@@ -1,0 +1,15 @@
+node_modules
+dist
+.turbo
+.next
+build
+.eslintcache
+*.log
+.DS_Store
+
+*storybook.log
+storybook-static
+
+.env
+.env.*
+!.env.example
