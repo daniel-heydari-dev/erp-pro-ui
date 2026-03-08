@@ -3,6 +3,11 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.30.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daniel-heydari-dev/erp-pro-ui"
+  },
+  "homepage": "https://daniel-heydari-dev.github.io/erp-pro-ui/",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",

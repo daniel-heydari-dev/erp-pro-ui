@@ -21,7 +21,7 @@ const InputDoc = () => {
           <Input
             placeholder="Type something..."
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
             label="Default Input"
             helperText="This is a helper text"
           />

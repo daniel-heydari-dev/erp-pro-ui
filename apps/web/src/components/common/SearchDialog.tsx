@@ -196,7 +196,7 @@ const SearchDialog = ({ isOpen, onClose }: SearchDialogProps) => {
       <div className="relative">
         <Input
           value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
           placeholder="Type to search..."
           className="w-full border-none   py-6 pl-12 pr-4 text-lg focus:ring-2 focus:ring-primary-500 outline-none transition-all"
           autoFocus
@@ -266,7 +266,7 @@ const SearchDialog = ({ isOpen, onClose }: SearchDialogProps) => {
                 ) : (
                   <div className="py-12 text-center text-neutral-500">
                     No results found for{" "}
-                    <span className="font-bold text-neutral-900 dark:text-white">"{searchValue}"</span>
+                    <span className="font-bold text-neutral-900 dark:text-white">&quot;{searchValue}&quot;</span>
                   </div>
                 )}
               </div>

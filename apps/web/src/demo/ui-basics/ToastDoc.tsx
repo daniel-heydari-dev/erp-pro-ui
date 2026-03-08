@@ -18,7 +18,7 @@ const ToastDoc = () => {
 
     promise(myPromise, {
       loading: 'Loading data...',
-      success: (data) => `Successfully loaded ${data.name}`,
+      success: (data: { name: string }) => `Successfully loaded ${data.name}`,
       error: 'Error loading data',
     });
   };
