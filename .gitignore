@@ -16,6 +16,8 @@ storybook-static
 !.env.example
 
 
+.npmrc
+
 .ai
 AGENTS.md
 CLAUDE.md
