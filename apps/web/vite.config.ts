@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, './src'),
+                'erp-pro-ui': path.resolve(__dirname, '../../packages/ui/src/index.ts'),
             },
         },
         server: {
