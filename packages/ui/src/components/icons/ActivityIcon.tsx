@@ -1,0 +1,43 @@
+import type { FC, SVGProps } from 'react';
+
+type IconProps = SVGProps<SVGSVGElement> & {
+  className?: string; // Allows passing Tailwind or custom class names
+  title?: string; // Accessible title for screen readers
+  titleId?: string; // ID for the title
+  color?: string; // Custom color for the icon
+};
+
+export const ActivityIcon: FC<IconProps> = ({
+  className,
+  title,
+  titleId,
+  color = "currentColor",
+  ...props
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    width="24"
+    height="24"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke={color}
+    aria-labelledby={title ? titleId : undefined}
+    role="img"
+    {...props}
+  >
+    {title && <title id={titleId}>{title}</title>}
+    <g id="Icon / Activity">
+      <path
+        id="Vector"
+        d="M22 12H19.52C19.083 11.9991 18.6577 12.1413 18.3091 12.405C17.9606 12.6686 17.708 13.0392 17.59 13.46L15.24 21.82C15.2249 21.8719 15.1933 21.9175 15.15 21.95C15.1067 21.9825 15.0541 22 15 22C14.9459 22 14.8933 21.9825 14.85 21.95C14.8067 21.9175 14.7751 21.8719 14.76 21.82L9.24 2.18C9.22485 2.12807 9.19327 2.08246 9.15 2.05C9.10673 2.01754 9.05409 2 9 2C8.94591 2 8.89327 2.01754 8.85 2.05C8.80673 2.08246 8.77515 2.12807 8.76 2.18L6.41 10.54C6.29246 10.9592 6.04138 11.3285 5.69486 11.592C5.34835 11.8555 4.92532 11.9988 4.49 12H2"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  </svg>
+);

@@ -1,6 +1,14 @@
 {
-  "name": "@repo/tsconfig",
+  "name": "@erp-pro/tsconfig",
   "version": "0.0.0",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "*.json"
+  ],
+  "exports": {
+    "./*.json": {
+      "default": "./*.json"
+    }
+  }
 }

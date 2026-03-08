@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { formatDate, type User, API_VERSION } from '@repo/shared'
+import { formatDate, type User, API_VERSION } from '@erp-pro/shared'
 import 'dotenv/config'
 
 const app = express()

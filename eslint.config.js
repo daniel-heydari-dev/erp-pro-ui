@@ -1,2 +1,2 @@
-import { baseConfig } from '@repo/eslint-config';
+import { baseConfig } from '@erp-pro/eslint-config';
 export default baseConfig;

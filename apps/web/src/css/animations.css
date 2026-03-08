@@ -1,0 +1,104 @@
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.border-beam-container {
+  position: relative;
+  border-radius: inherit;
+}
+
+.border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: var(--border-width) solid transparent;
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  mask-image: linear-gradient(transparent, transparent), linear-gradient(#000, #000);
+}
+
+.border-beam::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1;
+  width: var(--size);
+  background: linear-gradient(to left, var(--color-from), var(--color-to), transparent);
+  offset-anchor: calc(var(--anchor) * 1%) 50%;
+  offset-path: rect(0 auto auto 0 round var(--border-width));
+  animation: border-beam linear infinite;
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+}
+
+@keyframes antigravity-breathe {
+  0%, 100% {
+    box-shadow: inset 0 0 30px 0px rgba(0, 102, 255, 0.6);
+  }
+  50% {
+    box-shadow: inset 0 0 45px 10px rgba(0, 102, 255, 0.8);
+  }
+}
+
+.antigravity-glow {
+  animation: antigravity-breathe 3s ease-in-out infinite;
+}
+
+/* Background Gradient Animation keyframes */
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+.ui\:animate-gradient-first {
+  animation: moveVertical 30s ease infinite;
+}
+
+.ui\:animate-gradient-second {
+  animation: moveInCircle 20s reverse infinite;
+}
+
+.ui\:animate-gradient-third {
+  animation: moveInCircle 40s linear infinite;
+}
+
+.ui\:animate-gradient-fourth {
+  animation: moveHorizontal 40s ease infinite;
+}
+
+.ui\:animate-gradient-fifth {
+  animation: moveInCircle 20s ease infinite;
+}

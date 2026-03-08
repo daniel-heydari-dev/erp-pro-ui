@@ -6,6 +6,7 @@ build
 .eslintcache
 *.log
 .DS_Store
+*.d.ts.map
 
 *storybook.log
 storybook-static
@@ -13,3 +14,11 @@ storybook-static
 .env
 .env.*
 !.env.example
+
+
+.ai
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.cursor
+SPEC.MD

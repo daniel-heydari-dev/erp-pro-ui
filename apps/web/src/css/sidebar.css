@@ -1,0 +1,384 @@
+.sidebar,
+.sidebar-mobile {
+  background-color: var(--color-background) !important;
+}
+
+.sidebar::before {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--color-background), transparent);
+  z-index: 4;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.sidebar-no-fade::before {
+  opacity: 0;
+}
+
+.sidebar {
+  min-width: 240px;
+  padding: 7.5rem 0 6em 0 !important;
+  /* border-right: 1px solid #f0f0f0; Ultra-soft border */
+  background-color: var(--background);
+}
+
+@media only screen and (max-width: 967px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .sidebar {
+    padding: 7rem 0 6em 0 !important;
+  }
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  display: none;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+/* Firefox */
+.sidebar {
+  scrollbar-width: none;
+}
+
+.sidebar-logo {
+  padding: 2em calc(1em + 2px) !important;
+  border-bottom: none;
+  width: 100%;
+}
+
+.sidebar-logo img {
+  position: relative;
+  height: 32px;
+}
+
+.category-header {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+.category-header:hover {
+  opacity: 0.8;
+}
+
+.category-header.active-category-header .category-name {
+  color: var(--primary);
+  font-weight: 600;
+  text-shadow: none;
+}
+
+.category-header.active-category-header {
+  position: relative;
+  padding: 0.5em 0.75em;
+  border-radius: 8px;
+  /* border: 1px solid rgba(124, 58, 237, 0.3) !important; - Moved to pill */
+  transition: 
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Category header pill is managed by the shared layoutId element */
+
+.category-chevron {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--color-muted-foreground);
+}
+
+.category-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+/* Category expansion is now handled by Framer Motion in Sidebar.tsx */
+.category-content-wrapper {
+  overflow: hidden;
+}
+
+.category-content {
+  min-height: 0;
+}
+
+/* Global reset for all sidebar navigation elements to kill white focus rings and artifacts */
+.sidebar *,
+.sidebar *:focus,
+.sidebar *:focus-visible,
+.sidebar *:active,
+.sidebar *:link,
+.sidebar *:visited {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+  box-shadow: none;
+}
+
+.sidebar-item {
+  position: relative;
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  margin-right: 1em;
+  display: flex;
+  align-items: center;
+  transition: 
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent !important;
+  border-radius: 8px;
+  user-select: none;
+  text-decoration: none !important;
+}
+
+.sidebar-item:hover {
+  color: var(--foreground);
+  background-color: var(--secondary);
+}
+
+.active-sidebar-item {
+  position: relative;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  margin-right: 1em;
+  color: var(--active-sidebar-foreground) !important;
+  font-weight: 500;
+  border-radius: 8px;
+  /* border: 1px solid rgba(124, 58, 237, 0.6) !important; - Moved to pill */
+  transition: 
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The sliding indicator pill */
+.active-pill-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  z-index: 0;
+  background: var(--secondary);
+  box-shadow: 0 1px 4px rgba(115, 103, 240, 0.05);
+  border: 1px solid var(--primary) !important;
+  pointer-events: none;
+}
+
+.active-pill-background .shimmer-overlay {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 58, 237, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+  pointer-events: none;
+}
+
+.active-sidebar-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 90%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(124, 58, 237, 1),
+    transparent
+  );
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+.active-sidebar-item:hover {
+  transform: translateX(1px);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.3),
+    rgba(79, 70, 229, 0.4),
+    rgba(124, 58, 237, 0.3)
+  );
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    height: 70%;
+  }
+  50% {
+    opacity: 1;
+    height: 85%;
+  }
+}
+
+/* --- Modern Light Mode Overrides --- */
+/* --- Modern Light Mode Overrides --- */
+html:not(.dark) .active-pill-background {
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0.02) 100%);
+  border: 1px solid rgba(79, 70, 229, 0.15) !important;
+  box-shadow: 0 4px 20px -2px rgba(79, 70, 229, 0.1);
+  backdrop-filter: blur(12px); /* Glass Style */
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html:not(.dark) .active-sidebar-item {
+  color: #312e81 !important; /* Indigo 900 */
+}
+
+/* Reduce intensity on hover for active item in light mode */
+html:not(.dark) .active-sidebar-item:hover {
+  background: none !important;
+  box-shadow: none !important;
+  transform: translateX(2px);
+}
+
+html:not(.dark) .active-sidebar-item::after {
+  /* background: #6366f1; Indigo 500 */
+  width: 2px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+  animation: none; 
+  left: 0;
+}
+
+.sidebar-item .new-tag,
+.sidebar-item .updated-tag {
+  margin-left: 0.6em;
+  font-size: 10px;
+  line-height: 0;
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 1em 0.4em 0.8em 0.4em;
+  opacity: 1;
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+.sidebar-item .new-tag {
+  color: #fff;
+  border: 1px solid rgba(124, 58, 237, 0.6) !important;
+  background-color: rgba(124, 58, 237, 0.3);
+}
+
+.sidebar-item .updated-tag {
+  color: #fff;
+  border: 1px solid rgba(124, 58, 237, 0.4) !important;
+  background-color: rgba(124, 58, 237, 0.2);
+}
+
+.sidebar-item span {
+  border: none !important;
+  outline: none !important;
+  border-color: transparent !important;
+}
+
+.github-button {
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: 0.3s ease;
+}
+
+.github-button img {
+  transition: filter 0.3s ease;
+  filter: var(--logo-filter);
+}
+
+.github-button:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  background-color: var(--secondary) !important;
+}
+
+.cta-button-docs {
+  font-weight: 600;
+  font-size: 12px;
+  padding: 0 0 0 1rem;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 1), rgba(24, 47, 255, 0.6));
+  background-size: 200% 200%;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  justify-content: space-between;
+  transition: 0.3s ease;
+}
+
+.cta-button-docs span {
+  background-color: #060010;
+  margin-left: 1em;
+  margin-right: calc(1em - 6px);
+  padding-top: 0.1em;
+  height: 30px;
+  border-radius: 50px;
+  width: 75px;
+  font-weight: 600;
+  font-size: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-button-docs span img {
+  margin-right: 4px;
+  width: 12px;
+  height: 12px;
+  transition: 0.3s ease;
+}

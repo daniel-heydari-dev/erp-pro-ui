@@ -1,5 +1,5 @@
 {
-  "name": "@repo/shared",
+  "name": "@erp-pro/shared",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
-    "@repo/eslint-config": "workspace:*",
+    "@erp-pro/tsconfig": "workspace:*",
+    "@erp-pro/eslint-config": "workspace:*",
     "typescript": "^5.9.3",
     "eslint": "^9.39.2"
   }
