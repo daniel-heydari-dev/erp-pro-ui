@@ -1,2 +1,2 @@
-export { default as OTPInput, OTPInput as default } from "./OTPInput";
-export type { OTPInputProps, OTPInputSize, OTPInputVariant } from "./OTPInput";
+export { default as OTPInput } from './OTPInput';
+export type { OTPInputProps } from './types.d';

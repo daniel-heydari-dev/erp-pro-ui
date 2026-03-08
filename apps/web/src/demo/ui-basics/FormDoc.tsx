@@ -1,4 +1,4 @@
-import { Form, Input, Button } from '@erp-pro/ui';
+import { Form, Input, Button } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -42,7 +42,7 @@ const FormDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Form, Input, Button } from '@erp-pro/ui';
+      <CodeBlock code={`import { Form, Input, Button } from 'erp-pro-ui';
 
 const Example = () => {
   const handleSubmit = (data) => {

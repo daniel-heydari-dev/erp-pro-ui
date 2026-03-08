@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Textarea } from '@erp-pro/ui';
+import { Textarea } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -21,12 +21,12 @@ const TextareaDoc = () => {
             label="Comments"
             placeholder="Type your message here."
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
           />
         </div>
       </div>
 
-      <CodeBlock code={`import { Textarea } from '@erp-pro/ui';
+      <CodeBlock code={`import { Textarea } from 'erp-pro-ui';
 
 <Textarea
   label="Comments"

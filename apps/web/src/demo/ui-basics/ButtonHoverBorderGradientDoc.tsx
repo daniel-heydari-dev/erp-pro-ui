@@ -1,4 +1,4 @@
-import { ButtonHoverBorderGradient } from '@erp-pro/ui';
+import { ButtonHoverBorderGradient } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -23,7 +23,7 @@ const ButtonHoverBorderGradientDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { ButtonHoverBorderGradient } from '@erp-pro/ui';
+      <CodeBlock code={`import { ButtonHoverBorderGradient } from 'erp-pro-ui';
 
 <ButtonHoverBorderGradient>
   <span>Launch Application</span>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Dialog, type DialogVariant, type DialogAnimation } from '@erp-pro/ui';
+import { Button, Dialog, type DialogVariant, type DialogAnimation } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -62,7 +62,7 @@ const DialogDoc = () => {
       </div>
 
       <CodeBlock code={`import { useState } from 'react';
-import { Dialog, Button } from '@erp-pro/ui';
+import { Dialog, Button } from 'erp-pro-ui';
 
 const Example = () => {
   const [open, setOpen] = useState(false);

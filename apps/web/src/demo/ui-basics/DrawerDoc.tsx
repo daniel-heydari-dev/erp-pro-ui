@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Drawer, type DrawerPosition } from '@erp-pro/ui';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -50,7 +50,7 @@ const DrawerDoc = () => {
       </div>
 
       <CodeBlock code={`import { useState } from 'react';
-import { Drawer, Button } from '@erp-pro/ui';
+import { Drawer, Button } from 'erp-pro-ui';
 
 const Example = () => {
   const [open, setOpen] = useState(false);

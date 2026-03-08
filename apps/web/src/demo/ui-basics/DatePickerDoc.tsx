@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DatePicker, DatePickerValue } from '@erp-pro/ui';
+import { DatePicker, DatePickerValue } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -30,7 +30,7 @@ const DatePickerDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { DatePicker } from '@erp-pro/ui';
+      <CodeBlock code={`import { DatePicker } from 'erp-pro-ui';
 
 <DatePicker
   value={date}

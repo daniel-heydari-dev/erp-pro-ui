@@ -1,28 +1,33 @@
-# @erp-pro/ui
+# erp-pro-ui
 
-A premium, production-ready React component library built with TypeScript, Tailwind CSS v4, and Framer Motion. Designed for modern ERP, SaaS, and dashboard applications.
+# erp-pro-ui
 
-## ✨ Features
+Premium UI component library for ERP and SaaS applications.
 
-- **50+ Components** — Forms, Data Display, Charts, Animations, Effects
-- **Dark Mode** — Built-in theme system with `ThemeProvider`
-- **Tree-Shakable** — Named exports & subpath imports for zero unused code
-- **TypeScript-First** — Full type safety with exported interfaces
-- **Framer Motion** — Smooth, premium animations out of the box
-- **Recharts Integration** — 6 chart components for data visualization
-- **Accessible** — Keyboard navigation, ARIA attributes, focus management
+## Features
 
-## 📦 Installation
+- 🚀 **50+ Premium Components**: From basic buttons to complex data tables and charts.
+- 🎨 **Modern Aesthetics**: Sleek, glassmorphic, and highly interactive designs.
+- 📊 **Advanced Charts**: Customizable Neon Line Charts, Stacked Bar Charts, and more.
+- ⌨️ **Accessibility**: Built with accessibility and responsiveness in mind.
+- 🛠️ **Developer Friendly**: Fully typed with TypeScript and easy to integrate.
+
+## Installation
 
 ```bash
-# Inside your monorepo
-pnpm add @erp-pro/ui
+pnpm add erp-pro-ui
+# or
+npm install erp-pro-ui
+# or
+yarn add erp-pro-ui
 ```
 
 ### Peer Dependencies
 
+Ensure you have the following peer dependencies installed:
+
 ```bash
-pnpm add react react-dom framer-motion @tanstack/react-table
+pnpm add framer-motion three @react-three/fiber @react-three/drei @tanstack/react-table recharts lucide-react
 ```
 
 ### Font Setup (Geist)
@@ -48,7 +53,7 @@ fontFamily: {
 ## 🚀 Quick Start
 
 ```tsx
-import { ThemeProvider, Button, Input, Typography } from '@erp-pro/ui';
+import { ThemeProvider, Button, Input, Typography } from 'erp-pro-ui';
 
 function App() {
   return (
@@ -151,7 +156,7 @@ Built on [Recharts](https://recharts.org/), the chart components provide premium
 30+ custom SVG icons available:
 
 ```tsx
-import { IconDashboard, IconSettings, IconUser } from '@erp-pro/ui';
+import { IconDashboard, IconSettings, IconUser } from 'erp-pro-ui';
 
 <IconDashboard className="w-5 h-5" />;
 ```
@@ -161,7 +166,7 @@ import { IconDashboard, IconSettings, IconUser } from '@erp-pro/ui';
 Wrap your app with `ThemeProvider` for automatic dark/light mode:
 
 ```tsx
-import { ThemeProvider, useThemeContext } from '@erp-pro/ui';
+import { ThemeProvider, useThemeContext } from 'erp-pro-ui';
 
 // In root
 <ThemeProvider>
@@ -177,7 +182,7 @@ const { mode, toggleMode, setMode } = useThemeContext();
 ### Dialog
 
 ```tsx
-import { Dialog } from '@erp-pro/ui';
+import { Dialog } from 'erp-pro-ui';
 
 <Dialog
   open={isOpen}
@@ -196,7 +201,7 @@ import { Dialog } from '@erp-pro/ui';
 ### Toast
 
 ```tsx
-import { ToastProvider, useToast } from '@erp-pro/ui';
+import { ToastProvider, useToast } from 'erp-pro-ui';
 
 // Wrap app
 <ToastProvider>
@@ -211,7 +216,7 @@ addToast({ type: 'success', title: 'Saved!', message: 'All changes saved.' });
 ### DataTable
 
 ```tsx
-import { DataTable, FilterDropdown, ColumnToggle } from '@erp-pro/ui';
+import { DataTable, FilterDropdown, ColumnToggle } from 'erp-pro-ui';
 
 <DataTable data={users} columns={columns} searchable sortable paginated />;
 ```
@@ -219,7 +224,7 @@ import { DataTable, FilterDropdown, ColumnToggle } from '@erp-pro/ui';
 ### Background Gradient
 
 ```tsx
-import { BackgroundGradientAnimation } from '@erp-pro/ui';
+import { BackgroundGradientAnimation } from 'erp-pro-ui';
 
 <BackgroundGradientAnimation
   gradientBackgroundStart="rgb(0, 17, 82)"
@@ -239,10 +244,10 @@ import { BackgroundGradientAnimation } from '@erp-pro/ui';
 For optimal bundle size, use subpath imports:
 
 ```tsx
-import { Button } from '@erp-pro/ui/button';
-import { Dialog } from '@erp-pro/ui/dialog';
-import { Input } from '@erp-pro/ui/input';
-import { DataTable } from '@erp-pro/ui/data-table';
+import { Button } from 'erp-pro-ui/button';
+import { Dialog } from 'erp-pro-ui/dialog';
+import { Input } from 'erp-pro-ui/input';
+import { DataTable } from 'erp-pro-ui/data-table';
 ```
 
 ## 🛠️ Development

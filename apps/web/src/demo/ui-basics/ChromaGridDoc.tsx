@@ -1,4 +1,4 @@
-import { ChromaGrid } from '@erp-pro/ui';
+import { ChromaGrid } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -30,7 +30,7 @@ const ChromaGridDoc = () => {
         />
       </div>
 
-      <CodeBlock code={`import { ChromaGrid } from '@erp-pro/ui';
+      <CodeBlock code={`import { ChromaGrid } from 'erp-pro-ui';
 
 const items = [
   { id: '1', title: 'Design', icon: '🎨' },

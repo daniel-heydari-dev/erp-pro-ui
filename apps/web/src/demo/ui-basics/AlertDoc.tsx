@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Alert, type AlertVariant } from '@erp-pro/ui';
+import { Button, Alert, type AlertVariant } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -22,7 +22,7 @@ const AlertDoc = () => {
         />
       </div>
 
-      <CodeBlock code={`import { Alert } from '@erp-pro/ui';
+      <CodeBlock code={`import { Alert } from 'erp-pro-ui';
 
 <Alert 
   title="Heads up!" 

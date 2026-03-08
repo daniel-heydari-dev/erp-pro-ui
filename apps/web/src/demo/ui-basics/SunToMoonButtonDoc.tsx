@@ -1,4 +1,4 @@
-import { SunToMoonButton } from '@erp-pro/ui';
+import { SunToMoonButton } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -21,7 +21,7 @@ const SunToMoonButtonDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { SunToMoonButton } from '@erp-pro/ui';
+      <CodeBlock code={`import { SunToMoonButton } from 'erp-pro-ui';
 
 /* Full version with label and mockup */
 <SunToMoonButton showLabelAndImage={true} />

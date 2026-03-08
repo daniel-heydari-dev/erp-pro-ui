@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Radio } from '@erp-pro/ui';
+import { Radio } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -34,7 +34,7 @@ const RadioDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Radio } from '@erp-pro/ui';
+      <CodeBlock code={`import { Radio } from 'erp-pro-ui';
 
 const [selected, setSelected] = useState('option1');
 

@@ -1,4 +1,4 @@
-export { default as Loading } from "./Loading";
+export { default as Loading } from './Loading';
 export {
   Spinner,
   Dots,
@@ -8,5 +8,5 @@ export {
   Bounce,
   Wave,
   Skeleton,
-} from "./Loading";
-export type { LoadingProps, LoadingVariant, LoadingSize } from "./Loading";
+} from './Loading';
+export type { LoadingProps, LoadingVariant, LoadingSize } from './Loading';

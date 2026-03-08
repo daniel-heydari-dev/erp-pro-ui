@@ -1,4 +1,4 @@
-import { PasswordStrengthMeter } from '@erp-pro/ui';
+import { PasswordStrengthMeter } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ const PasswordStrengthMeterDoc = () => {
         <PasswordStrengthMeter password={password} />
       </div>
 
-      <CodeBlock code={`import { PasswordStrengthMeter } from '@erp-pro/ui';
+      <CodeBlock code={`import { PasswordStrengthMeter } from 'erp-pro-ui';
 import { useState } from 'react';
 
 const MyForm = () => {

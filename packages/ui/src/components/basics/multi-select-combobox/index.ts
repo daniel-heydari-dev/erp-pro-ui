@@ -1,2 +1,2 @@
-export { default as MultiSelectCombobox } from "./MultiSelectCombobox";
-export type { MultiSelectOption } from "./MultiSelectCombobox";
+export { default as MultiSelectCombobox } from './MultiSelectCombobox';
+export type { MultiSelectComboboxProps, Option } from './types';

@@ -1,4 +1,4 @@
-import { SkeletonComponent as Skeleton } from '@erp-pro/ui';
+import { SkeletonComponent as Skeleton } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 
 const SkeletonDoc = () => {

@@ -1,7 +1,2 @@
-export { ChromaGrid } from './ChromaGrid';
-export type {
-  ChromaGridProps,
-  ChromaGridItem,
-  ChromaGridAnimation,
-  ChromaGridHoverEffect,
-} from './types';
+export { default as ChromaGrid } from './ChromaGrid';
+export type { ChromaGridProps } from './ChromaGrid';

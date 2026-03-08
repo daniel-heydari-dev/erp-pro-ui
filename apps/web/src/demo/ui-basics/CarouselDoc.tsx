@@ -1,4 +1,4 @@
-import { Carousel } from '@erp-pro/ui';
+import { Carousel } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -58,7 +58,7 @@ const CarouselDoc = () => {
         <Carousel items={images} showArrows showDots height={400} animation="slide" />
       </div>
 
-      <CodeBlock code={`import { Carousel } from '@erp-pro/ui';
+      <CodeBlock code={`import { Carousel } from 'erp-pro-ui';
 
 const items = [
   { id: '1', image: 'url1.jpg', title: 'Mountain' },

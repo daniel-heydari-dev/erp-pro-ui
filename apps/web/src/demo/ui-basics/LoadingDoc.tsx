@@ -1,4 +1,4 @@
-import { Loading, Spinner, Dots, Pulse, Bars, Ring } from '@erp-pro/ui';
+import { Loading, Spinner, Dots, Pulse, Bars, Ring } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 
 const LoadingDoc = () => {

@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CategoryPage from './pages/CategoryPage';
 import CategoryRedirect from './pages/CategoryRedirect';
 import LandingPage from './pages/LandingPage';
-import { ThemeProvider, ToastProvider } from '@erp-pro/ui';
+import { ThemeProvider, ToastProvider } from 'erp-pro-ui';
 import { TransitionProvider } from './components/context/TransitionContext/TransitionContext';
 import { SearchProvider } from './components/context/SearchContext/SearchContext';
 import SidebarLayout from './components/layout/SidebarLayout';

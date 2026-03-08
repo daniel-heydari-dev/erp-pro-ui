@@ -1,4 +1,4 @@
-import { Dialog, Input } from "@erp-pro/ui";
+import { Dialog, Input } from "erp-pro-ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useNavigate } from "react-router-dom";

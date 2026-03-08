@@ -14,7 +14,7 @@
   "dependencies": {
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "@erp-pro/ui": "workspace:*"
+    "erp-pro-ui": "workspace:*"
   },
   "devDependencies": {
     "@erp-pro/tsconfig": "workspace:*",

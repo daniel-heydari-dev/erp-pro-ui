@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar } from '@erp-pro/ui';
+import { Calendar } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -31,7 +31,7 @@ const CalendarDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Calendar } from '@erp-pro/ui';
+      <CodeBlock code={`import { Calendar } from 'erp-pro-ui';
 import { useState } from 'react';
 
 const [date, setDate] = useState<Date | null>(new Date());

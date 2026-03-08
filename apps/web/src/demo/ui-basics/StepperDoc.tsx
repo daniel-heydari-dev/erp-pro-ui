@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stepper, Button, Select } from '@erp-pro/ui';
+import { Stepper, Button, Select } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -98,7 +98,7 @@ const StepperDoc = () => {
           <label className="docs-control-label w-20">Variant</label>
           <Select
             value={variant}
-            onChange={(e) => setVariant(e.target.value as any)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setVariant(e.target.value as any)}
             className="w-48"
             options={[
               { label: 'Default', value: 'default' },
@@ -112,7 +112,7 @@ const StepperDoc = () => {
           <label className="docs-control-label w-20">Size</label>
           <Select
             value={size}
-            onChange={(e) => setSize(e.target.value as any)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSize(e.target.value as any)}
             className="w-48"
             options={[
               { label: 'Small', value: 'sm' },
@@ -153,7 +153,7 @@ const StepperDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Stepper } from '@erp-pro/ui';
+      <CodeBlock code={`import { Stepper } from 'erp-pro-ui';
 
 // ... steps definition
 

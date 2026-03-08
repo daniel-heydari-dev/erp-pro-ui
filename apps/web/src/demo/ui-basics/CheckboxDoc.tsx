@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Checkbox } from '@erp-pro/ui';
+import { Checkbox } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -20,11 +20,11 @@ const CheckboxDoc = () => {
           id="preview-checkbox"
           label="Accept terms and conditions"
           checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChecked(e.target.checked)}
         />
       </div>
 
-      <CodeBlock code={`import { Checkbox } from '@erp-pro/ui';
+      <CodeBlock code={`import { Checkbox } from 'erp-pro-ui';
 
 const [checked, setChecked] = useState(false);
 

@@ -1,4 +1,4 @@
-import { HoverBorderGradient } from '@erp-pro/ui';
+import { HoverBorderGradient } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -18,7 +18,7 @@ const HoverBorderGradientDoc = () => {
         </HoverBorderGradient>
       </div>
 
-      <CodeBlock code={`import { HoverBorderGradient } from '@erp-pro/ui';
+      <CodeBlock code={`import { HoverBorderGradient } from 'erp-pro-ui';
 
 <HoverBorderGradient className="px-8 py-3 bg-white dark:bg-black text-black dark:text-white">
   <span>Hover Me</span>

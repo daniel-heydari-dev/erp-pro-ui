@@ -1,9 +1,8 @@
-export { Stepper } from './Stepper';
+export { default as Stepper } from './Stepper';
 export type {
-  Step,
-  StepStatus,
   StepperProps,
+  Step,
   StepperOrientation,
-  StepperSize,
   StepperVariant,
+  StepperSize,
 } from './types';

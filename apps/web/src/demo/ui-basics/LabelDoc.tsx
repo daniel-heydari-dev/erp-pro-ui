@@ -1,4 +1,4 @@
-import { Label, Input, Checkbox } from '@erp-pro/ui';
+import { Label, Input, Checkbox } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -19,7 +19,7 @@ const LabelDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Label, Input } from '@erp-pro/ui';
+      <CodeBlock code={`import { Label, Input } from 'erp-pro-ui';
 
 <div className="grid gap-1.5">
   <Label htmlFor="email">Email</Label>

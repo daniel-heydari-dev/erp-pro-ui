@@ -1,4 +1,4 @@
-import { HoverCard } from '@erp-pro/ui';
+import { HoverCard } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -44,7 +44,7 @@ const HoverCardDoc = () => {
         </HoverCard>
       </div>
 
-      <CodeBlock code={`import { HoverCard } from '@erp-pro/ui';
+      <CodeBlock code={`import { HoverCard } from 'erp-pro-ui';
 
 <HoverCard
   content={

@@ -1,4 +1,4 @@
-import { BackgroundGradientAnimation } from '@erp-pro/ui';
+import { BackgroundGradientAnimation } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -38,7 +38,7 @@ const BackgroundGradientAnimationDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { BackgroundGradientAnimation } from '@erp-pro/ui';
+      <CodeBlock code={`import { BackgroundGradientAnimation } from 'erp-pro-ui';
 
 <BackgroundGradientAnimation>
   <div className="z-10">

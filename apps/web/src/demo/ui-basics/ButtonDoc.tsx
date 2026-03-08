@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@erp-pro/ui';
+import { Button } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -27,7 +27,7 @@ const ButtonDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Button } from '@erp-pro/ui';
+      <CodeBlock code={`import { Button } from 'erp-pro-ui';
 
 <Button label="Click Me" primary onClick={() => console.log('Clicked')} />
 <Button label="Secondary" onClick={() => console.log('Clicked')} />`} />

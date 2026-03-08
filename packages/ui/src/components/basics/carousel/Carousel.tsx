@@ -163,7 +163,7 @@ export const Carousel = ({
   const transitionConfig = getTransitionConfig(animation, animationDuration);
   const [[currentIndex, direction], setSlide] = useState([initialSlide, 0]);
   const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const totalSlides = items.length;
 

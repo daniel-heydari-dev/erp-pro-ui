@@ -99,14 +99,14 @@ export const Demo: Story = {
  * ### Import
  *
  * ```tsx
- * import { BackgroundGradientAnimation } from '@erp-pro/ui';
- * import '@erp-pro/ui/styles.css';
+ * import { BackgroundGradientAnimation } from 'erp-pro-ui';
+ * import 'erp-pro-ui/styles.css';
  * ```
  *
  * ### Usage
  *
  * ```tsx
- * import { BackgroundGradientAnimation } from '@erp-pro/ui';
+ * import { BackgroundGradientAnimation } from 'erp-pro-ui';
  *
  * function HeroSection() {
  *   return (

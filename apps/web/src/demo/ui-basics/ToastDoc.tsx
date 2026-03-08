@@ -1,4 +1,4 @@
-import { Button, useToast, ToastProvider } from '@erp-pro/ui';
+import { Button, useToast, ToastProvider } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -39,7 +39,7 @@ const ToastDoc = () => {
         />
       </div>
 
-      <CodeBlock code={`import { useToast } from '@erp-pro/ui';
+      <CodeBlock code={`import { useToast } from 'erp-pro-ui';
 
 const Component = () => {
   const { toast } = useToast();

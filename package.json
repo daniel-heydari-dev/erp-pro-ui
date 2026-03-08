@@ -1,5 +1,5 @@
 {
-  "name": "erp-pro-ui-monorepo",
+  "name": "erp-pro-ui",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.30.1",

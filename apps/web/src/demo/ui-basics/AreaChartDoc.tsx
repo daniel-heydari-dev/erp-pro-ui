@@ -1,5 +1,5 @@
 import React from 'react';
-import { AreaChart, AreaChartData } from '@erp-pro/ui';
+import { AreaChart, AreaChartData } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -32,7 +32,7 @@ const AreaChartDoc = () => {
         <AreaChart data={data} categories={categories} height={350} className="px-4" />
       </div>
 
-      <CodeBlock code={`import { AreaChart, AreaChartData } from '@erp-pro/ui';
+      <CodeBlock code={`import { AreaChart, AreaChartData } from 'erp-pro-ui';
 
 const data: AreaChartData[] = [
   { name: 'Jan', revenue: 4000, expenses: 2400 },

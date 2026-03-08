@@ -1,59 +1,202 @@
 {
-  "name": "@erp-pro/ui",
-  "version": "0.0.0",
-  "private": true,
+  "name": "erp-pro-ui",
+  "version": "0.1.0",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "exports": {
-    ".": "./src/index.ts",
-    "./accordion": "./src/components/basics/accordion/Accordion.tsx",
-    "./alert": "./src/components/basics/alert/Alert.tsx",
-    "./animated-content": "./src/components/basics/animated-content/AnimatedContent.tsx",
-    "./background-gradient-animation": "./src/components/basics/background-gradient-animation/BackgroundGradientAnimation.tsx",
-    "./button": "./src/components/basics/Button/Button.tsx",
-    "./button-hover-border-gradient": "./src/components/basics/button-hover-border-gradient/ButtonHoverBorderGradient.tsx",
-    "./calendar": "./src/components/basics/calendar/Calendar.tsx",
-    "./card": "./src/components/basics/card/Card.tsx",
-    "./carousel": "./src/components/basics/carousel/Carousel.tsx",
-    "./checkbox": "./src/components/basics/checkbox/Checkbox.tsx",
-    "./chip": "./src/components/basics/chip/Chip.tsx",
-    "./chroma-grid": "./src/components/basics/chroma-grid/ChromaGrid.tsx",
-    "./color-palette": "./src/components/basics/colo-palette/ColorPalette.tsx",
-    "./combobox": "./src/components/basics/combobox/Combobox.tsx",
-    "./data-table": "./src/components/basics/data-table/DataTable.tsx",
-    "./date-picker": "./src/components/basics/date-picker/DatePicker.tsx",
-    "./dialog": "./src/components/basics/dialog/Dialog.tsx",
-    "./drawer": "./src/components/basics/drawer/Drawer.tsx",
-    "./form": "./src/components/basics/form/Form.tsx",
-    "./gradual-blur": "./src/components/basics/gradual-blur/GradualBlur.tsx",
-    "./hover-border-gradient": "./src/components/basics/hover-border-gradient/HoverBorderGradient.tsx",
-    "./hover-card": "./src/components/basics/hover-card/HoverCard.tsx",
-    "./input": "./src/components/basics/input/Input.tsx",
-    "./label": "./src/components/basics/label/Label.tsx",
-    "./loading": "./src/components/basics/loading/Loading.tsx",
-    "./multi-select-combobox": "./src/components/basics/multi-select-combobox/MultiSelectCombobox.tsx",
-    "./otp-input": "./src/components/basics/otp-Input/OTPInput.tsx",
-    "./password-strength-meter": "./src/components/basics/password-strength-meter/PasswordStrengthMeter.tsx",
-    "./preview": "./src/components/basics/preview/Preview.tsx",
-    "./radio": "./src/components/basics/radio/Radio.tsx",
-    "./select": "./src/components/basics/select/Select.tsx",
-    "./skeleton": "./src/components/basics/skeleton/Skeleton.tsx",
-    "./splash-cursor": "./src/components/basics/splashCursor/SplashCursor.tsx",
-    "./spotlight-card": "./src/components/basics/spotlight-card/SpotlightCard.tsx",
-    "./stepper": "./src/components/basics/stepper/Stepper.tsx",
-    "./sun-to-moon-button": "./src/components/basics/sun-to-moon-button/SunToMoonButton.tsx",
-    "./switch": "./src/components/basics/switch/Switch.tsx",
-    "./textarea": "./src/components/basics/textarea/Textarea.tsx",
-    "./toast": "./src/components/basics/toast/Toast.tsx",
-    "./tooltip": "./src/components/basics/tooltip/Tooltip.tsx",
-    "./ascii-text": "./src/components/text-animations/ASCIIText/ASCIIText.tsx",
-    "./icons": "./src/components/icons/index.ts",
-    "./spinners": "./src/components/spinners/Audio.tsx",
-    "./utils": "./src/utils/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./accordion": {
+      "types": "./dist/components/basics/accordion/Accordion.d.ts",
+      "import": "./dist/components/basics/accordion/Accordion.mjs"
+    },
+    "./alert": {
+      "types": "./dist/components/basics/alert/Alert.d.ts",
+      "import": "./dist/components/basics/alert/Alert.mjs"
+    },
+    "./animated-content": {
+      "types": "./dist/components/basics/animated-content/AnimatedContent.d.ts",
+      "import": "./dist/components/basics/animated-content/AnimatedContent.mjs"
+    },
+    "./background-gradient-animation": {
+      "types": "./dist/components/basics/background-gradient-animation/BackgroundGradientAnimation.d.ts",
+      "import": "./dist/components/basics/background-gradient-animation/BackgroundGradientAnimation.mjs"
+    },
+    "./button": {
+      "types": "./dist/components/basics/Button/Button.d.ts",
+      "import": "./dist/components/basics/Button/Button.mjs"
+    },
+    "./button-hover-border-gradient": {
+      "types": "./dist/components/basics/button-hover-border-gradient/ButtonHoverBorderGradient.d.ts",
+      "import": "./dist/components/basics/button-hover-border-gradient/ButtonHoverBorderGradient.mjs"
+    },
+    "./calendar": {
+      "types": "./dist/components/basics/calendar/Calendar.d.ts",
+      "import": "./dist/components/basics/calendar/Calendar.mjs"
+    },
+    "./card": {
+      "types": "./dist/components/basics/card/Card.d.ts",
+      "import": "./dist/components/basics/card/Card.mjs"
+    },
+    "./carousel": {
+      "types": "./dist/components/basics/carousel/Carousel.d.ts",
+      "import": "./dist/components/basics/carousel/Carousel.mjs"
+    },
+    "./checkbox": {
+      "types": "./dist/components/basics/checkbox/Checkbox.d.ts",
+      "import": "./dist/components/basics/checkbox/Checkbox.mjs"
+    },
+    "./chip": {
+      "types": "./dist/components/basics/chip/Chip.d.ts",
+      "import": "./dist/components/basics/chip/Chip.mjs"
+    },
+    "./chroma-grid": {
+      "types": "./dist/components/basics/chroma-grid/ChromaGrid.d.ts",
+      "import": "./dist/components/basics/chroma-grid/ChromaGrid.mjs"
+    },
+    "./color-palette": {
+      "types": "./dist/components/basics/colo-palette/ColorPalette.d.ts",
+      "import": "./dist/components/basics/colo-palette/ColorPalette.mjs"
+    },
+    "./combobox": {
+      "types": "./dist/components/basics/combobox/Combobox.d.ts",
+      "import": "./dist/components/basics/combobox/Combobox.mjs"
+    },
+    "./data-table": {
+      "types": "./dist/components/basics/data-table/DataTable.d.ts",
+      "import": "./dist/components/basics/data-table/DataTable.mjs"
+    },
+    "./date-picker": {
+      "types": "./dist/components/basics/date-picker/DatePicker.d.ts",
+      "import": "./dist/components/basics/date-picker/DatePicker.mjs"
+    },
+    "./dialog": {
+      "types": "./dist/components/basics/dialog/Dialog.d.ts",
+      "import": "./dist/components/basics/dialog/Dialog.mjs"
+    },
+    "./drawer": {
+      "types": "./dist/components/basics/drawer/Drawer.d.ts",
+      "import": "./dist/components/basics/drawer/Drawer.mjs"
+    },
+    "./form": {
+      "types": "./dist/components/basics/form/Form.d.ts",
+      "import": "./dist/components/basics/form/Form.mjs"
+    },
+    "./gradual-blur": {
+      "types": "./dist/components/basics/gradual-blur/GradualBlur.d.ts",
+      "import": "./dist/components/basics/gradual-blur/GradualBlur.mjs"
+    },
+    "./hover-border-gradient": {
+      "types": "./dist/components/basics/hover-border-gradient/HoverBorderGradient.d.ts",
+      "import": "./dist/components/basics/hover-border-gradient/HoverBorderGradient.mjs"
+    },
+    "./hover-card": {
+      "types": "./dist/components/basics/hover-card/HoverCard.d.ts",
+      "import": "./dist/components/basics/hover-card/HoverCard.mjs"
+    },
+    "./input": {
+      "types": "./dist/components/basics/input/Input.d.ts",
+      "import": "./dist/components/basics/input/Input.mjs"
+    },
+    "./label": {
+      "types": "./dist/components/basics/label/Label.d.ts",
+      "import": "./dist/components/basics/label/Label.mjs"
+    },
+    "./loading": {
+      "types": "./dist/components/basics/loading/Loading.d.ts",
+      "import": "./dist/components/basics/loading/Loading.mjs"
+    },
+    "./multi-select-combobox": {
+      "types": "./dist/components/basics/multi-select-combobox/MultiSelectCombobox.d.ts",
+      "import": "./dist/components/basics/multi-select-combobox/MultiSelectCombobox.mjs"
+    },
+    "./otp-input": {
+      "types": "./dist/components/basics/otp-Input/OTPInput.d.ts",
+      "import": "./dist/components/basics/otp-Input/OTPInput.mjs"
+    },
+    "./password-strength-meter": {
+      "types": "./dist/components/basics/password-strength-meter/PasswordStrengthMeter.d.ts",
+      "import": "./dist/components/basics/password-strength-meter/PasswordStrengthMeter.mjs"
+    },
+    "./preview": {
+      "types": "./dist/components/basics/preview/Preview.d.ts",
+      "import": "./dist/components/basics/preview/Preview.mjs"
+    },
+    "./radio": {
+      "types": "./dist/components/basics/radio/Radio.d.ts",
+      "import": "./dist/components/basics/radio/Radio.mjs"
+    },
+    "./select": {
+      "types": "./dist/components/basics/select/Select.d.ts",
+      "import": "./dist/components/basics/select/Select.mjs"
+    },
+    "./skeleton": {
+      "types": "./dist/components/basics/skeleton/Skeleton.d.ts",
+      "import": "./dist/components/basics/skeleton/Skeleton.mjs"
+    },
+    "./splash-cursor": {
+      "types": "./dist/components/basics/splashCursor/SplashCursor.d.ts",
+      "import": "./dist/components/basics/splashCursor/SplashCursor.mjs"
+    },
+    "./spotlight-card": {
+      "types": "./dist/components/basics/spotlight-card/SpotlightCard.d.ts",
+      "import": "./dist/components/basics/spotlight-card/SpotlightCard.mjs"
+    },
+    "./stepper": {
+      "types": "./dist/components/basics/stepper/Stepper.d.ts",
+      "import": "./dist/components/basics/stepper/Stepper.mjs"
+    },
+    "./sun-to-moon-button": {
+      "types": "./dist/components/basics/sun-to-moon-button/SunToMoonButton.d.ts",
+      "import": "./dist/components/basics/sun-to-moon-button/SunToMoonButton.mjs"
+    },
+    "./switch": {
+      "types": "./dist/components/basics/switch/Switch.d.ts",
+      "import": "./dist/components/basics/switch/Switch.mjs"
+    },
+    "./textarea": {
+      "types": "./dist/components/basics/textarea/Textarea.d.ts",
+      "import": "./dist/components/basics/textarea/Textarea.mjs"
+    },
+    "./toast": {
+      "types": "./dist/components/basics/toast/Toast.d.ts",
+      "import": "./dist/components/basics/toast/Toast.mjs"
+    },
+    "./tooltip": {
+      "types": "./dist/components/basics/tooltip/Tooltip.d.ts",
+      "import": "./dist/components/basics/tooltip/Tooltip.mjs"
+    },
+    "./ascii-text": {
+      "types": "./dist/components/text-animations/ASCIIText/ASCIIText.d.ts",
+      "import": "./dist/components/text-animations/ASCIIText/ASCIIText.mjs"
+    },
+    "./icons": {
+      "types": "./dist/components/icons/index.d.ts",
+      "import": "./dist/components/icons/index.mjs"
+    },
+    "./spinners": {
+      "types": "./dist/components/spinners/Audio.d.ts",
+      "import": "./dist/components/spinners/Audio.mjs"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.mjs"
+    },
+    "./style.css": "./dist/style.css"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
+    "build": "vite build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
@@ -75,7 +218,11 @@
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.182.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.39.2",
-    "typescript": "^5.9.3"
+    "terser": "^5.46.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.4.0"
   }
 }

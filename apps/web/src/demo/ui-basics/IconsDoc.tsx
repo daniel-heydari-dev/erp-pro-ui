@@ -30,7 +30,7 @@ import {
   ShoppingCartIcon,
   TrashIcon,
   UserIcon
-} from '@erp-pro/ui';
+} from 'erp-pro-ui';
 import CodeBlock from '../../components/CodeBlock';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 
@@ -72,7 +72,7 @@ const IconsDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Icons</h1>
       <p className="docs-paragraph">
-        Our curated collection of highly optimized SVG icons exported directly from <code>@erp-pro/ui</code>.
+        Our curated collection of highly optimized SVG icons exported directly from <code>erp-pro-ui</code>.
       </p>
 
       {/* Grid Display */}
@@ -106,7 +106,7 @@ const IconsDoc = () => {
         All icons accept standard SVG properties (like `className`) and an optional `size` prop.
       </p>
 
-      <CodeBlock code={`import { ActivityIcon, SettingsIcon } from '@erp-pro/ui';
+      <CodeBlock code={`import { ActivityIcon, SettingsIcon } from 'erp-pro-ui';
 
 export default function MyComponent() {
   return (

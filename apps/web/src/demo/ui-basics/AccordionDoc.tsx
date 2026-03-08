@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Accordion } from '@erp-pro/ui';
+import { Accordion } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -90,7 +90,7 @@ const AccordionDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Accordion } from '@erp-pro/ui';
+      <CodeBlock code={`import { Accordion } from 'erp-pro-ui';
 
 const items = [
   {

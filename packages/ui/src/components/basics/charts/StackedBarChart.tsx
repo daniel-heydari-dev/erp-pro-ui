@@ -21,6 +21,7 @@ interface StackedBarChartProps {
   data: StackedBarData[];
   categories: { key: string; color: string; label: string }[];
   height?: number | string;
+  yAxisDomain?: [number, number];
   className?: string;
 }
 
@@ -28,6 +29,7 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
   data,
   categories,
   height = 300,
+  yAxisDomain,
   className = "",
 }) => {
   return (
@@ -55,6 +57,7 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
             tickLine={false}
             tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
             dx={-10}
+            domain={yAxisDomain}
           />
           <Tooltip
             cursor={{ fill: "var(--color-neutral-800, rgba(38, 38, 38, 0.4))" }}

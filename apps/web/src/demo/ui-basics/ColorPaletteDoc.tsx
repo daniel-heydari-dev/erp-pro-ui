@@ -1,4 +1,4 @@
-import { ColorPalette } from '@erp-pro/ui';
+import { ColorPalette } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -16,7 +16,7 @@ const ColorPaletteDoc = () => {
         <ColorPalette theme="all" showGradients={true} showUsageExamples={false} />
       </div>
 
-      <CodeBlock code={`import { ColorPalette } from '@erp-pro/ui';
+      <CodeBlock code={`import { ColorPalette } from 'erp-pro-ui';
 
 /* Show the entire system palette */
 <ColorPalette theme="all" />

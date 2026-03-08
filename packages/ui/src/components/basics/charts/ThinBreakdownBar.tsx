@@ -3,20 +3,20 @@
 import React from "react";
 
 export interface BreakdownSegment {
-  id: string;
+  id?: string;
   label: string;
   value: number; // The absolute value or percentage
   color: string;
 }
 
 interface ThinBreakdownBarProps {
-  segments: BreakdownSegment[];
+  data: BreakdownSegment[];
   className?: string;
   showLabels?: boolean;
 }
 
 export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
-  segments,
+  data: segments,
   className = "",
   showLabels = true,
 }) => {
@@ -27,11 +27,11 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
     <div className={`w-full flex flex-col gap-3 ${className}`}>
       {/* The Bar Track */}
       <div className="flex w-full h-3 rounded-full overflow-hidden gap-1 bg-neutral-900/50">
-        {segments.map((segment) => {
+        {segments.map((segment, index) => {
           const widthPercent = total > 0 ? (segment.value / total) * 100 : 0;
           return (
             <div
-              key={segment.id}
+              key={segment.id || `segment-${index}`}
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
                 width: `${widthPercent}%`,
@@ -48,9 +48,9 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
       {/* The Labels */}
       {showLabels && (
         <div className="flex w-full justify-between items-center px-1">
-          {segments.map((segment) => (
+          {segments.map((segment, index) => (
             <div
-              key={`label-${segment.id}`}
+              key={`label-${segment.id || index}`}
               className="flex items-center gap-1.5 min-w-0"
             >
               <span className="text-xs text-neutral-400 font-medium truncate">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThinBreakdownBar, BreakdownSegment } from '@erp-pro/ui';
+import { ThinBreakdownBar, BreakdownSegment } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -27,11 +27,11 @@ const ThinBreakdownBarDoc = () => {
       <div className="docs-showcase-card h-[250px] flex items-center justify-center">
         <div className="w-full max-w-2xl px-8">
           <h3 className="text-xl font-semibold mb-6 text-zinc-100">Server Usage</h3>
-          <ThinBreakdownBar segments={segments} />
+          <ThinBreakdownBar data={segments} />
         </div>
       </div>
 
-      <CodeBlock code={`import { ThinBreakdownBar, BreakdownSegment } from '@erp-pro/ui';
+      <CodeBlock code={`import { ThinBreakdownBar, BreakdownSegment } from 'erp-pro-ui';
 
 const segments: BreakdownSegment[] = [
   { label: 'Cloud Resources', value: 45, color: '#e024ff' },
@@ -43,7 +43,7 @@ const segments: BreakdownSegment[] = [
 
 <div className="w-full max-w-2xl">
   <h3 className="text-xl font-semibold mb-6">Server Usage</h3>
-  <ThinBreakdownBar segments={segments} />
+  <ThinBreakdownBar data={segments} />
 </div>`} />
 
       {/* Props Reference */}
@@ -60,10 +60,10 @@ const segments: BreakdownSegment[] = [
           </thead>
           <tbody>
             <tr>
-              <td className="docs-prop-name">segments</td>
+              <td className="docs-prop-name">data</td>
               <td><span className="docs-prop-type">BreakdownSegment[]</span></td>
               <td>required</td>
-              <td>Array of objects containing {`{ label: string; value: number; color: string }`}</td>
+              <td>Array of objects containing {`{ label: string; value: number; color: string, id?: string }`}</td>
             </tr>
             <tr>
               <td className="docs-prop-name">className</td>

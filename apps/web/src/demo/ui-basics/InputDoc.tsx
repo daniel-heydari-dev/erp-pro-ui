@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, InputState } from '@erp-pro/ui';
+import { Input, InputState } from 'erp-pro-ui';
 import { FiSearch, FiMail, FiLock } from 'react-icons/fi';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
@@ -28,7 +28,7 @@ const InputDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Input } from '@erp-pro/ui';
+      <CodeBlock code={`import { Input } from 'erp-pro-ui';
 
 <Input
   label="Default Input"
@@ -70,7 +70,7 @@ const InputDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Input, InputState } from '@erp-pro/ui';
+      <CodeBlock code={`import { Input, InputState } from 'erp-pro-ui';
 
 <Input state={InputState.ERROR} error="Error message" />
 <Input state={InputState.SUCCESS} message="Success message" />

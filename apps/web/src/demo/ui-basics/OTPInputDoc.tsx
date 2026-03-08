@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OTPInput } from '@erp-pro/ui';
+import { OTPInput } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -29,7 +29,7 @@ const OTPInputDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { OTPInput } from '@erp-pro/ui';
+      <CodeBlock code={`import { OTPInput } from 'erp-pro-ui';
 import { useState } from 'react';
 
 const Example = () => {

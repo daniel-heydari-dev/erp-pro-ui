@@ -1,4 +1,4 @@
-import { Card } from '@erp-pro/ui';
+import { Card } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -19,7 +19,7 @@ const CardDoc = () => {
         />
       </div>
 
-      <CodeBlock code={`import { Card } from '@erp-pro/ui';
+      <CodeBlock code={`import { Card } from 'erp-pro-ui';
 
 <Card 
   title="Notifications" 

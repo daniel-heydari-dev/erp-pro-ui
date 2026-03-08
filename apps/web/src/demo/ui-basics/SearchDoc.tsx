@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@erp-pro/ui';
+import { Button } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 import { useSearch } from '../../components/context/SearchContext/useSearch';
@@ -33,7 +33,7 @@ const SearchDoc = () => {
       </div>
 
       <CodeBlock code={`import { useSearch } from '@/components/context/SearchContext/useSearch';
-import { Button } from '@erp-pro/ui';
+import { Button } from 'erp-pro-ui';
 
 export default function MyComponent() {
   const { toggleSearch } = useSearch();

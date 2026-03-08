@@ -1,4 +1,4 @@
-import { Button, SunToMoonButton } from "@erp-pro/ui";
+import { Button, SunToMoonButton } from "erp-pro-ui";
 import { useSearch } from "../context/SearchContext/useSearch";
 
 interface HeaderProps {

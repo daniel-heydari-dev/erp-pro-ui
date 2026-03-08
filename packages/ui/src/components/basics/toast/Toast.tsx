@@ -313,7 +313,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
       dismissible = true,
       duration,
     } = toast;
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [progress, setProgress] = useState(100);
     const [isPaused, setIsPaused] = useState(false);
 
@@ -386,14 +386,14 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-neutral-100 dark:bg-neutral-700">
             <motion.div
               className={`h-full ${type === "success"
-                  ? "bg-green-500"
-                  : type === "error"
-                    ? "bg-red-500"
-                    : type === "warning"
-                      ? "bg-amber-500"
-                      : type === "info"
-                        ? "bg-blue-500"
-                        : "bg-neutral-400"
+                ? "bg-green-500"
+                : type === "error"
+                  ? "bg-red-500"
+                  : type === "warning"
+                    ? "bg-amber-500"
+                    : type === "info"
+                      ? "bg-blue-500"
+                      : "bg-neutral-400"
                 }`}
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.05 }}

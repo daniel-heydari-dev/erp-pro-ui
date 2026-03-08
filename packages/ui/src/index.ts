@@ -1,9 +1,9 @@
 // =============================================================================
-// @erp-pro/ui - Main Entry Point
+// erp-pro-ui - Main Entry Point
 // =============================================================================
 // This file exports all components with named exports for optimal tree-shaking.
-// Import usage: import { Button, Input, Dialog } from '@erp-pro/ui'
-// Or use subpath imports: import { Button } from '@erp-pro/ui/button'
+// Import usage: import { Button, Input, Dialog } from 'erp-pro-ui'
+// Or use subpath imports: import { Button } from 'erp-pro-ui/button'
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ export { Carousel } from './components/basics/carousel/Carousel';
 
 export { Checkbox } from './components/basics/checkbox/Checkbox';
 
-export { Chip } from './components/basics/chip/Chip';
+export { default as Chip } from './components/basics/chip/Chip';
 export type {
   ChipProps,
   ChipVariant,
@@ -66,7 +66,7 @@ export type {
   ChipSize,
 } from './components/basics/chip/Chip';
 
-export { ChromaGrid } from './components/basics/chroma-grid/ChromaGrid';
+export { default as ChromaGrid } from './components/basics/chroma-grid/ChromaGrid';
 
 // ColorPalette - default export
 export { default as ColorPalette } from './components/basics/colo-palette/ColorPalette';
@@ -108,7 +108,7 @@ export { GradualBlur } from './components/basics/gradual-blur/GradualBlur';
 
 export { HoverBorderGradient } from './components/basics/hover-border-gradient/HoverBorderGradient';
 
-export { HoverCard } from './components/basics/hover-card/HoverCard';
+export { default as HoverCard } from './components/basics/hover-card/HoverCard';
 
 export { Input } from './components/basics/input/Input';
 export type { InputProps } from './components/basics/input/types';
@@ -137,7 +137,7 @@ export type {
 // MultiSelectCombobox - default export
 export { default as MultiSelectCombobox } from './components/basics/multi-select-combobox/MultiSelectCombobox';
 
-export { OTPInput } from './components/basics/otp-Input/OTPInput';
+export { default as OTPInput } from './components/basics/otp-Input/OTPInput';
 
 export { PasswordStrengthMeter } from './components/basics/password-strength-meter/PasswordStrengthMeter';
 
@@ -149,11 +149,11 @@ export { Select } from './components/basics/select/Select';
 
 export { Skeleton as SkeletonComponent } from './components/basics/skeleton/Skeleton';
 
-export { SplashCursor } from './components/basics/splashCursor/SplashCursor';
+export { default as SplashCursor } from './components/basics/splashCursor/SplashCursor';
 
-export { SpotlightCard } from './components/basics/spotlight-card/SpotlightCard';
+export { default as SpotlightCard } from './components/basics/spotlight-card/SpotlightCard';
 
-export { Stepper } from './components/basics/stepper/Stepper';
+export { default as Stepper } from './components/basics/stepper/Stepper';
 export type {
   StepperProps,
   Step,
@@ -180,7 +180,12 @@ export type {
   ToastPosition,
 } from './components/basics/toast/Toast';
 
-export { Tooltip } from './components/basics/tooltip/Tooltip';
+export { default as Tooltip } from './components/basics/tooltip/Tooltip';
+export type {
+  TooltipProps,
+  TooltipPosition,
+  TooltipTrigger,
+} from './components/basics/tooltip/Tooltip';
 export { Typography } from './components/basics/typography/Typography';
 export type {
   TypographyProps,
@@ -204,7 +209,7 @@ export type {
 // -----------------------------------------------------------------------------
 // Text Animation Components
 // -----------------------------------------------------------------------------
-export { ASCIIText } from './components/text-animations/ASCIIText/ASCIIText';
+export { default as ASCIIText } from './components/text-animations/ASCIIText/ASCIIText';
 export type { ASCIITextProps } from './components/text-animations/ASCIIText/ASCIIText';
 
 // -----------------------------------------------------------------------------

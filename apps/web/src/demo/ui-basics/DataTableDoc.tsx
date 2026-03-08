@@ -1,4 +1,4 @@
-import { DataTable, type FilterOption } from '@erp-pro/ui';
+import { DataTable, type FilterOption } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -82,7 +82,7 @@ const DataTableDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { DataTable, type FilterOption } from '@erp-pro/ui';
+      <CodeBlock code={`import { DataTable, type FilterOption } from 'erp-pro-ui';
 
 const filterOptions: FilterOption[] = [
   { id: 'email', label: 'Search Email', type: 'text' },

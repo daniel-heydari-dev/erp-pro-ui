@@ -8,7 +8,7 @@ import {
   NeonLineChart,
   StackedBarChart,
   ThinBreakdownBar,
-} from '@erp-pro/ui';
+} from 'erp-pro-ui';
 
 const neonData = [
   { name: '5/3', value: 7 },

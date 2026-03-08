@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MultiSelectCombobox } from '@erp-pro/ui';
+import { MultiSelectCombobox } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -38,7 +38,7 @@ const MultiSelectComboboxDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { MultiSelectCombobox } from '@erp-pro/ui';
+      <CodeBlock code={`import { MultiSelectCombobox } from 'erp-pro-ui';
 import { useState } from 'react';
 
 const options = [

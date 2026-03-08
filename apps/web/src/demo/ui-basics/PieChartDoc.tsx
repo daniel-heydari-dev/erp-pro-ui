@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, PieChartData } from '@erp-pro/ui';
+import { PieChart, PieChartData } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -29,7 +29,7 @@ const PieChartDoc = () => {
         <PieChart data={data} colors={colors} variant="donut" height={300} />
       </div>
 
-      <CodeBlock code={`import { PieChart, PieChartData } from '@erp-pro/ui';
+      <CodeBlock code={`import { PieChart, PieChartData } from 'erp-pro-ui';
 
 const data: PieChartData[] = [
   { name: 'Software', value: 400 },

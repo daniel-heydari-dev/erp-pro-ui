@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select } from '@erp-pro/ui';
+import { Select } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -31,12 +31,12 @@ const SelectDoc = () => {
             placeholder="Select a framework"
             options={options}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setValue(e.target.value)}
           />
         </div>
       </div>
 
-      <CodeBlock code={`import { Select } from '@erp-pro/ui';
+      <CodeBlock code={`import { Select } from 'erp-pro-ui';
 
 const options = [
   { value: 'react', label: 'React' },

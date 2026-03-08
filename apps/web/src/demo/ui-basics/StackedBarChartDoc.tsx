@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackedBarChart, StackedBarData } from '@erp-pro/ui';
+import { StackedBarChart, StackedBarData } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -41,7 +41,7 @@ const StackedBarChartDoc = () => {
         />
       </div>
 
-      <CodeBlock code={`import { StackedBarChart, StackedBarData } from '@erp-pro/ui';
+      <CodeBlock code={`import { StackedBarChart, StackedBarData } from 'erp-pro-ui';
 
 const customData: StackedBarData[] = [
   { name: '1/31', business: 600, construction: 400, leisure: 300, manufacturing: 200, wholesale: 100 },

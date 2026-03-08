@@ -1,12 +1,6 @@
-export {
-  default as ColorPalette,
-  lightThemeGroups,
-  darkThemeGroups,
-  gradientGroups,
-  defaultGroups,
-} from "./ColorPalette";
+export { default as ColorPalette } from './ColorPalette';
 export type {
   ColorPaletteProps,
   ColorGroup,
   ColorSwatch,
-} from "./ColorPalette";
+} from './ColorPalette';

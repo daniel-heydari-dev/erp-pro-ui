@@ -1,4 +1,4 @@
-import { Tooltip, Button, type TooltipPosition, type TooltipTrigger } from '@erp-pro/ui';
+import { Tooltip, Button, type TooltipPosition, type TooltipTrigger } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -18,7 +18,7 @@ const TooltipDoc = () => {
         </Tooltip>
       </div>
 
-      <CodeBlock code={`import { Tooltip, Button } from '@erp-pro/ui';
+      <CodeBlock code={`import { Tooltip, Button } from 'erp-pro-ui';
 
 <Tooltip content="This is a helpful tip!">
   <Button label="Hover Me" />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Chip, ChipVariant, ChipColor, ChipSize, Select, Checkbox } from '@erp-pro/ui';
+import { Chip, ChipVariant, ChipColor, ChipSize, Select, Checkbox } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -23,7 +23,7 @@ const ChipDoc = () => {
           <label className="docs-control-label w-20">Variant</label>
           <Select
             value={variant}
-            onChange={(e) => setVariant(e.target.value as any)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setVariant(e.target.value as any)}
             className="w-48"
             options={[
               { label: 'Filled', value: 'filled' },
@@ -37,7 +37,7 @@ const ChipDoc = () => {
           <label className="docs-control-label w-20">Size</label>
           <Select
             value={size}
-            onChange={(e) => setSize(e.target.value as any)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSize(e.target.value as ChipSize)}
             className="w-48"
             options={[
               { label: 'Small', value: 'sm' },
@@ -50,7 +50,7 @@ const ChipDoc = () => {
           <label className="docs-control-label w-20">Options</label>
           <Checkbox
             checked={removable}
-            onChange={(e) => setRemovable(e.target.checked)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemovable(e.target.checked)}
             label="Removable"
           />
         </div>
@@ -85,7 +85,7 @@ const ChipDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { Chip } from '@erp-pro/ui';
+      <CodeBlock code={`import { Chip } from 'erp-pro-ui';
 
 <Chip 
   variant="${variant}" 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, TypographyAlign, TypographyWeight, TypographyTracking, TypographyGradient } from '@erp-pro/ui';
+import { Typography, TypographyAlign, TypographyWeight, TypographyTracking, TypographyGradient } from 'erp-pro-ui';
 import CodeBlock from '../../components/CodeBlock';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 
@@ -259,7 +259,7 @@ const TypographyDoc = () => {
 
       {/* Section 5: Usage */}
       <h2 className="docs-category-subtitle">Props</h2>
-      <CodeBlock code={`import { Typography } from '@erp-pro/ui';
+      <CodeBlock code={`import { Typography } from 'erp-pro-ui';
 
 /* Regular Heading */
 <Typography variant="h1">The Title</Typography>

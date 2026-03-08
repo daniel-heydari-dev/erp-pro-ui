@@ -1,4 +1,4 @@
-import { SplashCursor } from '@erp-pro/ui';
+import { SplashCursor } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -21,7 +21,7 @@ const SplashCursorDoc = () => {
         </SplashCursor>
       </div>
 
-      <CodeBlock code={`import { SplashCursor } from '@erp-pro/ui';
+      <CodeBlock code={`import { SplashCursor } from 'erp-pro-ui';
 
 <SplashCursor className="h-[400px]">
   <div>Content inside the interactive area</div>

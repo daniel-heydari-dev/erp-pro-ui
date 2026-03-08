@@ -1,4 +1,4 @@
-import { GradualBlur } from '@erp-pro/ui';
+import { GradualBlur } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 import { useState } from 'react';
@@ -30,7 +30,7 @@ const GradualBlurDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { GradualBlur } from '@erp-pro/ui';
+      <CodeBlock code={`import { GradualBlur } from 'erp-pro-ui';
 
 <GradualBlur blur={12} duration={1}>
   <h3>Revealed Content</h3>

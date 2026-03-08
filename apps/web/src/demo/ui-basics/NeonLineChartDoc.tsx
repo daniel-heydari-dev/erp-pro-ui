@@ -1,5 +1,5 @@
 import React from 'react';
-import { NeonLineChart } from '@erp-pro/ui';
+import { NeonLineChart } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -30,7 +30,7 @@ const NeonLineChartDoc = () => {
         <NeonLineChart data={data} height={300} className="px-4" />
       </div>
 
-      <CodeBlock code={`import { NeonLineChart } from '@erp-pro/ui';
+      <CodeBlock code={`import { NeonLineChart } from 'erp-pro-ui';
 
 const data = [
   { name: 'Mon', value: 3 },

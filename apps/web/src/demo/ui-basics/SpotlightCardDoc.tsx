@@ -1,4 +1,4 @@
-import { SpotlightCard } from '@erp-pro/ui';
+import { SpotlightCard } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -30,7 +30,7 @@ const SpotlightCardDoc = () => {
         </SpotlightCard>
       </div>
 
-      <CodeBlock code={`import { SpotlightCard } from '@erp-pro/ui';
+      <CodeBlock code={`import { SpotlightCard } from 'erp-pro-ui';
 
 <SpotlightCard
   spotlightColor="rgba(115, 103, 240, 0.2)"

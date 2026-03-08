@@ -1,4 +1,4 @@
-import { AnimatedContent } from '@erp-pro/ui';
+import { AnimatedContent } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 import { useState } from 'react';
@@ -63,7 +63,7 @@ const AnimatedContentDoc = () => {
         </div>
       </div>
 
-      <CodeBlock code={`import { AnimatedContent } from '@erp-pro/ui';
+      <CodeBlock code={`import { AnimatedContent } from 'erp-pro-ui';
 
 <AnimatedContent preset="fade">
   <div>Content to animate</div>

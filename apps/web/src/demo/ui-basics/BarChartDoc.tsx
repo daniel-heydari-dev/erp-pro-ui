@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, BarChartData } from '@erp-pro/ui';
+import { BarChart, BarChartData } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -34,7 +34,7 @@ const BarChartDoc = () => {
         <BarChart data={data} categories={categories} height={350} layout="horizontal" className="px-4" />
       </div>
 
-      <CodeBlock code={`import { BarChart, BarChartData } from '@erp-pro/ui';
+      <CodeBlock code={`import { BarChart, BarChartData } from 'erp-pro-ui';
 
 const data: BarChartData[] = [
   { name: 'Jan', revenue: 4000, expenses: 2400 },

@@ -1,4 +1,4 @@
-import { Preview } from '@erp-pro/ui';
+import { Preview } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -19,7 +19,7 @@ const PreviewDoc = () => {
         <Preview />
       </div>
 
-      <CodeBlock code={`import { Preview } from '@erp-pro/ui';
+      <CodeBlock code={`import { Preview } from 'erp-pro-ui';
 
 /* Render the full showcase page */
 <Preview />`} />

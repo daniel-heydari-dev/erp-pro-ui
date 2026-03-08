@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Switch } from '@erp-pro/ui';
+import { Switch } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -19,11 +19,11 @@ const SwitchDoc = () => {
         <Switch
           label="Notifications"
           checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChecked(e.target.checked)}
         />
       </div>
 
-      <CodeBlock code={`import { Switch } from '@erp-pro/ui';
+      <CodeBlock code={`import { Switch } from 'erp-pro-ui';
 
 const [enabled, setEnabled] = useState(false);
 

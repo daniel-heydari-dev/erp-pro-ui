@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
 
     return {
+        base: '/erp-pro-ui/',
         plugins: [react(), tailwindcss()],
         resolve: {
             alias: {

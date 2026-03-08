@@ -10,13 +10,13 @@ const Installation = () => {
       <h3 className="docs-category-title">1. Install Dependencies</h3>
       <p className="docs-paragraph">Run the following command in your terminal:</p>
       <div className="bg-zinc-900 p-4 rounded-lg my-4 font-mono text-sm border border-zinc-800">
-        pnpm install @erp-pro/ui
+        pnpm install erp-pro-ui
       </div>
 
       <h3 className="docs-category-title">2. Import Styles</h3>
       <p className="docs-paragraph">Add the global CSS to your root application file:</p>
       <div className="bg-zinc-900 p-4 rounded-lg my-4 font-mono text-sm border border-zinc-800">
-        import &apos;@erp-pro/ui/styles.css&apos;;
+        import &apos;erp-pro-ui/styles.css&apos;;
       </div>
 
       <h3 className="docs-category-title">3. Tailwind Configuration</h3>
@@ -29,7 +29,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@erp-pro/ui/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/erp-pro-ui/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -62,7 +62,7 @@ export default {
       <h3 className="docs-category-title">5. Start Building</h3>
       <p className="docs-paragraph">Import components anywhere in your React app:</p>
       <div className="bg-zinc-900 p-4 rounded-lg my-4 font-mono text-sm border border-zinc-800">
-        import &#123; Button &#125; from &apos;@erp-pro/ui&apos;;
+        import &#123; Button &#125; from &apos;erp-pro-ui&apos;;
       </div>
 
       <DocsButtonBar next={{ label: 'MCP Server', route: '/get-started/mcp' }} />
