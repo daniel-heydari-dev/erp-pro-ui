@@ -1,0 +1,127 @@
+@import './fonts.css';
+@import './colors.css';
+
+@theme {
+  --font-expressive: 'Bebas Neue', 'Oswald', system-ui, sans-serif;
+  --font-sans: 'Geist', 'Roboto', sans-serif, system-ui;
+  --font-geist: 'Geist', sans-serif, system-ui;
+  --font-roboto: 'Roboto', sans-serif, system-ui;
+  --font-bebas: 'Bebas Neue', 'Oswald', system-ui, sans-serif;
+
+  --breakpoint-xs: 360px;
+}
+
+@source './**/*.{js,mjs,cjs,ts,jsx,tsx}';
+
+@custom-variant dark (&:is(.dark *, [data-theme$='-dark'] *, [data-mode='dark'] *));
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--foreground);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: var(--border-width) solid transparent;
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  mask-image:
+    linear-gradient(transparent, transparent), linear-gradient(#000, #000);
+}
+
+.border-beam::after {
+  content: '';
+  position: absolute;
+  aspect-ratio: 1;
+  width: var(--size);
+  background: linear-gradient(
+    to left,
+    var(--color-from),
+    var(--color-to),
+    transparent
+  );
+  offset-anchor: calc(var(--anchor) * 1%) 50%;
+  offset-path: rect(0 auto auto 0 round var(--border-width));
+  animation: border-beam linear infinite;
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+.ui\:animate-gradient-first {
+  animation: moveVertical 30s ease infinite;
+}
+
+.ui\:animate-gradient-second {
+  animation: moveInCircle 20s reverse infinite;
+}
+
+.ui\:animate-gradient-third {
+  animation: moveInCircle 40s linear infinite;
+}
+
+.ui\:animate-gradient-fourth {
+  animation: moveHorizontal 40s ease infinite;
+}
+
+.ui\:animate-gradient-fifth {
+  animation: moveInCircle 20s ease infinite;
+}

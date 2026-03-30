@@ -245,7 +245,7 @@ div:has(> .props-table) {
 }
 
 .tilted-card-demo-text {
-  font-family: 'Figtree';
+  font-family: var(--font-sans);
   font-weight: 900;
   text-transform: capitalize;
   box-shadow: 0 5px 30px #06001059;

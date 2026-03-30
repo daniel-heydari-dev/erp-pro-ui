@@ -4,37 +4,86 @@ import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
 const SwitchDoc = () => {
-  const [checked, setChecked] = useState(false);
+  const [alertsEnabled, setAlertsEnabled] = useState(true);
+  const [publicApiEnabled, setPublicApiEnabled] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const saveSettings = () => {
+    setSaving(true);
+    setTimeout(() => setSaving(false), 1200);
+  };
 
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Switch</h1>
       <p className="docs-paragraph">
-        The Switch component is used for toggling a single option on or off.
+        Switch is a compact on/off control for feature toggles, permission
+        gates, and account preferences.
       </p>
 
-      {/* Preview Section */}
-      <h2 className="docs-category-subtitle">Preview</h2>
+      <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
-        <Switch
-          label="Notifications"
-          checked={checked}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChecked(e.target.checked)}
-        />
+        <div className="w-full max-w-md space-y-2">
+          <Switch
+            label="Incident alerts"
+            checked={alertsEnabled}
+            onChange={(event) => setAlertsEnabled(event.target.checked)}
+          />
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            Alerts are currently {alertsEnabled ? 'enabled' : 'disabled'}.
+          </p>
+        </div>
       </div>
 
-      <CodeBlock code={`import { Switch } from 'erp-pro-ui';
+      <CodeBlock
+        code={`import { Switch } from 'erp-pro-ui';
 
-const [enabled, setEnabled] = useState(false);
+const [alertsEnabled, setAlertsEnabled] = useState(true);
 
 <Switch
-  label="Notifications"
-  checked={enabled}
-  onChange={(e) => setEnabled(e.target.checked)}
-/>`} />
+  label="Incident alerts"
+  checked={alertsEnabled}
+  onChange={(event) => setAlertsEnabled(event.target.checked)}
+/>`}
+      />
 
-      {/* States Section */}
+      <h2 className="docs-category-subtitle">Preference Form Pattern</h2>
+      <p className="docs-paragraph">
+        Switches are often grouped inside settings cards with a delayed save
+        action. This pattern makes state changes explicit.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-md space-y-4 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+          <Switch
+            label="Public API access"
+            checked={publicApiEnabled}
+            onChange={(event) => setPublicApiEnabled(event.target.checked)}
+          />
+          <button
+            onClick={saveSettings}
+            disabled={saving}
+            className="docs-button docs-button-primary"
+          >
+            {saving ? 'Saving...' : 'Save changes'}
+          </button>
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`const [publicApiEnabled, setPublicApiEnabled] = useState(false);
+
+<Switch
+  label="Public API access"
+  checked={publicApiEnabled}
+  onChange={(event) => setPublicApiEnabled(event.target.checked)}
+/>`}
+      />
+
       <h2 className="docs-category-subtitle">States</h2>
+      <p className="docs-paragraph">
+        Use disabled and error messaging for loading and validation scenarios.
+      </p>
 
       <div className="docs-showcase-grid">
         <div className="docs-showcase-card">
@@ -59,8 +108,7 @@ const [enabled, setEnabled] = useState(false);
 <Switch label="Disabled" disabled />
 <Switch label="Error" error="Error message" />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -74,46 +122,50 @@ const [enabled, setEnabled] = useState(false);
           <tbody>
             <tr>
               <td className="docs-prop-name">label</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Text label displayed next to switch</td>
+              <td>Optional text shown next to the switch control.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">checked</td>
-              <td><span className="docs-prop-type">boolean</span></td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
               <td>-</td>
-              <td>Controlled checked state</td>
+              <td>Controlled on/off value.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">defaultChecked</td>
-              <td><span className="docs-prop-type">boolean</span></td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
               <td>-</td>
-              <td>Initial checked state (uncontrolled)</td>
+              <td>Initial value in uncontrolled mode.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">error</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Error message displayed below</td>
+              <td>Validation message displayed beside the switch.</td>
             </tr>
             <tr>
-              <td className="docs-prop-name">onChange</td>
-              <td><span className="docs-prop-type">(e) =&gt; void</span></td>
+              <td className="docs-prop-name">...InputHTMLAttributes</td>
+              <td>
+                <span className="docs-prop-type">HTML props</span>
+              </td>
               <td>-</td>
-              <td>Handler for state changes</td>
-            </tr>
-            <tr>
-              <td className="docs-prop-name">disabled</td>
-              <td><span className="docs-prop-type">boolean</span></td>
-              <td>false</td>
-              <td>Disables the switch</td>
+              <td>Supports native props such as <code>onChange</code>, <code>name</code>, <code>disabled</code>, and <code>required</code>.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <DocsButtonBar
-        previous={{ label: 'Radio', route: '/ui-basics/radio' }}
+        prev={{ label: 'Radio', route: '/ui-basics/radio' }}
         next={{ label: 'Select', route: '/ui-basics/select' }}
       />
     </section>

@@ -7,7 +7,7 @@ const ButtonHoverBorderGradientDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Button Hover Border Gradient</h1>
       <p className="docs-paragraph">
-        A pre-configured button component utilizing the HoverBorderGradient for a futuristic aesthetic.
+        A pre-configured CTA button built on top of HoverBorderGradient for high-emphasis actions.
       </p>
 
       {/* Basic Usage */}
@@ -28,6 +28,30 @@ const ButtonHoverBorderGradientDoc = () => {
 <ButtonHoverBorderGradient>
   <span>Launch Application</span>
 </ButtonHoverBorderGradient>`} />
+
+      <h2 className="docs-category-subtitle">Action Set</h2>
+      <p className="docs-paragraph">
+        Use this variant for a small group of premium calls to action such as demo launches or trial starts.
+      </p>
+      <div className="docs-showcase-card h-[280px] flex items-center justify-center p-0">
+        <div className="-mt-40 flex flex-wrap items-center justify-center gap-8">
+          <ButtonHoverBorderGradient>
+            <span className="font-semibold">Watch Demo</span>
+          </ButtonHoverBorderGradient>
+          <ButtonHoverBorderGradient>
+            <span className="font-semibold">Start Trial</span>
+          </ButtonHoverBorderGradient>
+        </div>
+      </div>
+
+      <CodeBlock code={`<div className="flex gap-6">
+  <ButtonHoverBorderGradient>
+    <span>Watch Demo</span>
+  </ButtonHoverBorderGradient>
+  <ButtonHoverBorderGradient>
+    <span>Start Trial</span>
+  </ButtonHoverBorderGradient>
+</div>`} />
 
       {/* Styling Note */}
       <div className="mt-8 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/30 rounded-lg">

@@ -14,12 +14,12 @@ const DatePickerDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Date Picker</h1>
       <p className="docs-paragraph">
-        A component that allows users to select a date from a calendar popover.
+        DatePicker supports single-date and range selection with optional presets for recurring
+        workflows like reporting windows and booking periods.
       </p>
 
-      {/* Basic Usage */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
-      <div className="docs-showcase-card h-[350px] items-start">
+      <div className="docs-showcase-card">
         <div className="w-full max-w-xs">
           <DatePicker
             value={date}
@@ -38,12 +38,11 @@ const DatePickerDoc = () => {
   label="Pick a date"
 />`} />
 
-      {/* Range Mode */}
       <h2 className="docs-category-subtitle">Date Range Picker</h2>
       <p className="docs-paragraph">
         Set <code>mode="range"</code> to allow users to select a start and end date.
       </p>
-      <div className="docs-showcase-card h-[350px] items-start">
+      <div className="docs-showcase-card">
         <div className="w-full max-w-sm">
           <DatePicker
             mode="range"
@@ -62,12 +61,11 @@ const DatePickerDoc = () => {
   label="Booking Range"
 />`} />
 
-      {/* Advanced Presets */}
-      <h2 className="docs-category-subtitle">Advanced Presets</h2>
+      <h2 className="docs-category-subtitle">Preset Shortcuts</h2>
       <p className="docs-paragraph">
         Define custom presets for common timeframes like "Start of Year" or "Next Month".
       </p>
-      <div className="docs-showcase-card h-[350px] items-start">
+      <div className="docs-showcase-card">
         <div className="w-full max-w-xs">
           <DatePicker
             value={date}
@@ -87,8 +85,56 @@ const DatePickerDoc = () => {
         </div>
       </div>
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <CodeBlock code={`<DatePicker
+  value={date}
+  onChange={setDate}
+  label="Report Period"
+  presets={[
+    { label: 'Start of Year', value: () => new Date(new Date().getFullYear(), 0, 1) },
+    { label: 'End of Year', value: () => new Date(new Date().getFullYear(), 11, 31) },
+  ]}
+/>`} />
+
+      <h2 className="docs-category-subtitle">Helper And Disabled States</h2>
+      <p className="docs-paragraph mb-4">
+        Use helper text for context and disabled mode when date input is controlled by upstream
+        business logic.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
+          <DatePicker
+            value={date}
+            onChange={setDate}
+            label="Invoice Date"
+            helperText="Invoice dates cannot be earlier than the purchase order date."
+          />
+
+          <DatePicker
+            value={date}
+            onChange={setDate}
+            label="Locked Settlement Date"
+            disabled
+            helperText="Settlement windows are assigned by the finance team."
+          />
+        </div>
+      </div>
+
+      <CodeBlock code={`<DatePicker
+  value={invoiceDate}
+  onChange={setInvoiceDate}
+  label="Invoice Date"
+  helperText="Invoice dates cannot be earlier than the purchase order date."
+/>
+
+<DatePicker
+  value={settlementDate}
+  onChange={setSettlementDate}
+  disabled
+  label="Locked Settlement Date"
+/>`} />
+
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -102,27 +148,51 @@ const DatePickerDoc = () => {
           <tbody>
             <tr>
               <td className="docs-prop-name">value</td>
-              <td><span className="docs-prop-type">Date | Range</span></td>
+              <td><span className="docs-prop-type">DatePickerValue</span></td>
               <td>-</td>
-              <td>Selected date or range</td>
+              <td>Controlled selected value for single or range mode</td>
             </tr>
             <tr>
               <td className="docs-prop-name">onChange</td>
-              <td><span className="docs-prop-type">Function</span></td>
+              <td><span className="docs-prop-type">(value: DatePickerValue) =&gt; void</span></td>
               <td>-</td>
-              <td>Callback when selection changes</td>
+              <td>Fires when the selected date or range changes</td>
             </tr>
             <tr>
               <td className="docs-prop-name">mode</td>
-              <td><span className="docs-prop-type">"single" | "range"</span></td>
-              <td>"single"</td>
-              <td>Selection mode</td>
+              <td><span className="docs-prop-type">'single' | 'range'</span></td>
+              <td>'single'</td>
+              <td>Switches between one-date selection and start/end range selection</td>
             </tr>
             <tr>
               <td className="docs-prop-name">presets</td>
-              <td><span className="docs-prop-type">Preset[]</span></td>
+              <td><span className="docs-prop-type">DatePickerPreset[]</span></td>
               <td>-</td>
-              <td>Quick selection presets</td>
+              <td>Optional quick-select shortcuts rendered under the calendar</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">label</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>-</td>
+              <td>Field label rendered above the trigger</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">placeholder</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'Pick a date'</td>
+              <td>Text shown before any value is selected</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">helperText</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>-</td>
+              <td>Supplementary hint shown under the picker</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">disabled</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>false</td>
+              <td>Disables interaction and hides the calendar popover trigger state</td>
             </tr>
           </tbody>
         </table>

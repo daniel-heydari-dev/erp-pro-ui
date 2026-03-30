@@ -1,194 +1,298 @@
 {
   "name": "erp-pro-ui",
   "version": "0.1.0",
+  "description": "Lightweight React UI component library for ERP and SaaS apps with tree-shakeable subpath exports.",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
+  "style": "./dist/styles.css",
   "types": "./dist/index.d.ts",
   "license": "MIT",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.mjs"
     },
+    "./styles.css": "./dist/styles.css",
+    "./theme": {
+      "types": "./dist/foundations/theme/index.d.ts",
+      "import": "./dist/theme.mjs",
+      "require": "./dist/theme.cjs",
+      "default": "./dist/theme.mjs"
+    },
     "./accordion": {
-      "types": "./dist/components/basics/accordion/Accordion.d.ts",
-      "import": "./dist/components/basics/accordion/Accordion.mjs"
+      "types": "./dist/components/navigation/accordion/index.d.ts",
+      "import": "./dist/accordion.mjs",
+      "require": "./dist/accordion.cjs",
+      "default": "./dist/accordion.mjs"
     },
     "./alert": {
-      "types": "./dist/components/basics/alert/Alert.d.ts",
-      "import": "./dist/components/basics/alert/Alert.mjs"
+      "types": "./dist/components/feedback/alert/index.d.ts",
+      "import": "./dist/alert.mjs",
+      "require": "./dist/alert.cjs",
+      "default": "./dist/alert.mjs"
     },
     "./animated-content": {
-      "types": "./dist/components/basics/animated-content/AnimatedContent.d.ts",
-      "import": "./dist/components/basics/animated-content/AnimatedContent.mjs"
+      "types": "./dist/components/effects/animated-content/index.d.ts",
+      "import": "./dist/animated-content.mjs",
+      "require": "./dist/animated-content.cjs",
+      "default": "./dist/animated-content.mjs"
     },
     "./background-gradient-animation": {
-      "types": "./dist/components/basics/background-gradient-animation/BackgroundGradientAnimation.d.ts",
-      "import": "./dist/components/basics/background-gradient-animation/BackgroundGradientAnimation.mjs"
+      "types": "./dist/components/effects/background-gradient-animation/index.d.ts",
+      "import": "./dist/background-gradient-animation.mjs",
+      "require": "./dist/background-gradient-animation.cjs",
+      "default": "./dist/background-gradient-animation.mjs"
     },
     "./button": {
-      "types": "./dist/components/basics/Button/Button.d.ts",
-      "import": "./dist/components/basics/Button/Button.mjs"
+      "types": "./dist/components/forms/button/index.d.ts",
+      "import": "./dist/button.mjs",
+      "require": "./dist/button.cjs",
+      "default": "./dist/button.mjs"
     },
     "./button-hover-border-gradient": {
-      "types": "./dist/components/basics/button-hover-border-gradient/ButtonHoverBorderGradient.d.ts",
-      "import": "./dist/components/basics/button-hover-border-gradient/ButtonHoverBorderGradient.mjs"
+      "types": "./dist/components/effects/button-hover-border-gradient/index.d.ts",
+      "import": "./dist/button-hover-border-gradient.mjs",
+      "require": "./dist/button-hover-border-gradient.cjs",
+      "default": "./dist/button-hover-border-gradient.mjs"
     },
     "./calendar": {
-      "types": "./dist/components/basics/calendar/Calendar.d.ts",
-      "import": "./dist/components/basics/calendar/Calendar.mjs"
+      "types": "./dist/components/forms/calendar/index.d.ts",
+      "import": "./dist/calendar.mjs",
+      "require": "./dist/calendar.cjs",
+      "default": "./dist/calendar.mjs"
     },
     "./card": {
-      "types": "./dist/components/basics/card/Card.d.ts",
-      "import": "./dist/components/basics/card/Card.mjs"
+      "types": "./dist/components/data-display/card/index.d.ts",
+      "import": "./dist/card.mjs",
+      "require": "./dist/card.cjs",
+      "default": "./dist/card.mjs"
     },
     "./carousel": {
-      "types": "./dist/components/basics/carousel/Carousel.d.ts",
-      "import": "./dist/components/basics/carousel/Carousel.mjs"
+      "types": "./dist/components/navigation/carousel/index.d.ts",
+      "import": "./dist/carousel.mjs",
+      "require": "./dist/carousel.cjs",
+      "default": "./dist/carousel.mjs"
+    },
+    "./charts": {
+      "types": "./dist/components/data-display/charts/index.d.ts",
+      "import": "./dist/charts.mjs",
+      "require": "./dist/charts.cjs",
+      "default": "./dist/charts.mjs"
     },
     "./checkbox": {
-      "types": "./dist/components/basics/checkbox/Checkbox.d.ts",
-      "import": "./dist/components/basics/checkbox/Checkbox.mjs"
+      "types": "./dist/components/forms/checkbox/index.d.ts",
+      "import": "./dist/checkbox.mjs",
+      "require": "./dist/checkbox.cjs",
+      "default": "./dist/checkbox.mjs"
     },
     "./chip": {
-      "types": "./dist/components/basics/chip/Chip.d.ts",
-      "import": "./dist/components/basics/chip/Chip.mjs"
+      "types": "./dist/components/data-display/chip/index.d.ts",
+      "import": "./dist/chip.mjs",
+      "require": "./dist/chip.cjs",
+      "default": "./dist/chip.mjs"
     },
     "./chroma-grid": {
-      "types": "./dist/components/basics/chroma-grid/ChromaGrid.d.ts",
-      "import": "./dist/components/basics/chroma-grid/ChromaGrid.mjs"
+      "types": "./dist/components/effects/chroma-grid/index.d.ts",
+      "import": "./dist/chroma-grid.mjs",
+      "require": "./dist/chroma-grid.cjs",
+      "default": "./dist/chroma-grid.mjs"
     },
     "./color-palette": {
-      "types": "./dist/components/basics/colo-palette/ColorPalette.d.ts",
-      "import": "./dist/components/basics/colo-palette/ColorPalette.mjs"
+      "types": "./dist/components/data-display/color-palette/index.d.ts",
+      "import": "./dist/color-palette.mjs",
+      "require": "./dist/color-palette.cjs",
+      "default": "./dist/color-palette.mjs"
     },
     "./combobox": {
-      "types": "./dist/components/basics/combobox/Combobox.d.ts",
-      "import": "./dist/components/basics/combobox/Combobox.mjs"
+      "types": "./dist/components/forms/combobox/index.d.ts",
+      "import": "./dist/combobox.mjs",
+      "require": "./dist/combobox.cjs",
+      "default": "./dist/combobox.mjs"
     },
     "./data-table": {
-      "types": "./dist/components/basics/data-table/DataTable.d.ts",
-      "import": "./dist/components/basics/data-table/DataTable.mjs"
+      "types": "./dist/components/data-display/data-table/index.d.ts",
+      "import": "./dist/data-table.mjs",
+      "require": "./dist/data-table.cjs",
+      "default": "./dist/data-table.mjs"
     },
     "./date-picker": {
-      "types": "./dist/components/basics/date-picker/DatePicker.d.ts",
-      "import": "./dist/components/basics/date-picker/DatePicker.mjs"
+      "types": "./dist/components/forms/date-picker/index.d.ts",
+      "import": "./dist/date-picker.mjs",
+      "require": "./dist/date-picker.cjs",
+      "default": "./dist/date-picker.mjs"
     },
     "./dialog": {
-      "types": "./dist/components/basics/dialog/Dialog.d.ts",
-      "import": "./dist/components/basics/dialog/Dialog.mjs"
+      "types": "./dist/components/overlays/dialog/index.d.ts",
+      "import": "./dist/dialog.mjs",
+      "require": "./dist/dialog.cjs",
+      "default": "./dist/dialog.mjs"
     },
     "./drawer": {
-      "types": "./dist/components/basics/drawer/Drawer.d.ts",
-      "import": "./dist/components/basics/drawer/Drawer.mjs"
+      "types": "./dist/components/overlays/drawer/index.d.ts",
+      "import": "./dist/drawer.mjs",
+      "require": "./dist/drawer.cjs",
+      "default": "./dist/drawer.mjs"
     },
     "./form": {
-      "types": "./dist/components/basics/form/Form.d.ts",
-      "import": "./dist/components/basics/form/Form.mjs"
+      "types": "./dist/components/forms/form/index.d.ts",
+      "import": "./dist/form.mjs",
+      "require": "./dist/form.cjs",
+      "default": "./dist/form.mjs"
     },
     "./gradual-blur": {
-      "types": "./dist/components/basics/gradual-blur/GradualBlur.d.ts",
-      "import": "./dist/components/basics/gradual-blur/GradualBlur.mjs"
+      "types": "./dist/components/effects/gradual-blur/index.d.ts",
+      "import": "./dist/gradual-blur.mjs",
+      "require": "./dist/gradual-blur.cjs",
+      "default": "./dist/gradual-blur.mjs"
     },
     "./hover-border-gradient": {
-      "types": "./dist/components/basics/hover-border-gradient/HoverBorderGradient.d.ts",
-      "import": "./dist/components/basics/hover-border-gradient/HoverBorderGradient.mjs"
+      "types": "./dist/components/effects/hover-border-gradient/index.d.ts",
+      "import": "./dist/hover-border-gradient.mjs",
+      "require": "./dist/hover-border-gradient.cjs",
+      "default": "./dist/hover-border-gradient.mjs"
     },
     "./hover-card": {
-      "types": "./dist/components/basics/hover-card/HoverCard.d.ts",
-      "import": "./dist/components/basics/hover-card/HoverCard.mjs"
+      "types": "./dist/components/overlays/hover-card/index.d.ts",
+      "import": "./dist/hover-card.mjs",
+      "require": "./dist/hover-card.cjs",
+      "default": "./dist/hover-card.mjs"
     },
     "./input": {
-      "types": "./dist/components/basics/input/Input.d.ts",
-      "import": "./dist/components/basics/input/Input.mjs"
+      "types": "./dist/components/forms/input/index.d.ts",
+      "import": "./dist/input.mjs",
+      "require": "./dist/input.cjs",
+      "default": "./dist/input.mjs"
     },
     "./label": {
-      "types": "./dist/components/basics/label/Label.d.ts",
-      "import": "./dist/components/basics/label/Label.mjs"
+      "types": "./dist/components/forms/label/index.d.ts",
+      "import": "./dist/label.mjs",
+      "require": "./dist/label.cjs",
+      "default": "./dist/label.mjs"
     },
     "./loading": {
-      "types": "./dist/components/basics/loading/Loading.d.ts",
-      "import": "./dist/components/basics/loading/Loading.mjs"
+      "types": "./dist/components/data-display/loading/index.d.ts",
+      "import": "./dist/loading.mjs",
+      "require": "./dist/loading.cjs",
+      "default": "./dist/loading.mjs"
     },
     "./multi-select-combobox": {
-      "types": "./dist/components/basics/multi-select-combobox/MultiSelectCombobox.d.ts",
-      "import": "./dist/components/basics/multi-select-combobox/MultiSelectCombobox.mjs"
+      "types": "./dist/components/forms/multi-select-combobox/index.d.ts",
+      "import": "./dist/multi-select-combobox.mjs",
+      "require": "./dist/multi-select-combobox.cjs",
+      "default": "./dist/multi-select-combobox.mjs"
     },
     "./otp-input": {
-      "types": "./dist/components/basics/otp-Input/OTPInput.d.ts",
-      "import": "./dist/components/basics/otp-Input/OTPInput.mjs"
+      "types": "./dist/components/forms/otp-input/index.d.ts",
+      "import": "./dist/otp-input.mjs",
+      "require": "./dist/otp-input.cjs",
+      "default": "./dist/otp-input.mjs"
     },
     "./password-strength-meter": {
-      "types": "./dist/components/basics/password-strength-meter/PasswordStrengthMeter.d.ts",
-      "import": "./dist/components/basics/password-strength-meter/PasswordStrengthMeter.mjs"
-    },
-    "./preview": {
-      "types": "./dist/components/basics/preview/Preview.d.ts",
-      "import": "./dist/components/basics/preview/Preview.mjs"
+      "types": "./dist/components/forms/password-strength-meter/index.d.ts",
+      "import": "./dist/password-strength-meter.mjs",
+      "require": "./dist/password-strength-meter.cjs",
+      "default": "./dist/password-strength-meter.mjs"
     },
     "./radio": {
-      "types": "./dist/components/basics/radio/Radio.d.ts",
-      "import": "./dist/components/basics/radio/Radio.mjs"
+      "types": "./dist/components/forms/radio/index.d.ts",
+      "import": "./dist/radio.mjs",
+      "require": "./dist/radio.cjs",
+      "default": "./dist/radio.mjs"
     },
     "./select": {
-      "types": "./dist/components/basics/select/Select.d.ts",
-      "import": "./dist/components/basics/select/Select.mjs"
+      "types": "./dist/components/forms/select/index.d.ts",
+      "import": "./dist/select.mjs",
+      "require": "./dist/select.cjs",
+      "default": "./dist/select.mjs"
     },
     "./skeleton": {
-      "types": "./dist/components/basics/skeleton/Skeleton.d.ts",
-      "import": "./dist/components/basics/skeleton/Skeleton.mjs"
+      "types": "./dist/components/data-display/skeleton/index.d.ts",
+      "import": "./dist/skeleton.mjs",
+      "require": "./dist/skeleton.cjs",
+      "default": "./dist/skeleton.mjs"
     },
     "./splash-cursor": {
-      "types": "./dist/components/basics/splashCursor/SplashCursor.d.ts",
-      "import": "./dist/components/basics/splashCursor/SplashCursor.mjs"
+      "types": "./dist/components/effects/splash-cursor/index.d.ts",
+      "import": "./dist/splash-cursor.mjs",
+      "require": "./dist/splash-cursor.cjs",
+      "default": "./dist/splash-cursor.mjs"
     },
     "./spotlight-card": {
-      "types": "./dist/components/basics/spotlight-card/SpotlightCard.d.ts",
-      "import": "./dist/components/basics/spotlight-card/SpotlightCard.mjs"
+      "types": "./dist/components/effects/spotlight-card/index.d.ts",
+      "import": "./dist/spotlight-card.mjs",
+      "require": "./dist/spotlight-card.cjs",
+      "default": "./dist/spotlight-card.mjs"
     },
     "./stepper": {
-      "types": "./dist/components/basics/stepper/Stepper.d.ts",
-      "import": "./dist/components/basics/stepper/Stepper.mjs"
+      "types": "./dist/components/navigation/stepper/index.d.ts",
+      "import": "./dist/stepper.mjs",
+      "require": "./dist/stepper.cjs",
+      "default": "./dist/stepper.mjs"
     },
     "./sun-to-moon-button": {
-      "types": "./dist/components/basics/sun-to-moon-button/SunToMoonButton.d.ts",
-      "import": "./dist/components/basics/sun-to-moon-button/SunToMoonButton.mjs"
+      "types": "./dist/components/effects/sun-to-moon-button/index.d.ts",
+      "import": "./dist/sun-to-moon-button.mjs",
+      "require": "./dist/sun-to-moon-button.cjs",
+      "default": "./dist/sun-to-moon-button.mjs"
     },
     "./switch": {
-      "types": "./dist/components/basics/switch/Switch.d.ts",
-      "import": "./dist/components/basics/switch/Switch.mjs"
+      "types": "./dist/components/forms/switch/index.d.ts",
+      "import": "./dist/switch.mjs",
+      "require": "./dist/switch.cjs",
+      "default": "./dist/switch.mjs"
     },
     "./textarea": {
-      "types": "./dist/components/basics/textarea/Textarea.d.ts",
-      "import": "./dist/components/basics/textarea/Textarea.mjs"
+      "types": "./dist/components/forms/textarea/index.d.ts",
+      "import": "./dist/textarea.mjs",
+      "require": "./dist/textarea.cjs",
+      "default": "./dist/textarea.mjs"
     },
     "./toast": {
-      "types": "./dist/components/basics/toast/Toast.d.ts",
-      "import": "./dist/components/basics/toast/Toast.mjs"
+      "types": "./dist/components/overlays/toast/index.d.ts",
+      "import": "./dist/toast.mjs",
+      "require": "./dist/toast.cjs",
+      "default": "./dist/toast.mjs"
     },
     "./tooltip": {
-      "types": "./dist/components/basics/tooltip/Tooltip.d.ts",
-      "import": "./dist/components/basics/tooltip/Tooltip.mjs"
+      "types": "./dist/components/overlays/tooltip/index.d.ts",
+      "import": "./dist/tooltip.mjs",
+      "require": "./dist/tooltip.cjs",
+      "default": "./dist/tooltip.mjs"
+    },
+    "./typography": {
+      "types": "./dist/components/typography/index.d.ts",
+      "import": "./dist/typography.mjs",
+      "require": "./dist/typography.cjs",
+      "default": "./dist/typography.mjs"
     },
     "./ascii-text": {
-      "types": "./dist/components/text-animations/ASCIIText/ASCIIText.d.ts",
-      "import": "./dist/components/text-animations/ASCIIText/ASCIIText.mjs"
+      "types": "./dist/components/effects/ascii-text/index.d.ts",
+      "import": "./dist/ascii-text.mjs",
+      "require": "./dist/ascii-text.cjs",
+      "default": "./dist/ascii-text.mjs"
     },
     "./icons": {
       "types": "./dist/components/icons/index.d.ts",
-      "import": "./dist/components/icons/index.mjs"
+      "import": "./dist/icons.mjs",
+      "require": "./dist/icons.cjs",
+      "default": "./dist/icons.mjs"
     },
     "./spinners": {
-      "types": "./dist/components/spinners/Audio.d.ts",
-      "import": "./dist/components/spinners/Audio.mjs"
+      "types": "./dist/components/spinners/index.d.ts",
+      "import": "./dist/spinners.mjs",
+      "require": "./dist/spinners.cjs",
+      "default": "./dist/spinners.mjs"
     },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.mjs"
-    },
-    "./style.css": "./dist/style.css"
+      "import": "./dist/utils.mjs",
+      "require": "./dist/utils.cjs",
+      "default": "./dist/utils.mjs"
+    }
   },
   "files": [
     "dist",
@@ -202,8 +306,8 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "recharts": "^3.8.0",
-    "tailwind-merge": "^3.4.0"
+    "recharts": "^3.8.1",
+    "tailwind-merge": "^3.5.0"
   },
   "peerDependencies": {
     "@tanstack/react-table": "^8.0.0",
@@ -212,17 +316,28 @@
     "react-dom": "^19.0.0",
     "three": ">=0.150.0"
   },
+  "peerDependenciesMeta": {
+    "@tanstack/react-table": {
+      "optional": true
+    },
+    "framer-motion": {
+      "optional": true
+    },
+    "three": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
-    "@types/react": "^19.2.10",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/three": "^0.182.0",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.39.2",
-    "terser": "^5.46.0",
-    "typescript": "^5.9.3",
-    "vite": "^6.0.7",
-    "vite-plugin-dts": "^4.4.0"
+    "@types/three": "^0.183.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.1.0",
+    "terser": "^5.46.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

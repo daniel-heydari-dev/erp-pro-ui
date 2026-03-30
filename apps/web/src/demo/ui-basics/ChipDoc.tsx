@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Chip, ChipVariant, ChipColor, ChipSize, Select, Checkbox } from 'erp-pro-ui';
+import { Chip, ChipVariant, ChipSize, Select, Checkbox } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
@@ -7,15 +7,17 @@ const ChipDoc = () => {
   const [variant, setVariant] = useState<ChipVariant>('soft');
   const [size, setSize] = useState<ChipSize>('md');
   const [removable, setRemovable] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'review'>('all');
+  const [tags, setTags] = useState(['Berlin', 'Enterprise', 'Priority']);
+  const [lastAction, setLastAction] = useState('None yet');
 
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Chip</h1>
       <p className="docs-paragraph">
-        Compact elements that represent an input, attribute, or action.
+        Compact tokens for status, filtering, assignments, and removable selections in dense UI surfaces.
       </p>
 
-      {/* Preview Section */}
       <h2 className="docs-category-subtitle">Interactive Playground</h2>
 
       <div className="docs-controls">
@@ -62,7 +64,7 @@ const ChipDoc = () => {
             variant={variant}
             size={size}
             color="default"
-            onRemove={removable ? () => alert('Removed!') : undefined}
+            onRemove={removable ? () => setLastAction('Removed the default preview chip') : undefined}
           >
             Default
           </Chip>
@@ -70,7 +72,7 @@ const ChipDoc = () => {
             variant={variant}
             size={size}
             color="primary"
-            onRemove={removable ? () => alert('Removed!') : undefined}
+            onRemove={removable ? () => setLastAction('Removed the primary preview chip') : undefined}
           >
             Primary
           </Chip>
@@ -83,6 +85,9 @@ const ChipDoc = () => {
             Online
           </Chip>
         </div>
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">
+          Last action: {lastAction}
+        </p>
       </div>
 
       <CodeBlock code={`import { Chip } from 'erp-pro-ui';
@@ -122,53 +127,65 @@ const ChipDoc = () => {
       <CodeBlock code={`<Chip color="success" dot>Live Now</Chip>
 <Chip color="error" dot dotColor="#ff0000">System Error</Chip>`} />
 
-      {/* Clickable Actions */}
-      <h2 className="docs-category-subtitle">Interactive Actions</h2>
+      <h2 className="docs-category-subtitle">Interactive Filters</h2>
       <p className="docs-paragraph">
-        Add an <code>onClick</code> handler to use chips as compact action buttons or filter toggles.
+        Chips can also act as compact filter toggles or action shortcuts.
       </p>
       <div className="docs-showcase-card flex-wrap gap-3">
         <Chip
-          variant="outlined"
+          variant={activeFilter === 'all' ? 'filled' : 'outlined'}
           color="primary"
-          onClick={() => alert('Filter applied!')}
+          onClick={() => setActiveFilter('all')}
           startIcon={<span>🔍</span>}
         >
-          Search Filter
+          All orders
         </Chip>
         <Chip
-          variant="glass"
-          onClick={() => alert('Settings opened')}
-          startIcon={<span>⚙️</span>}
+          variant={activeFilter === 'active' ? 'filled' : 'outlined'}
+          color="success"
+          onClick={() => setActiveFilter('active')}
+          startIcon={<span>●</span>}
         >
-          Manage
+          Active only
+        </Chip>
+        <Chip
+          variant={activeFilter === 'review' ? 'filled' : 'outlined'}
+          color="warning"
+          onClick={() => setActiveFilter('review')}
+          startIcon={<span>⏳</span>}
+        >
+          Pending review
         </Chip>
       </div>
 
       <CodeBlock code={`<Chip 
   variant="outlined" 
-  onClick={() => {}}
+  onClick={() => setFilter('active')}
 >
-  Clickable Action
+  Active only
 </Chip>`} />
 
-      {/* Removable Tags */}
       <h2 className="docs-category-subtitle">Removable Tags</h2>
       <p className="docs-paragraph">
         Use <code>onRemove</code> to display a close button, ideal for multi-select filters and tags.
       </p>
       <div className="docs-showcase-card flex-wrap gap-3">
-        <Chip color="secondary" onRemove={() => alert('Removed React')}>React</Chip>
-        <Chip color="secondary" onRemove={() => alert('Removed TypeScript')}>TypeScript</Chip>
-        <Chip color="secondary" onRemove={() => alert('Removed Tailwind')}>Tailwind</Chip>
+        {tags.map((tag) => (
+          <Chip
+            key={tag}
+            color="secondary"
+            onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
+          >
+            {tag}
+          </Chip>
+        ))}
       </div>
 
       <CodeBlock code={`<Chip onRemove={() => handleRemove(tag.id)}>
   {tag.name}
 </Chip>`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -180,6 +197,12 @@ const ChipDoc = () => {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td className="docs-prop-name">children</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Visible label content inside the chip.</td>
+            </tr>
             <tr>
               <td className="docs-prop-name">variant</td>
               <td><span className="docs-prop-type">'filled' | 'outlined' | 'soft' | 'glass'</span></td>
@@ -196,13 +219,61 @@ const ChipDoc = () => {
               <td className="docs-prop-name">size</td>
               <td><span className="docs-prop-type">'sm' | 'md' | 'lg'</span></td>
               <td>'md'</td>
-              <td>Size of the chip</td>
+              <td>Size of the chip.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">onRemove</td>
               <td><span className="docs-prop-type">() =&gt; void</span></td>
               <td>-</td>
-              <td>Function called when remove button is clicked</td>
+              <td>Shows remove button and handles remove action.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">onClick</td>
+              <td><span className="docs-prop-type">() =&gt; void</span></td>
+              <td>-</td>
+              <td>Makes the chip interactive (filter toggles, quick actions).</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">disabled</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>false</td>
+              <td>Disables interaction and remove action.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">startIcon</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Optional leading icon.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">endIcon</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Optional trailing icon when <code>onRemove</code> is not set.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">dot</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>false</td>
+              <td>Shows a pulsing status dot indicator.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">dotColor</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>From color</td>
+              <td>Custom dot color (hex/rgb/css value).</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">maxWidth</td>
+              <td><span className="docs-prop-type">number | string</span></td>
+              <td>-</td>
+              <td>Constrains width and truncates text with ellipsis.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">className</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>-</td>
+              <td>Custom class name for the root chip element.</td>
             </tr>
           </tbody>
         </table>

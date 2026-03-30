@@ -70,10 +70,9 @@ const StepperDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Stepper</h1>
       <p className="docs-paragraph">
-        Visual navigation component that guides users through a multi-step process.
+        Step-by-step progress indicator for onboarding, checkout, and guided setup flows.
       </p>
 
-      {/* Preview Section */}
       <h2 className="docs-category-subtitle">Interactive Playground</h2>
 
       <div className="docs-controls">
@@ -207,16 +206,43 @@ const StepperDoc = () => {
 
       <CodeBlock code={`<Stepper
   steps={[
-    { id: "1", title: "User", icon: <UserIcon /> },
-    { id: "2", title: "Plan", icon: <CardIcon /> },
+    { id: "1", title: "User", icon: "👤" },
+    { id: "2", title: "Plan", icon: "💳" },
   ]}
   currentStep={1}
   showErrors={true}
   errorSteps={[1]}
 />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Approval Workflow</h2>
+      <p className="docs-paragraph">
+        Combine <code>completedSteps</code> with <code>clickable</code> to support non-linear review flows.
+      </p>
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-3xl">
+          <Stepper
+            steps={[
+              { id: 'request', title: 'Request', description: 'Submit purchase request' },
+              { id: 'manager', title: 'Manager', description: 'Manager approval' },
+              { id: 'finance', title: 'Finance', description: 'Budget verification' },
+              { id: 'done', title: 'Released', description: 'Order released to vendor' },
+            ]}
+            currentStep={2}
+            completedSteps={[0, 1]}
+            clickable
+            variant="default"
+          />
+        </div>
+      </div>
+
+      <CodeBlock code={`<Stepper
+  steps={approvalSteps}
+  currentStep={2}
+  completedSteps={[0, 1]}
+  clickable
+/>`} />
+
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -232,31 +258,79 @@ const StepperDoc = () => {
               <td className="docs-prop-name">steps</td>
               <td><span className="docs-prop-type">Step[]</span></td>
               <td>-</td>
-              <td>Array of step objects</td>
+              <td>Array of steps with title, optional description/icon, and optional content.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">currentStep</td>
               <td><span className="docs-prop-type">number</span></td>
               <td>0</td>
-              <td>Index of current step</td>
+              <td>Active step index (0-based).</td>
             </tr>
             <tr>
               <td className="docs-prop-name">orientation</td>
               <td><span className="docs-prop-type">'horizontal' | 'vertical'</span></td>
               <td>'horizontal'</td>
-              <td>Layout direction</td>
+              <td>Layout direction for the stepper.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">variant</td>
               <td><span className="docs-prop-type">'default' | 'glass' | 'minimal' | 'outlined'</span></td>
               <td>'glass'</td>
-              <td>Visual style variant</td>
+              <td>Visual style for step indicators and connector.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">size</td>
               <td><span className="docs-prop-type">'sm' | 'md' | 'lg'</span></td>
               <td>'md'</td>
-              <td>Size of indicators</td>
+              <td>Size scale for indicators and labels.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">onStepClick</td>
+              <td><span className="docs-prop-type">(stepIndex: number) =&gt; void</span></td>
+              <td>-</td>
+              <td>Called when a step is clicked.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">clickable</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Allows clicking steps to navigate.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">showNumbers</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Shows numeric markers instead of only icons.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">showConnector</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Toggles the line between steps.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">showErrors</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>false</td>
+              <td>Enables error styling for indices in <code>errorSteps</code>.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">errorSteps</td>
+              <td><span className="docs-prop-type">number[]</span></td>
+              <td>[]</td>
+              <td>Step indices that should show an error state.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">completedSteps</td>
+              <td><span className="docs-prop-type">number[]</span></td>
+              <td>-</td>
+              <td>Manual completed indices override auto-completion based on current step.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">animated</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Enables transitions for indicator and connector state changes.</td>
             </tr>
           </tbody>
         </table>

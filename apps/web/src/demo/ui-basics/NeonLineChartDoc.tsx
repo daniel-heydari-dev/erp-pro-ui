@@ -1,50 +1,83 @@
-import React from 'react';
 import { NeonLineChart } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
 const NeonLineChartDoc = () => {
-  const data = [
-    { name: 'Mon', value: 3 },
-    { name: 'Tue', value: 8 },
-    { name: 'Wed', value: 6 },
-    { name: 'Thu', value: 10 },
-    { name: 'Fri', value: 5 },
-    { name: 'Sat', value: 12 },
-    { name: 'Sun', value: 14 },
+  const latencyData = [
+    { name: 'Mon', value: 42 },
+    { name: 'Tue', value: 38 },
+    { name: 'Wed', value: 45 },
+    { name: 'Thu', value: 34 },
+    { name: 'Fri', value: 31 },
+    { name: 'Sat', value: 36 },
+    { name: 'Sun', value: 29 },
+  ];
+
+  const throughputData = [
+    { name: '00:00', value: 18 },
+    { name: '04:00', value: 24 },
+    { name: '08:00', value: 42 },
+    { name: '12:00', value: 58 },
+    { name: '16:00', value: 51 },
+    { name: '20:00', value: 33 },
   ];
 
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Neon Line Chart</h1>
       <p className="docs-paragraph">
-        A highly stylized, cyberpunk-inspired line chart with built-in glowing drop-shadow filters and gradient strokes.
+        NeonLineChart is a stylized line chart for premium dashboards, live activity views, or any
+        reporting surface where the chart should read as a visual focal point.
       </p>
 
-      {/* Basic Usage */}
-      <h2 className="docs-category-subtitle">Basic Usage</h2>
-      <p className="docs-paragraph">
-        This chart is pre-configured to deliver a premium, glowing aesthetic without any extra CSS.
+      <h2 className="docs-category-subtitle">Default Neon Styling</h2>
+      <p className="docs-paragraph mb-4">
+        The default gradient and glow already produce a strong visual treatment without extra CSS.
       </p>
-      <div className="docs-showcase-card h-[400px] flex items-center justify-center">
-        <NeonLineChart data={data} height={300} className="px-4" />
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-5xl">
+          <NeonLineChart data={latencyData} height={340} className="px-2" />
+        </div>
       </div>
 
       <CodeBlock code={`import { NeonLineChart } from 'erp-pro-ui';
 
 const data = [
-  { name: 'Mon', value: 3 },
-  { name: 'Tue', value: 8 },
-  // ...
+  { name: 'Mon', value: 42 },
+  { name: 'Tue', value: 38 },
+  { name: 'Wed', value: 45 },
 ];
 
-<NeonLineChart 
-  data={data} 
-  height={300} 
+<NeonLineChart data={data} height={340} />`} />
+
+      <h2 className="docs-category-subtitle">Custom Brand Glow</h2>
+      <p className="docs-paragraph mb-4">
+        Override the gradient stops and outer glow when the chart needs to match a product-specific
+        palette or campaign theme.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-5xl">
+          <NeonLineChart
+            data={throughputData}
+            height={340}
+            lineColorStop1="#00cfe8"
+            lineColorStop2="#7367f0"
+            glowColor="rgba(115, 103, 240, 0.45)"
+            className="px-2"
+          />
+        </div>
+      </div>
+
+      <CodeBlock code={`<NeonLineChart
+  data={throughputData}
+  height={340}
+  lineColorStop1="#00cfe8"
+  lineColorStop2="#7367f0"
+  glowColor="rgba(115, 103, 240, 0.45)"
 />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -58,21 +91,33 @@ const data = [
           <tbody>
             <tr>
               <td className="docs-prop-name">data</td>
-              <td><span className="docs-prop-type">{"{ name: string; value: number }[]"}</span></td>
-              <td>required</td>
-              <td>The array of timeline data points</td>
+              <td><span className="docs-prop-type">{'{ name: string; value: number }[]'}</span></td>
+              <td>-</td>
+              <td>Timeline data rendered as a single glowing series</td>
             </tr>
             <tr>
               <td className="docs-prop-name">height</td>
               <td><span className="docs-prop-type">number | string</span></td>
               <td>300</td>
-              <td>Height of the chart container</td>
+              <td>Height of the responsive chart container</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">lineColorStop1 / lineColorStop2</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'#00f0ff' / '#ff00e5'</td>
+              <td>Gradient endpoints used for the main line stroke</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">glowColor</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'rgba(255, 0, 229, 0.4)'</td>
+              <td>Primary shadow color used in the glow filter</td>
             </tr>
             <tr>
               <td className="docs-prop-name">className</td>
               <td><span className="docs-prop-type">string</span></td>
-              <td>undefined</td>
-              <td>Additional CSS classes for the container wrapper</td>
+              <td>''</td>
+              <td>Optional classes for the outer chart wrapper</td>
             </tr>
           </tbody>
         </table>

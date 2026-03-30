@@ -1,12 +1,14 @@
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Select } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
 const SelectDoc = () => {
-  const [value, setValue] = useState('');
+  const [framework, setFramework] = useState('');
+  const [environment, setEnvironment] = useState('staging');
 
-  const options = [
+  const frameworkOptions = [
     { value: 'react', label: 'React' },
     { value: 'vue', label: 'Vue' },
     { value: 'angular', label: 'Angular' },
@@ -14,29 +16,40 @@ const SelectDoc = () => {
     { value: 'nextjs', label: 'Next.js' },
   ];
 
+  const environmentOptions = [
+    { value: 'development', label: 'Development' },
+    { value: 'staging', label: 'Staging' },
+    { value: 'production', label: 'Production' },
+  ];
+
+  const handleFrameworkChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setFramework(event.target.value);
+  };
+
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Select</h1>
       <p className="docs-paragraph">
-        The Select component allows users to choose one option from a dropdown list.
-        It supports custom styling and behaves like a native select.
+        Select is a styled dropdown that still preserves native form behavior.
+        Use it for fields where users choose one value from a constrained list.
       </p>
 
-      {/* Preview Section */}
-      <h2 className="docs-category-subtitle">Preview</h2>
+      <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-sm">
           <Select
             label="Framework"
             placeholder="Select a framework"
-            options={options}
-            value={value}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setValue(e.target.value)}
+            options={frameworkOptions}
+            value={framework}
+            onChange={handleFrameworkChange}
+            helperText="Used to customize starter templates."
           />
         </div>
       </div>
 
-      <CodeBlock code={`import { Select } from 'erp-pro-ui';
+      <CodeBlock
+        code={`import { Select } from 'erp-pro-ui';
 
 const options = [
   { value: 'react', label: 'React' },
@@ -46,46 +59,85 @@ const options = [
 <Select
   label="Framework"
   options={options}
-  value={value}
-  onChange={(e) => setValue(e.target.value)}
-/>`} />
+  value={framework}
+  onChange={(event) => setFramework(event.target.value)}
+/>`}
+      />
 
-      {/* Scenarios Section */}
-      <h2 className="docs-category-subtitle">Scenarios</h2>
+      <h2 className="docs-category-subtitle">Controlled Form Pattern</h2>
+      <p className="docs-paragraph">
+        In real forms, pair controlled state with validation messaging so users
+        can resolve errors without losing context.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-sm">
+          <Select
+            label="Deployment environment"
+            placeholder="Choose environment"
+            options={environmentOptions}
+            value={environment}
+            onChange={(event) => setEnvironment(event.target.value)}
+            error={environment ? undefined : 'Environment is required'}
+            helperText="Choose where this release should be promoted."
+          />
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`const [environment, setEnvironment] = useState('');
+
+<Select
+  label="Deployment environment"
+  options={environmentOptions}
+  value={environment}
+  onChange={(event) => setEnvironment(event.target.value)}
+  error={environment ? undefined : 'Environment is required'}
+/>`}
+      />
+
+      <h2 className="docs-category-subtitle">Common States</h2>
+      <p className="docs-paragraph">
+        The component supports helper text, error text, disabled mode, and
+        custom dropdown surface styles via <code>bgClassName</code>.
+      </p>
 
       <div className="docs-showcase-grid">
         <div className="docs-showcase-card">
           <Select
-            label="Error State"
-            placeholder="Select option"
-            options={options}
-            error="Selection required"
+            label="Validation"
+            placeholder="Select owner"
+            options={frameworkOptions}
+            error="Owner is required"
           />
         </div>
         <div className="docs-showcase-card">
           <Select
             label="Disabled"
-            placeholder="Cannot select"
-            options={options}
+            placeholder="Cannot change"
+            options={frameworkOptions}
             disabled
+            value="react"
           />
         </div>
         <div className="docs-showcase-card">
           <Select
-            label="With Helper Text"
+            label="Custom Surface"
             placeholder="Select option"
-            options={options}
-            helperText="Choose your preferred library"
+            options={frameworkOptions}
+            helperText="Styled with a darker glass background."
+            bgClassName="bg-neutral-900/70 text-white backdrop-blur-xl"
           />
         </div>
       </div>
 
-      <CodeBlock code={`<Select error="Selection required" options={options} />
-<Select disabled options={options} />
-<Select helperText="Helper text here" options={options} />`} />
+      <CodeBlock
+        code={`<Select error="Owner is required" options={options} />
+<Select disabled value="react" options={options} />
+<Select bgClassName="bg-neutral-900/70" options={options} />`}
+      />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -99,52 +151,91 @@ const options = [
           <tbody>
             <tr>
               <td className="docs-prop-name">options</td>
-              <td><span className="docs-prop-type">{'Array<{ value: string, label: string }>'}</span></td>
-              <td>[]</td>
-              <td>Array of options to display</td>
+              <td>
+                <span className="docs-prop-type">
+                  Array&lt;{'{ value: string; label: string }'}&gt;
+                </span>
+              </td>
+              <td>-</td>
+              <td>List of selectable values and visible labels.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">value</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Current selected value</td>
+              <td>Currently selected option value (controlled usage).</td>
             </tr>
             <tr>
               <td className="docs-prop-name">onChange</td>
-              <td><span className="docs-prop-type">(e) =&gt; void</span></td>
+              <td>
+                <span className="docs-prop-type">
+                  (event: ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; void
+                </span>
+              </td>
               <td>-</td>
-              <td>Change handler</td>
+              <td>Called when users select a new value.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">label</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Label above the select</td>
+              <td>Optional field label rendered above the control.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">placeholder</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>'Select...'</td>
-              <td>Placeholder text</td>
+              <td>Shown when no option is currently selected.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">error</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Error message</td>
+              <td>Error message shown below the control in red.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">helperText</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Helper text below the select</td>
+              <td>
+                Supporting text shown when <code>error</code> is not set.
+              </td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">bgClassName</td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
+              <td>'bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl'</td>
+              <td>Background classes for trigger and dropdown menu surface.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">...SelectHTMLAttributes</td>
+              <td>
+                <span className="docs-prop-type">HTML props</span>
+              </td>
+              <td>-</td>
+              <td>
+                Supports native props like <code>name</code>,
+                <code>disabled</code>, and <code>required</code>.
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <DocsButtonBar
-        previous={{ label: 'Switch', route: '/ui-basics/switch' }}
+        prev={{ label: 'Switch', route: '/ui-basics/switch' }}
         next={{ label: 'Textarea', route: '/ui-basics/textarea' }}
       />
     </section>

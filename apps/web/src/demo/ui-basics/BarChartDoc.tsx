@@ -1,76 +1,90 @@
-import React from 'react';
 import { BarChart, BarChartData } from 'erp-pro-ui';
 import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
+const monthlyData: BarChartData[] = [
+  { name: 'Jan', fulfilled: 420, delayed: 38 },
+  { name: 'Feb', fulfilled: 465, delayed: 29 },
+  { name: 'Mar', fulfilled: 510, delayed: 34 },
+  { name: 'Apr', fulfilled: 548, delayed: 22 },
+  { name: 'May', fulfilled: 592, delayed: 18 },
+  { name: 'Jun', fulfilled: 625, delayed: 26 },
+];
+
+const monthlyCategories = [
+  { key: 'fulfilled', color: '#00cfe8' },
+  { key: 'delayed', color: '#ff9f43' },
+];
+
+const rankingData: BarChartData[] = [
+  { name: 'North Distribution Hub', transfers: 128 },
+  { name: 'Central Returns Team', transfers: 102 },
+  { name: 'West Picking Zone', transfers: 94 },
+  { name: 'Airport Forwarding Desk', transfers: 77 },
+];
+
 const BarChartDoc = () => {
-  const data: BarChartData[] = [
-    { name: 'Jan', revenue: 4000, expenses: 2400 },
-    { name: 'Feb', revenue: 3000, expenses: 1398 },
-    { name: 'Mar', revenue: 2000, expenses: 9800 },
-    { name: 'Apr', revenue: 2780, expenses: 3908 },
-    { name: 'May', revenue: 1890, expenses: 4800 },
-    { name: 'Jun', revenue: 2390, expenses: 3800 },
-  ];
-
-  const categories = [
-    { key: 'revenue', color: '#00cfe8' },
-    { key: 'expenses', color: '#28c76f' },
-  ];
-
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Bar Chart</h1>
       <p className="docs-paragraph">
-        A customizable standard bar chart for comparing distinct categories of data.
+        Bar charts are the right choice when the user is comparing distinct buckets rather than
+        reading continuous change.
       </p>
 
-      {/* Vertical Layout Usage */}
-      <h2 className="docs-category-subtitle">Vertical Layout</h2>
-      <p className="docs-paragraph">
-        The default layout, great for time-series or sequential comparisons.
+      <h2 className="docs-category-subtitle">Monthly Comparison</h2>
+      <p className="docs-paragraph mb-4">
+        The default horizontal layout works well for monthly or sequential reporting where categories
+        follow a natural order.
       </p>
-      <div className="docs-showcase-card h-[450px] flex items-center justify-center">
-        <BarChart data={data} categories={categories} height={350} layout="horizontal" className="px-4" />
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-5xl">
+          <BarChart data={monthlyData} categories={monthlyCategories} height={360} className="px-2" />
+        </div>
       </div>
 
       <CodeBlock code={`import { BarChart, BarChartData } from 'erp-pro-ui';
 
 const data: BarChartData[] = [
-  { name: 'Jan', revenue: 4000, expenses: 2400 },
-  // ...
+  { name: 'Jan', fulfilled: 420, delayed: 38 },
+  { name: 'Feb', fulfilled: 465, delayed: 29 },
+  { name: 'Mar', fulfilled: 510, delayed: 34 },
 ];
 
 const categories = [
-  { key: 'revenue', color: '#00cfe8' },
-  { key: 'expenses', color: '#28c76f' },
+  { key: 'fulfilled', color: '#00cfe8' },
+  { key: 'delayed', color: '#ff9f43' },
 ];
 
-<BarChart 
-  data={data} 
-  categories={categories} 
-  height={350} 
-  layout="horizontal" 
-/>`} />
+<BarChart data={data} categories={categories} height={360} />`} />
 
-      {/* Horizontal Layout Usage */}
-      <h2 className="docs-category-subtitle">Horizontal Layout</h2>
-      <p className="docs-paragraph">
-        Useful when data names are long or you are ranking items from top to bottom.
+      <h2 className="docs-category-subtitle">Ranking Layout</h2>
+      <p className="docs-paragraph mb-4">
+        Switch to the vertical layout when labels are longer or when you want a leaderboard-style
+        presentation.
       </p>
-      <div className="docs-showcase-card h-[450px] flex items-center justify-center">
-        <BarChart data={data} categories={categories} height={350} layout="vertical" className="px-4" />
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-5xl">
+          <BarChart
+            data={rankingData}
+            categories={[{ key: 'transfers', color: '#28c76f' }]}
+            height={360}
+            layout="vertical"
+            className="px-2"
+          />
+        </div>
       </div>
 
-      <CodeBlock code={`<BarChart 
-  data={data} 
-  categories={categories} 
-  height={350} 
-  layout="vertical" 
+      <CodeBlock code={`<BarChart
+  data={rankingData}
+  categories={[{ key: 'transfers', color: '#28c76f' }]}
+  height={360}
+  layout="vertical"
 />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -85,32 +99,32 @@ const categories = [
             <tr>
               <td className="docs-prop-name">data</td>
               <td><span className="docs-prop-type">BarChartData[]</span></td>
-              <td>required</td>
-              <td>The array of objects to map into the chart</td>
+              <td>-</td>
+              <td>Array of items containing a name field plus one or more numeric series</td>
             </tr>
             <tr>
               <td className="docs-prop-name">categories</td>
-              <td><span className="docs-prop-type">{"{ key: string; color: string }[]"}</span></td>
-              <td>required</td>
-              <td>The data keys to represent, and their respective bar colors</td>
+              <td><span className="docs-prop-type">{'{ key: string; color: string }[]'}</span></td>
+              <td>-</td>
+              <td>Maps chart series keys to the bar colors that should be rendered</td>
             </tr>
             <tr>
               <td className="docs-prop-name">layout</td>
               <td><span className="docs-prop-type">'horizontal' | 'vertical'</span></td>
               <td>'horizontal'</td>
-              <td>Orientation of the bars. 'horizontal' means bars grow upwards.</td>
+              <td>Controls whether categories run across the X axis or down the Y axis</td>
             </tr>
             <tr>
               <td className="docs-prop-name">height</td>
               <td><span className="docs-prop-type">number | string</span></td>
               <td>300</td>
-              <td>Height of the chart container</td>
+              <td>Height of the responsive chart wrapper</td>
             </tr>
             <tr>
-              <td className="docs-prop-name">showGrid</td>
-              <td><span className="docs-prop-type">boolean</span></td>
-              <td>true</td>
-              <td>Whether to render the Cartesian grid background</td>
+              <td className="docs-prop-name">className</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>''</td>
+              <td>Optional classes applied to the outer chart container</td>
             </tr>
           </tbody>
         </table>

@@ -14,12 +14,12 @@ const DataTableDoc = () => {
   ];
 
   const columns = [
-    { id: 'name', label: 'Name' },
-    { id: 'email', label: 'Email' },
-    { id: 'role', label: 'Role' },
-    { id: 'status', label: 'Status' },
-    { id: 'amount', label: 'Amount' },
-    { id: 'joinedDate', label: 'Joined' },
+    { id: 'name', label: 'Name', filterable: true, priority: 1 },
+    { id: 'email', label: 'Email', filterable: true, priority: 1 },
+    { id: 'role', label: 'Role', filterable: true, multiFilter: true, priority: 2 },
+    { id: 'status', label: 'Status', filterable: true, priority: 1 },
+    { id: 'amount', label: 'Amount', filterable: false, priority: 2 },
+    { id: 'joinedDate', label: 'Joined', filterable: false, priority: 3 },
   ];
 
   const filterOptions: FilterOption[] = [
@@ -63,13 +63,35 @@ const DataTableDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Data Table</h1>
       <p className="docs-paragraph">
-        A powerful component for displaying tabular data with support for custom rendering, sorting, and advanced filtering with project components.
+        A workspace-grade table for operational data with search, filtering, pagination, and responsive column management.
       </p>
 
-      {/* Preview Section */}
+      <h2 className="docs-category-subtitle">Default Workspace Table</h2>
+      <p className="docs-paragraph mb-4">
+        Use a wide layout when the table is the primary content on the page.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800">
+          <DataTable
+            data={sampleData}
+            columns={columns}
+            pageSize={5}
+            searchPlaceholder="Search team members..."
+          />
+        </div>
+      </div>
+
+      <CodeBlock code={`<DataTable
+  data={data}
+  columns={columns}
+  pageSize={5}
+  searchPlaceholder="Search team members..."
+/>`} />
+
       <h2 className="docs-category-subtitle">Advanced Filtering</h2>
       <p className="docs-paragraph mb-4">
-        This example demonstrates various filter types including partial text search, multi-select, dropdowns, date ranges, and numeric ranges.
+        This example demonstrates text search, multi-select roles, dropdown filters, date ranges, number ranges, and boolean toggles.
       </p>
 
       <div className="docs-showcase-card">
@@ -78,6 +100,8 @@ const DataTableDoc = () => {
             data={sampleData}
             columns={columns}
             filterOptions={filterOptions}
+            pageSize={4}
+            searchPlaceholder="Search users, roles, or statuses..."
           />
         </div>
       </div>
@@ -105,6 +129,83 @@ const filterOptions: FilterOption[] = [
 // "switch" / "checkbox": Boolean toggles
 // "date-range": Start and end date picker
 // "number-range": Min and Max numeric inputs`} />
+
+      <h2 className="docs-category-subtitle">Compact Audit Queue</h2>
+      <p className="docs-paragraph mb-4">
+        Reduce the height when the table sits inside a denser review screen or dashboard tab.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800">
+          <DataTable
+            data={sampleData.slice(0, 4)}
+            columns={columns}
+            pageSize={3}
+            maxHeight="320px"
+            searchPlaceholder="Search audit queue..."
+          />
+        </div>
+      </div>
+
+      <CodeBlock code={`<DataTable
+  data={queueData}
+  columns={columns}
+  pageSize={3}
+  maxHeight="320px"
+  searchPlaceholder="Search audit queue..."
+/>`} />
+
+      <h2 className="docs-category-subtitle">Core Props</h2>
+      <div className="overflow-x-auto">
+        <table className="docs-props-table">
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="docs-prop-name">data</td>
+              <td><span className="docs-prop-type">Record&lt;string, unknown&gt;[]</span></td>
+              <td>-</td>
+              <td>Array of row objects rendered by the table</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">columns</td>
+              <td><span className="docs-prop-type">ColumnConfig[]</span></td>
+              <td>-</td>
+              <td>Column metadata including labels, priorities, and filter behavior</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">filterOptions</td>
+              <td><span className="docs-prop-type">FilterOption[]</span></td>
+              <td>auto-generated</td>
+              <td>Optional custom filter controls for advanced table workflows</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">pageSize</td>
+              <td><span className="docs-prop-type">number</span></td>
+              <td>10</td>
+              <td>How many rows are shown per page</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">searchPlaceholder</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>-</td>
+              <td>Placeholder text for the built-in search field</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">maxHeight</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'500px'</td>
+              <td>Maximum height of the scrollable table region</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <DocsButtonBar
         prev={{ label: 'Form', route: '/ui-basics/form' }}

@@ -27,19 +27,37 @@ const ToastDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Toast</h1>
       <p className="docs-paragraph">
-        Global notification system for feedback. Requires the app to be wrapped in <code>ToastProvider</code>.
+        Toast provides global, non-blocking feedback for async actions, form
+        submissions, and system events. It requires the app to be wrapped in{' '}
+        <code>ToastProvider</code>.
       </p>
 
-      {/* Preview Section */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
-        <Button
-          label="Show Toast"
-          onClick={() => toast({ title: 'Notification', description: 'This is a basic toast message.' })}
-        />
+        <div className="flex flex-wrap gap-3">
+          <Button
+            label="Show Toast"
+            onClick={() =>
+              toast({
+                title: 'Notification',
+                description: 'This is a basic toast message.',
+              })
+            }
+          />
+          <Button
+            label="Loading Toast"
+            onClick={() =>
+              loading({
+                title: 'Syncing',
+                description: 'Uploading 12 inventory changes...',
+              })
+            }
+          />
+        </div>
       </div>
 
-      <CodeBlock code={`import { useToast } from 'erp-pro-ui';
+      <CodeBlock
+        code={`import { useToast } from 'erp-pro-ui';
 
 const Component = () => {
   const { toast } = useToast();
@@ -50,27 +68,70 @@ const Component = () => {
       onClick={() => toast({ title: 'Notification', description: 'Hello World' })} 
     />
   );
-};`} />
+};`}
+      />
 
-      {/* Variants Section */}
-      <h2 className="docs-category-subtitle">Variants</h2>
+      <h2 className="docs-category-subtitle">Provider Setup</h2>
       <p className="docs-paragraph">
-        Type-safe helpers for common scenarios.
+        Mount the provider once near the app root and keep usage calls inside
+        descendants.
       </p>
 
+      <CodeBlock
+        code={`import { ToastProvider } from 'erp-pro-ui';
+
+export function AppRoot() {
+  return (
+    <ToastProvider position="top-right" duration={4000} maxToasts={4}>
+      <App />
+    </ToastProvider>
+  );
+}`}
+      />
+
+      <h2 className="docs-category-subtitle">Variants</h2>
+      <p className="docs-paragraph">Type-safe helpers for common scenarios.</p>
+
       <div className="docs-showcase-card flex-wrap gap-4">
-        <Button label="Success" onClick={() => success({ title: 'Success', description: 'Operation completed successfully.' })} />
-        <Button label="Error" onClick={() => error({ title: 'Error', description: 'Something went wrong.' })} />
-        <Button label="Warning" onClick={() => warning({ title: 'Warning', description: 'Please review your input.' })} />
-        <Button label="Info" onClick={() => info({ title: 'Info', description: 'New updates available.' })} />
+        <Button
+          label="Success"
+          onClick={() =>
+            success({
+              title: 'Success',
+              description: 'Operation completed successfully.',
+            })
+          }
+        />
+        <Button
+          label="Error"
+          onClick={() =>
+            error({ title: 'Error', description: 'Something went wrong.' })
+          }
+        />
+        <Button
+          label="Warning"
+          onClick={() =>
+            warning({
+              title: 'Warning',
+              description: 'Please review your input.',
+            })
+          }
+        />
+        <Button
+          label="Info"
+          onClick={() =>
+            info({ title: 'Info', description: 'New updates available.' })
+          }
+        />
       </div>
 
-      <CodeBlock code={`const { success, error, warning, info } = useToast();
+      <CodeBlock
+        code={`const { success, error, warning, info } = useToast();
 
 <Button onClick={() => success({ title: 'Success', description: '...' })} />
-<Button onClick={() => error({ title: 'Error', description: '...' })} />`} />
+<Button onClick={() => error({ title: 'Error', description: '...' })} />`}
+      />
 
-      {/* Promise Section */}
       <h2 className="docs-category-subtitle">Promise Handling</h2>
       <p className="docs-paragraph">
         Automatically handle promise states (loading, success, error).
@@ -80,21 +141,23 @@ const Component = () => {
         <Button label="Trigger Async Action" primary onClick={handlePromise} />
       </div>
 
-      <CodeBlock code={`const { promise } = useToast();
+      <CodeBlock
+        code={`const { promise } = useToast();
 
 promise(myPromise, {
   loading: 'Loading data...',
   success: (data) => \`Loaded \${data.name}\`,
   error: 'Error loading data',
-});`} />
+});`}
+      />
 
-      {/* Positions Section */}
       <h2 className="docs-category-subtitle">Positions</h2>
       <p className="docs-paragraph">
         Toasts can be positioned at any corner or center edge.
         <br />
         <span className="text-sm text-neutral-500">
-          (Note: These examples use nested providers to demonstrate positioning. In a real app, you configure this once at the root.)
+          (Note: These examples use nested providers to demonstrate positioning.
+          In a real app, you configure this once at the root.)
         </span>
       </p>
 
@@ -121,10 +184,73 @@ promise(myPromise, {
         </div>
       </div>
 
-      <CodeBlock code={`// In App.tsx
+      <CodeBlock
+        code={`// In App.tsx
 <ToastProvider position="top-right">
   <App />
-</ToastProvider>`} />
+</ToastProvider>`}
+      />
+
+      <h2 className="docs-category-subtitle">Core Props</h2>
+      <div className="overflow-x-auto">
+        <table className="docs-props-table">
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="docs-prop-name">position</td>
+              <td>
+                <span className="docs-prop-type">
+                  'top-left' | 'top-center' | 'top-right' | 'bottom-left' |
+                  'bottom-center' | 'bottom-right'
+                </span>
+              </td>
+              <td>'top-right'</td>
+              <td>Default placement for toast stack in the viewport</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">duration</td>
+              <td>
+                <span className="docs-prop-type">number</span>
+              </td>
+              <td>4000</td>
+              <td>
+                Auto-dismiss duration in milliseconds for non-loading toasts
+              </td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">maxToasts</td>
+              <td>
+                <span className="docs-prop-type">number</span>
+              </td>
+              <td>5</td>
+              <td>Maximum visible toasts before older items are removed</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">dismissible</td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
+              <td>true</td>
+              <td>Whether toasts show a close control by default</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">containerClassName</td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
+              <td>''</td>
+              <td>Additional classes for the toast container wrapper</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <DocsButtonBar
         prev={{ label: 'Alert', route: '/ui-basics/alert' }}
@@ -135,13 +261,24 @@ promise(myPromise, {
 };
 
 // Helper component to isolate useToast context for position demos
-const PositionDemo = ({ label, position }: { label: string, position: string }) => {
+const PositionDemo = ({
+  label,
+  position,
+}: {
+  label: string;
+  position: string;
+}) => {
   const { toast } = useToast();
   return (
     <Button
       label={label}
       size="small"
-      onClick={() => toast({ title: position, description: `This toast is positioned at ${position}` })}
+      onClick={() =>
+        toast({
+          title: position,
+          description: `This toast is positioned at ${position}`,
+        })
+      }
     />
   );
 };

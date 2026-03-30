@@ -1,6 +1,7 @@
-import Sidebar from "../navs/Sidebar";
-import { BorderBeam } from "../common/BorderBeam";
-import Header from "../navs/Header";
+import { BorderBeam } from 'erp-pro-ui';
+
+import Header from '../navs/Header';
+import Sidebar from '../navs/Sidebar';
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface SidebarLayoutProps {
 
 const SidebarLayout = ({ children }: SidebarLayoutProps) => {
   return (
-    <main className='app-container relative' >
+    <main className="app-container relative">
       <BorderBeam
         duration={10}
         size={300}
@@ -23,9 +24,8 @@ const SidebarLayout = ({ children }: SidebarLayoutProps) => {
         <Sidebar />
         {children}
       </section>
-
     </main>
-  )
-}
+  );
+};
 
 export default SidebarLayout;

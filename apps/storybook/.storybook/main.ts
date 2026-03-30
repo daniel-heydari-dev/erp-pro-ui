@@ -9,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const uiPackageRoot = resolve(__dirname, '../../../packages/ui');
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -19,7 +20,7 @@ function getAbsolutePath(value: string): string {
 }
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@storybook/addon-links'),
@@ -35,12 +36,29 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       plugins: [tailwindcss()],
       resolve: {
-        alias: {
-          '@': resolve(__dirname, '../src'),
-        },
+        alias: [
+          {
+            find: '@',
+            replacement: resolve(__dirname, '../src'),
+          },
+          {
+            find: /^erp-pro-ui$/,
+            replacement: resolve(uiPackageRoot, 'src/index.ts'),
+          },
+          {
+            find: /^erp-pro-ui\/theme$/,
+            replacement: resolve(
+              uiPackageRoot,
+              'src/foundations/theme/index.ts',
+            ),
+          },
+          {
+            find: /^erp-pro-ui\/styles\.css$/,
+            replacement: resolve(uiPackageRoot, 'src/styles.css'),
+          },
+        ],
       },
     });
   },
 };
 export default config;
-

@@ -14,7 +14,7 @@ const CalendarDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Calendar</h1>
       <p className="docs-paragraph">
-        A calendar component for displaying dates and handling date selection.
+        Date grid for selecting a single day or a date range, with optional month controls and custom footer actions.
       </p>
 
       {/* Single Selection */}
@@ -45,6 +45,9 @@ const [date, setDate] = useState<Date | null>(new Date());
 
       {/* Range Selection */}
       <h2 className="docs-category-subtitle">Range Selection</h2>
+      <p className="docs-paragraph">
+        In range mode, the first click sets the start date and the second click completes the range.
+      </p>
       <div className="docs-showcase-card flex-col items-center">
         <Calendar
           selectionMode="range"
@@ -66,6 +69,33 @@ const [date, setDate] = useState<Date | null>(new Date());
   selectionMode="range"
   range={range}
   onRangeSelect={setRange}
+/>`} />
+
+      <h2 className="docs-category-subtitle">Controlled Month</h2>
+      <p className="docs-paragraph">
+        Use <code>month</code>, <code>year</code>, and <code>onMonthChange</code> when another control drives navigation.
+      </p>
+      <div className="docs-showcase-card flex-col items-center">
+        <Calendar
+          month={0}
+          year={2027}
+          onMonthChange={(nextMonth, nextYear) => {
+            console.log('Navigate to', nextMonth, nextYear);
+          }}
+          value={date}
+          onSelect={setDate}
+          className="rounded-md border shadow"
+        />
+      </div>
+
+      <CodeBlock code={`<Calendar
+  month={0}
+  year={2027}
+  onMonthChange={(nextMonth, nextYear) => {
+    console.log(nextMonth, nextYear);
+  }}
+  value={date}
+  onSelect={setDate}
 />`} />
 
       {/* Footer Actions */}
@@ -108,8 +138,7 @@ const [date, setDate] = useState<Date | null>(new Date());
   }
 />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -123,7 +152,7 @@ const [date, setDate] = useState<Date | null>(new Date());
           <tbody>
             <tr>
               <td className="docs-prop-name">selectionMode</td>
-              <td><span className="docs-prop-type">'single' | 'range' | 'multiple'</span></td>
+              <td><span className="docs-prop-type">'single' | 'range'</span></td>
               <td>'single'</td>
               <td>Selection mode</td>
             </tr>
@@ -141,20 +170,45 @@ const [date, setDate] = useState<Date | null>(new Date());
             </tr>
             <tr>
               <td className="docs-prop-name">onSelect</td>
-              <td><span className="docs-prop-type">(date: any) =&gt; void</span></td>
+              <td><span className="docs-prop-type">(date: Date) =&gt; void</span></td>
               <td>-</td>
-              <tr>
-                <td className="docs-prop-name">onSelect</td>
-                <td><span className="docs-prop-type">(date: Date) =&gt; void</span></td>
-                <td>-</td>
-                <td>Callback when selection changes (single mode)</td>
-              </tr>
-              <tr>
-                <td className="docs-prop-name">onRangeSelect</td>
-                <td><span className="docs-prop-type">(range: any) =&gt; void</span></td>
-                <td>-</td>
-                <td>Callback when range changes (range mode)</td>
-              </tr>
+              <td>Callback when single-date selection changes.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">onRangeSelect</td>
+              <td><span className="docs-prop-type">(range: {`{ start: Date | null; end: Date | null }`}) =&gt; void</span></td>
+              <td>-</td>
+              <td>Callback when the range selection changes.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">month</td>
+              <td><span className="docs-prop-type">number</span></td>
+              <td>Current month</td>
+              <td>Controlled month index (0 = January).</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">year</td>
+              <td><span className="docs-prop-type">number</span></td>
+              <td>Current year</td>
+              <td>Controlled full year (for example 2026).</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">onMonthChange</td>
+              <td><span className="docs-prop-type">(month: number, year: number) =&gt; void</span></td>
+              <td>-</td>
+              <td>Called when users navigate to a different month.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">footer</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Optional action area rendered below the calendar grid.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">className</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>-</td>
+              <td>Custom classes applied to the root container.</td>
             </tr>
           </tbody>
         </table>

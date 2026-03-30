@@ -7,6 +7,7 @@ const DrawerDoc = () => {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState<DrawerPosition>('right');
   const [title, setTitle] = useState('Drawer Title');
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const openDrawer = (pos: DrawerPosition) => {
     setPosition(pos);
@@ -19,10 +20,9 @@ const DrawerDoc = () => {
       <h1 className="docs-category-title">Drawer</h1>
       <p className="docs-paragraph">
         Drawers are overlay panels that slide in from the edge of the screen.
-        Ideal for mobile navigation, detailed filters, or complex forms.
+        They work well for settings, mobile navigation, filters, and secondary workflows.
       </p>
 
-      {/* Preview Section */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
         <Button label="Open Drawer" onClick={() => openDrawer('right')} />
@@ -36,10 +36,15 @@ const DrawerDoc = () => {
         >
           <div className="space-y-4">
             <p className="text-neutral-600 dark:text-neutral-300">
-              This is the drawer content area. It supports scrolling for long content.
+              This is the primary drawer content area. It supports long forms, stacked controls, and contextual details.
             </p>
-            <div className="h-32 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center text-neutral-400">
-              Placeholder Content
+            <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                Branch filters
+              </p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Review transfer rules, approval thresholds, and pending exceptions from one side panel.
+              </p>
             </div>
           </div>
           <div className="mt-8 flex justify-end gap-2">
@@ -73,7 +78,7 @@ const Example = () => {
       {/* Positions Section */}
       <h2 className="docs-category-subtitle">Positions</h2>
       <p className="docs-paragraph">
-        The drawer can slide in from any of the four edges: <span className="docs-highlight">left</span>, <span className="docs-highlight">right</span>, <span className="docs-highlight">top</span>, or <span className="docs-highlight">bottom</span>.
+        The component supports all four viewport edges: <span className="docs-highlight">left</span>, <span className="docs-highlight">right</span>, <span className="docs-highlight">top</span>, and <span className="docs-highlight">bottom</span>.
       </p>
 
       <div className="docs-showcase-card">
@@ -90,8 +95,64 @@ const Example = () => {
 <Drawer position="top" ... />
 <Drawer position="bottom" ... />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Settings Panel</h2>
+      <p className="docs-paragraph">
+        A realistic drawer flow with structured content and footer actions.
+        Keep drawer state controlled in the parent so actions can also close the panel after save events.
+      </p>
+      <div className="docs-showcase-card">
+        <Button label="Open Settings Panel" primary onClick={() => setSettingsOpen(true)} />
+
+        <Drawer
+          open={settingsOpen}
+          onOpenChange={setSettingsOpen}
+          title="Workspace settings"
+          description="Adjust notifications, approval behavior, and transfer visibility from one panel."
+          position="right"
+          footer={
+            <div className="flex justify-end gap-2">
+              <Button label="Cancel" onClick={() => setSettingsOpen(false)} />
+              <Button label="Save changes" primary onClick={() => setSettingsOpen(false)} />
+            </div>
+          }
+        >
+          <div className="space-y-4">
+            <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                Approval threshold
+              </p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Require a second approver for transfers above $5,000.
+              </p>
+            </div>
+            <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                Restock notifications
+              </p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Send a digest every 2 hours to branch managers and operations leads.
+              </p>
+            </div>
+          </div>
+        </Drawer>
+      </div>
+
+      <CodeBlock code={`<Drawer
+  open={open}
+  onOpenChange={setOpen}
+  title="Workspace settings"
+  description="Adjust notifications, approval behavior, and transfer visibility from one panel."
+  footer={
+    <div className="flex justify-end gap-2">
+      <Button label="Cancel" onClick={() => setOpen(false)} />
+      <Button label="Save changes" primary onClick={() => setOpen(false)} />
+    </div>
+  }
+>
+  <div className="space-y-4">...</div>
+</Drawer>`} />
+
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -132,6 +193,12 @@ const Example = () => {
               <td><span className="docs-prop-type">string</span></td>
               <td>-</td>
               <td>Header description</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">footer</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Optional footer area for actions</td>
             </tr>
           </tbody>
         </table>

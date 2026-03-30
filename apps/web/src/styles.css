@@ -1,6 +1,6 @@
-
 @import 'tailwindcss';
-@import './css/fonts.css';
+@import 'erp-pro-ui/styles.css';
+@import './css/colors.css';
 @import './css/misc.css';
 @import './css/sidebar.css';
 @import './css/category.css';
@@ -11,155 +11,9 @@
 @import './css/animations.css';
 @import './css/showcase.css';
 
-/* Include shared UI package for Tailwind class scanning */
-@source "../../../packages/ui/src";
 @source "./**/*.{js,ts,jsx,tsx}";
 
-/* Custom variant for dark mode */
-@custom-variant dark (&:is(.dark *, [data-theme="dark"] *, [data-mode="dark"] *));
-
-@theme {
-  /* Fonts */
-  --font-expressive: "Bebas Neue", times, system-ui;
-  --font-sans: "Geist", "Roboto", sans-serif, system-ui;
-  --font-geist: "Geist", sans-serif, system-ui;
-  --font-roboto: "Roboto", sans-serif, system-ui;
-  --font-bebas: "Bebas Neue", times, system-ui;
-
-  /* Breakpoints */
-  --breakpoint-xs: 360px;
-
-  /* Semantic Colors - Linked to CSS variables for dynamic switching */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* Shared Brand Colors */
-  --color-brand-fuchsia: #f11aa8;
-  --color-brand-crimson: #e21e25;
-  --color-brand-lavender: #7251a2;
-}
-
-/* Base Variable Definitions */
-:root {
-  /* Elegant Light Mode Palette (Zinc-based) */
-  --background: #ffffff;
-  --foreground: #09090b; /* zinc-950 */
-  
-  --primary: #4f46e5; /* Indigo 600 - Modern, Vibrant */
-  --primary-foreground: #ffffff;
-  
-  --secondary: #f4f4f5; /* zinc-100 */
-  --secondary-foreground: #18181b; /* zinc-900 */
-  
-  --muted: #f4f4f5; /* zinc-100 */
-  --muted-foreground: #52525b; /* zinc-600 - Darker for readability */
-  
-  --accent: #f4f4f5; /* zinc-100 */
-  --accent-foreground: #18181b; /* zinc-900 */
-  
-  --destructive: #ef4444; 
-  --destructive-foreground: #ffffff;
-  
-  --border: #e4e4e7; /* zinc-200 */
-  --input: #e4e4e7; /* zinc-200 */
-  --ring: #7367f0;
-  
-  --logo-filter: none;
-
-  /* Active Sidebar Text Contrast Fix */
-  --active-sidebar-foreground: #09090b; /* Zinc-950 for maximum clarity in light mode */
-
-  /* Viewport Glow - Disabled for Light Mode */
-  --viewport-glow-color: transparent;
-  --viewport-glow-blur: 0px;
-
-  --beam-color-from: transparent;
-  --beam-color-to: transparent;
-
-  /* Modern Text Colors */
-  --color-heading: #18181b; /* Zinc 900 */
-  --paragraph-color: #3f3f46; /* Zinc 700 */
-}
-
-.dark {
-  /* Dark Mode Palette (Zinc-based) */
-  --background: #09090b; /* zinc-950 */
-  --foreground: #fafafa; /* zinc-50 */
-  
-  --primary: #7367f0;
-  --primary-foreground: #ffffff;
-  
-  --secondary: #27272a; /* zinc-800 */
-  --secondary-foreground: #fafafa; /* zinc-50 */
-  
-  --muted: #27272a; /* zinc-800 */
-  --muted-foreground: #a1a1aa; /* zinc-400 */
-  
-  --accent: #27272a; /* zinc-800 */
-  --accent-foreground: #fafafa; /* zinc-50 */
-  
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  
-  --border: #27272a; /* zinc-800 */
-  --input: #27272a; /* zinc-800 */
-  --ring: #7367f0;
-
-  --logo-filter: brightness(0) invert(1);
-
-  /* Active Sidebar Text Contrast Fix */
-  --active-sidebar-foreground: #ffffff;
-
-  /* Viewport Glow - Intense for Dark Mode */
-  --viewport-glow-color: rgba(115, 103, 240, 0.4);
-  --viewport-glow-blur: 150px;
-
-  --beam-color-from: #00d8ff;
-  --beam-color-to: #5227ff;
-
-  /* Dark Mode Text Colors */
-  --color-heading: #ffffff;
-  --paragraph-color: #e4e4e7; /* Zinc 200 */
-}
-
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-:root {
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: var(--color-foreground);
-  background-color: var(--color-background);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 html {
-  scroll-behavior: smooth;
   scrollbar-width: none; /* Firefox */
 }
 
@@ -209,18 +63,17 @@ a {
 }
 
 body {
-  font-family: 'Figtree', sans-serif;
+  font-family: var(--font-sans);
   margin: 0;
   min-width: 100%;
 }
 
 .app-container {
-  background: var(--color-background);
+  background: var(--background);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 0 2em;
-
 }
 
 @media only screen and (max-width: 967px) {

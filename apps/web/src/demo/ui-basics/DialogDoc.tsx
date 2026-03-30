@@ -10,6 +10,8 @@ const DialogDoc = () => {
   const [presetOpen, setPresetOpen] = useState(false);
   const [animationOpen, setAnimationOpen] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState<DialogAnimation>('scale');
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [customOpen, setCustomOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Variant handler
@@ -38,7 +40,7 @@ const DialogDoc = () => {
       <h1 className="docs-category-title">Dialog</h1>
       <p className="docs-paragraph">
         A flexible dialog component for displaying content or requesting confirmation overlaying the main view.
-        Supports multiple animations, presets, and variants.
+        It supports multiple animations, preset footers, and intent-driven variants.
       </p>
 
       {/* Preview Section */}
@@ -135,7 +137,7 @@ const Example = () => {
           preset="confirm"
           title="Confirm Action"
           description="This dialog simulates an asynchronous action on confirm."
-          confirmLabel="Proccessing..."
+          confirmLabel="Approve transfer"
           loading={loading}
           onConfirm={handleConfirm}
         >
@@ -155,7 +157,74 @@ const Example = () => {
   description="Please confirm your action."
 />`} />
 
-      {/* Animations Section */}
+      <h2 className="docs-category-subtitle">Alert & Custom Layouts</h2>
+      <p className="docs-paragraph">
+        Use <span className="docs-highlight">preset="alert"</span> for simple acknowledgements or <span className="docs-highlight">preset="custom"</span> when the body contains a richer form flow.
+      </p>
+
+      <div className="docs-showcase-card flex-wrap gap-4">
+        <Button label="Open Alert" onClick={() => setAlertOpen(true)} />
+        <Button label="Open Custom Dialog" primary onClick={() => setCustomOpen(true)} />
+
+        <Dialog
+          open={alertOpen}
+          onOpenChange={setAlertOpen}
+          preset="alert"
+          variant="success"
+          title="Inventory sync complete"
+          description="All branch counts have been reconciled and the queue is ready for the next import."
+          confirmLabel="Continue"
+        />
+
+        <Dialog
+          open={customOpen}
+          onOpenChange={setCustomOpen}
+          preset="custom"
+          title="Create approval policy"
+          description="Define who needs to sign off before a transfer is released."
+          widthClassName="max-w-2xl"
+          footer={
+            <div className="flex justify-end gap-2">
+              <Button label="Cancel" onClick={() => setCustomOpen(false)} />
+              <Button label="Save policy" primary onClick={() => setCustomOpen(false)} />
+            </div>
+          }
+        >
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">Trigger</p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Transfer amount exceeds $5,000.
+              </p>
+            </div>
+            <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">Approvers</p>
+              <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Operations lead and finance controller.
+              </p>
+            </div>
+          </div>
+        </Dialog>
+      </div>
+
+      <CodeBlock code={`<Dialog
+  open={open}
+  onOpenChange={setOpen}
+  preset="alert"
+  variant="success"
+  title="Inventory sync complete"
+  description="All branch counts have been reconciled and the queue is ready for the next import."
+/>
+
+<Dialog
+  open={open}
+  onOpenChange={setOpen}
+  preset="custom"
+  footer={<DialogActions />}
+>
+  <PolicyEditor />
+</Dialog>`} />
+
       <h2 className="docs-category-subtitle">Animations</h2>
       <p className="docs-paragraph">
         Supports various entrance animations powered by Framer Motion.
@@ -192,8 +261,7 @@ const Example = () => {
   // ...
 />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -225,9 +293,9 @@ const Example = () => {
             </tr>
             <tr>
               <td className="docs-prop-name">preset</td>
-              <td><span className="docs-prop-type">'custom' | 'confirm'</span></td>
+              <td><span className="docs-prop-type">'custom' | 'alert' | 'confirm'</span></td>
               <td>'custom'</td>
-              <td>Layout preset. 'confirm' adds standard footer buttons</td>
+              <td>Layout preset. 'alert' renders one action, while 'confirm' renders cancel and confirm buttons</td>
             </tr>
             <tr>
               <td className="docs-prop-name">animation</td>
@@ -240,6 +308,42 @@ const Example = () => {
               <td><span className="docs-prop-type">boolean</span></td>
               <td>false</td>
               <td>Shows spinner on confirm button</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">closeOnOverlay</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Controls whether clicking the backdrop closes the dialog</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">showClose</td>
+              <td><span className="docs-prop-type">boolean</span></td>
+              <td>true</td>
+              <td>Shows or hides the top-right close icon</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">footer</td>
+              <td><span className="docs-prop-type">ReactNode</span></td>
+              <td>-</td>
+              <td>Custom action area. Overrides preset buttons when provided</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">confirmLabel</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'OK'</td>
+              <td>Primary action label for alert and confirm presets</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">cancelLabel</td>
+              <td><span className="docs-prop-type">string</span></td>
+              <td>'Cancel'</td>
+              <td>Secondary action label for confirm presets</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">onConfirm / onCancel</td>
+              <td><span className="docs-prop-type">{'{() => void}'}</span></td>
+              <td>-</td>
+              <td>Callbacks fired by preset footer buttons</td>
             </tr>
           </tbody>
         </table>

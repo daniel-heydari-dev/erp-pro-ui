@@ -4,55 +4,66 @@ import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
 const RadioDoc = () => {
-  const [selected, setSelected] = useState('option1');
+  const [selectedPlan, setSelectedPlan] = useState('pro');
 
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Radio</h1>
       <p className="docs-paragraph">
-        The Radio component allows users to select a single option from a list.
+        Radio is for single-choice decisions where users must pick exactly one
+        option from a known set.
       </p>
 
-      {/* Preview Section */}
-      <h2 className="docs-category-subtitle">Preview</h2>
+      <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
-        <div className="flex flex-col gap-2">
+        <div className="flex w-full max-w-md flex-col gap-3">
           <Radio
-            id="opt-1"
-            name="demo-group"
-            label="Option 1"
-            checked={selected === 'option1'}
-            onChange={() => setSelected('option1')}
+            id="plan-basic"
+            name="plan"
+            label="Basic Plan"
+            checked={selectedPlan === 'basic'}
+            onChange={() => setSelectedPlan('basic')}
           />
           <Radio
-            id="opt-2"
-            name="demo-group"
-            label="Option 2"
-            checked={selected === 'option2'}
-            onChange={() => setSelected('option2')}
+            id="plan-pro"
+            name="plan"
+            label="Pro Plan"
+            checked={selectedPlan === 'pro'}
+            onChange={() => setSelectedPlan('pro')}
+          />
+          <Radio
+            id="plan-enterprise"
+            name="plan"
+            label="Enterprise Plan"
+            checked={selectedPlan === 'enterprise'}
+            onChange={() => setSelectedPlan('enterprise')}
           />
         </div>
       </div>
 
-      <CodeBlock code={`import { Radio } from 'erp-pro-ui';
+      <CodeBlock
+        code={`import { Radio } from 'erp-pro-ui';
 
-const [selected, setSelected] = useState('option1');
+const [selectedPlan, setSelectedPlan] = useState('pro');
 
 <Radio
-  label="Option 1"
-  checked={selected === 'option1'}
-  onChange={() => setSelected('option1')}
+  name="plan"
+  label="Basic Plan"
+  checked={selectedPlan === 'basic'}
+  onChange={() => setSelectedPlan('basic')}
 />
 <Radio
-  label="Option 2"
-  checked={selected === 'option2'}
-  onChange={() => setSelected('option2')}
-/>`} />
+  name="plan"
+  label="Pro Plan"
+  checked={selectedPlan === 'pro'}
+  onChange={() => setSelectedPlan('pro')}
+/>`}
+      />
 
-      {/* Colors Section */}
-      <h2 className="docs-category-subtitle">Colors</h2>
+      <h2 className="docs-category-subtitle">Color Variants</h2>
       <p className="docs-paragraph">
-        Available in multiple colors to match different themes or states.
+        Use semantic color accents to map options to contexts such as risk,
+        ownership, or status.
       </p>
 
       <div className="docs-showcase-grid">
@@ -76,12 +87,17 @@ const [selected, setSelected] = useState('option1');
         </div>
       </div>
 
-      <CodeBlock code={`<Radio color="blue" defaultChecked />
+      <CodeBlock
+        code={`<Radio color="blue" defaultChecked />
 <Radio color="red" defaultChecked />
-<Radio color="green" defaultChecked />`} />
+<Radio color="green" defaultChecked />`}
+      />
 
-      {/* States Section */}
       <h2 className="docs-category-subtitle">States</h2>
+      <p className="docs-paragraph">
+        Disabled and error states help prevent invalid submissions and guide
+        users toward a valid selection.
+      </p>
 
       <div className="docs-showcase-grid">
         <div className="docs-showcase-card">
@@ -91,7 +107,7 @@ const [selected, setSelected] = useState('option1');
           <Radio label="Disabled Checked" disabled defaultChecked />
         </div>
         <div className="docs-showcase-card">
-          <Radio label="Error State" error="Selection invalid" defaultChecked color="red" />
+          <Radio label="Error State" error="Selection invalid" color="red" />
         </div>
       </div>
 
@@ -99,8 +115,7 @@ const [selected, setSelected] = useState('option1');
 <Radio disabled defaultChecked />
 <Radio error="Invalid selection" color="red" />`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -114,40 +129,58 @@ const [selected, setSelected] = useState('option1');
           <tbody>
             <tr>
               <td className="docs-prop-name">label</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Text label displayed next to radio</td>
+              <td>Optional text label rendered next to the radio control.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">checked</td>
-              <td><span className="docs-prop-type">boolean</span></td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
               <td>-</td>
-              <td>Controlled checked state</td>
+              <td>Controlled selected state.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">color</td>
-              <td><span className="docs-prop-type">RadioColor</span></td>
+              <td>
+                <span className="docs-prop-type">'red' | 'blue' | 'green' | 'yellow' | 'teal' | 'primary'</span>
+              </td>
               <td>'blue'</td>
-              <td>'red' | 'blue' | 'green' | 'yellow' | 'teal' | 'primary'</td>
+              <td>Accent color for the selected radio indicator.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">error</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Error message to display below</td>
+              <td>Error message text shown beside the control.</td>
             </tr>
             <tr>
-              <td className="docs-prop-name">onChange</td>
-              <td><span className="docs-prop-type">(e) =&gt; void</span></td>
+              <td className="docs-prop-name">bgClassName</td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Handler for state changes</td>
+              <td>Additional classes applied to the input element.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">...InputHTMLAttributes</td>
+              <td>
+                <span className="docs-prop-type">HTML props</span>
+              </td>
+              <td>-</td>
+              <td>Supports native props including <code>name</code>, <code>value</code>, <code>onChange</code>, <code>disabled</code>, and <code>required</code>.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <DocsButtonBar
-        previous={{ label: 'Checkbox', route: '/ui-basics/checkbox' }}
+        prev={{ label: 'Checkbox', route: '/ui-basics/checkbox' }}
         next={{ label: 'Switch', route: '/ui-basics/switch' }}
       />
     </section>

@@ -1,0 +1,150 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
+
+import { StorySurface } from '../../shared/storybook';
+import { Radio } from './Radio';
+
+const meta: Meta<typeof Radio> = {
+  title: 'Forms/Radio',
+  component: Radio,
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Single-choice selector for choosing one option from a related set.',
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    label: { control: 'text', description: 'Label text for the radio.' },
+    error: { control: 'text', description: 'Displays an error message.' },
+    disabled: { control: 'boolean', description: 'Locks interaction.' },
+    color: {
+      control: 'select',
+      options: ['primary', 'blue', 'red', 'green', 'yellow', 'teal'],
+      description: 'Accent color of the radio.',
+    },
+    checked: { control: false, description: 'Controlled checked state.' },
+    onChange: { control: false, description: 'Checked state change callback.' },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+/**
+ * ## Default
+ * Basic unchecked radio input.
+ */
+export const Default: Story = {
+  render: () => {
+    const [selected, setSelected] = useState('option-1');
+
+    return (
+      <StorySurface widthClassName="ui:w-full ui:max-w-md">
+        <Radio
+          name="group1"
+          label="Option 1"
+          checked={selected === 'option-1'}
+          onChange={() => setSelected('option-1')}
+        />
+      </StorySurface>
+    );
+  },
+};
+
+/**
+ * ## Radio Group Configuration
+ * Radios sharing the same `name` attribute will toggle correctly as a group.
+ */
+export const RadioGroup: Story = {
+  render: () => {
+    const [plan, setPlan] = useState('basic');
+
+    return (
+      <StorySurface widthClassName="ui:w-full ui:max-w-md">
+        <div className="ui:flex ui:flex-col ui:gap-3">
+          <h4 className="ui:mb-1 ui:font-semibold ui:text-foreground">
+            Select a Plan
+          </h4>
+          <Radio
+            name="plan"
+            label="Basic Plan ($10/mo)"
+            checked={plan === 'basic'}
+            onChange={() => setPlan('basic')}
+          />
+          <Radio
+            name="plan"
+            label="Pro Plan ($20/mo)"
+            checked={plan === 'pro'}
+            onChange={() => setPlan('pro')}
+          />
+          <Radio
+            name="plan"
+            label="Enterprise Plan (Contact Us)"
+            checked={plan === 'enterprise'}
+            onChange={() => setPlan('enterprise')}
+          />
+        </div>
+      </StorySurface>
+    );
+  },
+};
+
+/**
+ * ## Disabled
+ * Example of an unavailable selection.
+ */
+export const Disabled: Story = {
+  decorators: [
+    (StoryFn) => (
+      <StorySurface widthClassName="ui:w-full ui:max-w-md">
+        <StoryFn />
+      </StorySurface>
+    ),
+  ],
+  args: {
+    label: 'Unavailable Option',
+    disabled: true,
+  },
+};
+
+/**
+ * ## Shipping Speed Selector
+ * Common checkout-style radio group showing a realistic single-select flow.
+ */
+export const ShippingSpeedSelector: Story = {
+  render: () => {
+    const [speed, setSpeed] = useState('standard');
+
+    return (
+      <StorySurface widthClassName="ui:w-full ui:max-w-lg">
+        <div className="ui:space-y-3">
+          <h4 className="ui:text-sm ui:font-semibold ui:text-foreground">
+            Shipping speed
+          </h4>
+          <Radio
+            name="shipping"
+            label="Standard (3-5 days)"
+            checked={speed === 'standard'}
+            onChange={() => setSpeed('standard')}
+          />
+          <Radio
+            name="shipping"
+            label="Priority (1-2 days)"
+            checked={speed === 'priority'}
+            onChange={() => setSpeed('priority')}
+          />
+          <Radio
+            name="shipping"
+            label="Same day"
+            checked={speed === 'sameday'}
+            onChange={() => setSpeed('sameday')}
+          />
+        </div>
+      </StorySurface>
+    );
+  },
+};

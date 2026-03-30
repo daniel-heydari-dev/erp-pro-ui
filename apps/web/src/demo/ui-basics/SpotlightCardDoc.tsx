@@ -7,7 +7,7 @@ const SpotlightCardDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Spotlight Card</h1>
       <p className="docs-paragraph">
-        A card component with a dynamic spotlight effect that follows the mouse movement.
+        An interactive highlight surface that follows the pointer with a premium spotlight glow.
       </p>
 
       {/* Basic Usage */}
@@ -87,6 +87,31 @@ const SpotlightCardDoc = () => {
 >
   ...
 </SpotlightCard>`} />
+
+      <h2 className="docs-category-subtitle">Feature Grid</h2>
+      <p className="docs-paragraph">
+        Spotlight cards also work as a grouped feature section for product overviews or landing pages.
+      </p>
+      <div className="docs-showcase-card h-[420px] flex items-center justify-center bg-neutral-950">
+        <div className="grid w-full max-w-5xl gap-4 md:grid-cols-3">
+          {['Smart routing', 'Live approvals', 'Inventory insight'].map((title) => (
+            <SpotlightCard key={title} className="w-full min-h-44">
+              <div className="flex h-full flex-col justify-between gap-3">
+                <p className="text-sm font-semibold text-neutral-900 dark:text-white">{title}</p>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                  Designed for high-signal operational workflows with premium interaction feedback.
+                </p>
+              </div>
+            </SpotlightCard>
+          ))}
+        </div>
+      </div>
+
+      <CodeBlock code={`<div className="grid md:grid-cols-3 gap-4">
+  <SpotlightCard>...</SpotlightCard>
+  <SpotlightCard>...</SpotlightCard>
+  <SpotlightCard>...</SpotlightCard>
+</div>`} />
 
       {/* Props Reference */}
       <h2 className="docs-category-subtitle">Props</h2>

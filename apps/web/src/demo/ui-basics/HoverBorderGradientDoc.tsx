@@ -7,7 +7,7 @@ const HoverBorderGradientDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Hover Border Gradient</h1>
       <p className="docs-paragraph">
-        A container component that animates a gradient around its border, specifically highlighting the border on mouse hover.
+        A generic hoverable frame that adds animated border emphasis to buttons, pills, and small CTA surfaces.
       </p>
 
       {/* Basic Usage */}
@@ -50,6 +50,25 @@ const HoverBorderGradientDoc = () => {
 
 <HoverBorderGradient duration={0.5} clockwise={false}>
   Fast Counter
+</HoverBorderGradient>`} />
+
+      <h2 className="docs-category-subtitle">Action Row</h2>
+      <p className="docs-paragraph">
+        Wrap smaller actions when you want a subtle premium accent without turning the entire panel into a hero component.
+      </p>
+      <div className="docs-showcase-card h-[240px] flex items-center justify-center">
+        <div className="flex flex-wrap gap-4">
+          <HoverBorderGradient>
+            <span className="font-medium">Review order</span>
+          </HoverBorderGradient>
+          <HoverBorderGradient clockwise={false} duration={1.5}>
+            <span className="font-medium">Assign auditor</span>
+          </HoverBorderGradient>
+        </div>
+      </div>
+
+      <CodeBlock code={`<HoverBorderGradient>
+  <span>Review order</span>
 </HoverBorderGradient>`} />
 
       {/* Props Reference */}

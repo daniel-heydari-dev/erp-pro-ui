@@ -4,89 +4,128 @@ import DocsButtonBar from '../../docs/DocsButtonBar';
 import CodeBlock from '../../components/CodeBlock';
 
 const CheckboxDoc = () => {
-  const [checked, setChecked] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [notifications, setNotifications] = useState<string[]>(['email']);
+
+  const toggleChannel = (channel: string, nextChecked: boolean) => {
+    setNotifications((previous) => {
+      if (nextChecked) {
+        return previous.includes(channel) ? previous : [...previous, channel];
+      }
+      return previous.filter((item) => item !== channel);
+    });
+  };
 
   return (
     <section className="docs-section">
       <h1 className="docs-category-title">Checkbox</h1>
       <p className="docs-paragraph">
-        The Checkbox component allows users to select one or multiple items from a list, or toggle an option.
+        Checkbox is used for yes/no choices and multi-select lists where users
+        can enable more than one option at a time.
       </p>
 
-      {/* Preview Section */}
-      <h2 className="docs-category-subtitle">Preview</h2>
+      <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
         <Checkbox
-          id="preview-checkbox"
+          id="terms-checkbox"
           label="Accept terms and conditions"
-          checked={checked}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChecked(e.target.checked)}
+          checked={acceptedTerms}
+          onChange={(event) => setAcceptedTerms(event.target.checked)}
         />
       </div>
 
-      <CodeBlock code={`import { Checkbox } from 'erp-pro-ui';
+      <CodeBlock
+        code={`import { Checkbox } from 'erp-pro-ui';
 
-const [checked, setChecked] = useState(false);
+const [acceptedTerms, setAcceptedTerms] = useState(false);
 
 <Checkbox
   label="Accept terms and conditions"
-  checked={checked}
-  onChange={(e) => setChecked(e.target.checked)}
-/>`} />
+  checked={acceptedTerms}
+  onChange={(event) => setAcceptedTerms(event.target.checked)}
+/>`}
+      />
 
-      {/* Colors Section */}
-      <h2 className="docs-category-subtitle">Colors</h2>
+      <h2 className="docs-category-subtitle">Multi-Select Pattern</h2>
       <p className="docs-paragraph">
-        Customize the checkbox color to match your theme or intent.
+        Use multiple checkboxes with a shared state array for preference and
+        permissions screens.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-md space-y-2">
+          <Checkbox
+            label="Email updates"
+            checked={notifications.includes('email')}
+            onChange={(event) => toggleChannel('email', event.target.checked)}
+          />
+          <Checkbox
+            label="SMS alerts"
+            checked={notifications.includes('sms')}
+            onChange={(event) => toggleChannel('sms', event.target.checked)}
+          />
+          <Checkbox
+            label="Push notifications"
+            checked={notifications.includes('push')}
+            onChange={(event) => toggleChannel('push', event.target.checked)}
+          />
+          <p className="pt-2 text-xs text-neutral-500 dark:text-neutral-400">
+            Selected channels: {notifications.length ? notifications.join(', ') : 'none'}
+          </p>
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`const [channels, setChannels] = useState<string[]>(['email']);
+
+<Checkbox
+  label="Email updates"
+  checked={channels.includes('email')}
+  onChange={(event) => {
+    const checked = event.target.checked;
+    setChannels((prev) =>
+      checked ? [...prev, 'email'] : prev.filter((value) => value !== 'email')
+    );
+  }}
+/>`}
+      />
+
+      <h2 className="docs-category-subtitle">Colors and States</h2>
+      <p className="docs-paragraph">
+        Choose semantic color variants for intent, and use <code>error</code>{' '}
+        or <code>disabled</code> for user feedback.
       </p>
 
       <div className="docs-showcase-grid">
         <div className="docs-showcase-card">
-          <Checkbox label="Primary (Default)" color="primary" defaultChecked />
+          <Checkbox label="Primary" color="primary" defaultChecked />
         </div>
         <div className="docs-showcase-card">
-          <Checkbox label="Green / Success" color="green" defaultChecked />
+          <Checkbox label="Success" color="green" defaultChecked />
         </div>
         <div className="docs-showcase-card">
-          <Checkbox label="Red / Error" color="red" defaultChecked />
+          <Checkbox label="Warning" color="yellow" defaultChecked />
         </div>
         <div className="docs-showcase-card">
-          <Checkbox label="Blue" color="blue" defaultChecked />
+          <Checkbox label="Custom hex color" color="#7c3aed" defaultChecked />
         </div>
         <div className="docs-showcase-card">
-          <Checkbox label="Yellow" color="yellow" defaultChecked />
+          <Checkbox label="Error state" error="Permission required" color="red" />
         </div>
         <div className="docs-showcase-card">
-          <Checkbox label="Teal" color="teal" defaultChecked />
+          <Checkbox label="Disabled" disabled />
         </div>
       </div>
 
-      <CodeBlock code={`<Checkbox color="primary" defaultChecked />
+      <CodeBlock
+        code={`<Checkbox color="primary" defaultChecked />
 <Checkbox color="green" defaultChecked />
-<Checkbox color="red" defaultChecked />
-<Checkbox color="blue" defaultChecked />`} />
+<Checkbox color="#7c3aed" defaultChecked />
+<Checkbox error="Permission required" color="red" />
+<Checkbox disabled />`}
+      />
 
-      {/* States Section */}
-      <h2 className="docs-category-subtitle">States</h2>
-
-      <div className="docs-showcase-grid">
-        <div className="docs-showcase-card">
-          <Checkbox label="Checked state" defaultChecked />
-        </div>
-        <div className="docs-showcase-card">
-          <Checkbox label="Unchecked state" />
-        </div>
-        <div className="docs-showcase-card">
-          <Checkbox label="Error state" error="Permission required" defaultChecked color="red" />
-        </div>
-      </div>
-
-      <CodeBlock code={`<Checkbox defaultChecked />
-<Checkbox />
-<Checkbox error="Permission required" color="red" />`} />
-
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -100,46 +139,66 @@ const [checked, setChecked] = useState(false);
           <tbody>
             <tr>
               <td className="docs-prop-name">label</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Text label displayed next to checkbox</td>
+              <td>Optional text rendered beside the checkbox control.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">checked</td>
-              <td><span className="docs-prop-type">boolean</span></td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
               <td>-</td>
-              <td>Controlled checked state</td>
+              <td>Controlled selection state.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">defaultChecked</td>
-              <td><span className="docs-prop-type">boolean</span></td>
+              <td>
+                <span className="docs-prop-type">boolean</span>
+              </td>
               <td>-</td>
-              <td>Initial checked state (uncontrolled)</td>
+              <td>Initial value when used in uncontrolled mode.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">color</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">'red' | 'blue' | 'green' | 'yellow' | 'teal' | 'primary' | string</span>
+              </td>
               <td>'primary'</td>
-              <td>Color theme: 'primary', 'red', 'green', 'blue', etc.</td>
+              <td>Checked-state color token or any custom color value.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">error</td>
-              <td><span className="docs-prop-type">string</span></td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Error message to display below</td>
+              <td>Error message displayed beside the control.</td>
             </tr>
             <tr>
-              <td className="docs-prop-name">onChange</td>
-              <td><span className="docs-prop-type">(e) =&gt; void</span></td>
+              <td className="docs-prop-name">extra</td>
+              <td>
+                <span className="docs-prop-type">string</span>
+              </td>
               <td>-</td>
-              <td>Handler for state changes</td>
+              <td>Additional class names applied to the input element.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">...InputHTMLAttributes</td>
+              <td>
+                <span className="docs-prop-type">HTML props</span>
+              </td>
+              <td>-</td>
+              <td>Supports native props like <code>name</code>, <code>disabled</code>, <code>required</code>, and <code>onChange</code>.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <DocsButtonBar
-        previous={{ label: 'Input', route: '/ui-basics/input' }}
+        prev={{ label: 'Input', route: '/ui-basics/input' }}
         next={{ label: 'Radio', route: '/ui-basics/radio' }}
       />
     </section>

@@ -1,0 +1,21 @@
+:root,
+[data-theme] {
+  --logo-filter: none;
+  --active-sidebar-foreground: var(--text-1);
+  --viewport-glow-color: transparent;
+  --viewport-glow-blur: 0px;
+  --beam-color-from: transparent;
+  --beam-color-to: transparent;
+  --color-heading: var(--heading);
+  --paragraph-color: var(--text-2);
+}
+
+[data-theme$='-dark'],
+.dark {
+  --logo-filter: brightness(0) invert(1);
+  --active-sidebar-foreground: #ffffff;
+  --viewport-glow-color: rgb(115 103 240 / 0.4);
+  --viewport-glow-blur: 150px;
+  --beam-color-from: #00d8ff;
+  --beam-color-to: #5227ff;
+}

@@ -1,7 +1,5 @@
 # erp-pro-ui
 
-# erp-pro-ui
-
 Premium UI component library for ERP and SaaS applications.
 
 ## Features
@@ -52,6 +50,11 @@ fontFamily: {
 
 ## 🚀 Quick Start
 
+```css
+@import 'tailwindcss';
+@import 'erp-pro-ui/styles.css';
+```
+
 ```tsx
 import { ThemeProvider, Button, Input, Typography } from 'erp-pro-ui';
 
@@ -67,6 +70,37 @@ function App() {
   );
 }
 ```
+
+## 🧱 Package Contract
+
+`erp-pro-ui` publishes reusable UI primitives and domain components.
+
+- Import `tailwindcss` in your app stylesheet, then import `erp-pro-ui/styles.css` once to load the shared tokens and theme presets.
+- Use root imports for convenience: `import { Button, Dialog } from 'erp-pro-ui'`
+- Use subpath imports for leaner consumer bundles: `import { Button } from 'erp-pro-ui/button'`
+- Do not import from `src/**` or internal grouped folders; those paths are implementation details and may change between releases.
+- Composite showcase pages are intentionally excluded from the public API. Build those in your app by composing exported primitives.
+
+## 🗂️ Internal Architecture
+
+The published API stays flat, while the source is organized by responsibility:
+
+```text
+src/
+  foundations/theme
+  components/forms
+  components/overlays
+  components/data-display
+  components/navigation
+  components/feedback
+  components/typography
+  components/effects
+  components/icons
+  components/spinners
+  utils
+```
+
+This keeps the codebase maintainable without forcing consumers to learn internal folder names.
 
 ## 📋 Component Reference
 
@@ -248,7 +282,43 @@ import { Button } from 'erp-pro-ui/button';
 import { Dialog } from 'erp-pro-ui/dialog';
 import { Input } from 'erp-pro-ui/input';
 import { DataTable } from 'erp-pro-ui/data-table';
+import { Calendar } from 'erp-pro-ui/calendar';
 ```
+
+Subpath exports map to real build entries in `dist/`, so the documented import paths are the supported package boundary.
+
+## 🧩 Composition Example
+
+Complex pages should be assembled in the consuming app from exported primitives:
+
+```tsx
+import {
+  AnimatedContent,
+  Button,
+  Carousel,
+  Dialog,
+  GradualBlur,
+} from 'erp-pro-ui';
+
+function MarketingShowcase() {
+  return (
+    <>
+      <GradualBlur>
+        <h1>Design System Showcase</h1>
+      </GradualBlur>
+
+      <AnimatedContent preset="scale">
+        <Carousel items={items} variant="glass" />
+      </AnimatedContent>
+
+      <Button primary label="Open Dialog" onClick={() => setOpen(true)} />
+      <Dialog open={open} onOpenChange={setOpen} title="Crystal Dialog" />
+    </>
+  );
+}
+```
+
+This pattern keeps the package lightweight while still supporting richer product-specific experiences.
 
 ## 🛠️ Development
 

@@ -7,10 +7,14 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Contexts
+// Foundations
 // -----------------------------------------------------------------------------
-export { ThemeProvider, useThemeContext } from './contexts';
-export type { ThemeModeType, ThemeColorType, UseThemeType } from './contexts';
+export { ThemeProvider, useThemeContext } from './foundations/theme';
+export type {
+  ThemeModeType,
+  ThemeColorType,
+  UseThemeType,
+} from './foundations/theme';
 
 // -----------------------------------------------------------------------------
 // Utilities
@@ -20,104 +24,109 @@ export * from './utils';
 // -----------------------------------------------------------------------------
 // Basic Components
 // -----------------------------------------------------------------------------
-export { NeonLineChart } from './components/basics/charts/NeonLineChart';
-export { StackedBarChart } from './components/basics/charts/StackedBarChart';
-export type { StackedBarData } from './components/basics/charts/StackedBarChart';
-export { ThinBreakdownBar } from './components/basics/charts/ThinBreakdownBar';
-export type { BreakdownSegment } from './components/basics/charts/ThinBreakdownBar';
+export {
+  NeonLineChart,
+  StackedBarChart,
+  ThinBreakdownBar,
+  AreaChart,
+  BarChart,
+  PieChart,
+} from './components/data-display/charts';
+export type {
+  StackedBarData,
+  BreakdownSegment,
+  AreaChartData,
+  BarChartData,
+  PieChartData,
+} from './components/data-display/charts';
 
-export { AreaChart } from './components/basics/charts/AreaChart';
-export type { AreaChartData } from './components/basics/charts/AreaChart';
-export { BarChart } from './components/basics/charts/BarChart';
-export type { BarChartData } from './components/basics/charts/BarChart';
-export { PieChart } from './components/basics/charts/PieChart';
-export type { PieChartData } from './components/basics/charts/PieChart';
-
-export { Accordion } from './components/basics/accordion/Accordion';
+export { Accordion } from './components/navigation/accordion';
 export type {
   AccordionProps,
   AccordionItemConfig,
-} from './components/basics/accordion/types.d';
+} from './components/navigation/accordion';
 
-export { Alert } from './components/basics/alert/Alert';
+export { Alert } from './components/feedback/alert';
 
-export { AnimatedContent } from './components/basics/animated-content/AnimatedContent';
+export { AnimatedContent } from './components/effects/animated-content';
 
-export { BackgroundGradientAnimation } from './components/basics/background-gradient-animation/BackgroundGradientAnimation';
+export { BackgroundGradientAnimation } from './components/effects/background-gradient-animation';
 
-export { Button } from './components/basics/Button/Button';
-export type { ButtonProps } from './components/basics/Button/types';
+export { BorderBeam } from './components/effects/border-beam';
+export type { BorderBeamProps } from './components/effects/border-beam';
 
-export { ButtonHoverBorderGradient } from './components/basics/button-hover-border-gradient/ButtonHoverBorderGradient';
+export { Button } from './components/forms/button';
+export type { ButtonProps } from './components/forms/button';
 
-export { Calendar } from './components/basics/calendar/Calendar';
+export { ButtonHoverBorderGradient } from './components/effects/button-hover-border-gradient';
 
-export { Card } from './components/basics/card/Card';
+export { Calendar } from './components/forms/calendar';
 
-export { Carousel } from './components/basics/carousel/Carousel';
+export { Card } from './components/data-display/card';
 
-export { Checkbox } from './components/basics/checkbox/Checkbox';
+export { Carousel } from './components/navigation/carousel';
 
-export { default as Chip } from './components/basics/chip/Chip';
+export { Checkbox } from './components/forms/checkbox';
+
+export { Chip } from './components/data-display/chip';
 export type {
   ChipProps,
   ChipVariant,
   ChipColor,
   ChipSize,
-} from './components/basics/chip/Chip';
+} from './components/data-display/chip';
 
-export { default as ChromaGrid } from './components/basics/chroma-grid/ChromaGrid';
+export { ChromaGrid } from './components/effects/chroma-grid';
 
-// ColorPalette - default export
-export { default as ColorPalette } from './components/basics/colo-palette/ColorPalette';
+export { ColorPalette } from './components/data-display/color-palette';
 export type {
   ColorPaletteProps,
   ColorGroup,
   ColorSwatch,
-} from './components/basics/colo-palette/ColorPalette';
+} from './components/data-display/color-palette';
 
-// Combobox - default export
-export { default as Combobox } from './components/basics/combobox/Combobox';
-export type { ComboboxOption } from './components/basics/combobox/Combobox';
+export { Combobox } from './components/forms/combobox';
+export type {
+  ComboboxOption,
+  ComboboxProps,
+} from './components/forms/combobox';
 
-// DataTable - default export
-export { default as DataTable } from './components/basics/data-table/DataTable';
+export { DataTable } from './components/data-display/data-table';
 export {
   FilterDropdown,
   FilterButton,
   ColumnToggle,
   FilterProfile,
-} from './components/basics/data-table/DataTable';
+} from './components/data-display/data-table';
 export type {
   DataTableProps,
   FilterOption,
   FilterValue,
   FilterValues,
-} from './components/basics/data-table/DataTable';
+} from './components/data-display/data-table';
 
-export { DatePicker } from './components/basics/date-picker/DatePicker';
-export type { DatePickerValue } from './components/basics/date-picker/types';
+export { DatePicker } from './components/forms/date-picker';
+export type { DatePickerValue } from './components/forms/date-picker';
 
-export { Dialog } from './components/basics/dialog/Dialog';
+export { Dialog } from './components/overlays/dialog';
 
-export { Drawer } from './components/basics/drawer/Drawer';
+export { Drawer } from './components/overlays/drawer';
 
-export { Form } from './components/basics/form/Form';
+export { Form } from './components/forms/form';
 
-export { GradualBlur } from './components/basics/gradual-blur/GradualBlur';
+export { GradualBlur } from './components/effects/gradual-blur';
 
-export { HoverBorderGradient } from './components/basics/hover-border-gradient/HoverBorderGradient';
+export { HoverBorderGradient } from './components/effects/hover-border-gradient';
 
-export { default as HoverCard } from './components/basics/hover-card/HoverCard';
+export { HoverCard } from './components/overlays/hover-card';
 
-export { Input } from './components/basics/input/Input';
-export type { InputProps } from './components/basics/input/types';
-export { InputState } from './components/basics/input/types';
+export { Input } from './components/forms/input';
+export type { InputProps } from './components/forms/input';
+export { InputState } from './components/forms/input';
 
-export { Label } from './components/basics/label/Label';
+export { Label } from './components/forms/label';
 
-// Loading - default export
-export { default as Loading } from './components/basics/loading/Loading';
+export { Loading } from './components/data-display/loading';
 export {
   Spinner,
   Dots,
@@ -127,66 +136,69 @@ export {
   Bounce,
   Wave,
   Skeleton,
-} from './components/basics/loading/Loading';
+} from './components/data-display/loading';
 export type {
   LoadingProps,
   LoadingVariant,
   LoadingSize,
-} from './components/basics/loading/Loading';
+} from './components/data-display/loading';
 
-// MultiSelectCombobox - default export
-export { default as MultiSelectCombobox } from './components/basics/multi-select-combobox/MultiSelectCombobox';
+export { MultiSelectCombobox } from './components/forms/multi-select-combobox';
+export type {
+  MultiSelectComboboxProps,
+  MultiSelectOption,
+} from './components/forms/multi-select-combobox';
 
-export { default as OTPInput } from './components/basics/otp-Input/OTPInput';
+export { OTPInput } from './components/forms/otp-input';
+export type { OTPInputProps } from './components/forms/otp-input';
 
-export { PasswordStrengthMeter } from './components/basics/password-strength-meter/PasswordStrengthMeter';
+export { PasswordStrengthMeter } from './components/forms/password-strength-meter';
+export type { PasswordStrengthMeterProps } from './components/forms/password-strength-meter';
 
-export { Preview } from './components/basics/preview/Preview';
+export { Radio } from './components/forms/radio';
 
-export { Radio } from './components/basics/radio/Radio';
+export { Select } from './components/forms/select';
 
-export { Select } from './components/basics/select/Select';
+export { Skeleton as SkeletonComponent } from './components/data-display/skeleton';
 
-export { Skeleton as SkeletonComponent } from './components/basics/skeleton/Skeleton';
+export { SplashCursor } from './components/effects/splash-cursor';
 
-export { default as SplashCursor } from './components/basics/splashCursor/SplashCursor';
+export { SpotlightCard } from './components/effects/spotlight-card';
 
-export { default as SpotlightCard } from './components/basics/spotlight-card/SpotlightCard';
-
-export { default as Stepper } from './components/basics/stepper/Stepper';
+export { Stepper } from './components/navigation/stepper';
 export type {
   StepperProps,
   Step,
   StepperOrientation,
   StepperVariant,
   StepperSize,
-} from './components/basics/stepper/types';
+} from './components/navigation/stepper';
 
-// SunToMoonButton - default export
-export { default as SunToMoonButton } from './components/basics/sun-to-moon-button/SunToMoonButton';
+export { SunToMoonButton } from './components/effects/sun-to-moon-button';
+export type { SunToMoonButtonProps } from './components/effects/sun-to-moon-button';
 
-export { Switch } from './components/basics/switch/Switch';
+export { Switch } from './components/forms/switch';
 
-export { Textarea } from './components/basics/textarea/Textarea';
+export { Textarea } from './components/forms/textarea';
 
 export {
-  default as ToastProvider,
+  ToastProvider,
   ToastItem,
   useToast,
-} from './components/basics/toast/Toast';
+} from './components/overlays/toast';
 export type {
   Toast,
   ToastType,
   ToastPosition,
-} from './components/basics/toast/Toast';
+} from './components/overlays/toast';
 
-export { default as Tooltip } from './components/basics/tooltip/Tooltip';
+export { Tooltip } from './components/overlays/tooltip';
 export type {
   TooltipProps,
   TooltipPosition,
   TooltipTrigger,
-} from './components/basics/tooltip/Tooltip';
-export { Typography } from './components/basics/typography/Typography';
+} from './components/overlays/tooltip';
+export { Typography } from './components/typography';
 export type {
   TypographyProps,
   TypographyVariant,
@@ -194,23 +206,20 @@ export type {
   TypographyWeight,
   TypographyTracking,
   TypographyGradient,
-} from './components/basics/typography/Typography';
-export type { AlertProps, AlertVariant } from './components/basics/alert/types';
+} from './components/typography';
+export type { AlertProps, AlertVariant } from './components/feedback/alert';
 export type {
   DialogProps,
   DialogVariant,
   DialogAnimation,
-} from './components/basics/dialog/types';
-export type {
-  DrawerProps,
-  DrawerPosition,
-} from './components/basics/drawer/types';
+} from './components/overlays/dialog';
+export type { DrawerProps, DrawerPosition } from './components/overlays/drawer';
 
 // -----------------------------------------------------------------------------
 // Text Animation Components
 // -----------------------------------------------------------------------------
-export { default as ASCIIText } from './components/text-animations/ASCIIText/ASCIIText';
-export type { ASCIITextProps } from './components/text-animations/ASCIIText/ASCIIText';
+export { ASCIIText } from './components/effects/ascii-text';
+export type { ASCIITextProps } from './components/effects/ascii-text';
 
 // -----------------------------------------------------------------------------
 // Icons - Re-export from barrel file
@@ -220,4 +229,4 @@ export * from './components/icons';
 // -----------------------------------------------------------------------------
 // Spinners
 // -----------------------------------------------------------------------------
-export { Audio } from './components/spinners/Audio';
+export { Audio } from './components/spinners';

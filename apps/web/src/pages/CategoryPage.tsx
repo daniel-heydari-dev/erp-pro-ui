@@ -1,19 +1,14 @@
-import { componentMap } from "@/constants/Components";
-import { useTransition } from "@/hooks/useTransition";
-import { decodeLabel } from "@/utils/utils";
-import { lazy, Suspense, useEffect } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { componentMap } from '@/constants/Components';
+import { useTransition } from '@/hooks/useTransition';
+import { decodeLabel } from '@/utils/utils';
+import { lazy, Suspense, useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
 import IndexPage from './IndexPage';
 import CategoryRedirect from './CategoryRedirect';
 
-interface CategoryPageProps {
+interface CategoryPageProps {}
 
-}
-
-const CategoryPage = ({ }: CategoryPageProps) => {
-
-
-
+const CategoryPage = ({}: CategoryPageProps) => {
   const { category, subcategory } = useParams();
   const { transitionPhase, getPreloadedComponent } = useTransition();
 
@@ -28,9 +23,11 @@ const CategoryPage = ({ }: CategoryPageProps) => {
   const isIndexPage = subcategory === 'index';
 
   const componentFactory = subcategory && componentMap[subcategory];
-  const preloaded = (subcategory ? getPreloadedComponent(subcategory) : null) as { default: React.ComponentType<any> } | null;
-  const SubcategoryComponent = preloaded?.default || (componentFactory ? lazy(componentFactory) : null);
-
+  const preloaded = (
+    subcategory ? getPreloadedComponent(subcategory) : null
+  ) as { default: React.ComponentType<any> } | null;
+  const SubcategoryComponent =
+    preloaded?.default || (componentFactory ? lazy(componentFactory) : null);
 
   useEffect(() => {
     if (transitionPhase !== 'fade-out') {
@@ -44,19 +41,27 @@ const CategoryPage = ({ }: CategoryPageProps) => {
 
   useEffect(() => {
     if (decodedLabel) {
-      document.title = `React Bits - ${decodedLabel}`;
+      document.title = `erp-pro-ui - ${decodedLabel}`;
     }
   }, [decodedLabel]);
 
   return isIndexPage ? (
     <IndexPage />
   ) : (
-    <div className={`category-page ${isLoading ? 'loading' : ''}`} >
+    <div className={`category-page ${isLoading ? 'loading' : ''}`}>
       <div className="page-transition-fade" style={{ opacity }}>
-        <h2 className={`sub-category ${isGetStartedRoute ? 'docs-category-title' : ''}`}>{decodedLabel}</h2>
+        <h2
+          className={`sub-category ${isGetStartedRoute ? 'docs-category-title' : ''}`}
+        >
+          {decodedLabel}
+        </h2>
 
         {SubcategoryComponent ? (
-          <Suspense fallback={<div className="fixed! inset-0 z-50 pointer-events-none antigravity-glow rounded-none" />}>
+          <Suspense
+            fallback={
+              <div className="fixed! inset-0 z-50 pointer-events-none antigravity-glow rounded-none" />
+            }
+          >
             <SubcategoryComponent />
           </Suspense>
         ) : (
@@ -70,6 +75,6 @@ const CategoryPage = ({ }: CategoryPageProps) => {
       </div>
     </div>
   );
-}
+};
 
 export default CategoryPage;

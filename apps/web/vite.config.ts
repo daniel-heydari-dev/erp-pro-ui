@@ -1,24 +1,36 @@
-import { defineConfig,loadEnv } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
-export default defineConfig(({ mode }) => {
-    // Load env file based on `mode` in the current working directory.
-    // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-    const env = loadEnv(mode, process.cwd(), '');
+const uiPackageRoot = path.resolve(__dirname, '../../packages/ui');
 
-    return {
-        base: '/erp-pro-ui/',
-        plugins: [react(), tailwindcss()],
-        resolve: {
-            alias: {
-                '@': path.resolve(__dirname, './src'),
-                'erp-pro-ui': path.resolve(__dirname, '../../packages/ui/src/index.ts'),
-            },
+export default defineConfig(({ mode }) => {
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    base: '/erp-pro-ui/',
+    plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: [
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, './src'),
         },
-        server: {
-            port: Number(env.VITE_PORT) || 3000,
+        {
+          find: /^erp-pro-ui$/,
+          replacement: path.resolve(uiPackageRoot, 'src/index.ts'),
         },
-    };
+        {
+          find: /^erp-pro-ui\/styles\.css$/,
+          replacement: path.resolve(uiPackageRoot, 'src/styles.css'),
+        },
+      ],
+    },
+    server: {
+      port: Number(env.VITE_PORT) || 3000,
+    },
+  };
 });

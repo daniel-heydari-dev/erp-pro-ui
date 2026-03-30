@@ -7,96 +7,76 @@ const CardDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Card</h1>
       <p className="docs-paragraph">
-        Displays content in a contained, elevated container with a glassmorphism effect.
+        A compact summary surface for highlights, empty states, and lightweight dashboard content.
       </p>
 
-      {/* Preview Section */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
       <div className="docs-showcase-card">
         <Card
-          title="Notifications"
-          description="You have 3 unread messages."
+          title="Project Update"
+          description="The new UI component package has been deployed to the staging environment."
         />
       </div>
 
       <CodeBlock code={`import { Card } from 'erp-pro-ui';
 
 <Card 
-  title="Notifications" 
-  description="You have 3 unread messages." 
+  title="Project Update" 
+  description="The new UI component package has been deployed to the staging environment." 
 />`} />
 
-      {/* Interactive Card */}
-      <h2 className="docs-category-subtitle">Interactive Card</h2>
+      <h2 className="docs-category-subtitle">Dashboard Summaries</h2>
       <p className="docs-paragraph">
-        Cards can handle clicks and feature subtle hover animations for a premium feel.
+        Cards are well suited for compact KPI rows and status summaries.
       </p>
       <div className="docs-showcase-card">
-        <Card
-          title="Clickable Project"
-          description="Click this card to learn more about the implementation details and architecture."
-        />
-      </div>
-
-      <CodeBlock code={`<Card 
-  title="Clickable Project" 
-  description="..." 
-  onClick={() => console.log('Card clicked')}
-/>`} />
-
-      {/* Grid Example */}
-      <h2 className="docs-category-subtitle">Grid Layout</h2>
-      <p className="docs-paragraph">
-        Cards work perfectly in responsive grids for dashboards and feed layouts.
-      </p>
-
-      <div className="docs-showcase-card">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 w-full max-w-4xl">
           <Card
-            title="Revenue"
-            description="$45,231.89"
+            title="Orders Reviewed"
+            description="124 purchase orders were verified in the last 24 hours."
           />
           <Card
-            title="Subscriptions"
-            description="+2,350"
+            title="Stock Alerts"
+            description="8 SKUs require replenishment before the next delivery wave."
+          />
+          <Card
+            title="Warehouse Health"
+            description="Cycle-count completion is currently at 96% across all active zones."
           />
         </div>
       </div>
 
-      <CodeBlock code={`<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <Card title="Revenue" description="..." />
-  <Card title="Subscriptions" description="..." />
+      <CodeBlock code={`<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+  <Card title="Orders Reviewed" description="124 purchase orders were verified in the last 24 hours." />
+  <Card title="Stock Alerts" description="8 SKUs require replenishment before the next delivery wave." />
+  <Card title="Warehouse Health" description="Cycle-count completion is currently at 96% across all active zones." />
 </div>`} />
 
-      {/* Media & Custom Content */}
-      <h2 className="docs-category-subtitle">Custom Content</h2>
+      <h2 className="docs-category-subtitle">Long-Form Content</h2>
       <p className="docs-paragraph">
-        Since cards are flexible, you can nest complex layouts and media inside them.
+        The component still reads cleanly when the description needs more operational detail.
       </p>
+
       <div className="docs-showcase-card">
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-xl">
           <Card
-            title="User Profile"
-            description="Manage your account settings and preferences here."
+            title="Migration Checklist"
+            description="Before enabling the new ERP workspace for every branch, confirm role mappings, import the supplier catalog, verify audit retention settings, and schedule a final permission review with operations leadership."
           />
-          <div className="mt-[-20px] px-6 pb-6 pt-0">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-100 dark:bg-neutral-800/50 border border-neutral-200 dark:border-white/5">
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">JD</div>
-              <div>
-                <p className="text-sm font-semibold">Jane Doe</p>
-                <p className="text-xs text-neutral-500">Product Designer</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
-      <CodeBlock code={`<Card title="User Profile" description="...">
-  {/* Custom content can be nested alongside or inside */}
-</Card>`} />
+      <CodeBlock code={`<Card
+  title="Migration Checklist"
+  description="Before enabling the new ERP workspace for every branch, confirm role mappings, import the supplier catalog, verify audit retention settings, and schedule a final permission review with operations leadership."
+/>`} />
 
-      {/* Props Reference */}
-      <h2 className="docs-category-subtitle">Props</h2>
+      <h2 className="docs-category-subtitle">Core Props</h2>
+      <p className="docs-paragraph">
+        This card intentionally keeps a minimal API: pass concise text through
+        <span className="docs-highlight"> title </span> and
+        <span className="docs-highlight"> description </span>, then compose layout around the card with your own containers.
+      </p>
       <div className="overflow-x-auto">
         <table className="docs-props-table">
           <thead>
@@ -118,7 +98,7 @@ const CardDoc = () => {
               <td className="docs-prop-name">description</td>
               <td><span className="docs-prop-type">string</span></td>
               <td>-</td>
-              <td>Card content text</td>
+              <td>Supporting content shown below the title</td>
             </tr>
           </tbody>
         </table>

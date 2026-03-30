@@ -1,41 +1,48 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import { ThemeProvider, ToastProvider } from 'erp-pro-ui';
+
 import CategoryPage from './pages/CategoryPage';
 import CategoryRedirect from './pages/CategoryRedirect';
 import LandingPage from './pages/LandingPage';
-import { ThemeProvider, ToastProvider } from 'erp-pro-ui';
-import { TransitionProvider } from './components/context/TransitionContext/TransitionContext';
-import { SearchProvider } from './components/context/SearchContext/SearchContext';
+import AppProvidersLayout from './components/layout/AppProvidersLayout';
 import SidebarLayout from './components/layout/SidebarLayout';
+import './styles.css';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      element: <AppProvidersLayout />,
+      children: [
+        {
+          path: '/',
+          element: <LandingPage />,
+        },
+        {
+          path: '/:category',
+          element: <CategoryRedirect />,
+        },
+        {
+          path: '/:category/:subcategory',
+          element: (
+            <SidebarLayout>
+              <CategoryPage />
+            </SidebarLayout>
+          ),
+        },
+        {
+          path: '*',
+          element: <CategoryRedirect />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <LandingPage />,
+    basename: '/erp-pro-ui',
   },
-  {
-    path: "/:category",
-    element: <CategoryRedirect />,
-  },
-  {
-    path: "/:category/:subcategory",
-    element: (
-      <TransitionProvider>
-        <SearchProvider>
-          <SidebarLayout>
-            <CategoryPage />
-          </SidebarLayout>
-        </SearchProvider>
-      </TransitionProvider>
-    ),
-  },
-  {
-    path: "*",
-    element: <CategoryRedirect />,
-  }
-]);
+);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
