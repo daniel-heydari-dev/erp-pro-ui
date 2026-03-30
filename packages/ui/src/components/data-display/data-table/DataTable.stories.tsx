@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { StorySurface } from '../../shared/storybook';
@@ -66,7 +67,13 @@ const sampleData: UserRow[] = [
 const columns = [
   { id: 'name', label: 'Full Name', filterable: true, priority: 1 },
   { id: 'status', label: 'Status', filterable: true, priority: 1 },
-  { id: 'role', label: 'Role', filterable: true, multiFilter: true, priority: 2 },
+  {
+    id: 'role',
+    label: 'Role',
+    filterable: true,
+    multiFilter: true,
+    priority: 2,
+  },
   { id: 'location', label: 'Location', filterable: true, priority: 2 },
   { id: 'lastSeen', label: 'Last Seen', filterable: false, priority: 3 },
 ];
@@ -117,16 +124,28 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    data: sampleData,
     columns,
     pageSize: 5,
     searchPlaceholder: 'Search team members...',
   },
-  render: (args) => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
-      <DataTable {...args} />
-    </StorySurface>
-  ),
+  render: (args) => {
+    const [rows, setRows] = useState(sampleData);
+
+    return (
+      <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+        <DataTable
+          {...args}
+          data={rows}
+          onBulkDelete={(selectedRows) => {
+            const selectedIds = new Set(selectedRows.map((row) => row.id));
+            setRows((previousRows) =>
+              previousRows.filter((row) => !selectedIds.has(row.id)),
+            );
+          }}
+        />
+      </StorySurface>
+    );
+  },
 };
 
 /**
@@ -164,4 +183,31 @@ export const CompactAuditQueue: Story = {
       />
     </StorySurface>
   ),
+};
+
+/**
+ * ## Bulk Selection Workspace
+ * Demonstrates the optional bulk-selection mode and bulk delete action.
+ */
+export const BulkSelectionWorkspace: Story = {
+  render: () => {
+    const [rows, setRows] = useState(sampleData);
+
+    return (
+      <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+        <DataTable
+          data={rows}
+          columns={columns}
+          pageSize={5}
+          searchPlaceholder="Search team members..."
+          onBulkDelete={(selectedRows) => {
+            const selectedIds = new Set(selectedRows.map((row) => row.id));
+            setRows((previousRows) =>
+              previousRows.filter((row) => !selectedIds.has(row.id)),
+            );
+          }}
+        />
+      </StorySurface>
+    );
+  },
 };

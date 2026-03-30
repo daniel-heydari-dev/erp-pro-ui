@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import { StorySurface } from '../../shared/storybook';
+import {
+  StoryIntro,
+  StoryPanel,
+  StorySection,
+  StorySurface,
+} from '../../shared/storybook';
 import { Select } from './Select';
 
 const meta: Meta<typeof Select> = {
@@ -158,7 +163,7 @@ export const ApprovalFormSegment: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-xl">
-        <div className="ui:space-y-4">
+        <StorySection>
           <Select
             label="Review Department"
             value={department}
@@ -169,10 +174,10 @@ export const ApprovalFormSegment: Story = {
               { label: 'Procurement', value: 'procurement' },
             ]}
           />
-          <div className="ui:rounded-md ui:border ui:border-border ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground">
+          <StoryPanel className="ui:rounded-md ui:bg-muted/40 ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground ui:shadow-none">
             Current reviewer queue is generated from the selected department.
-          </div>
-        </div>
+          </StoryPanel>
+        </StorySection>
       </StorySurface>
     );
   },
@@ -181,15 +186,11 @@ export const ApprovalFormSegment: Story = {
 export const CommonStates: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:space-y-4">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-            Common states and surfaces
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Error, disabled, and custom-surface cases are easier to evaluate when shown together.
-          </p>
-        </div>
+      <StorySection>
+        <StoryIntro
+          title="Common states and surfaces"
+          description="Error, disabled, and custom-surface cases are easier to evaluate when shown together."
+        />
         <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
           <Select
             label="Validation"
@@ -224,7 +225,7 @@ export const CommonStates: Story = {
             bgClassName="bg-neutral-900/70 text-white backdrop-blur-xl"
           />
         </div>
-      </div>
+      </StorySection>
     </StorySurface>
   ),
 };

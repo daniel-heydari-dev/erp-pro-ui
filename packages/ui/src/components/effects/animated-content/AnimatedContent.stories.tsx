@@ -1,8 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import { useState, type ComponentProps } from 'react';
 
-import { StorySurface } from '../../shared/storybook';
+import {
+  StoryIntro,
+  StoryPanel,
+  StorySection,
+  StorySurface,
+} from '../../shared/storybook';
 import { AnimatedContent } from './AnimatedContent';
+
+const comparisonPresets = [
+  { preset: 'fade', label: 'Fade' },
+  { preset: 'scale', label: 'Scale' },
+  { preset: 'slideUp', label: 'Slide Up' },
+  { preset: 'bounce', label: 'Bounce' },
+  { preset: 'flip', label: 'Flip' },
+  { preset: 'zoom', label: 'Zoom' },
+] as const;
+
+const staggeredMetrics = [
+  { label: 'New leads', value: '184' },
+  { label: 'Qualified', value: '72' },
+  { label: 'Closed', value: '29' },
+] as const;
 
 const meta: Meta<typeof AnimatedContent> = {
   title: 'Visuals/AnimatedContent',
@@ -47,15 +67,15 @@ export const Default: Story = {
     preset: 'slideUp',
     duration: 0.5,
   },
-  render: (args) => (
+  render: (args: ComponentProps<typeof AnimatedContent>) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-lg">
       <AnimatedContent {...args}>
-        <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-card-foreground ui:shadow-lg">
+        <StoryPanel className="ui:shadow-lg">
           <h3 className="ui:mb-2 ui:text-lg ui:font-semibold">
             Animated Block
           </h3>
           <p className="ui:text-neutral-500">I reveal myself gracefully.</p>
-        </div>
+        </StoryPanel>
       </AnimatedContent>
     </StorySurface>
   ),
@@ -83,16 +103,12 @@ export const PresetGallery: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
-        <div className="ui:space-y-5">
+        <StorySection className="ui:space-y-5">
           <div className="ui:flex ui:flex-col ui:gap-3 ui:md:flex-row ui:md:items-center ui:md:justify-between">
-            <div>
-              <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-                Preset comparison
-              </p>
-              <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-                Replay multiple built-in entrance styles side by side when choosing motion for a section.
-              </p>
-            </div>
+            <StoryIntro
+              title="Preset comparison"
+              description="Replay multiple built-in entrance styles side by side when choosing motion for a section."
+            />
             <button
               type="button"
               onClick={() => setInstanceKey((current) => current + 1)}
@@ -102,38 +118,18 @@ export const PresetGallery: Story = {
             </button>
           </div>
           <div key={instanceKey} className="ui:grid ui:gap-4 md:ui:grid-cols-2 xl:ui:grid-cols-3">
-        {[
-          { preset: 'fade', label: 'Fade' },
-          { preset: 'scale', label: 'Scale' },
-          { preset: 'slideUp', label: 'Slide Up' },
-          { preset: 'bounce', label: 'Bounce' },
-          { preset: 'flip', label: 'Flip' },
-          { preset: 'zoom', label: 'Zoom' },
-        ].map((item, index) => (
-          <AnimatedContent
-            key={item.label}
-            preset={
-              item.preset as
-                | 'fade'
-                | 'scale'
-                | 'slideUp'
-                | 'bounce'
-                | 'flip'
-                | 'zoom'
-            }
-            delay={index * 0.12}
-            duration={0.8}
-          >
-            <div className="ui:flex ui:min-h-32 ui:flex-col ui:items-center ui:justify-center ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-5 ui:text-center ui:shadow-sm">
-              <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-primary/10 ui:text-sm ui:font-bold ui:text-primary">
-                {item.label}
-              </div>
-              <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">{item.preset}</p>
-            </div>
-          </AnimatedContent>
-        ))}
+            {comparisonPresets.map((item, index) => (
+              <AnimatedContent key={item.label} preset={item.preset} delay={index * 0.12} duration={0.8}>
+                <StoryPanel className="ui:flex ui:min-h-32 ui:flex-col ui:items-center ui:justify-center ui:p-5 ui:text-center">
+                  <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-primary/10 ui:text-sm ui:font-bold ui:text-primary">
+                    {item.label}
+                  </div>
+                  <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">{item.preset}</p>
+                </StoryPanel>
+              </AnimatedContent>
+            ))}
           </div>
-        </div>
+        </StorySection>
       </StorySurface>
     );
   },
@@ -145,16 +141,12 @@ export const EasingCurves: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-        <div className="ui:space-y-5">
+        <StorySection className="ui:space-y-5">
           <div className="ui:flex ui:flex-col ui:gap-3 ui:md:flex-row ui:md:items-center ui:md:justify-between">
-            <div>
-              <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-                Easing comparison
-              </p>
-              <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-                Easing changes the personality of the same preset without changing layout.
-              </p>
-            </div>
+            <StoryIntro
+              title="Easing comparison"
+              description="Easing changes the personality of the same preset without changing layout."
+            />
             <button
               type="button"
               onClick={() => setInstanceKey((current) => current + 1)}
@@ -165,17 +157,17 @@ export const EasingCurves: Story = {
           </div>
           <div key={instanceKey} className="ui:flex ui:flex-wrap ui:gap-6">
             <AnimatedContent preset="slideRight" ease="backOut" duration={1}>
-              <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground ui:shadow-sm">
+              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground">
                 Back Out
-              </div>
+              </StoryPanel>
             </AnimatedContent>
             <AnimatedContent preset="slideRight" ease="anticipate" duration={1} delay={0.2}>
-              <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground ui:shadow-sm">
+              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground">
                 Anticipate
-              </div>
+              </StoryPanel>
             </AnimatedContent>
           </div>
-        </div>
+        </StorySection>
       </StorySurface>
     );
   },
@@ -185,20 +177,16 @@ export const StaggeredBoard: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
-        {[
-          { label: 'New leads', value: '184' },
-          { label: 'Qualified', value: '72' },
-          { label: 'Closed', value: '29' },
-        ].map((card, index) => (
+        {staggeredMetrics.map((card, index) => (
           <AnimatedContent key={card.label} preset="slideUp" delay={index * 0.14}>
-            <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-5 ui:shadow-sm">
+            <StoryPanel className="ui:rounded-2xl ui:p-5">
               <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
                 {card.label}
               </p>
               <p className="ui:mt-3 ui:text-3xl ui:font-semibold ui:text-foreground">
                 {card.value}
               </p>
-            </div>
+            </StoryPanel>
           </AnimatedContent>
         ))}
       </div>

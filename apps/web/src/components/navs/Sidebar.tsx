@@ -1,67 +1,145 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useRef, useState, useLayoutEffect, useCallback, useMemo, memo, useEffect } from 'react';
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { CATEGORIES, NEW, UPDATED } from '../../constants/Categories';
 import { componentMap } from '../../constants/Components';
-import { useSearch } from '../context/SearchContext/useSearch';
 import { useTransition } from '../../hooks/useTransition';
 import { getSavedComponents } from '../../utils/favorites';
 
-
-interface SidebarProps {
-
-}
-
 const HOVER_TIMEOUT_DELAY = 150;
-const ICON_BUTTON_STYLES = {
-  rounded: '10px',
-  border: '1px solid var(--color-gray-300)',
-  bg: 'var(--color-background)'
-};
-const ARROW_ICON_PROPS = {
-  boxSize: 4,
-  transform: 'rotate(-45deg)'
-};
+const ACTIVE_LINE_CLASS_NAME =
+  'absolute -left-px top-0 h-6 w-1 rounded-full bg-primary pointer-events-none z-2 transition-all duration-200 ease-in-out';
+const HOVER_LINE_CLASS_NAME =
+  'absolute -left-px top-0 h-6 w-1 rounded-[1px] bg-primary/40 pointer-events-none z-1 transition-all duration-200 ease-in-out';
+const SIDEBAR_CONTENT_CLASS_NAME = 'flex flex-col items-stretch space-y-4';
 
 const scrollToTop = () => window.scrollTo(0, 0);
 const slug = (str: string) => str.replace(/\s+/g, '-').toLowerCase();
 const toPascal = (str: string) =>
   str
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join('');
 
+function useSavedComponentsSet(): Set<string> {
+  const [savedSet, setSavedSet] = useState<Set<string>>(
+    () => new Set(getSavedComponents()),
+  );
 
-const Sidebar = ({ }: SidebarProps) => {
+  useEffect(() => {
+    const updateSaved = () => setSavedSet(new Set(getSavedComponents()));
+    const onStorage = (event: StorageEvent) => {
+      if (!event || event.key === 'savedComponents') {
+        updateSaved();
+      }
+    };
 
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+    window.addEventListener('favorites:updated', updateSaved);
+    window.addEventListener('storage', onStorage);
+    updateSaved();
+
+    return () => {
+      window.removeEventListener('favorites:updated', updateSaved);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  return savedSet;
+}
+
+function useSidebarBottomFade(
+  sidebarContainerRef: React.RefObject<HTMLElement | null>,
+): boolean {
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+
+  useEffect(() => {
+    const sidebarElement = sidebarContainerRef.current;
+    if (!sidebarElement) {
+      return;
+    }
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = sidebarElement;
+      setIsScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 10);
+    };
+
+    sidebarElement.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => sidebarElement.removeEventListener('scroll', handleScroll);
+  }, [sidebarContainerRef]);
+
+  return isScrolledToBottom;
+}
+
+interface SidebarIndicatorLineProps {
+  className: string;
+  isVisible: boolean;
+  position: number | null;
+  hiddenOffset: number;
+}
+
+function SidebarIndicatorLine({
+  className,
+  isVisible,
+  position,
+  hiddenOffset,
+}: SidebarIndicatorLineProps) {
+  return (
+    <div
+      className={[className, isVisible ? 'opacity-100' : 'opacity-0'].join(' ')}
+      style={{
+        transform:
+          isVisible && position !== null
+            ? `translateY(${position - 12}px)`
+            : `translateY(${hiddenOffset}px)`,
+      }}
+    />
+  );
+}
+
+const Sidebar = () => {
   const [linePosition, setLinePosition] = useState<number | null>(null);
   const [isLineVisible, setIsLineVisible] = useState(false);
-  const [hoverLinePosition, setHoverLinePosition] = useState<number | null>(null);
+  const [hoverLinePosition, setHoverLinePosition] = useState<number | null>(
+    null,
+  );
   const [isHoverLineVisible, setIsHoverLineVisible] = useState(false);
-  const [pendingActivePath, setPendingActivePath] = useState<string | null>(null);
-  const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+  const [pendingActivePath, setPendingActivePath] = useState<string | null>(
+    null,
+  );
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
 
-  const searchBtnRef = useRef<HTMLButtonElement>(null);
-  const menuBtnRef = useRef<HTMLButtonElement>(null);
   const sidebarContainerRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Record<string, HTMLElement | null>>({});
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hoverDelayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [savedSet, setSavedSet] = useState<Set<string>>(() => new Set(getSavedComponents()));
+  const hoverDelayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const savedSet = useSavedComponentsSet();
+  const isScrolledToBottom = useSidebarBottomFade(sidebarContainerRef);
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { toggleSearch } = useSearch();
   const { startTransition, isTransitioning } = useTransition();
 
   const findActiveElement = useCallback(() => {
     const activePath = pendingActivePath || location.pathname;
 
     for (const category of CATEGORIES) {
-      const subPath = category.subcategories.find(sub => {
+      const subPath = category.subcategories.find((sub) => {
         return activePath === `/${slug(category.name)}/${slug(sub)}`;
       });
 
@@ -104,22 +182,11 @@ const Sidebar = ({ }: SidebarProps) => {
   }, []);
 
   const toggleCategory = useCallback((name: string) => {
-    setExpandedCategories(prev => ({
+    setExpandedCategories((prev) => ({
       ...prev,
-      [name]: !prev[name]
+      [name]: !prev[name],
     }));
   }, []);
-
-  const handleDrawerToggle = () => setDrawerOpen(p => !p);
-  const closeDrawer = () => setDrawerOpen(false);
-  const onSearchClick = () => {
-    closeDrawer();
-    toggleSearch();
-  };
-  const onNavClick = () => {
-    closeDrawer();
-    scrollToTop();
-  };
 
   const handleTransitionNavigation = useCallback(
     async (path: string, subcategory: string) => {
@@ -133,28 +200,13 @@ const Sidebar = ({ }: SidebarProps) => {
         setPendingActivePath(null);
       });
     },
-    [isTransitioning, location.pathname, startTransition, navigate]
-  );
-
-  const handleMobileTransitionNavigation = useCallback(
-    async (path: string, subcategory: string) => {
-      if (isTransitioning || location.pathname === path) return;
-
-      closeDrawer();
-      setPendingActivePath(path);
-
-      await startTransition(slug(subcategory), componentMap, () => {
-        navigate(path);
-        scrollToTop();
-        setPendingActivePath(null);
-      });
-    },
-    [isTransitioning, location.pathname, startTransition, navigate]
+    [isTransitioning, location.pathname, startTransition, navigate],
   );
 
   const onItemEnter = (path: string, e: React.MouseEvent<HTMLElement>) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    if (hoverDelayTimeoutRef.current) clearTimeout(hoverDelayTimeoutRef.current);
+    if (hoverDelayTimeoutRef.current)
+      clearTimeout(hoverDelayTimeoutRef.current);
 
     const targetElement = e.currentTarget;
 
@@ -169,7 +221,8 @@ const Sidebar = ({ }: SidebarProps) => {
   };
 
   const onItemLeave = () => {
-    if (hoverDelayTimeoutRef.current) clearTimeout(hoverDelayTimeoutRef.current);
+    if (hoverDelayTimeoutRef.current)
+      clearTimeout(hoverDelayTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
       setIsHoverLineVisible(false);
     }, HOVER_TIMEOUT_DELAY);
@@ -183,14 +236,18 @@ const Sidebar = ({ }: SidebarProps) => {
       const offset = 100;
 
       const isElementAboveView = elementRect.top < containerRect.top + offset;
-      const isElementBelowView = elementRect.bottom > containerRect.bottom - offset;
+      const isElementBelowView =
+        elementRect.bottom > containerRect.bottom - offset;
 
       if (isElementAboveView || isElementBelowView) {
-        const scrollTop = sidebarContainerRef.current.scrollTop + (elementRect.top - containerRect.top) - offset;
+        const scrollTop =
+          sidebarContainerRef.current.scrollTop +
+          (elementRect.top - containerRect.top) -
+          offset;
 
         sidebarContainerRef.current.scrollTo({
           top: scrollTop,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     }
@@ -222,9 +279,10 @@ const Sidebar = ({ }: SidebarProps) => {
   useEffect(
     () => () => {
       if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-      if (hoverDelayTimeoutRef.current) clearTimeout(hoverDelayTimeoutRef.current);
+      if (hoverDelayTimeoutRef.current)
+        clearTimeout(hoverDelayTimeoutRef.current);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -233,44 +291,12 @@ const Sidebar = ({ }: SidebarProps) => {
     }
   }, [location.pathname, pendingActivePath]);
 
-  useEffect(() => {
-    const sidebarElement = sidebarContainerRef.current;
-    if (!sidebarElement) return;
-
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = sidebarElement;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
-      setIsScrolledToBottom(isAtBottom);
-    };
-
-    sidebarElement.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => sidebarElement.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Keep favorites in sync so hearts update when user toggles favorites
-  useEffect(() => {
-    const updateSaved = () => setSavedSet(new Set(getSavedComponents()));
-    const onStorage = (e: StorageEvent) => {
-      if (!e || e.key === 'savedComponents') updateSaved();
-    };
-    window.addEventListener('favorites:updated', updateSaved);
-    window.addEventListener('storage', onStorage);
-    // Ensure initial sync
-    updateSaved();
-    return () => {
-      window.removeEventListener('favorites:updated', updateSaved);
-      window.removeEventListener('storage', onStorage);
-    };
-  }, []);
-
   const setCategoryExpanded = useCallback((name: string, expanded: boolean) => {
-    setExpandedCategories(prev => {
+    setExpandedCategories((prev) => {
       if (prev[name] === expanded) return prev;
       return {
         ...prev,
-        [name]: expanded
+        [name]: expanded,
       };
     });
   }, []);
@@ -278,48 +304,32 @@ const Sidebar = ({ }: SidebarProps) => {
   return (
     <nav
       ref={sidebarContainerRef}
-      className={`sidebar ${isScrolledToBottom ? "sidebar-no-fade" : ""} fixed top-[57px] h-screen w-0 md:w-40 p-5 overflow-y-auto `}
+      className={`sidebar ${isScrolledToBottom ? 'sidebar-no-fade' : ''} fixed top-14.25 h-screen w-0 overflow-y-auto p-5 md:w-40`}
     >
       <div ref={sidebarRef} className="relative">
-        {/* Active line */}
-        <div
-          className={[
-            "absolute -left-px top-0 w-[4px] h-6 bg-primary rounded-full pointer-events-none z-[2]",
-            "transition-all duration-200 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)]",
-            isLineVisible ? "opacity-100" : "opacity-0",
-          ].join(" ")}
-          style={{
-            transform:
-              isLineVisible && linePosition !== null
-                ? `translateY(${linePosition - 12}px)`
-                : "translateY(-205px)",
-          }}
+        <SidebarIndicatorLine
+          className={ACTIVE_LINE_CLASS_NAME}
+          isVisible={isLineVisible}
+          position={linePosition}
+          hiddenOffset={-205}
+        />
+        <SidebarIndicatorLine
+          className={HOVER_LINE_CLASS_NAME}
+          isVisible={isHoverLineVisible}
+          position={hoverLinePosition}
+          hiddenOffset={-100}
         />
 
-        {/* Hover line */}
-        <div
-          className={[
-            "absolute -left-px top-0 w-[4px] h-6 bg-primary/40 rounded-[1px] pointer-events-none z-[1]",
-            "transition-all duration-200 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)]",
-            isHoverLineVisible ? "opacity-100" : "opacity-0",
-          ].join(" ")}
-          style={{
-            transform:
-              hoverLinePosition !== null
-                ? `translateY(${hoverLinePosition - 12}px)`
-                : "translateY(-100px)",
-          }}
-        />
-
-        {/* VStack */}
-        <div className="flex flex-col items-stretch space-y-4">
+        <div className={SIDEBAR_CONTENT_CLASS_NAME}>
           {CATEGORIES.map((cat, index) => (
             <Category
               key={cat.name}
               category={cat}
               isExpanded={!!expandedCategories[cat.name]}
               toggleExpanded={() => toggleCategory(cat.name)}
-              onExpandedChange={(expanded) => setCategoryExpanded(cat.name, expanded)}
+              onExpandedChange={(expanded) =>
+                setCategoryExpanded(cat.name, expanded)
+              }
               location={location}
               pendingActivePath={pendingActivePath}
               handleClick={scrollToTop}
@@ -334,9 +344,9 @@ const Sidebar = ({ }: SidebarProps) => {
           ))}
         </div>
       </div>
-    </nav >
-  )
-}
+    </nav>
+  );
+};
 
 type CategoryData = {
   name: string;
@@ -346,8 +356,8 @@ type CategoryData = {
 type SavedSetLike =
   | Set<string>
   | {
-    has?: (key: string) => boolean;
-  }
+      has?: (key: string) => boolean;
+    }
   | null
   | undefined;
 
@@ -386,7 +396,6 @@ export const Category = memo(function Category({
   isFirstCategory,
   savedSet,
 }: CategoryProps) {
-
   const items = useMemo(() => {
     return category.subcategories.map((sub) => {
       const path = `/${slug(category.name)}/${slug(sub)}`;
@@ -407,10 +416,19 @@ export const Category = memo(function Category({
         isFavorited: hasFavorite,
       };
     });
-  }, [category.name, category.subcategories, location.pathname, pendingActivePath, savedSet]);
+  }, [
+    category.name,
+    category.subcategories,
+    location.pathname,
+    pendingActivePath,
+    savedSet,
+  ]);
 
   const activePath = pendingActivePath || location.pathname;
-  const hasActiveItem = useMemo(() => items.some(item => item.isActive), [items]);
+  const hasActiveItem = useMemo(
+    () => items.some((item) => item.isActive),
+    [items],
+  );
   const prevActivePathRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -430,7 +448,8 @@ export const Category = memo(function Category({
       <div>
         <div
           ref={(el) => {
-            if (itemRefs.current) itemRefs.current[`category:${category.name}`] = el;
+            if (itemRefs.current)
+              itemRefs.current[`category:${category.name}`] = el;
           }}
           onClick={toggleExpanded}
           onMouseEnter={(e) => {
@@ -445,26 +464,30 @@ export const Category = memo(function Category({
             }
           }}
           className={[
-            "category-header",
-            "mb-2",
-            isFirstCategory ? "mt-0" : "mt-4",
-            hasActiveItem && !isExpanded ? "active-category-header" : "",
-          ].join(" ")}
+            'category-header',
+            'mb-2',
+            isFirstCategory ? 'mt-0' : 'mt-4',
+            hasActiveItem && !isExpanded ? 'active-category-header' : '',
+          ].join(' ')}
         >
-          <span className="category-name m-2 relative z-1">{category.name}</span>
+          <span className="category-name m-2 relative z-1">
+            {category.name}
+          </span>
           {hasActiveItem && !isExpanded && (
             <motion.div
               layoutId="active-sidebar-pill"
               className="active-pill-background"
               transition={{
-                type: "spring",
+                type: 'spring',
                 stiffness: 350,
                 damping: 30,
               }}
             />
           )}
           <svg
-            className={["category-chevron", isExpanded ? "expanded" : ""].join(" ")}
+            className={['category-chevron', isExpanded ? 'expanded' : ''].join(
+              ' ',
+            )}
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -483,76 +506,82 @@ export const Category = memo(function Category({
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{
-                height: "auto",
+                height: 'auto',
                 opacity: 1,
                 transition: {
                   height: {
-                    type: "spring",
+                    type: 'spring',
                     stiffness: 350,
                     damping: 30,
                   },
-                  opacity: { duration: 0.2 }
-                }
+                  opacity: { duration: 0.2 },
+                },
               }}
               exit={{
                 height: 0,
                 opacity: 0,
                 transition: {
                   height: {
-                    type: "spring",
+                    type: 'spring',
                     stiffness: 350,
                     damping: 30,
                   },
-                  opacity: { duration: 0.2 }
-                }
+                  opacity: { duration: 0.2 },
+                },
               }}
               className="category-content-wrapper"
             >
               <div className="category-content relative pl-4 border-l border-[#392e4e] flex flex-col space-y-2 pb-2">
-                {items.map(({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
-                  <Link
-                    key={path}
-                    to={path}
-                    ref={(el) => {
-                      if (itemRefs.current) itemRefs.current[path] = el;
-                    }}
-                    className={[
-                      "sidebar-item",
-                      isActive ? "active-sidebar-item" : "",
-                      isTransitioning ? "transitioning" : "",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (handleTransitionNavigation) {
-                        handleTransitionNavigation(path, sub);
-                      } else {
-                        handleClick();
-                      }
-                    }}
-                    onMouseEnter={(e) => onItemMouseEnter(path, e)}
-                    onMouseLeave={onItemMouseLeave}
-                  >
-                    <span className="inline-flex items-center ml-2 relative z-1">
-                      {sub}
-                      {isNew && <span className="new-tag ml-2">New</span>}
-                      {isUpdated && <span className="updated-tag ml-2">Updated</span>}
-                      {isFavorited && <span className="favorited-heart ml-2">❤️</span>}
-                    </span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="active-sidebar-pill"
-                        className="active-pill-background"
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                  </Link>
-                ))}
+                {items.map(
+                  ({ sub, path, isActive, isNew, isUpdated, isFavorited }) => (
+                    <Link
+                      key={path}
+                      to={path}
+                      ref={(el) => {
+                        if (itemRefs.current) itemRefs.current[path] = el;
+                      }}
+                      className={[
+                        'sidebar-item',
+                        isActive ? 'active-sidebar-item' : '',
+                        isTransitioning ? 'transitioning' : '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (handleTransitionNavigation) {
+                          handleTransitionNavigation(path, sub);
+                        } else {
+                          handleClick();
+                        }
+                      }}
+                      onMouseEnter={(e) => onItemMouseEnter(path, e)}
+                      onMouseLeave={onItemMouseLeave}
+                    >
+                      <span className="inline-flex items-center ml-2 relative z-1">
+                        {sub}
+                        {isNew && <span className="new-tag ml-2">New</span>}
+                        {isUpdated && (
+                          <span className="updated-tag ml-2">Updated</span>
+                        )}
+                        {isFavorited && (
+                          <span className="favorited-heart ml-2">❤️</span>
+                        )}
+                      </span>
+                      {isActive && (
+                        <motion.div
+                          layoutId="active-sidebar-pill"
+                          className="active-pill-background"
+                          transition={{
+                            type: 'spring',
+                            stiffness: 350,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                    </Link>
+                  ),
+                )}
               </div>
             </motion.div>
           )}
@@ -561,6 +590,5 @@ export const Category = memo(function Category({
     </>
   );
 });
-
 
 export default Sidebar;

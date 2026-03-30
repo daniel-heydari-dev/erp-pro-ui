@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import { StorySurface } from '../../shared/storybook';
+import { StorySection, StorySurface } from '../../shared/storybook';
 import { Switch } from './Switch';
 
 const meta: Meta<typeof Switch> = {
@@ -114,7 +114,7 @@ export const SettingsGroup: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-        <div className="ui:space-y-4">
+        <StorySection>
           <Switch
             label="Daily email digest"
             checked={emailDigest}
@@ -126,7 +126,7 @@ export const SettingsGroup: Story = {
             onChange={(e) => setSmsAlerts(e.target.checked)}
           />
           <Switch label="Audit lock" checked disabled />
-        </div>
+        </StorySection>
       </StorySurface>
     );
   },

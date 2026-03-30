@@ -6,7 +6,7 @@ import { Button } from '../button';
 import { Checkbox } from '../checkbox';
 import { Input } from '../input';
 import { Textarea } from '../textarea';
-import { StorySurface } from '../../shared/storybook';
+import { StoryPanel, StorySurface } from '../../shared/storybook';
 
 const meta: Meta<typeof Form> = {
   title: 'Layout/Form',
@@ -71,7 +71,7 @@ function SignInFormDemo() {
           <Button primary type="submit" className="ui:w-full" label="Sign In" />
         </Form>
 
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-muted/40 ui:p-4">
+        <StoryPanel className="ui:rounded-2xl ui:bg-muted/40 ui:p-4 ui:shadow-none">
           <p className="ui:text-sm ui:font-semibold ui:text-foreground">
             Captured submit payload
           </p>
@@ -88,7 +88,7 @@ function SignInFormDemo() {
               2,
             )}
           </pre>
-        </div>
+        </StoryPanel>
       </div>
     </StorySurface>
   );

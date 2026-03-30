@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { StorySurface } from '../../shared/storybook';
+import { StoryIntro, StorySection, StorySurface } from '../../shared/storybook';
 import { ChromaGrid } from './ChromaGrid';
 
 const launchItems = [
@@ -111,16 +111,11 @@ type Story = StoryObj<typeof meta>;
 export const FeatureHighlights: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
-      <div className="ui:space-y-4">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-            Landing-page feature mosaic
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Mirrors the docs gradient treatment with mixed card sizes and a
-            clear hero card.
-          </p>
-        </div>
+      <StorySection>
+        <StoryIntro
+          title="Landing-page feature mosaic"
+          description="Mirrors the docs gradient treatment with mixed card sizes and a clear hero card."
+        />
         <ChromaGrid
           items={launchItems}
           columns={3}
@@ -131,7 +126,7 @@ export const FeatureHighlights: Story = {
           minHeight={170}
           gap={18}
         />
-      </div>
+      </StorySection>
     </StorySurface>
   ),
 };
@@ -142,16 +137,13 @@ export const GlassOperationsBoard: Story = {
       widthClassName="ui:w-full ui:max-w-6xl"
       className="ui:border-none ui:bg-gradient-to-br ui:from-slate-950 ui:via-slate-900 ui:to-slate-950"
     >
-      <div className="ui:space-y-4">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-white">
-            Glass variant for premium dashboards
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-white/65">
-            Works well when the grid needs to sit on top of an existing branded
-            backdrop.
-          </p>
-        </div>
+      <StorySection>
+        <StoryIntro
+          title="Glass variant for premium dashboards"
+          description="Works well when the grid needs to sit on top of an existing branded backdrop."
+          titleClassName="ui:text-white"
+          descriptionClassName="ui:text-white/65"
+        />
         <ChromaGrid
           items={operationsItems}
           columns={3}
@@ -162,7 +154,7 @@ export const GlassOperationsBoard: Story = {
           minHeight={160}
           gap={20}
         />
-      </div>
+      </StorySection>
     </StorySurface>
   ),
 };
@@ -170,16 +162,11 @@ export const GlassOperationsBoard: Story = {
 export const PulseStatusWall: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:space-y-4">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-            Compact animation-led layout
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            A tighter grid with pulse entrances for campaign status, regional
-            rollouts, or alert clusters.
-          </p>
-        </div>
+      <StorySection>
+        <StoryIntro
+          title="Compact animation-led layout"
+          description="A tighter grid with pulse entrances for campaign status, regional rollouts, or alert clusters."
+        />
         <ChromaGrid
           items={pulseItems}
           columns={4}
@@ -191,7 +178,7 @@ export const PulseStatusWall: Story = {
           gap={16}
           borderRadius="2xl"
         />
-      </div>
+      </StorySection>
     </StorySurface>
   ),
 };

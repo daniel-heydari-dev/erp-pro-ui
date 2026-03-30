@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { StorySurface } from '../../shared/storybook';
+import {
+  StoryPanel,
+  StorySection,
+  StorySurface,
+} from '../../shared/storybook';
 import MultiSelectCombobox from './MultiSelectCombobox';
 
 const options = [
@@ -65,14 +69,14 @@ function SelectionSummaryExample() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
-      <div className="ui:space-y-4">
+      <StorySection>
         <MultiSelectCombobox
           options={options}
           value={values}
           onChange={setValues}
           placeholder="Select frameworks..."
         />
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-muted/40 ui:p-4">
+        <StoryPanel className="ui:rounded-lg ui:bg-muted/40 ui:p-4 ui:shadow-none">
           <p className="ui:mb-2 ui:text-sm ui:font-medium">Selected Values:</p>
           <div className="ui:flex ui:flex-wrap ui:gap-2">
             {values.length > 0 ? (
@@ -90,8 +94,8 @@ function SelectionSummaryExample() {
               </span>
             )}
           </div>
-        </div>
-      </div>
+        </StoryPanel>
+      </StorySection>
     </StorySurface>
   );
 }
@@ -101,7 +105,7 @@ function DenseToolbarExample() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-5">
+      <StoryPanel className="ui:rounded-2xl ui:p-5">
         <div className="ui:mb-3 ui:flex ui:items-center ui:justify-between ui:gap-3">
           <p className="ui:text-sm ui:font-medium">Task board filters</p>
           <span className="ui:text-xs ui:text-muted-foreground">
@@ -115,7 +119,7 @@ function DenseToolbarExample() {
           placeholder="Filter by stack or capability..."
           bgClassName="ui:bg-muted"
         />
-      </div>
+      </StoryPanel>
     </StorySurface>
   );
 }

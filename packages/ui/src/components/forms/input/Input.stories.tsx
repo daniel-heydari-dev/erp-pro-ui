@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import type { ComponentProps } from 'react';
 
 import { Button } from '../button';
-import { StoryStack, StorySurface } from '../../shared/storybook';
+import {
+  StoryIntro,
+  StorySection,
+  StoryStack,
+  StorySurface,
+} from '../../shared/storybook';
 import { SearchIcon } from '../../icons';
 import { Input } from './Input';
-import { InputState } from './types';
+import { InputState, type InputProps } from './types';
 
-const meta = {
+const meta: Meta<typeof Input> = {
   title: 'Forms/Input',
   component: Input,
-  render: (args: ComponentProps<typeof Input>) => (
+  render: (args: InputProps) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <Input {...args} className="ui:w-full" />
     </StorySurface>
@@ -56,7 +60,7 @@ const meta = {
     onChange: { control: false },
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Input>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -142,12 +146,10 @@ export const States: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <StoryStack className="ui:w-full">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">Validation states</p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Pair visual state with helper, success, or error messaging so users can recover without losing context.
-          </p>
-        </div>
+        <StoryIntro
+          title="Validation states"
+          description="Pair visual state with helper, success, or error messaging so users can recover without losing context."
+        />
         <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
           <Input
             label="Work email"
@@ -177,22 +179,23 @@ export const States: Story = {
 export const CommonFieldPatterns: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:space-y-4">
-        <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
-            Common field patterns
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Show search, email, and secure-entry fields in realistic surfaces instead of isolated control samples.
-          </p>
-        </div>
+      <StorySection>
+        <StoryIntro
+          title="Common field patterns"
+          description="Show search, email, and secure-entry fields in realistic surfaces instead of isolated control samples."
+        />
         <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
           <Input
             label="Search"
             placeholder="Search projects"
             icon={<SearchIcon width={18} height={18} color="currentColor" />}
           />
-          <Input label="Email" type="email" placeholder="Email address" icon={<MailIcon />} />
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Email address"
+            icon={<MailIcon />}
+          />
           <Input
             label="Password"
             type="password"
@@ -200,7 +203,7 @@ export const CommonFieldPatterns: Story = {
             bgClassName="bg-neutral-100 dark:bg-neutral-800"
           />
         </div>
-      </div>
+      </StorySection>
     </StorySurface>
   ),
 };
@@ -243,9 +246,19 @@ export const ValidationFeedbackFlow: Story = {
           placeholder="Enter at least 6 characters"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          state={hasValue ? (isValid ? InputState.SUCCESS : InputState.ERROR) : InputState.DEFAULT}
+          state={
+            hasValue
+              ? isValid
+                ? InputState.SUCCESS
+                : InputState.ERROR
+              : InputState.DEFAULT
+          }
           message={isValid ? 'Code format looks valid.' : undefined}
-          error={hasValue && !isValid ? 'Code must be at least 6 characters.' : undefined}
+          error={
+            hasValue && !isValid
+              ? 'Code must be at least 6 characters.'
+              : undefined
+          }
         />
       </StorySurface>
     );

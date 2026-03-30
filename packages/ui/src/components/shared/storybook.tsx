@@ -58,3 +58,67 @@ export function StoryStack({
     </div>
   );
 }
+
+export function StorySection({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
+  return <div className={mergeClassNames('ui:space-y-4', className)}>{children}</div>;
+}
+
+interface StoryIntroProps {
+  title: ReactNode;
+  description?: ReactNode;
+  className?: string;
+  titleClassName?: string;
+  descriptionClassName?: string;
+}
+
+export function StoryIntro({
+  title,
+  description,
+  className,
+  titleClassName,
+  descriptionClassName,
+}: StoryIntroProps) {
+  return (
+    <div className={className}>
+      <p
+        className={mergeClassNames(
+          'ui:text-sm ui:font-semibold ui:text-foreground',
+          titleClassName,
+        )}
+      >
+        {title}
+      </p>
+      {description ? (
+        <p
+          className={mergeClassNames(
+            'ui:mt-1 ui:text-sm ui:text-muted-foreground',
+            descriptionClassName,
+          )}
+        >
+          {description}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+interface StoryPanelProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function StoryPanel({ children, className }: StoryPanelProps) {
+  return (
+    <div
+      className={mergeClassNames(
+        'ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-card-foreground ui:shadow-sm',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
