@@ -4,6 +4,15 @@ import {
   AnimatePresence,
   type TargetAndTransition,
 } from "framer-motion";
+import {
+  AlertCircleIcon,
+  AlertTriangleIcon,
+  CheckCircleIcon,
+  CloseIcon,
+  InfoCircleIcon,
+  LoaderIcon,
+  QuestionCircleIcon,
+} from "../../icons";
 import type {
   DialogProps,
   DialogVariant,
@@ -136,102 +145,18 @@ const variantStyles: Record<
 // Default icons per variant
 const VariantIcon = ({ variant }: { variant: DialogVariant }): ReactElement => {
   const icons: Record<DialogVariant, ReactElement> = {
-    default: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-        />
-      </svg>
-    ),
-    destructive: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-        />
-      </svg>
-    ),
-    success: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    ),
-    warning: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-        />
-      </svg>
-    ),
-    info: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-        />
-      </svg>
-    ),
+    default: <QuestionCircleIcon className="w-6 h-6" aria-hidden="true" />,
+    destructive: <AlertTriangleIcon className="w-6 h-6" aria-hidden="true" />,
+    success: <CheckCircleIcon className="w-6 h-6" aria-hidden="true" />,
+    warning: <AlertCircleIcon className="w-6 h-6" aria-hidden="true" />,
+    info: <InfoCircleIcon className="w-6 h-6" aria-hidden="true" />,
   };
   return icons[variant];
 };
 
 // Loading spinner
 const Spinner = () => (
-  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    />
-    <path
-      className="opacity-75"
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-    />
-  </svg>
+  <LoaderIcon className="animate-spin w-4 h-4" aria-hidden="true" />
 );
 
 export const Dialog = ({
@@ -382,19 +307,7 @@ export const Dialog = ({
                 aria-label="Close dialog"
                 onClick={() => onOpenChange?.(false)}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <CloseIcon className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
 

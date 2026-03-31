@@ -1,5 +1,7 @@
 import { forwardRef } from "react";
 
+import { CloseIcon } from "../../icons";
+
 export type ChipVariant = "filled" | "outlined" | "soft" | "glass";
 export type ChipColor =
   | "default"
@@ -238,19 +240,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
             `}
             aria-label="Remove"
           >
-            <svg
-              className={iconSizeStyles[size]}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <CloseIcon className={iconSizeStyles[size]} aria-hidden="true" />
           </button>
         )}
       </span>

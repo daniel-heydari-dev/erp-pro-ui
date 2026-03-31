@@ -1,5 +1,6 @@
-import { CheckIcon, ChevronDownIcon } from "../../icons";
 import React, { useEffect, useRef, useState } from "react";
+
+import { CheckIcon, ChevronDownIcon, CloseIcon } from "../../icons";
 import { mergeClassNames } from "../../../utils";
 
 export interface MultiSelectOption {
@@ -96,19 +97,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                   onClick={(e) => handleRemoveTag(value[index], e)}
                   className="ml-0.5 rounded-full p-0.5 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
                 >
-                  <svg
-                    className="w-3 h-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <CloseIcon className="w-3 h-3" aria-hidden="true" />
                 </button>
               </span>
             ))

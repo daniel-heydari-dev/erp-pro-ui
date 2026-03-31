@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+
+import { CheckIcon, CloseIcon } from "../../icons";
 import { mergeClassNames } from "../../../utils";
 import type {
   StepperProps,
@@ -73,43 +75,6 @@ const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
   return baseStyles[variant][status];
 };
 
-// Check icon SVG
-const CheckIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={3}
-  >
-    <motion.path
-      initial={{ pathLength: 0 }}
-      animate={{ pathLength: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M5 13l4 4L19 7"
-    />
-  </svg>
-);
-
-// Error icon SVG
-const ErrorIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2.5}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
-
 // Step Indicator Component
 const StepIndicator = ({
   step,
@@ -135,11 +100,11 @@ const StepIndicator = ({
     }
 
     if (status === "completed") {
-      return <CheckIcon className={config.icon} />;
+      return <CheckIcon className={config.icon} aria-hidden="true" />;
     }
 
     if (status === "error") {
-      return <ErrorIcon className={config.icon} />;
+      return <CloseIcon className={config.icon} aria-hidden="true" />;
     }
 
     if (showNumbers) {

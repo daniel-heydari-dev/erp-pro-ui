@@ -16,6 +16,7 @@
     "storybook": "turbo storybook --filter=storybook",
     "lint": "pnpm lint:all",
     "lint:all": "turbo lint",
+    "release": "pnpm --filter ./packages/ui build && pnpm --filter ./packages/ui publish --no-git-checks --access public",
     "typecheck": "pnpm typecheck:all",
     "typecheck:all": "turbo typecheck",
     "format": "pnpm format:all",
@@ -27,7 +28,7 @@
   "devDependencies": {
     "dotenv-cli": "^11.0.0",
     "prettier": "^3.8.1",
-    "turbo": "^2.8.21",
+    "turbo": "^2.9.2",
     "typescript": "^6.0.2"
   }
 }

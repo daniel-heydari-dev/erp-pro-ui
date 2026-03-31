@@ -1,31 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { ChevronLeftIcon, ChevronRightIcon } from "../../icons";
 import { mergeClassNames } from "../../../utils";
 import type { CarouselProps, CarouselAnimation } from "./types";
-
-const ChevronLeft = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-  </svg>
-);
-
-const ChevronRight = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-  </svg>
-);
 
 const variantStyles = {
   default: "ui:bg-white ui:dark:bg-neutral-900 ui:shadow-xl",
@@ -326,7 +304,7 @@ export const Carousel = ({
                 whileTap={{ scale: 0.9 }}
                 aria-label="Previous slide"
               >
-                <ChevronLeft className="ui:w-6 ui:h-6" />
+                <ChevronLeftIcon className="ui:w-6 ui:h-6" aria-hidden="true" />
               </motion.button>
               <motion.button
                 type="button"
@@ -336,7 +314,10 @@ export const Carousel = ({
                 whileTap={{ scale: 0.9 }}
                 aria-label="Next slide"
               >
-                <ChevronRight className="ui:w-6 ui:h-6" />
+                <ChevronRightIcon
+                  className="ui:w-6 ui:h-6"
+                  aria-hidden="true"
+                />
               </motion.button>
             </>
           )}

@@ -1,3 +1,4 @@
+import { InfoCircleIcon } from "../../icons";
 import type { AlertProps } from "./types";
 
 const variantClasses: Record<NonNullable<AlertProps["variant"]>, string> = {
@@ -7,24 +8,7 @@ const variantClasses: Record<NonNullable<AlertProps["variant"]>, string> = {
   destructive: "border-destructive bg-destructive/10",
 };
 
-const defaultIcon = (
-  <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
-    <circle
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="2"
-      fill="none"
-    />
-    <path
-      d="M12 8v5m0 4h.01"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-  </svg>
-);
+const defaultIcon = <InfoCircleIcon className="h-5 w-5" aria-hidden="true" />;
 
 export const Alert = ({
   title,

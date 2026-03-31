@@ -65,11 +65,11 @@ pnpm dev:api    # Express API (localhost:3001)
 pnpm storybook  # Storybook (localhost:6006)
 ```
 
-Web: http://localhost:3000
+Web: <http://localhost:3000>
 
-API: http://localhost:3001
+API: <http://localhost:3001>
 
-Storybook: http://localhost:6006
+Storybook: <http://localhost:6006>
 
 ### Other Commands
 
@@ -78,6 +78,19 @@ Storybook: http://localhost:6006
 - `pnpm typecheck`: Run typechecking across the repo
 - `pnpm format`: Format all files with Prettier
 - `pnpm clean`: Remove build outputs and node_modules
+
+## Publishing
+
+`erp-pro-ui` publishes automatically from `main`.
+
+- Bump the version in `packages/ui/package.json`.
+- Push the change to `main`.
+- GitHub Actions builds `erp-pro-ui` and publishes it to npm.
+- If that version already exists on npm, the workflow skips publishing.
+
+Required repository secret:
+
+- `NPM_TOKEN`: npm automation token with publish access to the package.
 
 ---
 

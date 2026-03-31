@@ -9,6 +9,9 @@
   "style": "./dist/styles.css",
   "types": "./dist/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

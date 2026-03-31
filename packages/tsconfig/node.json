@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["esnext"],
     "module": "esnext",
-    "target": "esnext"
+    "target": "esnext",
+    "types": ["node"]
   }
 }

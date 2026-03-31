@@ -8,6 +8,14 @@ import {
   forwardRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  AlertTriangleIcon,
+  CheckCircleIcon,
+  CloseIcon,
+  InfoCircleIcon,
+  LoaderIcon,
+  XCircleIcon,
+} from "../../icons";
 
 // ============================================================================
 // Types
@@ -121,104 +129,6 @@ export const useToast = (): ToastContextValue => {
 };
 
 // ============================================================================
-// Icons
-// ============================================================================
-
-const SuccessIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-  </svg>
-);
-
-const ErrorIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
-
-const WarningIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-    />
-  </svg>
-);
-
-const InfoIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-    />
-  </svg>
-);
-
-const LoadingIcon = () => (
-  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    />
-    <path
-      className="opacity-75"
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-    />
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg
-    className="w-4 h-4"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
-
-// ============================================================================
 // Styles
 // ============================================================================
 
@@ -314,11 +224,13 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
     const [isPaused, setIsPaused] = useState(false);
 
     const defaultIcons: Record<ToastType, React.ReactNode> = {
-      success: <SuccessIcon />,
-      error: <ErrorIcon />,
-      warning: <WarningIcon />,
-      info: <InfoIcon />,
-      loading: <LoadingIcon />,
+      success: <CheckCircleIcon className="w-5 h-5" aria-hidden="true" />,
+      error: <XCircleIcon className="w-5 h-5" aria-hidden="true" />,
+      warning: <AlertTriangleIcon className="w-5 h-5" aria-hidden="true" />,
+      info: <InfoCircleIcon className="w-5 h-5" aria-hidden="true" />,
+      loading: (
+        <LoaderIcon className="w-5 h-5 animate-spin" aria-hidden="true" />
+      ),
       default: null,
     };
 
@@ -446,7 +358,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
             className="absolute top-3 right-3 p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
             aria-label="Dismiss"
           >
-            <CloseIcon />
+            <CloseIcon className="w-4 h-4" aria-hidden="true" />
           </button>
         )}
       </motion.div>
