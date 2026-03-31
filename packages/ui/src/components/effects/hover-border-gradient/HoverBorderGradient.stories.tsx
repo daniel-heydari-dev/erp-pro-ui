@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { HoverBorderGradient } from './HoverBorderGradient';
+import { StorySurface } from "../../shared/storybook";
+import { HoverBorderGradient } from "./HoverBorderGradient";
 
 const meta: Meta<typeof HoverBorderGradient> = {
-  title: 'Visuals/HoverBorderGradient',
+  title: "Visuals/HoverBorderGradient",
   component: HoverBorderGradient,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Generic hoverable frame with animated gradient emphasis for buttons, cards, or stat pills.',
+          "Generic hoverable frame with animated gradient emphasis for buttons, cards, or stat pills.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     duration: {
-      control: 'number',
-      description: 'Animation duration in seconds',
+      control: "number",
+      description: "Animation duration in seconds",
     },
-    clockwise: { control: 'boolean', description: 'Direction of rotation' },
+    clockwise: { control: "boolean", description: "Direction of rotation" },
   },
 };
 
@@ -42,7 +42,7 @@ export const Default: Story = {
       <div
         style={
           {
-            '--color-hover-gradient': 'rgba(99, 102, 241, 0.8)',
+            "--color-hover-gradient": "rgba(99, 102, 241, 0.8)",
           } as React.CSSProperties
         }
       >

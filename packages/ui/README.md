@@ -51,12 +51,12 @@ fontFamily: {
 ## 🚀 Quick Start
 
 ```css
-@import 'tailwindcss';
-@import 'erp-pro-ui/styles.css';
+@import "tailwindcss";
+@import "erp-pro-ui/styles.css";
 ```
 
 ```tsx
-import { ThemeProvider, Button, Input, Typography } from 'erp-pro-ui';
+import { ThemeProvider, Button, Input, Typography } from "erp-pro-ui";
 
 function App() {
   return (
@@ -78,8 +78,64 @@ function App() {
 - Import `tailwindcss` in your app stylesheet, then import `erp-pro-ui/styles.css` once to load the shared tokens and theme presets.
 - Use root imports for convenience: `import { Button, Dialog } from 'erp-pro-ui'`
 - Use subpath imports for leaner consumer bundles: `import { Button } from 'erp-pro-ui/button'`
+- Use `erp-pro-ui/docs` when another tool, app, or script needs structured install and component metadata.
 - Do not import from `src/**` or internal grouped folders; those paths are implementation details and may change between releases.
 - Composite showcase pages are intentionally excluded from the public API. Build those in your app by composing exported primitives.
+
+## 📚 Portable Docs Export
+
+`erp-pro-ui` now ships a machine-readable docs surface at `erp-pro-ui/docs`.
+
+Use it when you need to power another docs site, custom CLI tooling, AI prompts,
+or project-specific scaffolding without reaching into the web app source.
+
+```tsx
+import {
+  getComponentDocByName,
+  libraryDocs,
+  searchComponentDocs,
+} from "erp-pro-ui/docs";
+
+const button = getComponentDocByName("Button");
+const chartComponents = searchComponentDocs("chart");
+
+console.log(libraryDocs.installSteps);
+console.log(button?.rootImport);
+console.log(chartComponents.map((component) => component.name));
+```
+
+The docs bundle includes:
+
+- package-level summary and feature highlights
+- install steps and peer dependency guidance
+- quick start examples
+- a complete component inventory with slugs, Storybook titles, docs URLs, and supported import paths
+- helpers for exact component lookup and component search
+
+## 🤖 MCP Server
+
+For AI-assisted workflows, use the companion MCP package:
+
+```bash
+npx -y erp-pro-ui-mcp-server
+```
+
+Example MCP client configuration:
+
+```json
+{
+  "mcpServers": {
+    "erp-pro-ui": {
+      "command": "npx",
+      "args": ["-y", "erp-pro-ui-mcp-server"]
+    }
+  }
+}
+```
+
+The server exposes tools for library overview, component listing, component search,
+exact component docs lookup, installation guidance, readable resource URIs, and
+prompt templates for component selection and integration.
 
 ## 🗂️ Internal Architecture
 
@@ -190,7 +246,7 @@ Built on [Recharts](https://recharts.org/), the chart components provide premium
 30+ custom SVG icons available:
 
 ```tsx
-import { IconDashboard, IconSettings, IconUser } from 'erp-pro-ui';
+import { IconDashboard, IconSettings, IconUser } from "erp-pro-ui";
 
 <IconDashboard className="w-5 h-5" />;
 ```
@@ -200,7 +256,7 @@ import { IconDashboard, IconSettings, IconUser } from 'erp-pro-ui';
 Wrap your app with `ThemeProvider` for automatic dark/light mode:
 
 ```tsx
-import { ThemeProvider, useThemeContext } from 'erp-pro-ui';
+import { ThemeProvider, useThemeContext } from "erp-pro-ui";
 
 // In root
 <ThemeProvider>
@@ -216,7 +272,7 @@ const { mode, toggleMode, setMode } = useThemeContext();
 ### Dialog
 
 ```tsx
-import { Dialog } from 'erp-pro-ui';
+import { Dialog } from "erp-pro-ui";
 
 <Dialog
   open={isOpen}
@@ -235,7 +291,7 @@ import { Dialog } from 'erp-pro-ui';
 ### Toast
 
 ```tsx
-import { ToastProvider, useToast } from 'erp-pro-ui';
+import { ToastProvider, useToast } from "erp-pro-ui";
 
 // Wrap app
 <ToastProvider>
@@ -244,13 +300,13 @@ import { ToastProvider, useToast } from 'erp-pro-ui';
 
 // Use anywhere
 const { addToast } = useToast();
-addToast({ type: 'success', title: 'Saved!', message: 'All changes saved.' });
+addToast({ type: "success", title: "Saved!", message: "All changes saved." });
 ```
 
 ### DataTable
 
 ```tsx
-import { DataTable, FilterDropdown, ColumnToggle } from 'erp-pro-ui';
+import { DataTable, FilterDropdown, ColumnToggle } from "erp-pro-ui";
 
 <DataTable data={users} columns={columns} searchable sortable paginated />;
 ```
@@ -258,7 +314,7 @@ import { DataTable, FilterDropdown, ColumnToggle } from 'erp-pro-ui';
 ### Background Gradient
 
 ```tsx
-import { BackgroundGradientAnimation } from 'erp-pro-ui';
+import { BackgroundGradientAnimation } from "erp-pro-ui";
 
 <BackgroundGradientAnimation
   gradientBackgroundStart="rgb(0, 17, 82)"
@@ -278,11 +334,11 @@ import { BackgroundGradientAnimation } from 'erp-pro-ui';
 For optimal bundle size, use subpath imports:
 
 ```tsx
-import { Button } from 'erp-pro-ui/button';
-import { Dialog } from 'erp-pro-ui/dialog';
-import { Input } from 'erp-pro-ui/input';
-import { DataTable } from 'erp-pro-ui/data-table';
-import { Calendar } from 'erp-pro-ui/calendar';
+import { Button } from "erp-pro-ui/button";
+import { Dialog } from "erp-pro-ui/dialog";
+import { Input } from "erp-pro-ui/input";
+import { DataTable } from "erp-pro-ui/data-table";
+import { Calendar } from "erp-pro-ui/calendar";
 ```
 
 Subpath exports map to real build entries in `dist/`, so the documented import paths are the supported package boundary.
@@ -298,7 +354,7 @@ import {
   Carousel,
   Dialog,
   GradualBlur,
-} from 'erp-pro-ui';
+} from "erp-pro-ui";
 
 function MarketingShowcase() {
   return (
@@ -335,6 +391,12 @@ pnpm lint
 # Run Storybook
 pnpm storybook
 ```
+
+## 🔌 Companion Packages
+
+- `erp-pro-ui`: the component library itself
+- `erp-pro-ui/docs`: structured docs metadata for scripts and external tools
+- `erp-pro-ui-mcp-server`: stdio MCP server for AI editors and agents
 
 ## 📄 License
 

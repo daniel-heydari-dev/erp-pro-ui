@@ -77,7 +77,7 @@ export interface ToastContextValue {
       loading: string;
       success: string | ((data: T) => string);
       error: string | ((error: unknown) => string);
-    }
+    },
   ) => Promise<T>;
   dismiss: (id: string) => void;
   dismissAll: () => void;
@@ -185,11 +185,7 @@ const InfoIcon = () => (
 );
 
 const LoadingIcon = () => (
-  <svg
-    className="w-5 h-5 animate-spin"
-    fill="none"
-    viewBox="0 0 24 24"
-  >
+  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
     <circle
       className="opacity-25"
       cx="12"
@@ -385,16 +381,17 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
         {duration && duration > 0 && type !== "loading" && (
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-neutral-100 dark:bg-neutral-700">
             <motion.div
-              className={`h-full ${type === "success"
-                ? "bg-green-500"
-                : type === "error"
-                  ? "bg-red-500"
-                  : type === "warning"
-                    ? "bg-amber-500"
-                    : type === "info"
-                      ? "bg-blue-500"
-                      : "bg-neutral-400"
-                }`}
+              className={`h-full ${
+                type === "success"
+                  ? "bg-green-500"
+                  : type === "error"
+                    ? "bg-red-500"
+                    : type === "warning"
+                      ? "bg-amber-500"
+                      : type === "info"
+                        ? "bg-blue-500"
+                        : "bg-neutral-400"
+              }`}
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.05 }}
             />
@@ -419,8 +416,9 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
           )}
           {description && (
             <p
-              className={`text-sm text-neutral-600 dark:text-neutral-300 ${title ? "mt-1" : ""
-                }`}
+              className={`text-sm text-neutral-600 dark:text-neutral-300 ${
+                title ? "mt-1" : ""
+              }`}
             >
               {description}
             </p>
@@ -453,7 +451,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
         )}
       </motion.div>
     );
-  }
+  },
 );
 
 ToastItem.displayName = "ToastItem";
@@ -506,7 +504,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
 
       return id;
     },
-    [duration, dismissible, maxToasts]
+    [duration, dismissible, maxToasts],
   );
 
   const dismiss = useCallback((id: string) => {
@@ -522,38 +520,38 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       prev.map((t) =>
         t.id === id
           ? {
-            ...t,
-            ...options,
-            type: options.type ?? t.type,
-          }
-          : t
-      )
+              ...t,
+              ...options,
+              type: options.type ?? t.type,
+            }
+          : t,
+      ),
     );
   }, []);
 
   const toast = useCallback(
     (options: ToastOptions | string) => addToast(options, "default"),
-    [addToast]
+    [addToast],
   );
 
   const success = useCallback(
     (options: ToastOptions | string) => addToast(options, "success"),
-    [addToast]
+    [addToast],
   );
 
   const error = useCallback(
     (options: ToastOptions | string) => addToast(options, "error"),
-    [addToast]
+    [addToast],
   );
 
   const warning = useCallback(
     (options: ToastOptions | string) => addToast(options, "warning"),
-    [addToast]
+    [addToast],
   );
 
   const info = useCallback(
     (options: ToastOptions | string) => addToast(options, "info"),
-    [addToast]
+    [addToast],
   );
 
   const loading = useCallback(
@@ -562,10 +560,10 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         typeof options === "string" ? { description: options } : options;
       return addToast(
         { ...toastOptions, duration: 0, dismissible: false },
-        "loading"
+        "loading",
       );
     },
-    [addToast]
+    [addToast],
   );
 
   const promise = useCallback(
@@ -575,7 +573,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         loading: string;
         success: string | ((data: T) => string);
         error: string | ((error: unknown) => string);
-      }
+      },
     ): Promise<T> => {
       const id = loading(options.loading);
 
@@ -606,7 +604,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         throw err;
       }
     },
-    [loading, update, duration]
+    [loading, update, duration],
   );
 
   const contextValue: ToastContextValue = {
@@ -667,7 +665,7 @@ export const toastStandalone = {
       loading: string;
       success: string | ((data: T) => string);
       error: string | ((error: unknown) => string);
-    }
+    },
   ) => globalToast?.promise(promise, options),
   dismiss: (id: string) => globalToast?.dismiss(id),
   dismissAll: () => globalToast?.dismissAll(),

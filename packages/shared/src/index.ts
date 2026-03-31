@@ -5,7 +5,7 @@ export type User = {
 };
 
 export const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('en-US').format(date);
+  return new Intl.DateTimeFormat("en-US").format(date);
 };
 
-export const API_VERSION = 'v1';
+export const API_VERSION = "v1";

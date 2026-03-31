@@ -1,58 +1,58 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StoryStack, StorySurface } from '../../shared/storybook';
-import { NeonLineChart } from './NeonLineChart';
+import { StoryStack, StorySurface } from "../../shared/storybook";
+import { NeonLineChart } from "./NeonLineChart";
 
 const latencyData = [
-  { name: 'Mon', value: 42 },
-  { name: 'Tue', value: 38 },
-  { name: 'Wed', value: 45 },
-  { name: 'Thu', value: 34 },
-  { name: 'Fri', value: 31 },
-  { name: 'Sat', value: 36 },
-  { name: 'Sun', value: 29 },
+  { name: "Mon", value: 42 },
+  { name: "Tue", value: 38 },
+  { name: "Wed", value: 45 },
+  { name: "Thu", value: 34 },
+  { name: "Fri", value: 31 },
+  { name: "Sat", value: 36 },
+  { name: "Sun", value: 29 },
 ];
 
 const throughputData = [
-  { name: '00:00', value: 18 },
-  { name: '04:00', value: 24 },
-  { name: '08:00', value: 42 },
-  { name: '12:00', value: 58 },
-  { name: '16:00', value: 51 },
-  { name: '20:00', value: 33 },
+  { name: "00:00", value: 18 },
+  { name: "04:00", value: 24 },
+  { name: "08:00", value: 42 },
+  { name: "12:00", value: 58 },
+  { name: "16:00", value: 51 },
+  { name: "20:00", value: 33 },
 ];
 
 const retentionData = [
-  { name: 'Week 1', value: 76 },
-  { name: 'Week 2', value: 72 },
-  { name: 'Week 3', value: 69 },
-  { name: 'Week 4', value: 65 },
-  { name: 'Week 5', value: 67 },
-  { name: 'Week 6', value: 70 },
+  { name: "Week 1", value: 76 },
+  { name: "Week 2", value: 72 },
+  { name: "Week 3", value: 69 },
+  { name: "Week 4", value: 65 },
+  { name: "Week 5", value: 67 },
+  { name: "Week 6", value: 70 },
 ];
 
 const meta: Meta<typeof NeonLineChart> = {
-  title: 'Data Display/NeonLineChart',
+  title: "Data Display/NeonLineChart",
   component: NeonLineChart,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Stylized single-series line chart for premium dashboards and visually prominent activity views.',
+          "Stylized single-series line chart for premium dashboards and visually prominent activity views.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    height: { control: 'number' },
-    lineColorStop1: { control: 'color' },
-    lineColorStop2: { control: 'color' },
-    glowColor: { control: 'text' },
-    data: { control: false, description: 'Single glowing series data.' },
+    height: { control: "number" },
+    lineColorStop1: { control: "color" },
+    lineColorStop2: { control: "color" },
+    glowColor: { control: "text" },
+    data: { control: false, description: "Single glowing series data." },
     className: {
       control: false,
-      description: 'Custom classes for the outer container.',
+      description: "Custom classes for the outer container.",
     },
   },
 };
@@ -76,9 +76,9 @@ export const DefaultNeonStyling: Story = {
           </div>
           <div className="ui:grid ui:grid-cols-3 ui:gap-3">
             {[
-              { label: 'Current', value: '29 ms' },
-              { label: 'Peak', value: '45 ms' },
-              { label: 'Target', value: '< 35 ms' },
+              { label: "Current", value: "29 ms" },
+              { label: "Peak", value: "45 ms" },
+              { label: "Target", value: "< 35 ms" },
             ].map((metric) => (
               <div
                 key={metric.label}
@@ -143,9 +143,9 @@ export const CompactActivityWidget: Story = {
           </p>
           <div className="ui:mt-6 ui:space-y-4">
             {[
-              { label: '6-week average', value: '69.8%' },
-              { label: 'Best week', value: '76%' },
-              { label: 'Trend', value: '+5 pts recovery' },
+              { label: "6-week average", value: "69.8%" },
+              { label: "Best week", value: "76%" },
+              { label: "Trend", value: "+5 pts recovery" },
             ].map((item) => (
               <div key={item.label}>
                 <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">

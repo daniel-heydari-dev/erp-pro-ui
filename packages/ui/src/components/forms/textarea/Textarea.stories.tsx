@@ -1,44 +1,44 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Textarea } from './Textarea';
+import { StorySurface } from "../../shared/storybook";
+import { Textarea } from "./Textarea";
 
 const meta: Meta<typeof Textarea> = {
-  title: 'Forms/Textarea',
+  title: "Forms/Textarea",
   component: Textarea,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Multi-line input for notes, descriptions, and long-form form content.',
+          "Multi-line input for notes, descriptions, and long-form form content.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     label: {
-      control: 'text',
-      description: 'Label displayed above the textarea',
+      control: "text",
+      description: "Label displayed above the textarea",
     },
     helperText: {
-      control: 'text',
-      description: 'Helper text displayed below the textarea',
+      control: "text",
+      description: "Helper text displayed below the textarea",
     },
     error: {
-      control: 'text',
+      control: "text",
       description:
-        'Error message displayed below the textarea (turns input red)',
+        "Error message displayed below the textarea (turns input red)",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the textarea is disabled',
+      control: "boolean",
+      description: "Whether the textarea is disabled",
     },
-    placeholder: { control: 'text', description: 'Placeholder text' },
-    rows: { control: 'number', description: 'Visible row count.' },
-    value: { control: false, description: 'Controlled textarea value.' },
-    onChange: { control: false, description: 'Value change callback.' },
+    placeholder: { control: "text", description: "Placeholder text" },
+    rows: { control: "number", description: "Visible row count." },
+    value: { control: false, description: "Controlled textarea value." },
+    onChange: { control: false, description: "Value change callback." },
   },
 };
 
@@ -48,7 +48,7 @@ type Story = StoryObj<typeof meta>;
 // --- Helper Components for Stories ---
 
 function ControlledTextarea() {
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState("");
   const maxLength = 240;
 
   return (
@@ -86,10 +86,10 @@ export const Default: Story = {
  */
 export const WithHelperText: Story = {
   args: {
-    label: 'Message',
-    placeholder: 'Type your message here...',
-    helperText: 'Maximum 500 characters allowed.',
-    className: 'ui:w-full',
+    label: "Message",
+    placeholder: "Type your message here...",
+    helperText: "Maximum 500 characters allowed.",
+    className: "ui:w-full",
     rows: 4,
   },
 };
@@ -100,10 +100,10 @@ export const WithHelperText: Story = {
  */
 export const ErrorState: Story = {
   args: {
-    label: 'Description',
-    placeholder: 'Enter description...',
-    error: 'Description is required.',
-    className: 'ui:w-full',
+    label: "Description",
+    placeholder: "Enter description...",
+    error: "Description is required.",
+    className: "ui:w-full",
     rows: 4,
   },
 };
@@ -114,11 +114,11 @@ export const ErrorState: Story = {
  */
 export const DisabledState: Story = {
   args: {
-    label: 'System Notes',
+    label: "System Notes",
     value:
-      'These notes were automatically generated and cannot be modified safely.',
+      "These notes were automatically generated and cannot be modified safely.",
     disabled: true,
-    className: 'ui:w-full',
+    className: "ui:w-full",
     rows: 3,
   },
 };

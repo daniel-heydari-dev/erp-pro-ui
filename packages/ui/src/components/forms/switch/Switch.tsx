@@ -62,13 +62,11 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           </label>
         )}
         {error && (
-          <p className="text-sm font-medium text-destructive mt-1">
-            {error}
-          </p>
+          <p className="text-sm font-medium text-destructive mt-1">{error}</p>
         )}
       </div>
     );
-  }
+  },
 );
 
 Switch.displayName = "Switch";

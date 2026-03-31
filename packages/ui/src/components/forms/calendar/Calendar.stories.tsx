@@ -1,33 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Calendar } from './Calendar';
+import { StorySurface } from "../../shared/storybook";
+import { Calendar } from "./Calendar";
 
 const meta: Meta<typeof Calendar> = {
-  title: 'Forms/Calendar',
+  title: "Forms/Calendar",
   component: Calendar,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Date grid for single-day or range selection, with optional controlled month navigation and footer actions.',
+          "Date grid for single-day or range selection, with optional controlled month navigation and footer actions.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    selectionMode: { control: 'radio', options: ['single', 'range'] },
-    className: { control: 'text' },
-    value: { control: false, description: 'Selected date in single mode.' },
-    onSelect: { control: false, description: 'Single-date selection callback.' },
-    range: { control: false, description: 'Selected range in range mode.' },
-    onRangeSelect: { control: false, description: 'Range selection callback.' },
-    month: { control: false, description: 'Controlled month index (0-11).' },
-    year: { control: false, description: 'Controlled full year.' },
-    onMonthChange: { control: false, description: 'Called when month navigation changes.' },
-    footer: { control: false, description: 'Optional footer action content.' },
+    selectionMode: { control: "radio", options: ["single", "range"] },
+    className: { control: "text" },
+    value: { control: false, description: "Selected date in single mode." },
+    onSelect: {
+      control: false,
+      description: "Single-date selection callback.",
+    },
+    range: { control: false, description: "Selected range in range mode." },
+    onRangeSelect: { control: false, description: "Range selection callback." },
+    month: { control: false, description: "Controlled month index (0-11)." },
+    year: { control: false, description: "Controlled full year." },
+    onMonthChange: {
+      control: false,
+      description: "Called when month navigation changes.",
+    },
+    footer: { control: false, description: "Optional footer action content." },
   },
 };
 
@@ -40,13 +46,9 @@ function SingleSelectionExample() {
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <div className="ui:flex ui:flex-col ui:items-center ui:gap-4">
-        <Calendar
-          selectionMode="single"
-          value={date}
-          onSelect={setDate}
-        />
+        <Calendar selectionMode="single" value={date} onSelect={setDate} />
         <p className="ui:text-sm ui:text-muted-foreground">
-          Selected: {date ? date.toLocaleDateString() : 'None'}
+          Selected: {date ? date.toLocaleDateString() : "None"}
         </p>
       </div>
     </StorySurface>
@@ -68,7 +70,8 @@ function RangeSelectionExample() {
           onRangeSelect={setRange}
         />
         <p className="ui:text-sm ui:text-muted-foreground">
-          Range: {range.start?.toLocaleDateString() ?? 'None'} - {range.end?.toLocaleDateString() ?? 'None'}
+          Range: {range.start?.toLocaleDateString() ?? "None"} -{" "}
+          {range.end?.toLocaleDateString() ?? "None"}
         </p>
       </div>
     </StorySurface>

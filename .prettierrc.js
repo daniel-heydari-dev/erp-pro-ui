@@ -1,4 +1,4 @@
-import prettierConfig from './packages/prettier-config/index.js';
+import prettierConfig from "./packages/prettier-config/index.js";
 
 /** @type {import("prettier").Config} */
 export default {

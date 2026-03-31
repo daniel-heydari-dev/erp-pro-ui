@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-import { CheckIcon, ChevronDownIcon } from '../../icons';
-import { mergeClassNames } from '../../../utils';
+import { CheckIcon, ChevronDownIcon } from "../../icons";
+import { mergeClassNames } from "../../../utils";
 
 export interface ComboboxOption {
   label: string;
@@ -23,14 +23,14 @@ const Combobox: React.FC<ComboboxProps> = ({
   options,
   value,
   onChange,
-  placeholder = 'Select...',
+  placeholder = "Select...",
   className,
-  bgClassName = 'bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl',
+  bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
   createOptionLabel,
   onCreateOption,
 }) => {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   // Filter options by search
@@ -43,30 +43,30 @@ const Combobox: React.FC<ComboboxProps> = ({
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
-        setSearch('');
+        setSearch("");
       }
     };
     if (open) {
-      document.addEventListener('mousedown', handleClick);
+      document.addEventListener("mousedown", handleClick);
     }
-    return () => document.removeEventListener('mousedown', handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
   return (
     <div
       ref={ref}
-      className={mergeClassNames('relative w-full', className)}
+      className={mergeClassNames("relative w-full", className)}
       tabIndex={0}
     >
       <div
         className={mergeClassNames(
-          'flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-black/5 dark:border-white/10 px-3 py-2 text-sm text-foreground transition focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-sm',
+          "flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-black/5 dark:border-white/10 px-3 py-2 text-sm text-foreground transition focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-sm",
           bgClassName,
-          'hover:bg-white/60 dark:hover:bg-white/10',
+          "hover:bg-white/60 dark:hover:bg-white/10",
         )}
         onClick={() => {
           setOpen((o) => {
-            if (o) setSearch(''); // Reset search when closing
+            if (o) setSearch(""); // Reset search when closing
             return !o;
           });
         }}
@@ -80,8 +80,8 @@ const Combobox: React.FC<ComboboxProps> = ({
         )}
         <span
           className={mergeClassNames(
-            'ml-2 transition-transform duration-300',
-            open ? 'rotate-180' : 'rotate-0',
+            "ml-2 transition-transform duration-300",
+            open ? "rotate-180" : "rotate-0",
           )}
         >
           <ChevronDownIcon width={24} height={24} color="#a1a1a1" />
@@ -109,13 +109,13 @@ const Combobox: React.FC<ComboboxProps> = ({
               <div
                 key={opt.value}
                 className={mergeClassNames(
-                  'mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground dark:text-white transition',
-                  opt.value === value ? 'bg-primary/20 font-semibold' : '',
-                  'hover:bg-primary hover:text-white',
+                  "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground dark:text-white transition",
+                  opt.value === value ? "bg-primary/20 font-semibold" : "",
+                  "hover:bg-primary hover:text-white",
                 )}
                 onClick={() => {
                   onChange(opt.value);
-                  setSearch('');
+                  setSearch("");
                   setOpen(false);
                 }}
               >
@@ -139,7 +139,7 @@ const Combobox: React.FC<ComboboxProps> = ({
                 className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-foreground dark:text-white transition hover:bg-primary hover:text-white"
                 onClick={() => {
                   onCreateOption();
-                  setSearch('');
+                  setSearch("");
                   setOpen(false);
                 }}
               >

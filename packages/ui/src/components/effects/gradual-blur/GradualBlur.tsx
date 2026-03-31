@@ -1,7 +1,7 @@
-import { useRef, type ComponentType } from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
-import { mergeClassNames } from '../../../utils';
-import type { GradualBlurProps } from './types';
+import { useRef, type ComponentType } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
+import { mergeClassNames } from "../../../utils";
+import type { GradualBlurProps } from "./types";
 
 export const GradualBlur = ({
   children,
@@ -12,22 +12,22 @@ export const GradualBlur = ({
   triggerOnce = true,
   threshold = 0.05,
   visible = false,
-  direction = 'none',
+  direction = "none",
   distance = 20,
   className,
-  as = 'div',
+  as = "div",
 }: GradualBlurProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const getInitialPosition = () => {
     switch (direction) {
-      case 'top':
+      case "top":
         return { y: -distance };
-      case 'bottom':
+      case "bottom":
         return { y: distance };
-      case 'left':
+      case "left":
         return { x: -distance };
-      case 'right':
+      case "right":
         return { x: distance };
       default:
         return { x: 0, y: 0 };
@@ -44,14 +44,14 @@ export const GradualBlur = ({
     },
     visible: {
       opacity: 1,
-      filter: 'blur(0px)',
+      filter: "blur(0px)",
       x: 0,
       y: 0,
     },
   };
 
   const MotionComponent = motion.create(as as string) as ComponentType<
-    HTMLMotionProps<'div'>
+    HTMLMotionProps<"div">
   >;
 
   return (
@@ -59,21 +59,21 @@ export const GradualBlur = ({
       ref={ref}
       variants={variants}
       initial="hidden"
-      animate={!triggerOnView ? (visible ? 'visible' : 'hidden') : undefined}
-      whileInView={triggerOnView ? 'visible' : undefined}
+      animate={!triggerOnView ? (visible ? "visible" : "hidden") : undefined}
+      whileInView={triggerOnView ? "visible" : undefined}
       viewport={{
         once: triggerOnce,
         amount: threshold,
-        margin: '0px 0px -50px 0px', // Slight bottom margin to trigger earlier
+        margin: "0px 0px -50px 0px", // Slight bottom margin to trigger earlier
       }}
       transition={{
         duration,
         delay,
-        ease: 'easeOut',
+        ease: "easeOut",
         filter: { duration: duration },
         opacity: { duration: duration },
       }}
-      className={mergeClassNames('relative', className)}
+      className={mergeClassNames("relative", className)}
     >
       {children}
     </MotionComponent>

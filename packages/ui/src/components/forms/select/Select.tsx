@@ -18,7 +18,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
       ...props
     },
-    ref
+    ref,
   ) => {
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -102,7 +102,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 : "border-neutral-300 dark:border-neutral-600",
               disabled
                 ? "cursor-not-allowed opacity-50"
-                : `${bgClassName} hover:bg-white/60 dark:hover:bg-white/10`
+                : `${bgClassName} hover:bg-white/60 dark:hover:bg-white/10`,
             )}
             onClick={() => {
               if (!disabled) {
@@ -122,7 +122,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             <span
               className={mergeClassNames(
                 "ml-2 transition-transform duration-300",
-                open ? "rotate-180" : "rotate-0"
+                open ? "rotate-180" : "rotate-0",
               )}
             >
               <ChevronDownIcon width={24} height={24} color="#a1a1a1" />
@@ -130,10 +130,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </div>
 
           {open && !disabled && (
-            <div className={mergeClassNames(
-              "absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-md border border-neutral-200 dark:border-neutral-600 shadow-xl transition overflow-auto",
-              bgClassName
-            )}>
+            <div
+              className={mergeClassNames(
+                "absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-md border border-neutral-200 dark:border-neutral-600 shadow-xl transition overflow-auto",
+                bgClassName,
+              )}
+            >
               {options.length === 0 && (
                 <div className="px-3 py-2 text-neutral-500 dark:text-neutral-400">
                   No options
@@ -144,10 +146,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                   key={opt.value}
                   className={mergeClassNames(
                     "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-neutral-900 dark:text-white transition",
-                    opt.value === value
-                      ? "bg-primary/20 font-semibold"
-                      : "",
-                    "hover:bg-primary hover:text-white"
+                    opt.value === value ? "bg-primary/20 font-semibold" : "",
+                    "hover:bg-primary hover:text-white",
                   )}
                   onClick={() => handleSelect(opt.value)}
                 >
@@ -160,9 +160,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                       />
                     )}
                   </span>
-                  <span className="min-w-0 flex-1 truncate">
-                    {opt.label}
-                  </span>
+                  <span className="min-w-0 flex-1 truncate">{opt.label}</span>
                 </div>
               ))}
             </div>
@@ -181,7 +179,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Select.displayName = "Select";

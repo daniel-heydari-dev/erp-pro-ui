@@ -13,7 +13,18 @@ const colorClasses: Record<NonNullable<CheckboxProps["color"]>, string> = {
 };
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className = "", label, error, id, extra = "", color = "primary", ...props }, ref) => {
+  (
+    {
+      className = "",
+      label,
+      error,
+      id,
+      extra = "",
+      color = "primary",
+      ...props
+    },
+    ref,
+  ) => {
     const generatedId = useId();
     const checkboxId = id || `checkbox-${sanitizeId(generatedId)}`;
 
@@ -32,7 +43,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             background-size: 70%;
             background-position: center;
             background-repeat: no-repeat;
-            ${customColorStyle ? `background-color: ${customColorStyle} !important;` : ''}
+            ${customColorStyle ? `background-color: ${customColorStyle} !important;` : ""}
           }
         `}</style>
         <div className="flex items-center space-x-2">
@@ -40,8 +51,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ref={ref}
             type="checkbox"
             id={checkboxId}
-            className={`checkbox-custom-${checkboxId} peer relative flex h-5 min-h-[20px] w-5 min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 transition duration-200 outline-none checked:border-none checked:text-white hover:cursor-pointer dark:border-white/30 ${isPredefinedColor ? colorClasses[color as keyof typeof colorClasses] : ""
-              } ${error ? "border-red-500 dark:border-red-400" : ""} ${extra} ${className}`}
+            className={`checkbox-custom-${checkboxId} peer relative flex h-5 min-h-[20px] w-5 min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 transition duration-200 outline-none checked:border-none checked:text-white hover:cursor-pointer dark:border-white/30 ${
+              isPredefinedColor
+                ? colorClasses[color as keyof typeof colorClasses]
+                : ""
+            } ${error ? "border-red-500 dark:border-red-400" : ""} ${extra} ${className}`}
             {...props}
           />
           {label && (
@@ -53,14 +67,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             </label>
           )}
           {error && (
-            <p className="text-sm font-medium text-destructive mt-1">
-              {error}
-            </p>
+            <p className="text-sm font-medium text-destructive mt-1">{error}</p>
           )}
         </div>
       </>
     );
-  }
+  },
 );
 
 Checkbox.displayName = "Checkbox";

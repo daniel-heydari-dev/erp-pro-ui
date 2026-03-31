@@ -100,6 +100,89 @@ const filterOptions: FilterOption[] = [
   },
 ];
 
+function DefaultWorkspaceStory(props: Story['args']) {
+  const [rows, setRows] = useState(sampleData);
+
+  return (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <DataTable
+        {...props}
+        data={rows}
+        onBulkDelete={(selectedRows) => {
+          const selectedIds = new Set(selectedRows.map((row) => row.id));
+          setRows((previousRows) =>
+            previousRows.filter((row) => !selectedIds.has(row.id)),
+          );
+        }}
+      />
+    </StorySurface>
+  );
+}
+
+function BulkSelectionWorkspaceStory() {
+  const [rows, setRows] = useState(sampleData);
+
+  return (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <DataTable
+        data={rows}
+        columns={columns}
+        pageSize={5}
+        searchPlaceholder="Search team members..."
+        onBulkDelete={(selectedRows) => {
+          const selectedIds = new Set(selectedRows.map((row) => row.id));
+          setRows((previousRows) =>
+            previousRows.filter((row) => !selectedIds.has(row.id)),
+          );
+        }}
+      />
+    </StorySurface>
+  );
+}
+
+function BulkSelectionCustomActionsStory() {
+  const [rows, setRows] = useState(sampleData);
+  const [reviewedIds, setReviewedIds] = useState<string[]>([]);
+
+  return (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <div className="ui:space-y-4">
+        <DataTable
+          data={rows}
+          columns={columns}
+          pageSize={5}
+          searchPlaceholder="Search team members..."
+          renderBulkActions={({ selectedRows, clearSelection }) => (
+            <button
+              type="button"
+              onClick={() => {
+                const nextReviewedIds = selectedRows.map((row) => row.id);
+                setReviewedIds(nextReviewedIds);
+                clearSelection();
+              }}
+              className="inline-flex items-center rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-100"
+            >
+              Mark reviewed
+            </button>
+          )}
+          onBulkDelete={(selectedRows) => {
+            const selectedIds = new Set(selectedRows.map((row) => row.id));
+            setRows((previousRows) =>
+              previousRows.filter((row) => !selectedIds.has(row.id)),
+            );
+          }}
+        />
+
+        {reviewedIds.length > 0 ? (
+          <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-4 ui:py-3 ui:text-sm ui:text-card-foreground">
+            Reviewed rows: {reviewedIds.join(', ')}
+          </div>
+        ) : null}
+      </div>
+    </StorySurface>
+  );
+}
+
 const meta: Meta<typeof DataTable> = {
   title: 'Data Display/DataTable',
   component: DataTable,
@@ -128,24 +211,7 @@ export const Default: Story = {
     pageSize: 5,
     searchPlaceholder: 'Search team members...',
   },
-  render: (args) => {
-    const [rows, setRows] = useState(sampleData);
-
-    return (
-      <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
-        <DataTable
-          {...args}
-          data={rows}
-          onBulkDelete={(selectedRows) => {
-            const selectedIds = new Set(selectedRows.map((row) => row.id));
-            setRows((previousRows) =>
-              previousRows.filter((row) => !selectedIds.has(row.id)),
-            );
-          }}
-        />
-      </StorySurface>
-    );
-  },
+  render: (args: Story['args']) => <DefaultWorkspaceStory {...args} />,
 };
 
 /**
@@ -190,24 +256,13 @@ export const CompactAuditQueue: Story = {
  * Demonstrates the optional bulk-selection mode and bulk delete action.
  */
 export const BulkSelectionWorkspace: Story = {
-  render: () => {
-    const [rows, setRows] = useState(sampleData);
+  render: () => <BulkSelectionWorkspaceStory />,
+};
 
-    return (
-      <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
-        <DataTable
-          data={rows}
-          columns={columns}
-          pageSize={5}
-          searchPlaceholder="Search team members..."
-          onBulkDelete={(selectedRows) => {
-            const selectedIds = new Set(selectedRows.map((row) => row.id));
-            setRows((previousRows) =>
-              previousRows.filter((row) => !selectedIds.has(row.id)),
-            );
-          }}
-        />
-      </StorySurface>
-    );
-  },
+/**
+ * ## Bulk Selection With Custom Actions
+ * Shows how consumers can add extra bulk-action buttons without replacing the default delete action.
+ */
+export const BulkSelectionWithCustomActions: Story = {
+  render: () => <BulkSelectionCustomActionsStory />,
 };

@@ -20,17 +20,32 @@ const meta: Meta<typeof Stepper> = {
   argTypes: {
     orientation: { control: "radio", options: ["horizontal", "vertical"] },
     size: { control: "select", options: ["sm", "md", "lg"] },
-    variant: { control: "select", options: ["default", "glass", "minimal", "outlined"] },
+    variant: {
+      control: "select",
+      options: ["default", "glass", "minimal", "outlined"],
+    },
     showNumbers: { control: "boolean" },
     clickable: { control: "boolean" },
     showConnector: { control: "boolean" },
     showErrors: { control: "boolean" },
     animated: { control: "boolean" },
     steps: { control: false, description: "Ordered step definitions." },
-    currentStep: { control: false, description: "Controlled current step index." },
-    onStepClick: { control: false, description: "Called when a step is clicked." },
-    errorSteps: { control: false, description: "Indices rendered in error state." },
-    completedSteps: { control: false, description: "Optional manual completed indices." },
+    currentStep: {
+      control: false,
+      description: "Controlled current step index.",
+    },
+    onStepClick: {
+      control: false,
+      description: "Called when a step is clicked.",
+    },
+    errorSteps: {
+      control: false,
+      description: "Indices rendered in error state.",
+    },
+    completedSteps: {
+      control: false,
+      description: "Optional manual completed indices.",
+    },
   },
 };
 
@@ -40,7 +55,12 @@ type Story = StoryObj<typeof meta>;
 const steps = [
   { id: "1", title: "Cart", description: "Review your items" },
   { id: "2", title: "Shipping", description: "Choose shipping method" },
-  { id: "3", title: "Payment", description: "Enter payment details", optional: true },
+  {
+    id: "3",
+    title: "Payment",
+    description: "Enter payment details",
+    optional: true,
+  },
   { id: "4", title: "Confirmation", description: "Order complete!" },
 ];
 
@@ -80,16 +100,16 @@ function StepperDemo(props: Omit<StepperProps, "steps" | "currentStep">) {
  * ## Horizontal Flow
  * Commonly used at the top of multi-part forms.
  */
-export const Horizontal: Story = { 
-  render: () => <StepperDemo orientation="horizontal" variant="glass" /> 
+export const Horizontal: Story = {
+  render: () => <StepperDemo orientation="horizontal" variant="glass" />,
 };
 
 /**
  * ## Vertical Flow
  * Commonly used alongside deeper settings sections to outline major changes.
  */
-export const Vertical: Story = { 
-  render: () => <StepperDemo orientation="vertical" variant="outlined" /> 
+export const Vertical: Story = {
+  render: () => <StepperDemo orientation="vertical" variant="outlined" />,
 };
 
 /**

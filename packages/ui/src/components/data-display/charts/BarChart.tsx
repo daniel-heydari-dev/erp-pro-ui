@@ -53,13 +53,19 @@ export const BarChart: React.FC<BarChartProps> = ({
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+                tick={{
+                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fontSize: 12,
+                }}
                 dy={10}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+                tick={{
+                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fontSize: 12,
+                }}
                 dx={-10}
               />
             </>
@@ -69,7 +75,10 @@ export const BarChart: React.FC<BarChartProps> = ({
                 type="number"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+                tick={{
+                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fontSize: 12,
+                }}
                 dy={10}
               />
               <YAxis
@@ -77,7 +86,10 @@ export const BarChart: React.FC<BarChartProps> = ({
                 type="category"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+                tick={{
+                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fontSize: 12,
+                }}
                 dx={-10}
               />
             </>

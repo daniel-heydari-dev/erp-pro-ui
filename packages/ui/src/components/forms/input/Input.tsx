@@ -23,7 +23,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       // bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
       ...props
     },
-    ref
+    ref,
   ) => {
     const radius = 100; // Radius for the hover effect
     const [visible, setVisible] = useState(false);
@@ -45,8 +45,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const inputStateStyles: Record<InputState, string> = {
       [InputState.DISABLED]: "placeholder:!text-muted-foreground",
-      [InputState.ERROR]:
-        "text-destructive placeholder:text-destructive",
+      [InputState.ERROR]: "text-destructive placeholder:text-destructive",
       [InputState.SUCCESS]:
         "text-green-500 placeholder:text-green-500 dark:text-green-400 dark:placeholder:text-green-400",
       [InputState.DEFAULT]: "text-foreground",
@@ -66,8 +65,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               ? "none"
               : useMotionTemplate`
                   radial-gradient(
-                    ${visible ? `${radius}px` : "0px"
-                } circle at ${mouseX}px ${mouseY}px,
+                    ${
+                      visible ? `${radius}px` : "0px"
+                    } circle at ${mouseX}px ${mouseY}px,
                     #3b82f6,
                     transparent 70%
                   )
@@ -79,12 +79,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           className={mergeClassNames(
             "group/input rounded-lg p-[2px] transition duration-300 hover:border-blue-500 dark:hover:border-blue-500",
             wrapperStateStyles[state],
-            extra
+            extra,
           )}
         >
           <div className="relative flex items-center ">
             {icon && (
-              <div className={mergeClassNames("pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3", iconClassName)}>
+              <div
+                className={mergeClassNames(
+                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3",
+                  iconClassName,
+                )}
+              >
                 {icon}
               </div>
             )}
@@ -97,7 +102,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-[2px] focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 bgClassName,
                 inputStateStyles[state],
-                className
+                className,
               )}
               {...props}
               autoComplete="off"
@@ -109,9 +114,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <p
             className={mergeClassNames(
               "text-sm font-medium mt-1",
-              error
-                ? "text-destructive"
-                : "text-muted-foreground"
+              error ? "text-destructive" : "text-muted-foreground",
             )}
           >
             {error || message}
@@ -124,7 +127,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

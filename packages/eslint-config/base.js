@@ -1,19 +1,20 @@
-import js from '@eslint/js';
-import prettierConfig from 'eslint-config-prettier';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import js from "@eslint/js";
+import prettierConfig from "eslint-config-prettier";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 /** @type {import('eslint').Linter.Config[]} */
 export const baseConfig = [
   {
     ignores: [
-      '**/dist/**',
-      '**/node_modules/**',
-      '**/.turbo/**',
-      '**/build/**',
-      '**/.next/**',
-      '**/storybook-static/**',
-      '**/public/**',
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/.turbo/**",
+      "**/build/**",
+      "**/.next/**",
+      "**/storybook-static/**",
+      "**/public/**",
+      "**/eslint.config.js",
     ],
   },
   js.configs.recommended,
@@ -26,10 +27,10 @@ export const baseConfig = [
       },
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_' },
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
       ],
     },
   },

@@ -44,7 +44,13 @@ const sizeMap: Record<LoadingSize, { container: string; text: string }> = {
 };
 
 // Spinner - Classic rotating circle
-function Spinner({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Spinner({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   return (
     <svg
       className={`animate-spin ${sizeMap[size].container}`}
@@ -70,7 +76,13 @@ function Spinner({ size = "md", color = "currentColor" }: { size?: LoadingSize; 
 }
 
 // Dots - Three bouncing dots
-function Dots({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Dots({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   const dotSize = {
     xs: "w-1.5 h-1.5",
     sm: "w-2 h-2",
@@ -97,7 +109,13 @@ function Dots({ size = "md", color = "currentColor" }: { size?: LoadingSize; col
 }
 
 // Pulse - Pulsing circle
-function Pulse({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Pulse({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   return (
     <div className={`relative ${sizeMap[size].container}`}>
       <div
@@ -113,7 +131,13 @@ function Pulse({ size = "md", color = "currentColor" }: { size?: LoadingSize; co
 }
 
 // Bars - Audio-style animated bars
-function Bars({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Bars({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   const barWidth = {
     xs: "w-0.5",
     sm: "w-1",
@@ -123,9 +147,7 @@ function Bars({ size = "md", color = "currentColor" }: { size?: LoadingSize; col
   };
 
   return (
-    <div
-      className={`flex items-end gap-0.5 ${sizeMap[size].container}`}
-    >
+    <div className={`flex items-end gap-0.5 ${sizeMap[size].container}`}>
       {[0, 1, 2, 3, 4].map((i) => (
         <div
           key={i}
@@ -149,7 +171,13 @@ function Bars({ size = "md", color = "currentColor" }: { size?: LoadingSize; col
 }
 
 // Ring - Rotating ring with gradient
-function Ring({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Ring({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   const strokeWidth = {
     xs: 3,
     sm: 3,
@@ -188,7 +216,13 @@ function Ring({ size = "md", color = "currentColor" }: { size?: LoadingSize; col
 }
 
 // Bounce - Three bouncing circles
-function Bounce({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Bounce({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   const dotSize = {
     xs: "w-2 h-2",
     sm: "w-3 h-3",
@@ -221,7 +255,13 @@ function Bounce({ size = "md", color = "currentColor" }: { size?: LoadingSize; c
 }
 
 // Wave - Wave animation
-function Wave({ size = "md", color = "currentColor" }: { size?: LoadingSize; color?: string }) {
+function Wave({
+  size = "md",
+  color = "currentColor",
+}: {
+  size?: LoadingSize;
+  color?: string;
+}) {
   const barHeight = {
     xs: "h-3",
     sm: "h-4",
@@ -330,10 +370,9 @@ export default function Loading({
 
   const content = (
     <div
-      className={`inline-flex items-center ${textPosition === "bottom"
-        ? "flex-col gap-2"
-        : "flex-row gap-3"
-        } ${className}`}
+      className={`inline-flex items-center ${
+        textPosition === "bottom" ? "flex-col gap-2" : "flex-row gap-3"
+      } ${className}`}
     >
       {renderLoader()}
       {text && (

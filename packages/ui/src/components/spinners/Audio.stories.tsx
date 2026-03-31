@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../shared/storybook';
-import { Audio } from './Audio';
+import { StorySurface } from "../shared/storybook";
+import { Audio } from "./Audio";
 
 const meta: Meta<typeof Audio> = {
-  title: 'Feedback/Audio',
+  title: "Feedback/Audio",
   component: Audio,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Equalizer-style loading indicator suitable for audio, streaming, and live-processing states.',
+          "Equalizer-style loading indicator suitable for audio, streaming, and live-processing states.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    className: { control: 'text' },
-    fill: { control: 'color' },
-    width: { control: 'number' },
-    height: { control: 'number' },
+    className: { control: "text" },
+    fill: { control: "color" },
+    width: { control: "number" },
+    height: { control: "number" },
   },
 };
 
@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    fill: '#7367f0',
+    fill: "#7367f0",
     width: 55,
     height: 80,
   },

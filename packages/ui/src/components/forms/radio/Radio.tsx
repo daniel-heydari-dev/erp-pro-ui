@@ -25,7 +25,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       bgClassName = "",
       ...props
     },
-    ref
+    ref,
   ) => {
     const generatedId = useId();
     const radioId = id || `radio-${sanitizeId(generatedId)}`;
@@ -40,7 +40,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           className={mergeClassNames(
             "h-5 w-5 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
             bgClassName,
-            className
+            className,
           )}
           {...props}
         />
@@ -53,13 +53,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           </label>
         )}
         {error && (
-          <p className="text-sm font-medium text-red-500 mt-1">
-            {error}
-          </p>
+          <p className="text-sm font-medium text-red-500 mt-1">{error}</p>
         )}
       </div>
     );
-  }
+  },
 );
 
 Radio.displayName = "Radio";

@@ -148,7 +148,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
       dotColor,
       maxWidth,
     },
-    ref
+    ref,
   ) => {
     const isClickable = onClick !== undefined;
     const isRemovable = onRemove !== undefined;
@@ -157,9 +157,10 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
       inline-flex items-center font-medium rounded-full transition-all duration-200
       ${sizeStyles[size]}
       ${colorStyles[variant][color]}
-      ${isClickable && !disabled
-        ? "cursor-pointer hover:scale-105 hover:shadow-lg active:scale-95"
-        : ""
+      ${
+        isClickable && !disabled
+          ? "cursor-pointer hover:scale-105 hover:shadow-lg active:scale-95"
+          : ""
       }
       ${disabled ? "opacity-50 cursor-not-allowed grayscale" : ""}
       ${maxWidth ? "max-w-full" : ""}
@@ -189,9 +190,9 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
         style={
           maxWidth
             ? {
-              maxWidth:
-                typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth,
-            }
+                maxWidth:
+                  typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth,
+              }
             : undefined
         }
         onKeyDown={(e) => {
@@ -207,8 +208,9 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
       >
         {dot && (
           <span
-            className={`rounded-full flex-shrink-0 animate-pulse ${dotSizeStyles[size]
-              } ${dotColor ? "" : dotColorStyles[color]}`}
+            className={`rounded-full flex-shrink-0 animate-pulse ${
+              dotSizeStyles[size]
+            } ${dotColor ? "" : dotColorStyles[color]}`}
             style={dotColor ? { backgroundColor: dotColor } : undefined}
           />
         )}
@@ -253,11 +255,10 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
         )}
       </span>
     );
-  }
+  },
 );
 
 Chip.displayName = "Chip";
 
 export default Chip;
 export { Chip };
-

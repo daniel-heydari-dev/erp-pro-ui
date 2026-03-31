@@ -1,4 +1,4 @@
 export type CardProps = {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 };

@@ -1,6 +1,6 @@
-import { CheckIcon, ChevronDownIcon } from '../../icons';
-import React, { useEffect, useRef, useState } from 'react';
-import { mergeClassNames } from '../../../utils';
+import { CheckIcon, ChevronDownIcon } from "../../icons";
+import React, { useEffect, useRef, useState } from "react";
+import { mergeClassNames } from "../../../utils";
 
 export interface MultiSelectOption {
   label: string;
@@ -20,12 +20,12 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
   options,
   value = [],
   onChange,
-  placeholder = 'Select...',
+  placeholder = "Select...",
   className,
-  bgClassName = 'bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl',
+  bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
 }) => {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   // Filter options by search
@@ -38,13 +38,13 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
-        setSearch('');
+        setSearch("");
       }
     };
     if (open) {
-      document.addEventListener('mousedown', handleClick);
+      document.addEventListener("mousedown", handleClick);
     }
-    return () => document.removeEventListener('mousedown', handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
   const handleOptionClick = (optionValue: string) => {
@@ -67,18 +67,18 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
   return (
     <div
       ref={ref}
-      className={mergeClassNames('relative w-full', className)}
+      className={mergeClassNames("relative w-full", className)}
       tabIndex={0}
     >
       <div
         className={mergeClassNames(
-          'flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-black/5 dark:border-white/10 px-3 py-2 text-sm text-foreground transition focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-sm',
+          "flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-black/5 dark:border-white/10 px-3 py-2 text-sm text-foreground transition focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-sm",
           bgClassName,
-          'hover:bg-white/60 dark:hover:bg-white/10',
+          "hover:bg-white/60 dark:hover:bg-white/10",
         )}
         onClick={() => {
           setOpen((o) => {
-            if (o) setSearch('');
+            if (o) setSearch("");
             return !o;
           });
         }}
@@ -118,8 +118,8 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
         </div>
         <span
           className={mergeClassNames(
-            'ml-2 transition-transform duration-300 flex-shrink-0',
-            open ? 'rotate-180' : 'rotate-0',
+            "ml-2 transition-transform duration-300 flex-shrink-0",
+            open ? "rotate-180" : "rotate-0",
           )}
         >
           <ChevronDownIcon width={24} height={24} color="#a1a1a1" />
@@ -151,19 +151,19 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                 <div
                   key={option.value}
                   className={mergeClassNames(
-                    'flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition',
+                    "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition",
                     isSelected
-                      ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                      : 'text-foreground dark:text-white hover:bg-neutral-100 dark:hover:bg-white/10',
+                      ? "bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300"
+                      : "text-foreground dark:text-white hover:bg-neutral-100 dark:hover:bg-white/10",
                   )}
                   onClick={() => handleOptionClick(option.value)}
                 >
                   <span
                     className={mergeClassNames(
-                      'flex h-4 w-4 items-center justify-center rounded border transition',
+                      "flex h-4 w-4 items-center justify-center rounded border transition",
                       isSelected
-                        ? 'border-primary-500 bg-primary-500 text-white'
-                        : 'border-neutral-300 dark:border-neutral-600',
+                        ? "border-primary-500 bg-primary-500 text-white"
+                        : "border-neutral-300 dark:border-neutral-600",
                     )}
                   >
                     {isSelected && <CheckIcon width={12} height={12} />}

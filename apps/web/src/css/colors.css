@@ -10,7 +10,7 @@
   --paragraph-color: var(--text-2);
 }
 
-[data-theme$='-dark'],
+[data-theme$="-dark"],
 .dark {
   --logo-filter: brightness(0) invert(1);
   --active-sidebar-foreground: #ffffff;

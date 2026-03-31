@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, type TargetAndTransition } from "framer-motion";
-import type { AnimatedContentProps, AnimationPreset, AnimationEase } from "./types";
+import type {
+  AnimatedContentProps,
+  AnimationPreset,
+  AnimationEase,
+} from "./types";
 
 // Easing function mappings
 const easingMap: Record<AnimationEase, number[] | string> = {
@@ -23,7 +27,12 @@ const easingMap: Record<AnimationEase, number[] | string> = {
 const getSpringConfig = (ease: AnimationEase) => {
   switch (ease) {
     case "bounce":
-      return { type: "spring" as const, damping: 8, stiffness: 200, bounce: 0.5 };
+      return {
+        type: "spring" as const,
+        damping: 8,
+        stiffness: 200,
+        bounce: 0.5,
+      };
     case "elastic":
       return { type: "spring" as const, damping: 10, stiffness: 100 };
     default:
@@ -37,11 +46,22 @@ const getPresetAnimation = (
   distance: number,
   initialOpacity: number,
   initialScale: number,
-  reverse: boolean
-): { initial: TargetAndTransition; animate: TargetAndTransition; exit: TargetAndTransition } => {
+  reverse: boolean,
+): {
+  initial: TargetAndTransition;
+  animate: TargetAndTransition;
+  exit: TargetAndTransition;
+} => {
   const dir = reverse ? -1 : 1;
 
-  const presets: Record<AnimationPreset, { initial: TargetAndTransition; animate: TargetAndTransition; exit: TargetAndTransition }> = {
+  const presets: Record<
+    AnimationPreset,
+    {
+      initial: TargetAndTransition;
+      animate: TargetAndTransition;
+      exit: TargetAndTransition;
+    }
+  > = {
     fade: {
       initial: { opacity: initialOpacity },
       animate: { opacity: 1 },
@@ -73,7 +93,11 @@ const getPresetAnimation = (
       exit: { opacity: 0, x: (-distance / 2) * dir },
     },
     elastic: {
-      initial: { opacity: initialOpacity, scale: initialScale, y: distance / 2 },
+      initial: {
+        opacity: initialOpacity,
+        scale: initialScale,
+        y: distance / 2,
+      },
       animate: { opacity: 1, scale: 1, y: 0 },
       exit: { opacity: 0, scale: 0.8, y: distance / 4 },
     },
@@ -126,7 +150,7 @@ export const AnimatedContent = ({
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
     once: triggerOnce,
-    amount: threshold
+    amount: threshold,
   });
   const [isVisible, setIsVisible] = useState(!triggerOnView);
   const [hasDisappeared, setHasDisappeared] = useState(false);
@@ -150,7 +174,13 @@ export const AnimatedContent = ({
 
   // Get animation config
   const opacity = animateOpacity ? initialOpacity : 1;
-  const animation = getPresetAnimation(preset, distance, opacity, initialScale, reverse);
+  const animation = getPresetAnimation(
+    preset,
+    distance,
+    opacity,
+    initialScale,
+    reverse,
+  );
 
   // Get transition config
   const springConfig = getSpringConfig(ease);
@@ -168,7 +198,11 @@ export const AnimatedContent = ({
 
   // Determine current animation state
   const shouldAnimate = triggerOnView ? isVisible : true;
-  const currentState = hasDisappeared ? "exit" : shouldAnimate ? "animate" : "initial";
+  const currentState = hasDisappeared
+    ? "exit"
+    : shouldAnimate
+      ? "animate"
+      : "initial";
 
   const MotionComponent = (motion as any)[as] || motion.div;
 
@@ -177,8 +211,16 @@ export const AnimatedContent = ({
       ref={ref as any}
       className={className}
       initial={animation.initial}
-      animate={currentState === "animate" ? animation.animate : currentState === "exit" ? animation.exit : animation.initial}
-      transition={(currentState === "exit" ? exitTransition : transition) as any}
+      animate={
+        currentState === "animate"
+          ? animation.animate
+          : currentState === "exit"
+            ? animation.exit
+            : animation.initial
+      }
+      transition={
+        (currentState === "exit" ? exitTransition : transition) as any
+      }
       style={{ perspective: preset === "flip" ? 1000 : undefined }}
     >
       {children}

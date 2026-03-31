@@ -48,5 +48,10 @@ export interface ChromaGridProps {
   style?: CSSProperties;
 }
 
-export type ChromaGridAnimation = "wave" | "pulse" | "fadeIn" | "scale" | "none";
+export type ChromaGridAnimation =
+  | "wave"
+  | "pulse"
+  | "fadeIn"
+  | "scale"
+  | "none";
 export type ChromaGridHoverEffect = "lift" | "glow" | "scale" | "tilt" | "none";

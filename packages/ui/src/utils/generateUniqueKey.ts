@@ -14,10 +14,12 @@ const generateUniqueKey = ({
   const bytes =
     entropy === "high" && typeof crypto !== "undefined"
       ? crypto.getRandomValues(new Uint8Array(byteLength))
-      : Array.from({ length: byteLength }, () => Math.floor(Math.random() * 256));
+      : Array.from({ length: byteLength }, () =>
+          Math.floor(Math.random() * 256),
+        );
 
   const hex = (Array.from(bytes) as number[])
-    .map(b => b.toString(16).padStart(2, "0"))
+    .map((b) => b.toString(16).padStart(2, "0"))
     .join("")
     .slice(0, length);
 

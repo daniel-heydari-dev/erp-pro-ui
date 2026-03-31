@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import ColorPalette from './ColorPalette';
+import { StorySurface } from "../../shared/storybook";
+import ColorPalette from "./ColorPalette";
 
 const meta: Meta<typeof ColorPalette> = {
-  title: 'Data Display/ColorPalette',
+  title: "Data Display/ColorPalette",
   component: ColorPalette,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component:
-          'Reference palette for the design system color tokens, gradients, and implementation examples.',
+          "Reference palette for the design system color tokens, gradients, and implementation examples.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    theme: { control: 'radio', options: ['light', 'dark', 'all'] },
-    showGradients: { control: 'boolean' },
-    showUsageExamples: { control: 'boolean' },
-    groups: { control: false, description: 'Optional custom color groups.' },
+    theme: { control: "radio", options: ["light", "dark", "all"] },
+    showGradients: { control: "boolean" },
+    showUsageExamples: { control: "boolean" },
+    groups: { control: false, description: "Optional custom color groups." },
     className: {
       control: false,
-      description: 'Custom class for the root palette.',
+      description: "Custom class for the root palette.",
     },
   },
 };
@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const SystemPalette: Story = {
   args: {
-    theme: 'all',
+    theme: "all",
     showGradients: true,
     showUsageExamples: false,
   },
@@ -73,10 +73,10 @@ export const BrandOverrideExample: Story = {
   args: {
     groups: [
       {
-        name: 'Brand Colors',
+        name: "Brand Colors",
         colors: [
-          { name: 'brand-pink', value: '#FF0077' },
-          { name: 'brand-cyan', value: '#00E0FF' },
+          { name: "brand-pink", value: "#FF0077" },
+          { name: "brand-cyan", value: "#00E0FF" },
         ],
       },
     ],

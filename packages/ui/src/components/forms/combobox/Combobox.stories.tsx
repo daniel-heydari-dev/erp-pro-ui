@@ -1,59 +1,59 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import Combobox from './Combobox';
+import { StorySurface } from "../../shared/storybook";
+import Combobox from "./Combobox";
 
 const meta = {
-  title: 'Forms/Combobox',
+  title: "Forms/Combobox",
   component: Combobox,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     controls: { expanded: true },
     docs: {
       description: {
         component:
-          'Searchable select input for long option lists. The story keeps local state inside a dedicated demo wrapper instead of leaking state into Storybook args.',
+          "Searchable select input for long option lists. The story keeps local state inside a dedicated demo wrapper instead of leaking state into Storybook args.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Combobox>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const frameworks = [
-  { value: 'react', label: 'React' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'angular', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'next.js', label: 'Next.js' },
-  { value: 'nuxt.js', label: 'Nuxt.js' },
-  { value: 'remix', label: 'Remix' },
-  { value: 'astro', label: 'Astro' },
-  { value: 'solidstart', label: 'SolidStart' },
+  { value: "react", label: "React" },
+  { value: "vue", label: "Vue" },
+  { value: "angular", label: "Angular" },
+  { value: "svelte", label: "Svelte" },
+  { value: "next.js", label: "Next.js" },
+  { value: "nuxt.js", label: "Nuxt.js" },
+  { value: "remix", label: "Remix" },
+  { value: "astro", label: "Astro" },
+  { value: "solidstart", label: "SolidStart" },
 ];
 
 const teams = [
-  { value: 'fulfillment', label: 'Fulfillment Operations' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'merchandising', label: 'Merchandising' },
-  { value: 'support', label: 'Support' },
-  { value: 'revops', label: 'Revenue Operations' },
-  { value: 'product', label: 'Product' },
+  { value: "fulfillment", label: "Fulfillment Operations" },
+  { value: "finance", label: "Finance" },
+  { value: "merchandising", label: "Merchandising" },
+  { value: "support", label: "Support" },
+  { value: "revops", label: "Revenue Operations" },
+  { value: "product", label: "Product" },
 ];
 
 const filters = [
-  { value: 'open', label: 'Open Orders' },
-  { value: 'at-risk', label: 'At-Risk Shipments' },
-  { value: 'scheduled', label: 'Scheduled Deliveries' },
-  { value: 'exceptions', label: 'Exceptions Queue' },
-  { value: 'returns', label: 'Returns' },
+  { value: "open", label: "Open Orders" },
+  { value: "at-risk", label: "At-Risk Shipments" },
+  { value: "scheduled", label: "Scheduled Deliveries" },
+  { value: "exceptions", label: "Exceptions Queue" },
+  { value: "returns", label: "Returns" },
 ];
 
 function SearchableSelectionDemo() {
-  const [value, setValue] = useState('next.js');
+  const [value, setValue] = useState("next.js");
 
   const selected = frameworks.find((option) => option.value === value);
 
@@ -73,7 +73,7 @@ function SearchableSelectionDemo() {
               Current selection
             </p>
             <p className="ui:mt-2 ui:text-xl ui:font-semibold ui:text-foreground">
-              {selected?.label ?? 'No framework selected'}
+              {selected?.label ?? "No framework selected"}
             </p>
             <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
               Useful for framework presets, assignee routing, or catalog
@@ -99,7 +99,7 @@ function SearchableSelectionDemo() {
 }
 
 function CreateOptionDemo() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [requests, setRequests] = useState<string[]>([]);
 
   return (
@@ -117,7 +117,7 @@ function CreateOptionDemo() {
             createOptionLabel="Request a new team"
             onCreateOption={() =>
               setRequests((current) => [
-                `Creation flow requested for \"${value || 'new team'}\".`,
+                `Creation flow requested for \"${value || "new team"}\".`,
                 ...current,
               ])
             }
@@ -156,7 +156,7 @@ function CreateOptionDemo() {
 }
 
 function ToolbarFilterDemo() {
-  const [value, setValue] = useState('exceptions');
+  const [value, setValue] = useState("exceptions");
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
@@ -184,9 +184,9 @@ function ToolbarFilterDemo() {
         </div>
         <div className="ui:grid ui:gap-3 ui:md:grid-cols-3">
           {[
-            { label: 'Open tasks', value: '42' },
-            { label: 'Escalations', value: '6' },
-            { label: 'Avg. resolution', value: '2h 14m' },
+            { label: "Open tasks", value: "42" },
+            { label: "Escalations", value: "6" },
+            { label: "Avg. resolution", value: "2h 14m" },
           ].map((metric) => (
             <div
               key={metric.label}

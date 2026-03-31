@@ -1,0 +1,30 @@
+@theme {
+  --font-expressive: "Bebas Neue", "Oswald", system-ui, sans-serif;
+  --font-sans: "Geist", "Roboto", sans-serif, system-ui;
+  --font-geist: "Geist", sans-serif, system-ui;
+  --font-roboto: "Roboto", sans-serif, system-ui;
+  --font-bebas: "Bebas Neue", "Oswald", system-ui, sans-serif;
+
+  --breakpoint-xs: 360px;
+}
+
+@custom-variant dark (&:is(.dark *, [data-theme$='-dark'] *, [data-mode='dark'] *));
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--foreground);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}

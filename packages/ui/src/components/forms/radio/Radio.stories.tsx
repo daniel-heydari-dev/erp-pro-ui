@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Radio } from './Radio';
+import { StorySurface } from "../../shared/storybook";
+import { Radio } from "./Radio";
 
 const meta: Meta<typeof Radio> = {
-  title: 'Forms/Radio',
+  title: "Forms/Radio",
   component: Radio,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Single-choice selector for choosing one option from a related set.',
+          "Single-choice selector for choosing one option from a related set.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    label: { control: 'text', description: 'Label text for the radio.' },
-    error: { control: 'text', description: 'Displays an error message.' },
-    disabled: { control: 'boolean', description: 'Locks interaction.' },
+    label: { control: "text", description: "Label text for the radio." },
+    error: { control: "text", description: "Displays an error message." },
+    disabled: { control: "boolean", description: "Locks interaction." },
     color: {
-      control: 'select',
-      options: ['primary', 'blue', 'red', 'green', 'yellow', 'teal'],
-      description: 'Accent color of the radio.',
+      control: "select",
+      options: ["primary", "blue", "red", "green", "yellow", "teal"],
+      description: "Accent color of the radio.",
     },
-    checked: { control: false, description: 'Controlled checked state.' },
-    onChange: { control: false, description: 'Checked state change callback.' },
+    checked: { control: false, description: "Controlled checked state." },
+    onChange: { control: false, description: "Checked state change callback." },
   },
 };
 
@@ -40,15 +40,15 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   render: () => {
-    const [selected, setSelected] = useState('option-1');
+    const [selected, setSelected] = useState("option-1");
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
         <Radio
           name="group1"
           label="Option 1"
-          checked={selected === 'option-1'}
-          onChange={() => setSelected('option-1')}
+          checked={selected === "option-1"}
+          onChange={() => setSelected("option-1")}
         />
       </StorySurface>
     );
@@ -61,7 +61,7 @@ export const Default: Story = {
  */
 export const RadioGroup: Story = {
   render: () => {
-    const [plan, setPlan] = useState('basic');
+    const [plan, setPlan] = useState("basic");
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -72,20 +72,20 @@ export const RadioGroup: Story = {
           <Radio
             name="plan"
             label="Basic Plan ($10/mo)"
-            checked={plan === 'basic'}
-            onChange={() => setPlan('basic')}
+            checked={plan === "basic"}
+            onChange={() => setPlan("basic")}
           />
           <Radio
             name="plan"
             label="Pro Plan ($20/mo)"
-            checked={plan === 'pro'}
-            onChange={() => setPlan('pro')}
+            checked={plan === "pro"}
+            onChange={() => setPlan("pro")}
           />
           <Radio
             name="plan"
             label="Enterprise Plan (Contact Us)"
-            checked={plan === 'enterprise'}
-            onChange={() => setPlan('enterprise')}
+            checked={plan === "enterprise"}
+            onChange={() => setPlan("enterprise")}
           />
         </div>
       </StorySurface>
@@ -106,7 +106,7 @@ export const Disabled: Story = {
     ),
   ],
   args: {
-    label: 'Unavailable Option',
+    label: "Unavailable Option",
     disabled: true,
   },
 };
@@ -117,7 +117,7 @@ export const Disabled: Story = {
  */
 export const ShippingSpeedSelector: Story = {
   render: () => {
-    const [speed, setSpeed] = useState('standard');
+    const [speed, setSpeed] = useState("standard");
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-lg">
@@ -128,20 +128,20 @@ export const ShippingSpeedSelector: Story = {
           <Radio
             name="shipping"
             label="Standard (3-5 days)"
-            checked={speed === 'standard'}
-            onChange={() => setSpeed('standard')}
+            checked={speed === "standard"}
+            onChange={() => setSpeed("standard")}
           />
           <Radio
             name="shipping"
             label="Priority (1-2 days)"
-            checked={speed === 'priority'}
-            onChange={() => setSpeed('priority')}
+            checked={speed === "priority"}
+            onChange={() => setSpeed("priority")}
           />
           <Radio
             name="shipping"
             label="Same day"
-            checked={speed === 'sameday'}
-            onChange={() => setSpeed('sameday')}
+            checked={speed === "sameday"}
+            onChange={() => setSpeed("sameday")}
           />
         </div>
       </StorySurface>

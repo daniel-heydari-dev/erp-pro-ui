@@ -29,6 +29,7 @@ Includes a **React + Vite + Tailwind v4 web app**, an **Express API**, and **Sto
 │   ├── prettier-config/  # Shared Prettier config
 │   ├── shared/           # Shared TS utilities/types
 │   ├── tsconfig/         # Shared base TS configs
+│   ├── vite-config/      # Shared Vite + Tailwind app config
 │   └── ui/               # Shared React UI components
 ├── package.json
 ├── turbo.json
@@ -84,20 +85,22 @@ Storybook: http://localhost:6006
 
 Both the **web** app and **storybook** support path aliases for cleaner imports:
 
-| Alias | Path |
-|-------|------|
+| Alias | Path      |
+| ----- | --------- |
 | `@/*` | `./src/*` |
 
 ### Usage Example
 
 ```tsx
 // Instead of relative imports like this:
-import { Button } from '../../../components/Button';
+import { Button } from "../../../components/Button";
 
 // Use the @ alias:
-import { Button } from '@/components/Button';
+import { Button } from "@/components/Button";
 ```
 
 This is configured in:
+
 - `tsconfig.json` - TypeScript path mapping
-- `vite.config.ts` / `.storybook/main.ts` - Vite resolve aliases
+- `packages/vite-config` - Shared Vite resolve aliases and Tailwind wiring
+- `vite.config.ts` / `.storybook/main.ts` - App-specific wrappers over the shared Vite config

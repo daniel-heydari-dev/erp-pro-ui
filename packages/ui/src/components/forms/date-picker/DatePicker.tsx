@@ -1,19 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Calendar } from '../calendar';
+import { Calendar } from "../calendar";
 
-import type {
-  DatePickerProps,
-  DatePickerValue,
-  DateRangeValue,
-} from './types';
+import type { DatePickerProps, DatePickerValue, DateRangeValue } from "./types";
 
 const formatDate = (date: Date | null) =>
   date?.toLocaleDateString(undefined, {
     month: "short",
     day: "numeric",
     year: "numeric",
-  }) ?? '';
+  }) ?? "";
 
 const isRangeValue = (value: DatePickerValue): value is DateRangeValue =>
   typeof value === "object" &&
@@ -24,20 +20,20 @@ const isRangeValue = (value: DatePickerValue): value is DateRangeValue =>
 const emptyRange: DateRangeValue = { start: null, end: null };
 
 export const DatePicker = ({
-  mode = 'single',
+  mode = "single",
   value,
   onChange,
   label,
   placeholder = "Pick a date",
   helperText,
   disabled = false,
-  className = '',
+  className = "",
   presets,
 }: DatePickerProps) => {
   const [open, setOpen] = useState(false);
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<DatePickerValue>(
-    value ?? (mode === "range" ? emptyRange : null)
+    value ?? (mode === "range" ? emptyRange : null),
   );
 
   const currentValue = isControlled ? value : internalValue;
@@ -57,7 +53,7 @@ export const DatePicker = ({
       if (rangeValue.start) {
         return `${formatDate(rangeValue.start)} — …`;
       }
-      return '';
+      return "";
     }
     return formatDate(singleValue);
   }, [mode, rangeValue.end, rangeValue.start, singleValue]);
@@ -82,11 +78,11 @@ export const DatePicker = ({
     };
 
     if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
 
@@ -97,18 +93,14 @@ export const DatePicker = ({
   };
 
   return (
-    <div
-      ref={containerRef}
-      className={`w-full space-y-2 ${className}`.trim()}
-    >
-      {label && (
-        <p className="text-sm font-medium text-heading">{label}</p>
-      )}
+    <div ref={containerRef} className={`w-full space-y-2 ${className}`.trim()}>
+      {label && <p className="text-sm font-medium text-heading">{label}</p>}
       <div className="relative">
         <button
           type="button"
-          className={`flex w-full items-center justify-between rounded-md border border-black/5 dark:border-white/10 backdrop-blur-xl bg-white/40 dark:bg-zinc-950/40 px-3 py-2 text-sm shadow-sm ${disabled ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+          className={`flex w-full items-center justify-between rounded-md border border-black/5 dark:border-white/10 backdrop-blur-xl bg-white/40 dark:bg-zinc-950/40 px-3 py-2 text-sm shadow-sm ${
+            disabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           onClick={() => !disabled && setOpen((prev) => !prev)}
           aria-haspopup="dialog"
           aria-expanded={open}
@@ -126,25 +118,25 @@ export const DatePicker = ({
         {open && !disabled && (
           <div className="absolute left-0 top-12 z-40 dropdown-panel">
             <Calendar
-              value={mode === "single" ? singleValue ?? null : undefined}
+              value={mode === "single" ? (singleValue ?? null) : undefined}
               selectionMode={mode}
               range={mode === "range" ? rangeValue : undefined}
               onSelect={
                 mode === "single"
                   ? (date) => {
-                    updateValue(date);
-                    setOpen(false);
-                  }
+                      updateValue(date);
+                      setOpen(false);
+                    }
                   : undefined
               }
               onRangeSelect={
                 mode === "range"
                   ? (nextRange) => {
-                    updateValue(nextRange);
-                    if (nextRange.start && nextRange.end) {
-                      setOpen(false);
+                      updateValue(nextRange);
+                      if (nextRange.start && nextRange.end) {
+                        setOpen(false);
+                      }
                     }
-                  }
                   : undefined
               }
             />

@@ -1,2 +1,2 @@
-export { default as BlurText } from './BlurText';
-export type { BlurTextProps } from './BlurText';
+export { default as BlurText } from "./BlurText";
+export type { BlurTextProps } from "./BlurText";

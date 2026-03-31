@@ -8,8 +8,10 @@ export type RadioColor =
   | "teal"
   | "primary";
 
-export interface RadioProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+export interface RadioProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type"
+> {
   label?: string;
   error?: string;
   /** Color variant for the checked state */

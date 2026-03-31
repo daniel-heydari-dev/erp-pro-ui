@@ -1,42 +1,42 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
 import {
   StoryIntro,
   StoryPanel,
   StorySection,
   StorySurface,
-} from '../../shared/storybook';
-import { Select } from './Select';
+} from "../../shared/storybook";
+import { Select } from "./Select";
 
 const meta: Meta<typeof Select> = {
-  title: 'Forms/Select',
+  title: "Forms/Select",
   component: Select,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Controlled dropdown for choosing one option from a predefined list.',
+          "Controlled dropdown for choosing one option from a predefined list.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    label: { control: 'text', description: 'Label for the dropdown' },
-    error: { control: 'text', description: 'Error feedback message' },
-    helperText: { control: 'text', description: 'Helper instruction text' },
-    disabled: { control: 'boolean', description: 'Disables the dropdown' },
+    label: { control: "text", description: "Label for the dropdown" },
+    error: { control: "text", description: "Error feedback message" },
+    helperText: { control: "text", description: "Helper instruction text" },
+    disabled: { control: "boolean", description: "Disables the dropdown" },
     placeholder: {
-      control: 'text',
-      description: 'Default placeholder when no item is selected',
+      control: "text",
+      description: "Default placeholder when no item is selected",
     },
     options: {
       control: false,
-      description: 'Available choices as value/label pairs.',
+      description: "Available choices as value/label pairs.",
     },
-    value: { control: false, description: 'Controlled selected value.' },
-    onChange: { control: false, description: 'Selection change callback.' },
+    value: { control: false, description: "Controlled selected value." },
+    onChange: { control: false, description: "Selection change callback." },
   },
 };
 
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof meta>;
 // --- Helper Components ---
 
 function ControlledSelect() {
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState("");
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <div className="ui:min-h-80 ui:w-full">
@@ -55,10 +55,10 @@ function ControlledSelect() {
           value={val}
           onChange={(e) => setVal(e.target.value)}
           options={[
-            { label: 'United States', value: 'us' },
-            { label: 'Canada', value: 'ca' },
-            { label: 'United Kingdom', value: 'uk' },
-            { label: 'Australia', value: 'au' },
+            { label: "United States", value: "us" },
+            { label: "Canada", value: "ca" },
+            { label: "United Kingdom", value: "uk" },
+            { label: "Australia", value: "au" },
           ]}
           className="ui:w-full"
         />
@@ -79,7 +79,7 @@ export const Default: Story = {
 
 export const ControlledFormPattern: Story = {
   render: () => {
-    const [environment, setEnvironment] = useState('');
+    const [environment, setEnvironment] = useState("");
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -88,13 +88,13 @@ export const ControlledFormPattern: Story = {
             label="Deployment environment"
             placeholder="Choose environment"
             options={[
-              { label: 'Development', value: 'development' },
-              { label: 'Staging', value: 'staging' },
-              { label: 'Production', value: 'production' },
+              { label: "Development", value: "development" },
+              { label: "Staging", value: "staging" },
+              { label: "Production", value: "production" },
             ]}
             value={environment}
             onChange={(event) => setEnvironment(event.target.value)}
-            error={environment ? undefined : 'Environment is required'}
+            error={environment ? undefined : "Environment is required"}
             helperText="Choose where this release should be promoted."
           />
         </div>
@@ -109,13 +109,13 @@ export const ControlledFormPattern: Story = {
  */
 export const WithError: Story = {
   args: {
-    label: 'Favorite Color',
-    error: 'Please select a color to continue.',
+    label: "Favorite Color",
+    error: "Please select a color to continue.",
     options: [
-      { label: 'Red', value: 'red' },
-      { label: 'Blue', value: 'blue' },
+      { label: "Red", value: "red" },
+      { label: "Blue", value: "blue" },
     ],
-    className: 'ui:w-full',
+    className: "ui:w-full",
   },
   decorators: [
     (StoryFn) => (
@@ -135,18 +135,21 @@ export const WithError: Story = {
  */
 export const Disabled: Story = {
   args: {
-    label: 'Available Options (Locked)',
+    label: "Available Options (Locked)",
     disabled: true,
-    value: 'opt1',
+    value: "opt1",
     options: [
-      { label: 'Option 1', value: 'opt1' },
-      { label: 'Option 2', value: 'opt2' },
+      { label: "Option 1", value: "opt1" },
+      { label: "Option 2", value: "opt2" },
     ],
-    className: 'ui:w-full',
+    className: "ui:w-full",
   },
   decorators: [
     (StoryFn) => (
-      <StorySurface widthClassName="ui:w-full ui:max-w-md" className="ui:min-h-72">
+      <StorySurface
+        widthClassName="ui:w-full ui:max-w-md"
+        className="ui:min-h-72"
+      >
         <StoryFn />
       </StorySurface>
     ),
@@ -159,7 +162,7 @@ export const Disabled: Story = {
  */
 export const ApprovalFormSegment: Story = {
   render: () => {
-    const [department, setDepartment] = useState('operations');
+    const [department, setDepartment] = useState("operations");
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-xl">
@@ -169,9 +172,9 @@ export const ApprovalFormSegment: Story = {
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             options={[
-              { label: 'Operations', value: 'operations' },
-              { label: 'Finance', value: 'finance' },
-              { label: 'Procurement', value: 'procurement' },
+              { label: "Operations", value: "operations" },
+              { label: "Finance", value: "finance" },
+              { label: "Procurement", value: "procurement" },
             ]}
           />
           <StoryPanel className="ui:rounded-md ui:bg-muted/40 ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground ui:shadow-none">
@@ -196,9 +199,9 @@ export const CommonStates: Story = {
             label="Validation"
             placeholder="Select owner"
             options={[
-              { label: 'React', value: 'react' },
-              { label: 'Vue', value: 'vue' },
-              { label: 'Angular', value: 'angular' },
+              { label: "React", value: "react" },
+              { label: "Vue", value: "vue" },
+              { label: "Angular", value: "angular" },
             ]}
             error="Owner is required"
           />
@@ -206,9 +209,9 @@ export const CommonStates: Story = {
             label="Disabled"
             placeholder="Cannot change"
             options={[
-              { label: 'React', value: 'react' },
-              { label: 'Vue', value: 'vue' },
-              { label: 'Angular', value: 'angular' },
+              { label: "React", value: "react" },
+              { label: "Vue", value: "vue" },
+              { label: "Angular", value: "angular" },
             ]}
             disabled
             value="react"
@@ -217,9 +220,9 @@ export const CommonStates: Story = {
             label="Custom Surface"
             placeholder="Select option"
             options={[
-              { label: 'React', value: 'react' },
-              { label: 'Vue', value: 'vue' },
-              { label: 'Angular', value: 'angular' },
+              { label: "React", value: "react" },
+              { label: "Vue", value: "vue" },
+              { label: "Angular", value: "angular" },
             ]}
             helperText="Styled with a darker glass background."
             bgClassName="bg-neutral-900/70 text-white backdrop-blur-xl"

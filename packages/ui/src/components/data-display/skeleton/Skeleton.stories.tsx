@@ -1,31 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { StorySurface } from '../../shared/storybook';
-import { Skeleton, SkeletonCard, SkeletonListItem } from './Skeleton';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { StorySurface } from "../../shared/storybook";
+import { Skeleton, SkeletonCard, SkeletonListItem } from "./Skeleton";
 
 const meta: Meta<typeof Skeleton> = {
-  title: 'Data Display/Skeleton',
+  title: "Data Display/Skeleton",
   component: Skeleton,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Skeleton placeholders preserve layout while real content is loading across cards, lists, tables, and profile blocks.',
+          "Skeleton placeholders preserve layout while real content is loading across cards, lists, tables, and profile blocks.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['text', 'circular', 'rectangular', 'rounded'],
+      control: "select",
+      options: ["text", "circular", "rectangular", "rounded"],
     },
     animation: {
-      control: 'select',
-      options: ['pulse', 'wave', 'none'],
+      control: "select",
+      options: ["pulse", "wave", "none"],
     },
-    width: { control: 'number' },
-    height: { control: 'number' },
+    width: { control: "number" },
+    height: { control: "number" },
   },
 };
 

@@ -1,36 +1,36 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Checkbox } from './Checkbox';
+import { StorySurface } from "../../shared/storybook";
+import { Checkbox } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
-  title: 'Forms/Checkbox',
+  title: "Forms/Checkbox",
   component: Checkbox,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Boolean input for agreements, option sets, and permission toggles.',
+          "Boolean input for agreements, option sets, and permission toggles.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    label: { control: 'text', description: 'Label text for the checkbox.' },
+    label: { control: "text", description: "Label text for the checkbox." },
     error: {
-      control: 'text',
-      description: 'Displays error below the checkbox.',
+      control: "text",
+      description: "Displays error below the checkbox.",
     },
-    disabled: { control: 'boolean', description: 'Prevents interaction.' },
+    disabled: { control: "boolean", description: "Prevents interaction." },
     color: {
-      control: 'select',
-      options: ['primary', 'blue', 'red', 'green', 'yellow', 'teal'],
-      description: 'Color scheme of the checkbox when checked.',
+      control: "select",
+      options: ["primary", "blue", "red", "green", "yellow", "teal"],
+      description: "Color scheme of the checkbox when checked.",
     },
-    checked: { control: false, description: 'Controlled checked state.' },
-    onChange: { control: false, description: 'Checked state change callback.' },
+    checked: { control: false, description: "Controlled checked state." },
+    onChange: { control: false, description: "Checked state change callback." },
   },
 };
 
@@ -69,7 +69,7 @@ export const Checked: Story = {
     ),
   ],
   args: {
-    label: 'Subscribe to newsletter',
+    label: "Subscribe to newsletter",
     defaultChecked: true,
   },
 };
@@ -87,8 +87,8 @@ export const WithError: Story = {
     ),
   ],
   args: {
-    label: 'I agree to the privacy policy',
-    error: 'You must agree before continuing.',
+    label: "I agree to the privacy policy",
+    error: "You must agree before continuing.",
   },
 };
 
@@ -105,7 +105,7 @@ export const Disabled: Story = {
     ),
   ],
   args: {
-    label: 'Legacy feature (unavailable)',
+    label: "Legacy feature (unavailable)",
     disabled: true,
     defaultChecked: true,
   },
@@ -160,7 +160,10 @@ export const FilterChecklist: Story = {
             label="Include archived"
             checked={state.includeArchived}
             onChange={(e) =>
-              setState((prev) => ({ ...prev, includeArchived: e.target.checked }))
+              setState((prev) => ({
+                ...prev,
+                includeArchived: e.target.checked,
+              }))
             }
           />
         </div>

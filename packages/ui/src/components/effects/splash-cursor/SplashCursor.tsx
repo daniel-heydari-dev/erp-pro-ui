@@ -78,7 +78,8 @@ export const SplashCursor = ({
 
       for (let i = 0; i < particleCount; i++) {
         const angle = (Math.PI * 2 * i) / particleCount;
-        const distance = variant === "ripple" ? config.base : Math.random() * config.variance;
+        const distance =
+          variant === "ripple" ? config.base : Math.random() * config.variance;
 
         newParticles.push({
           id: particleIdRef.current++,
@@ -95,11 +96,11 @@ export const SplashCursor = ({
       // Remove particles after animation
       setTimeout(() => {
         setParticles((prev) =>
-          prev.filter((p) => !newParticles.find((np) => np.id === p.id))
+          prev.filter((p) => !newParticles.find((np) => np.id === p.id)),
         );
       }, duration);
     },
-    [size, particleCount, opacity, duration, getRandomColor, variant]
+    [size, particleCount, opacity, duration, getRandomColor, variant],
   );
 
   const handleMouseMove = useCallback(
@@ -119,7 +120,7 @@ export const SplashCursor = ({
         }
       }
     },
-    [enabled, createParticles, variant]
+    [enabled, createParticles, variant],
   );
 
   const handleClick = useCallback(
@@ -137,7 +138,7 @@ export const SplashCursor = ({
         setTimeout(() => createParticles(x, y), 200);
       }
     },
-    [enabled, createParticles, variant]
+    [enabled, createParticles, variant],
   );
 
   const getParticleAnimation = (particle: Particle) => {
@@ -183,10 +184,7 @@ export const SplashCursor = ({
   return (
     <div
       ref={containerRef}
-      className={mergeClassNames(
-        "relative overflow-hidden",
-        className
-      )}
+      className={mergeClassNames("relative overflow-hidden", className)}
       style={style}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsInside(true)}

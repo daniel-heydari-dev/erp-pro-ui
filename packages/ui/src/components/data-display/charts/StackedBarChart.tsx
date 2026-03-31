@@ -71,13 +71,19 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
           />
           <Legend
             iconType="circle"
-            wrapperStyle={{ paddingTop: "20px", fontSize: "12px", color: "var(--color-neutral-300)" }}
+            wrapperStyle={{
+              paddingTop: "20px",
+              fontSize: "12px",
+              color: "var(--color-neutral-300)",
+            }}
           />
 
           {categories.map((cat, index) => {
             // Apply rounded radius only to the top bar in the stack
             const isTop = index === categories.length - 1;
-            const radius: [number, number, number, number] = isTop ? [6, 6, 0, 0] : [0, 0, 0, 0];
+            const radius: [number, number, number, number] = isTop
+              ? [6, 6, 0, 0]
+              : [0, 0, 0, 0];
 
             return (
               <Bar

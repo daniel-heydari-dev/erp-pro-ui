@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { Input } from '../input';
-import { PasswordStrengthMeter } from './PasswordStrengthMeter';
+import { StorySurface } from "../../shared/storybook";
+import { Input } from "../input";
+import { PasswordStrengthMeter } from "./PasswordStrengthMeter";
 
 const meta: Meta<typeof PasswordStrengthMeter> = {
-  title: 'Forms/PasswordStrengthMeter',
+  title: "Forms/PasswordStrengthMeter",
   component: PasswordStrengthMeter,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Evaluates password quality against practical security criteria and gives immediate visual feedback during credential setup.',
+          "Evaluates password quality against practical security criteria and gives immediate visual feedback during credential setup.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    password: { control: 'text', description: 'Password value to evaluate.' },
+    password: { control: "text", description: "Password value to evaluate." },
   },
 };
 
@@ -27,7 +27,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function InteractiveExample() {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -50,8 +50,8 @@ function InteractiveExample() {
 }
 
 function SignUpFlowExample() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">

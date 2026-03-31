@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { SpotlightCard } from './SpotlightCard';
+import { StorySurface } from "../../shared/storybook";
+import { SpotlightCard } from "./SpotlightCard";
 
 const meta: Meta<typeof SpotlightCard> = {
-  title: 'Visuals/SpotlightCard',
+  title: "Visuals/SpotlightCard",
   component: SpotlightCard,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Interactive spotlight surface for premium feature highlights, pricing cards, or dashboard callouts.',
+          "Interactive spotlight surface for premium feature highlights, pricing cards, or dashboard callouts.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    spotlightColor: { control: 'color' },
-    spotlightSize: { control: 'number' },
-    spotlightEnabled: { control: 'boolean' },
+    spotlightColor: { control: "color" },
+    spotlightSize: { control: "number" },
+    spotlightEnabled: { control: "boolean" },
     variant: {
-      control: 'select',
-      options: ['glass', 'solid', 'outlined'],
+      control: "select",
+      options: ["glass", "solid", "outlined"],
     },
-    hoverScale: { control: 'boolean' },
+    hoverScale: { control: "boolean" },
   },
 };
 
@@ -71,7 +71,7 @@ export const Default: Story = {
 };
 
 export const SolidVariant: Story = {
-  args: { variant: 'solid', spotlightColor: 'rgba(59, 130, 246, 0.15)' },
+  args: { variant: "solid", spotlightColor: "rgba(59, 130, 246, 0.15)" },
   render: Default.render,
 };
 
@@ -86,20 +86,21 @@ export const FeatureGrid: Story = {
       className="ui:bg-neutral-950"
     >
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
-        {[
-          'Smart routing',
-          'Live approvals',
-          'Inventory insight',
-        ].map((title) => (
-          <SpotlightCard key={title} className="ui:w-full">
-            <div className="ui:flex ui:min-h-44 ui:flex-col ui:justify-between ui:gap-3">
-              <p className="ui:text-sm ui:font-semibold ui:text-white">{title}</p>
-              <p className="ui:text-sm ui:text-neutral-400">
-                Designed for high-signal operational workflows with premium interaction feedback.
-              </p>
-            </div>
-          </SpotlightCard>
-        ))}
+        {["Smart routing", "Live approvals", "Inventory insight"].map(
+          (title) => (
+            <SpotlightCard key={title} className="ui:w-full">
+              <div className="ui:flex ui:min-h-44 ui:flex-col ui:justify-between ui:gap-3">
+                <p className="ui:text-sm ui:font-semibold ui:text-white">
+                  {title}
+                </p>
+                <p className="ui:text-sm ui:text-neutral-400">
+                  Designed for high-signal operational workflows with premium
+                  interaction feedback.
+                </p>
+              </div>
+            </SpotlightCard>
+          ),
+        )}
       </div>
     </StorySurface>
   ),

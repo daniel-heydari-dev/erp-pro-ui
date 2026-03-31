@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { Button } from '../button';
+import { Button } from "../button";
 import {
   StoryIntro,
   StorySection,
   StoryStack,
   StorySurface,
-} from '../../shared/storybook';
-import { SearchIcon } from '../../icons';
-import { Input } from './Input';
-import { InputState, type InputProps } from './types';
+} from "../../shared/storybook";
+import { SearchIcon } from "../../icons";
+import { Input } from "./Input";
+import { InputState, type InputProps } from "./types";
 
 const meta: Meta<typeof Input> = {
-  title: 'Forms/Input',
+  title: "Forms/Input",
   component: Input,
   render: (args: InputProps) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -21,45 +21,45 @@ const meta: Meta<typeof Input> = {
     </StorySurface>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     controls: { expanded: true },
     docs: {
       description: {
         component:
-          'Form input with helper, validation, and icon states. Stories use a shared StorySurface so controls stay visually consistent.',
+          "Form input with helper, validation, and icon states. Stories use a shared StorySurface so controls stay visually consistent.",
       },
     },
   },
   argTypes: {
     state: {
-      control: 'select',
+      control: "select",
       options: [
         InputState.DEFAULT,
         InputState.SUCCESS,
         InputState.ERROR,
         InputState.DISABLED,
       ],
-      description: 'Visual state of the input',
+      description: "Visual state of the input",
     },
-    label: { control: 'text' },
-    helperText: { control: 'text' },
-    error: { control: 'text' },
-    message: { control: 'text' },
-    placeholder: { control: 'text' },
-    disabled: { control: 'boolean' },
+    label: { control: "text" },
+    helperText: { control: "text" },
+    error: { control: "text" },
+    message: { control: "text" },
+    placeholder: { control: "text" },
+    disabled: { control: "boolean" },
     type: {
-      control: 'radio',
-      options: ['text', 'email', 'password', 'number'],
-      description: 'Native input type attribute.',
+      control: "radio",
+      options: ["text", "email", "password", "number"],
+      description: "Native input type attribute.",
     },
     bgClassName: {
-      control: 'text',
-      description: 'Custom utility classes for the input background surface.',
+      control: "text",
+      description: "Custom utility classes for the input background surface.",
     },
     icon: { control: false },
     onChange: { control: false },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -68,7 +68,7 @@ type Story = StoryObj<typeof meta>;
 // --- Helper Components for Stories ---
 
 function ControlledInput() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <Input
@@ -117,10 +117,10 @@ export const Default: Story = {
  */
 export const WithHelperText: Story = {
   args: {
-    label: 'Username',
-    placeholder: 'johndoe',
-    helperText: 'This is your public display name.',
-    className: 'ui:w-full',
+    label: "Username",
+    placeholder: "johndoe",
+    helperText: "This is your public display name.",
+    className: "ui:w-full",
   },
 };
 
@@ -130,11 +130,11 @@ export const WithHelperText: Story = {
  */
 export const WithIcon: Story = {
   args: {
-    label: 'Search tickets',
-    placeholder: 'Find by ticket ID, title, or owner',
-    helperText: 'Search runs client-side as you type.',
+    label: "Search tickets",
+    placeholder: "Find by ticket ID, title, or owner",
+    helperText: "Search runs client-side as you type.",
     icon: <SearchIcon width={18} height={18} color="currentColor" />,
-    className: 'ui:w-full',
+    className: "ui:w-full",
   },
 };
 
@@ -235,7 +235,7 @@ export const LoginFormExample: Story = {
  */
 export const ValidationFeedbackFlow: Story = {
   render: () => {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState("");
     const isValid = value.length >= 6;
     const hasValue = value.length > 0;
 
@@ -253,10 +253,10 @@ export const ValidationFeedbackFlow: Story = {
                 : InputState.ERROR
               : InputState.DEFAULT
           }
-          message={isValid ? 'Code format looks valid.' : undefined}
+          message={isValid ? "Code format looks valid." : undefined}
           error={
             hasValue && !isValid
-              ? 'Code must be at least 6 characters.'
+              ? "Code must be at least 6 characters."
               : undefined
           }
         />

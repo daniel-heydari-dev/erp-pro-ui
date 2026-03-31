@@ -1,12 +1,12 @@
 import type { ReactNode, CSSProperties } from "react";
 
-export type CarouselAnimation = 
-  | "slide"    // Default horizontal slide
-  | "fade"     // Crossfade between slides
-  | "scale"    // Scale up/down transition
-  | "flip"     // 3D flip effect
-  | "cube"     // 3D cube rotation
-  | "cards";   // Card stack effect
+export type CarouselAnimation =
+  | "slide" // Default horizontal slide
+  | "fade" // Crossfade between slides
+  | "scale" // Scale up/down transition
+  | "flip" // 3D flip effect
+  | "cube" // 3D cube rotation
+  | "cards"; // Card stack effect
 
 export interface CarouselItem {
   /** Unique identifier */
@@ -45,9 +45,16 @@ export interface CarouselProps {
   /** Number of visible slides */
   slidesPerView?: number;
   /** Custom arrow component */
-  renderArrow?: (props: { direction: "prev" | "next"; onClick: () => void }) => ReactNode;
+  renderArrow?: (props: {
+    direction: "prev" | "next";
+    onClick: () => void;
+  }) => ReactNode;
   /** Custom dot component */
-  renderDot?: (props: { index: number; active: boolean; onClick: () => void }) => ReactNode;
+  renderDot?: (props: {
+    index: number;
+    active: boolean;
+    onClick: () => void;
+  }) => ReactNode;
   /** Callback when slide changes */
   onSlideChange?: (index: number) => void;
   /** Visual variant */

@@ -46,12 +46,8 @@ export const Alert = ({
     >
       <span className="text-heading">{icon}</span>
       <div className="space-y-1">
-        {title && (
-          <p className="text-base font-medium text-heading">{title}</p>
-        )}
-        {description && (
-          <p className="text-muted-foreground">{description}</p>
-        )}
+        {title && <p className="text-base font-medium text-heading">{title}</p>}
+        {description && <p className="text-muted-foreground">{description}</p>}
         {children}
       </div>
     </div>

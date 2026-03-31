@@ -335,9 +335,7 @@ function ColorSwatchItem({ color }: { color: ColorSwatch }) {
       >
         <span
           className={
-            color.textColor === "light"
-              ? "text-white"
-              : "text-neutral-900"
+            color.textColor === "light" ? "text-white" : "text-neutral-900"
           }
         >
           {color.value.length <= 9 ? color.value.toUpperCase() : "RGBA"}
@@ -459,9 +457,7 @@ function GradientPreview() {
           >
             Mesh Gradient
           </div>
-          <code className="text-xs text-neutral-500">
-            radial-gradient mesh
-          </code>
+          <code className="text-xs text-neutral-500">radial-gradient mesh</code>
         </div>
 
         {/* Navigation Active */}
@@ -476,9 +472,7 @@ function GradientPreview() {
           >
             Nav Active State
           </div>
-          <code className="text-xs text-neutral-500">
-            270deg with opacity
-          </code>
+          <code className="text-xs text-neutral-500">270deg with opacity</code>
         </div>
 
         {/* Dark Surface */}
@@ -601,8 +595,9 @@ export default function ColorPalette({
 
   return (
     <div
-      className={`p-6 bg-white dark:bg-neutral-900 rounded-xl ${className || ""
-        }`}
+      className={`p-6 bg-white dark:bg-neutral-900 rounded-xl ${
+        className || ""
+      }`}
     >
       <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
         Color Palette
@@ -618,18 +613,20 @@ export default function ColorPalette({
       {/* Theme Toggle Info */}
       <div className="mb-6 flex flex-wrap gap-2">
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${theme === "light" || theme === "all"
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            theme === "light" || theme === "all"
               ? "bg-primary-100 text-primary-700"
               : "bg-neutral-100 text-neutral-500"
-            }`}
+          }`}
         >
           Light Theme
         </span>
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${theme === "dark" || theme === "all"
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            theme === "dark" || theme === "all"
               ? "bg-primary-100 text-primary-700"
               : "bg-neutral-100 text-neutral-500"
-            }`}
+          }`}
         >
           Dark Theme
         </span>

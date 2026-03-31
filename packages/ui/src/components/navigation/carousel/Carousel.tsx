@@ -4,20 +4,33 @@ import { mergeClassNames } from "../../../utils";
 import type { CarouselProps, CarouselAnimation } from "./types";
 
 const ChevronLeft = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
   </svg>
 );
 
 const ChevronRight = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
   </svg>
 );
 
 const variantStyles = {
   default: "ui:bg-white ui:dark:bg-neutral-900 ui:shadow-xl",
-  glass: "ui:bg-white/60 ui:dark:bg-neutral-900/50 ui:backdrop-blur-2xl ui:border ui:border-white/40 ui:dark:border-white/10",
+  glass:
+    "ui:bg-white/60 ui:dark:bg-neutral-900/50 ui:backdrop-blur-2xl ui:border ui:border-white/40 ui:dark:border-white/10",
   minimal: "ui:bg-transparent",
 };
 
@@ -99,7 +112,10 @@ const getAnimationVariants = (animation: CarouselAnimation) => {
 };
 
 // Transition configs for each animation
-const getTransitionConfig = (animation: CarouselAnimation, duration: number) => {
+const getTransitionConfig = (
+  animation: CarouselAnimation,
+  duration: number,
+) => {
   const durationSec = duration / 1000;
   const configs: Record<CarouselAnimation, object> = {
     slide: {
@@ -181,11 +197,17 @@ export const Carousel = ({
       setSlide([newIndex, newDirection]);
       onSlideChange?.(newIndex);
     },
-    [currentIndex, infinite, totalSlides, onSlideChange]
+    [currentIndex, infinite, totalSlides, onSlideChange],
   );
 
-  const goNext = useCallback(() => goToSlide(currentIndex + 1, 1), [currentIndex, goToSlide]);
-  const goPrev = useCallback(() => goToSlide(currentIndex - 1, -1), [currentIndex, goToSlide]);
+  const goNext = useCallback(
+    () => goToSlide(currentIndex + 1, 1),
+    [currentIndex, goToSlide],
+  );
+  const goPrev = useCallback(
+    () => goToSlide(currentIndex - 1, -1),
+    [currentIndex, goToSlide],
+  );
 
   // Auto-play
   useEffect(() => {
@@ -210,7 +232,10 @@ export const Carousel = ({
   // Drag handling
   const handleDragEnd = (
     _event: MouseEvent | TouchEvent | PointerEvent,
-    info: { offset: { x: number; y: number }; velocity: { x: number; y: number } }
+    info: {
+      offset: { x: number; y: number };
+      velocity: { x: number; y: number };
+    },
   ) => {
     const threshold = 50;
     if (info.offset.x < -threshold) goNext();
@@ -224,9 +249,12 @@ export const Carousel = ({
       className={mergeClassNames(
         "ui:relative ui:overflow-hidden ui:rounded-2xl ui:w-full",
         variantStyles[variant],
-        className
+        className,
       )}
-      style={{ height: typeof height === "number" ? `${height}px` : height, ...style }}
+      style={{
+        height: typeof height === "number" ? `${height}px` : height,
+        ...style,
+      }}
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
@@ -245,7 +273,10 @@ export const Carousel = ({
           dragElastic={0.2}
           onDragEnd={handleDragEnd}
           className="ui:absolute ui:inset-0 ui:flex ui:items-center ui:justify-center ui:cursor-grab active:ui:cursor-grabbing"
-          style={{ perspective: animation === "flip" || animation === "cube" ? 1000 : undefined }}
+          style={{
+            perspective:
+              animation === "flip" || animation === "cube" ? 1000 : undefined,
+          }}
         >
           {currentItem.image ? (
             <div className="ui:relative ui:w-full ui:h-full">
@@ -262,7 +293,9 @@ export const Carousel = ({
                     </h3>
                   )}
                   {currentItem.description && (
-                    <p className="ui:text-white/80">{currentItem.description}</p>
+                    <p className="ui:text-white/80">
+                      {currentItem.description}
+                    </p>
                   )}
                 </div>
               )}
@@ -329,14 +362,14 @@ export const Carousel = ({
                   "ui:rounded-full ui:transition-all ui:duration-300",
                   index === currentIndex
                     ? "ui:w-8 ui:h-2.5 ui:bg-white ui:shadow-lg"
-                    : "ui:w-2.5 ui:h-2.5 ui:bg-white/60 hover:ui:bg-white/90"
+                    : "ui:w-2.5 ui:h-2.5 ui:bg-white/60 hover:ui:bg-white/90",
                 )}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={index === currentIndex ? "true" : undefined}
               />
-            )
+            ),
           )}
         </div>
       )}

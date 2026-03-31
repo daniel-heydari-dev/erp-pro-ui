@@ -65,8 +65,7 @@ const variantStyles: Record<
 > = {
   outlined: {
     base: "border border-neutral-300 dark:border-neutral-600 bg-transparent rounded-lg",
-    focus:
-      "focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20",
+    focus: "focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20",
     error: "border-red-500 dark:border-red-500",
   },
   filled: {
@@ -101,13 +100,11 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
       type = "number",
       className = "",
       inputClassName = "",
-      separator = (
-        <span className="text-neutral-400 text-2xl mx-2">—</span>
-      ),
+      separator = <span className="text-neutral-400 text-2xl mx-2">—</span>,
       separatorPositions = [],
       "aria-label": ariaLabel = "One-time password",
     },
-    ref
+    ref,
   ) => {
     const [values, setValues] = useState<string[]>(() => {
       const initial = controlledValue ?? defaultValue;
@@ -146,7 +143,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           inputRefs.current[index]?.select();
         }
       },
-      [length]
+      [length],
     );
 
     const handleChange = useCallback(
@@ -176,7 +173,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           onComplete?.(otpValue);
         }
       },
-      [values, onChange, onComplete, length, type, focusInput]
+      [values, onChange, onComplete, length, type, focusInput],
     );
 
     const handleKeyDown = useCallback(
@@ -215,7 +212,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
             break;
         }
       },
-      [values, onChange, focusInput]
+      [values, onChange, focusInput],
     );
 
     const handlePaste = useCallback(
@@ -247,7 +244,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           onComplete?.(otpValue);
         }
       },
-      [length, type, onChange, onComplete, focusInput]
+      [length, type, onChange, onComplete, focusInput],
     );
 
     const handleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
@@ -263,7 +260,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           inputs.push(
             <div key={`separator-${i}`} className="flex items-center">
               {separator}
-            </div>
+            </div>,
           );
         }
 
@@ -297,13 +294,14 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
               ${variantStyles[variant].base}
               ${!error ? variantStyles[variant].focus : ""}
               ${error ? variantStyles[variant].error : ""}
-              ${disabled
-                ? "opacity-50 cursor-not-allowed bg-neutral-100 dark:bg-neutral-800"
-                : ""
+              ${
+                disabled
+                  ? "opacity-50 cursor-not-allowed bg-neutral-100 dark:bg-neutral-800"
+                  : ""
               }
               ${inputClassName}
             `}
-          />
+          />,
         );
       }
 
@@ -326,7 +324,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 OTPInput.displayName = "OTPInput";

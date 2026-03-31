@@ -72,7 +72,7 @@
 }
 
 :root,
-[data-theme$='-light'] {
+[data-theme$="-light"] {
   color-scheme: light;
 
   --background: #ffffff;
@@ -114,7 +114,7 @@
   );
 }
 
-[data-theme$='-dark'] {
+[data-theme$="-dark"] {
   color-scheme: dark;
 
   --background: #09090b;
@@ -157,7 +157,7 @@
 }
 
 :root,
-[data-theme^='purple-'] {
+[data-theme^="purple-"] {
   --primary-50: #ebe9fd;
   --primary-100: #dad6fb;
   --primary-200: #bfb8f8;
@@ -172,7 +172,7 @@
   --primary-foreground: #ffffff;
 }
 
-[data-theme^='teal-'] {
+[data-theme^="teal-"] {
   --primary-50: #f0fdfa;
   --primary-100: #ccfbf1;
   --primary-200: #99f6e4;
@@ -187,7 +187,7 @@
   --primary-foreground: #ffffff;
 }
 
-[data-theme^='yellow-'] {
+[data-theme^="yellow-"] {
   --primary-50: #fffbeb;
   --primary-100: #fef3c7;
   --primary-200: #fde68a;
@@ -202,7 +202,7 @@
   --primary-foreground: #ffffff;
 }
 
-[data-theme^='green-'] {
+[data-theme^="green-"] {
   --primary-50: #ecfdf5;
   --primary-100: #d1fae5;
   --primary-200: #a7f3d0;

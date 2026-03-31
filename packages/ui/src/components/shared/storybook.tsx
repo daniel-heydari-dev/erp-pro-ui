@@ -1,22 +1,22 @@
-import type { Meta } from '@storybook/react-vite';
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { Meta } from "@storybook/react-vite";
+import type { PropsWithChildren, ReactNode } from "react";
 
-import { mergeClassNames } from '../../utils';
+import { mergeClassNames } from "../../utils";
 
 type StoryMetaConfig<TComponent> = Omit<
   Meta<TComponent>,
-  'parameters' | 'tags'
+  "parameters" | "tags"
 > & {
-  parameters?: Meta<TComponent>['parameters'];
+  parameters?: Meta<TComponent>["parameters"];
 };
 
 export function createStoryMeta<TComponent>(
   meta: StoryMetaConfig<TComponent>,
 ): Meta<TComponent> {
   return {
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     parameters: {
-      layout: 'padded',
+      layout: "padded",
       controls: { expanded: true },
       ...meta.parameters,
     },
@@ -33,12 +33,12 @@ interface StorySurfaceProps {
 export function StorySurface({
   children,
   className,
-  widthClassName = 'ui:w-full ui:max-w-xl',
+  widthClassName = "ui:w-full ui:max-w-xl",
 }: StorySurfaceProps) {
   return (
     <div
       className={mergeClassNames(
-        'ui:mx-auto ui:w-full ui:rounded-2xl ui:border ui:border-border ui:bg-background/95 ui:p-6 ui:text-foreground ui:shadow-sm',
+        "ui:mx-auto ui:w-full ui:rounded-2xl ui:border ui:border-border ui:bg-background/95 ui:p-6 ui:text-foreground ui:shadow-sm",
         widthClassName,
         className,
       )}
@@ -53,7 +53,7 @@ export function StoryStack({
   className,
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={mergeClassNames('ui:flex ui:flex-col ui:gap-4', className)}>
+    <div className={mergeClassNames("ui:flex ui:flex-col ui:gap-4", className)}>
       {children}
     </div>
   );
@@ -63,7 +63,9 @@ export function StorySection({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) {
-  return <div className={mergeClassNames('ui:space-y-4', className)}>{children}</div>;
+  return (
+    <div className={mergeClassNames("ui:space-y-4", className)}>{children}</div>
+  );
 }
 
 interface StoryIntroProps {
@@ -85,7 +87,7 @@ export function StoryIntro({
     <div className={className}>
       <p
         className={mergeClassNames(
-          'ui:text-sm ui:font-semibold ui:text-foreground',
+          "ui:text-sm ui:font-semibold ui:text-foreground",
           titleClassName,
         )}
       >
@@ -94,7 +96,7 @@ export function StoryIntro({
       {description ? (
         <p
           className={mergeClassNames(
-            'ui:mt-1 ui:text-sm ui:text-muted-foreground',
+            "ui:mt-1 ui:text-sm ui:text-muted-foreground",
             descriptionClassName,
           )}
         >
@@ -114,7 +116,7 @@ export function StoryPanel({ children, className }: StoryPanelProps) {
   return (
     <div
       className={mergeClassNames(
-        'ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-card-foreground ui:shadow-sm',
+        "ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-card-foreground ui:shadow-sm",
         className,
       )}
     >

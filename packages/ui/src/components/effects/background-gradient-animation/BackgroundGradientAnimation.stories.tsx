@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from '../../forms/button';
-import { BackgroundGradientAnimation } from './BackgroundGradientAnimation';
+import { Button } from "../../forms/button";
+import { BackgroundGradientAnimation } from "./BackgroundGradientAnimation";
 
 const meta: Meta<typeof BackgroundGradientAnimation> = {
-  title: 'Visuals/BackgroundGradientAnimation',
+  title: "Visuals/BackgroundGradientAnimation",
   component: BackgroundGradientAnimation,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component:
-          'BackgroundGradientAnimation creates a layered animated mesh background for landing pages, callouts, and immersive full-bleed surfaces. These stories cover hero usage, custom palettes, theme variations, and practical product layouts.',
+          "BackgroundGradientAnimation creates a layered animated mesh background for landing pages, callouts, and immersive full-bleed surfaces. These stories cover hero usage, custom palettes, theme variations, and practical product layouts.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 function GradientFrame({
   children,
-  className = 'ui:h-[520px]',
+  className = "ui:h-[520px]",
 }: {
   children: React.ReactNode;
   className?: string;
@@ -111,55 +111,55 @@ export const ThemeGallery: Story = {
     <div className="ui:grid ui:gap-6 ui:p-6 md:ui:grid-cols-2 xl:ui:grid-cols-4">
       {[
         {
-          name: 'Ocean',
+          name: "Ocean",
           props: {
-            gradientBackgroundStart: 'rgb(0, 50, 100)',
-            gradientBackgroundEnd: 'rgb(0, 20, 60)',
-            firstColor: '0, 150, 200',
-            secondColor: '0, 200, 180',
-            thirdColor: '50, 100, 200',
-            fourthColor: '0, 80, 150',
-            fifthColor: '100, 200, 220',
-            pointerColor: '0, 255, 200',
+            gradientBackgroundStart: "rgb(0, 50, 100)",
+            gradientBackgroundEnd: "rgb(0, 20, 60)",
+            firstColor: "0, 150, 200",
+            secondColor: "0, 200, 180",
+            thirdColor: "50, 100, 200",
+            fourthColor: "0, 80, 150",
+            fifthColor: "100, 200, 220",
+            pointerColor: "0, 255, 200",
           },
         },
         {
-          name: 'Sunset',
+          name: "Sunset",
           props: {
-            gradientBackgroundStart: 'rgb(255, 100, 50)',
-            gradientBackgroundEnd: 'rgb(150, 0, 100)',
-            firstColor: '255, 150, 50',
-            secondColor: '255, 80, 100',
-            thirdColor: '255, 200, 100',
-            fourthColor: '200, 50, 100',
-            fifthColor: '255, 100, 150',
-            pointerColor: '255, 200, 100',
+            gradientBackgroundStart: "rgb(255, 100, 50)",
+            gradientBackgroundEnd: "rgb(150, 0, 100)",
+            firstColor: "255, 150, 50",
+            secondColor: "255, 80, 100",
+            thirdColor: "255, 200, 100",
+            fourthColor: "200, 50, 100",
+            fifthColor: "255, 100, 150",
+            pointerColor: "255, 200, 100",
           },
         },
         {
-          name: 'Aurora',
+          name: "Aurora",
           props: {
-            gradientBackgroundStart: 'rgb(0, 30, 50)',
-            gradientBackgroundEnd: 'rgb(0, 10, 30)',
-            firstColor: '0, 255, 150',
-            secondColor: '0, 200, 255',
-            thirdColor: '100, 255, 200',
-            fourthColor: '0, 150, 200',
-            fifthColor: '50, 255, 150',
-            pointerColor: '100, 255, 200',
+            gradientBackgroundStart: "rgb(0, 30, 50)",
+            gradientBackgroundEnd: "rgb(0, 10, 30)",
+            firstColor: "0, 255, 150",
+            secondColor: "0, 200, 255",
+            thirdColor: "100, 255, 200",
+            fourthColor: "0, 150, 200",
+            fifthColor: "50, 255, 150",
+            pointerColor: "100, 255, 200",
           },
         },
         {
-          name: 'Galaxy',
+          name: "Galaxy",
           props: {
-            gradientBackgroundStart: 'rgb(30, 0, 60)',
-            gradientBackgroundEnd: 'rgb(0, 0, 30)',
-            firstColor: '100, 50, 200',
-            secondColor: '150, 100, 255',
-            thirdColor: '50, 50, 150',
-            fourthColor: '200, 100, 255',
-            fifthColor: '100, 150, 255',
-            pointerColor: '200, 150, 255',
+            gradientBackgroundStart: "rgb(30, 0, 60)",
+            gradientBackgroundEnd: "rgb(0, 0, 30)",
+            firstColor: "100, 50, 200",
+            secondColor: "150, 100, 255",
+            thirdColor: "50, 50, 150",
+            fourthColor: "200, 100, 255",
+            fifthColor: "100, 150, 255",
+            pointerColor: "200, 150, 255",
           },
         },
       ].map((theme) => (
@@ -197,26 +197,26 @@ export const ProductShowcase: Story = {
           <div className="ui:grid ui:w-full ui:max-w-5xl ui:gap-4 md:ui:grid-cols-3">
             {[
               {
-                plan: 'Starter',
-                price: '$29',
-                features: ['1 workspace', 'Email support', 'Basic analytics'],
+                plan: "Starter",
+                price: "$29",
+                features: ["1 workspace", "Email support", "Basic analytics"],
               },
               {
-                plan: 'Growth',
-                price: '$79',
+                plan: "Growth",
+                price: "$79",
                 features: [
-                  '5 workspaces',
-                  'Priority routing',
-                  'Advanced dashboards',
+                  "5 workspaces",
+                  "Priority routing",
+                  "Advanced dashboards",
                 ],
               },
               {
-                plan: 'Enterprise',
-                price: '$149',
+                plan: "Enterprise",
+                price: "$149",
                 features: [
-                  'Unlimited teams',
-                  'Custom roles',
-                  'Dedicated success lead',
+                  "Unlimited teams",
+                  "Custom roles",
+                  "Dedicated success lead",
                 ],
               },
             ].map((tier, index) => (
@@ -240,10 +240,10 @@ export const ProductShowcase: Story = {
                 </ul>
                 <div className="ui:mt-6 ui:pt-2">
                   <Button
-                    label={index === 1 ? 'Start Trial' : 'Choose Plan'}
+                    label={index === 1 ? "Start Trial" : "Choose Plan"}
                     primary={index === 1}
                     className={
-                      index === 1 ? '' : 'ui:bg-white/10 ui:text-white'
+                      index === 1 ? "" : "ui:bg-white/10 ui:text-white"
                     }
                   />
                 </div>

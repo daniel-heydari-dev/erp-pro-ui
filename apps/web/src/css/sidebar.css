@@ -4,7 +4,7 @@
 }
 
 .sidebar::before {
-  content: '';
+  content: "";
   position: fixed;
   bottom: 0;
   left: 0;
@@ -96,7 +96,7 @@
   padding: 0.5em 0.75em;
   border-radius: 8px;
   /* border: 1px solid rgba(124, 58, 237, 0.3) !important; - Moved to pill */
-  transition: 
+  transition:
     color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -142,7 +142,7 @@
   margin-right: 1em;
   display: flex;
   align-items: center;
-  transition: 
+  transition:
     color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent !important;
@@ -164,7 +164,7 @@
   font-weight: 500;
   border-radius: 8px;
   /* border: 1px solid rgba(124, 58, 237, 0.6) !important; - Moved to pill */
-  transition: 
+  transition:
     color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -185,7 +185,7 @@
 }
 
 .active-pill-background .shimmer-overlay {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -202,7 +202,7 @@
 }
 
 .active-sidebar-item::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 0;
@@ -233,7 +233,8 @@
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -251,7 +252,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     height: 70%;
   }
@@ -264,7 +266,11 @@
 /* --- Modern Light Mode Overrides --- */
 /* --- Modern Light Mode Overrides --- */
 html:not(.dark) .active-pill-background {
-  background: linear-gradient(90deg, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0.02) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(79, 70, 229, 0.08) 0%,
+    rgba(79, 70, 229, 0.02) 100%
+  );
   border: 1px solid rgba(79, 70, 229, 0.15) !important;
   box-shadow: 0 4px 20px -2px rgba(79, 70, 229, 0.1);
   backdrop-filter: blur(12px); /* Glass Style */
@@ -287,7 +293,7 @@ html:not(.dark) .active-sidebar-item::after {
   width: 2px;
   border-radius: 0 4px 4px 0;
   box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
-  animation: none; 
+  animation: none;
   left: 0;
 }
 
@@ -344,7 +350,11 @@ html:not(.dark) .active-sidebar-item::after {
   font-size: 12px;
   padding: 0 0 0 1rem;
   height: 40px;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 1), rgba(24, 47, 255, 0.6));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 1),
+    rgba(24, 47, 255, 0.6)
+  );
   background-size: 200% 200%;
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);

@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "dotenv -e .env -- sh -c 'storybook dev -p $STORYBOOK_PORT'",
-    "storybook": "dotenv -e .env -- sh -c 'storybook dev -p $STORYBOOK_PORT'",
-    "build": "storybook build",
+    "dev": "dotenv -e .env -- sh -c 'storybook dev -p $STORYBOOK_PORT --no-open'",
+    "storybook": "dotenv -e .env -- sh -c 'storybook dev -p $STORYBOOK_PORT --no-open'",
+    "build": "pnpm --dir ../.. --filter erp-pro-ui story:check && STORYBOOK_STATIC_BUILD=true storybook build",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "build-storybook": "storybook build"
+    "typecheck": "pnpm --dir ../.. --filter erp-pro-ui story:check && tsc --noEmit",
+    "build-storybook": "pnpm --dir ../.. --filter erp-pro-ui story:check && STORYBOOK_STATIC_BUILD=true storybook build"
   },
   "dependencies": {
     "react": "^19.2.4",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@erp-pro/tsconfig": "workspace:*",
     "@erp-pro/eslint-config": "workspace:*",
+    "@erp-pro/vite-config": "workspace:*",
     "@storybook/addon-a11y": "^10.3.3",
     "@storybook/addon-docs": "^10.3.3",
     "@storybook/addon-links": "^10.3.3",

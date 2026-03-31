@@ -1,8 +1,8 @@
-import type { LabelProps } from './types';
-import { forwardRef } from 'react';
+import type { LabelProps } from "./types";
+import { forwardRef } from "react";
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className = '', children, required, ...props }, ref) => {
+  ({ className = "", children, required, ...props }, ref) => {
     return (
       <label
         ref={ref}
@@ -13,15 +13,16 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
           peer-disabled:cursor-not-allowed
           peer-disabled:opacity-70
           ${className}
-        `.trim().replace(/\s+/g, ' ')}
+        `
+          .trim()
+          .replace(/\s+/g, " ")}
         {...props}
       >
         {children}
         {required && <span className="text-destructive ml-1">*</span>}
       </label>
     );
-  }
+  },
 );
 
-Label.displayName = 'Label';
-
+Label.displayName = "Label";

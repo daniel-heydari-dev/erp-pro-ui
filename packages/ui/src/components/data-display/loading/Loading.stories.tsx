@@ -1,32 +1,32 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import Loading from './Loading';
-import { StorySurface } from '../../shared/storybook';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import Loading from "./Loading";
+import { StorySurface } from "../../shared/storybook";
 
 const meta: Meta<typeof Loading> = {
-  title: 'Data Display/Loading',
+  title: "Data Display/Loading",
   component: Loading,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Loading covers compact inline indicators, overlay states, and lightweight skeleton placeholders.',
+          "Loading covers compact inline indicators, overlay states, and lightweight skeleton placeholders.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['spinner', 'dots', 'pulse', 'bars', 'ring', 'bounce', 'wave'],
-      description: 'Animation type.',
+      control: "select",
+      options: ["spinner", "dots", "pulse", "bars", "ring", "bounce", "wave"],
+      description: "Animation type.",
     },
     size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      control: "select",
+      options: ["xs", "sm", "md", "lg", "xl"],
     },
-    text: { control: 'text', description: 'Optional loading message.' },
-    color: { control: 'color', description: 'Override default theme color.' },
+    text: { control: "text", description: "Optional loading message." },
+    color: { control: "color", description: "Override default theme color." },
   },
 };
 
@@ -39,9 +39,9 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    variant: 'spinner',
-    size: 'md',
-    color: '#3b82f6',
+    variant: "spinner",
+    size: "md",
+    color: "#3b82f6",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -62,17 +62,17 @@ export const Variations: Story = {
       <div className="ui:grid ui:w-full ui:gap-4 sm:ui:grid-cols-2 xl:ui:grid-cols-4">
         {[
           {
-            label: 'Spinner',
+            label: "Spinner",
             element: <Loading variant="spinner" size="lg" />,
           },
-          { label: 'Dots', element: <Loading variant="dots" size="lg" /> },
-          { label: 'Pulse', element: <Loading variant="pulse" size="lg" /> },
-          { label: 'Bars', element: <Loading variant="bars" size="lg" /> },
-          { label: 'Ring', element: <Loading variant="ring" size="lg" /> },
-          { label: 'Bounce', element: <Loading variant="bounce" size="lg" /> },
-          { label: 'Wave', element: <Loading variant="wave" size="lg" /> },
+          { label: "Dots", element: <Loading variant="dots" size="lg" /> },
+          { label: "Pulse", element: <Loading variant="pulse" size="lg" /> },
+          { label: "Bars", element: <Loading variant="bars" size="lg" /> },
+          { label: "Ring", element: <Loading variant="ring" size="lg" /> },
+          { label: "Bounce", element: <Loading variant="bounce" size="lg" /> },
+          { label: "Wave", element: <Loading variant="wave" size="lg" /> },
           {
-            label: 'Skeleton',
+            label: "Skeleton",
             element: (
               <Loading
                 variant="skeleton"
@@ -105,9 +105,9 @@ export const Variations: Story = {
  */
 export const WithText: Story = {
   args: {
-    variant: 'dots',
-    text: 'Syncing your workspace...',
-    color: '#000000',
+    variant: "dots",
+    text: "Syncing your workspace...",
+    color: "#000000",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">

@@ -1,37 +1,37 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { DatePicker } from './DatePicker';
-import type { DatePickerValue } from './types';
+import { StorySurface } from "../../shared/storybook";
+import { DatePicker } from "./DatePicker";
+import type { DatePickerValue } from "./types";
 
 const meta: Meta<typeof DatePicker> = {
-  title: 'Forms/DatePicker',
+  title: "Forms/DatePicker",
   component: DatePicker,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Single-date and range picker with optional presets for reporting windows, booking periods, and finance workflows.',
+          "Single-date and range picker with optional presets for reporting windows, booking periods, and finance workflows.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    mode: { control: 'radio', options: ['single', 'range'] },
-    label: { control: 'text' },
-    placeholder: { control: 'text' },
-    helperText: { control: 'text' },
-    disabled: { control: 'boolean' },
-    value: { control: false, description: 'Controlled single date or range.' },
+    mode: { control: "radio", options: ["single", "range"] },
+    label: { control: "text" },
+    placeholder: { control: "text" },
+    helperText: { control: "text" },
+    disabled: { control: "boolean" },
+    value: { control: false, description: "Controlled single date or range." },
     onChange: {
       control: false,
-      description: 'Called when the selected value changes.',
+      description: "Called when the selected value changes.",
     },
     presets: {
       control: false,
-      description: 'Quick-select presets shown below the calendar.',
+      description: "Quick-select presets shown below the calendar.",
     },
   },
 };
@@ -93,15 +93,15 @@ function PresetShortcutsExample() {
         label="Report Period"
         presets={[
           {
-            label: 'Start of Year',
+            label: "Start of Year",
             value: () => new Date(new Date().getFullYear(), 0, 1),
           },
           {
-            label: 'End of Year',
+            label: "End of Year",
             value: () => new Date(new Date().getFullYear(), 11, 31),
           },
           {
-            label: 'Next Month',
+            label: "Next Month",
             value: () => {
               const dateValue = new Date();
               return new Date(

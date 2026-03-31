@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
-import * as THREE from 'three';
-import { useRef, useState, useEffect, memo } from 'react';
-import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber';
+import * as THREE from "three";
+import { useRef, useState, useEffect, memo } from "react";
+import { Canvas, createPortal, useFrame, useThree } from "@react-three/fiber";
 import {
   useFBO,
   useGLTF,
@@ -12,24 +12,24 @@ import {
   ScrollControls,
   MeshTransmissionMaterial,
   Text,
-} from '@react-three/drei';
-import { easing } from 'maath';
+} from "@react-three/drei";
+import { easing } from "maath";
 
 export default function FluidGlass({
-  mode = 'lens',
+  mode = "lens",
   lensProps = {},
   barProps = {},
   cubeProps = {},
 }) {
-  const Wrapper = mode === 'bar' ? Bar : mode === 'cube' ? Cube : Lens;
+  const Wrapper = mode === "bar" ? Bar : mode === "cube" ? Cube : Lens;
   const rawOverrides =
-    mode === 'bar' ? barProps : mode === 'cube' ? cubeProps : lensProps;
+    mode === "bar" ? barProps : mode === "cube" ? cubeProps : lensProps;
 
   const {
     navItems = [
-      { label: 'Home', link: '' },
-      { label: 'About', link: '' },
-      { label: 'Contact', link: '' },
+      { label: "Home", link: "" },
+      { label: "About", link: "" },
+      { label: "Contact", link: "" },
     ],
     ...modeProps
   } = rawOverrides;
@@ -37,7 +37,7 @@ export default function FluidGlass({
   return (
     <Canvas camera={{ position: [0, 0, 20], fov: 15 }} gl={{ alpha: true }}>
       <ScrollControls damping={0.2} pages={3} distance={0.4}>
-        {mode === 'bar' && <NavItems items={navItems} />}
+        {mode === "bar" && <NavItems items={navItems} />}
         <Wrapper modeProps={modeProps}>
           <Scroll>
             <Typography />
@@ -165,8 +165,8 @@ function Bar({ modeProps = {}, ...p }) {
     roughness: 0,
     thickness: 10,
     ior: 1.15,
-    color: '#ffffff',
-    attenuationColor: '#ffffff',
+    color: "#ffffff",
+    attenuationColor: "#ffffff",
     attenuationDistance: 0.25,
   };
 
@@ -194,18 +194,18 @@ function NavItems({ items }) {
   const getDevice = () => {
     const w = window.innerWidth;
     return w <= DEVICE.mobile.max
-      ? 'mobile'
+      ? "mobile"
       : w <= DEVICE.tablet.max
-        ? 'tablet'
-        : 'desktop';
+        ? "tablet"
+        : "desktop";
   };
 
   const [device, setDevice] = useState(getDevice());
 
   useEffect(() => {
     const onResize = () => setDevice(getDevice());
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -223,7 +223,7 @@ function NavItems({ items }) {
 
   const handleNavigate = (link) => {
     if (!link) return;
-    link.startsWith('#')
+    link.startsWith("#")
       ? (window.location.hash = link)
       : (window.location.href = link);
   };
@@ -248,8 +248,8 @@ function NavItems({ items }) {
             e.stopPropagation();
             handleNavigate(link);
           }}
-          onPointerOver={() => (document.body.style.cursor = 'pointer')}
-          onPointerOut={() => (document.body.style.cursor = 'auto')}
+          onPointerOver={() => (document.body.style.cursor = "pointer")}
+          onPointerOut={() => (document.body.style.cursor = "auto")}
         >
           {label}
         </Text>
@@ -309,15 +309,15 @@ function Typography() {
   };
   const getDevice = () => {
     const w = window.innerWidth;
-    return w <= 639 ? 'mobile' : w <= 1023 ? 'tablet' : 'desktop';
+    return w <= 639 ? "mobile" : w <= 1023 ? "tablet" : "desktop";
   };
 
   const [device, setDevice] = useState(getDevice());
 
   useEffect(() => {
     const onResize = () => setDevice(getDevice());
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -40,7 +40,15 @@
   letter-spacing: -2px;
   color: #fff;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #fff 0%, #8660fa 20%, #a855f7 40%, #8400ff 60%, #a855f7 80%, #fff 100%);
+  background: linear-gradient(
+    135deg,
+    #fff 0%,
+    #8660fa 20%,
+    #a855f7 40%,
+    #8400ff 60%,
+    #a855f7 80%,
+    #fff 100%
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -182,7 +190,7 @@
 }
 
 .showcase-wrapper .grid-container .grid-item::before {
-  content: '';
+  content: "";
   position: absolute;
   border-radius: 25px;
   z-index: 2;

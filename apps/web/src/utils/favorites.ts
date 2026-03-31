@@ -1,10 +1,12 @@
-const STORAGE_KEY = 'savedComponents';
+const STORAGE_KEY = "savedComponents";
 
 const read = (): string[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed.filter(x => typeof x === 'string') : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((x) => typeof x === "string")
+      : [];
   } catch {
     return [];
   }
@@ -15,7 +17,9 @@ const write = (list: string[]) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 
     try {
-      window.dispatchEvent(new CustomEvent('favorites:updated', { detail: list }));
+      window.dispatchEvent(
+        new CustomEvent("favorites:updated", { detail: list }),
+      );
     } catch {
       // no-op
     }
@@ -40,15 +44,17 @@ export const addSavedComponent = (key: string) => {
 
 export const removeSavedComponent = (key: string): string[] => {
   const list = read();
-  const next = list.filter(item => item !== key);
+  const next = list.filter((item) => item !== key);
   write(next);
   return next;
 };
 
-export const toggleSavedComponent = (key: string): { saved: boolean; list: string[] } => {
+export const toggleSavedComponent = (
+  key: string,
+): { saved: boolean; list: string[] } => {
   const list = read();
   if (list.includes(key)) {
-    const next = list.filter(item => item !== key);
+    const next = list.filter((item) => item !== key);
     write(next);
     return { saved: false, list: next };
   }
@@ -62,5 +68,5 @@ export default {
   isComponentSaved,
   addSavedComponent,
   removeSavedComponent,
-  toggleSavedComponent
+  toggleSavedComponent,
 };

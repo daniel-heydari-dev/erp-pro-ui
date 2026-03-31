@@ -1,57 +1,57 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { ThinBreakdownBar } from './ThinBreakdownBar';
+import { StorySurface } from "../../shared/storybook";
+import { ThinBreakdownBar } from "./ThinBreakdownBar";
 
 const infrastructureSegments = [
-  { label: 'Compute', value: 45, color: '#7367f0' },
-  { label: 'Database', value: 25, color: '#00cfe8' },
-  { label: 'Queues', value: 15, color: '#28c76f' },
-  { label: 'Storage', value: 10, color: '#ff9f43' },
-  { label: 'Other', value: 5, color: '#ff4c51' },
+  { label: "Compute", value: 45, color: "#7367f0" },
+  { label: "Database", value: 25, color: "#00cfe8" },
+  { label: "Queues", value: 15, color: "#28c76f" },
+  { label: "Storage", value: 10, color: "#ff9f43" },
+  { label: "Other", value: 5, color: "#ff4c51" },
 ];
 
 const capacityRows = [
   {
-    title: 'Warehouse A',
+    title: "Warehouse A",
     segments: [
-      { label: 'Available', value: 58, color: '#28c76f' },
-      { label: 'Reserved', value: 27, color: '#7367f0' },
-      { label: 'Blocked', value: 15, color: '#ff9f43' },
+      { label: "Available", value: 58, color: "#28c76f" },
+      { label: "Reserved", value: 27, color: "#7367f0" },
+      { label: "Blocked", value: 15, color: "#ff9f43" },
     ],
   },
   {
-    title: 'Warehouse B',
+    title: "Warehouse B",
     segments: [
-      { label: 'Available', value: 36, color: '#28c76f' },
-      { label: 'Reserved', value: 44, color: '#7367f0' },
-      { label: 'Blocked', value: 20, color: '#ff9f43' },
+      { label: "Available", value: 36, color: "#28c76f" },
+      { label: "Reserved", value: 44, color: "#7367f0" },
+      { label: "Blocked", value: 20, color: "#ff9f43" },
     ],
   },
 ];
 
 const meta: Meta<typeof ThinBreakdownBar> = {
-  title: 'Data Display/ThinBreakdownBar',
+  title: "Data Display/ThinBreakdownBar",
   component: ThinBreakdownBar,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Compact proportional indicator for showing how a total is divided across a few segments.',
+          "Compact proportional indicator for showing how a total is divided across a few segments.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    showLabels: { control: 'boolean' },
+    showLabels: { control: "boolean" },
     data: {
       control: false,
-      description: 'Segments containing label, value, and color.',
+      description: "Segments containing label, value, and color.",
     },
     className: {
       control: false,
-      description: 'Custom classes for the outer container.',
+      description: "Custom classes for the outer container.",
     },
   },
 };

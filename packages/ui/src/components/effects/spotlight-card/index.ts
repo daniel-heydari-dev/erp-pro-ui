@@ -1,2 +1,2 @@
-export { default as SpotlightCard } from './SpotlightCard';
-export type { SpotlightCardProps } from './types';
+export { default as SpotlightCard } from "./SpotlightCard";
+export type { SpotlightCardProps } from "./types";

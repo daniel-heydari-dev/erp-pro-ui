@@ -107,7 +107,12 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
             stroke="url(#neonGradient)"
             strokeWidth={3}
             dot={false}
-            activeDot={{ r: 6, fill: "#fff", stroke: lineColorStop2, strokeWidth: 2 }}
+            activeDot={{
+              r: 6,
+              fill: "#fff",
+              stroke: lineColorStop2,
+              strokeWidth: 2,
+            }}
             filter="url(#neonGlow)"
           />
         </LineChart>

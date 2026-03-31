@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState, type FormEvent } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState, type FormEvent } from "react";
 
-import { Form, FormSection, FormField, FormActions, InputGroup } from './Form';
-import { Button } from '../button';
-import { Checkbox } from '../checkbox';
-import { Input } from '../input';
-import { Textarea } from '../textarea';
-import { StoryPanel, StorySurface } from '../../shared/storybook';
+import { Form, FormSection, FormField, FormActions, InputGroup } from "./Form";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
+import { Input } from "../input";
+import { Textarea } from "../textarea";
+import { StoryPanel, StorySurface } from "../../shared/storybook";
 
 const meta: Meta<typeof Form> = {
-  title: 'Layout/Form',
+  title: "Layout/Form",
   component: Form,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Form provides a styled wrapper for native submit handling and richer layout primitives such as sections, grouped fields, inline labels, and shared action rows.',
+          "Form provides a styled wrapper for native submit handling and richer layout primitives such as sections, grouped fields, inline labels, and shared action rows.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     gap: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
+      control: "select",
+      options: ["sm", "md", "lg"],
     },
   },
 };
@@ -82,7 +82,7 @@ function SignInFormDemo() {
           <pre className="ui:mt-4 ui:min-h-56 ui:overflow-auto ui:rounded-xl ui:bg-background ui:p-4 ui:text-xs ui:text-muted-foreground">
             {JSON.stringify(
               submitted ?? {
-                status: 'Submit the form to inspect the payload.',
+                status: "Submit the form to inspect the payload.",
               },
               null,
               2,

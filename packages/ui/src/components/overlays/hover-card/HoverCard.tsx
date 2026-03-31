@@ -105,7 +105,7 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
       width,
       maxWidth = 320,
     },
-    ref
+    ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const openTimeoutRef = useRef<any>(null);
@@ -196,7 +196,7 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
         </AnimatePresence>
       </div>
     );
-  }
+  },
 );
 
 HoverCard.displayName = "HoverCard";

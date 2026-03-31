@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import * as THREE from 'three';
+import { useRef, useEffect } from "react";
+import * as THREE from "three";
 
 const vertexShader = /* glsl */ `
 varying vec2 v_texcoord;
@@ -126,14 +126,14 @@ void main() {
 `;
 
 const ShapeBlur = ({
-  className = '',
+  className = "",
   variation = 0,
   pixelRatioProp = 2,
   shapeSize = 1.2,
   roundness = 0.4,
   borderSize = 0.05,
   circleSize = 0.3,
-  circleEdge = 0.5
+  circleEdge = 0.5,
 }) => {
   const mountRef = useRef();
 
@@ -170,22 +170,22 @@ const ShapeBlur = ({
         u_roundness: { value: roundness },
         u_borderSize: { value: borderSize },
         u_circleSize: { value: circleSize },
-        u_circleEdge: { value: circleEdge }
+        u_circleEdge: { value: circleEdge },
       },
       defines: { VAR: variation },
-      transparent: true
+      transparent: true,
     });
 
     const quad = new THREE.Mesh(geo, material);
     scene.add(quad);
 
-    const onPointerMove = e => {
+    const onPointerMove = (e) => {
       const rect = mount.getBoundingClientRect();
       vMouse.set(e.clientX - rect.left, e.clientY - rect.top);
     };
 
-    document.addEventListener('mousemove', onPointerMove);
-    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener("mousemove", onPointerMove);
+    document.addEventListener("pointermove", onPointerMove);
 
     const resize = () => {
       const container = mountRef.current;
@@ -208,7 +208,7 @@ const ShapeBlur = ({
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     const ro = new ResizeObserver(() => resize());
     if (mountRef.current) ro.observe(mountRef.current);
@@ -218,7 +218,7 @@ const ShapeBlur = ({
       const dt = time - lastTime;
       lastTime = time;
 
-      ['x', 'y'].forEach(k => {
+      ["x", "y"].forEach((k) => {
         vMouseDamp[k] = THREE.MathUtils.damp(vMouseDamp[k], vMouse[k], 8, dt);
       });
 
@@ -229,14 +229,22 @@ const ShapeBlur = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
       if (ro) ro.disconnect();
-      document.removeEventListener('mousemove', onPointerMove);
-      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener("mousemove", onPointerMove);
+      document.removeEventListener("pointermove", onPointerMove);
       mount.removeChild(renderer.domElement);
       renderer.dispose();
     };
-  }, [variation, pixelRatioProp, shapeSize, roundness, borderSize, circleSize, circleEdge]);
+  }, [
+    variation,
+    pixelRatioProp,
+    shapeSize,
+    roundness,
+    borderSize,
+    circleSize,
+    circleEdge,
+  ]);
 
   return <div ref={mountRef} className={`w-full h-full ${className}`} />;
 };

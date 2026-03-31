@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { AccordionProps } from './types';
+import { useState } from "react";
+import type { AccordionProps } from "./types";
 
 const cx = (...classes: Array<string | false | undefined>) =>
-  classes.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+  classes.filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
 
 const caret = (
   <svg
@@ -23,11 +23,11 @@ const caret = (
 
 export const Accordion = ({
   items,
-  type = 'single',
-  defaultOpenIds = type === 'single' && items.length ? [items[0].id] : [],
+  type = "single",
+  defaultOpenIds = type === "single" && items.length ? [items[0].id] : [],
   value,
   onValueChange,
-  className = '',
+  className = "",
   separated = false,
 }: AccordionProps) => {
   const [internalOpen, setInternalOpen] = useState<string[]>(defaultOpenIds);
@@ -38,7 +38,7 @@ export const Accordion = ({
     let next: string[];
     const isOpen = openItems.includes(id);
 
-    if (type === 'single') {
+    if (type === "single") {
       next = isOpen ? [] : [id];
     } else {
       next = isOpen
@@ -53,7 +53,7 @@ export const Accordion = ({
   };
 
   return (
-    <div className={cx('space-y-3', className)}>
+    <div className={cx("space-y-3", className)}>
       {items.map((item) => {
         const open = openItems.includes(item.id);
         return (
@@ -61,33 +61,33 @@ export const Accordion = ({
             key={item.id}
             className={cx(
               // Glass effect base
-              'rounded-xl backdrop-blur-2xl transition-all duration-300',
+              "rounded-xl backdrop-blur-2xl transition-all duration-300",
               // Light mode glass
-              'bg-white/60 border border-white/40 shadow-lg shadow-neutral-200/50',
+              "bg-white/60 border border-white/40 shadow-lg shadow-neutral-200/50",
               // Dark mode glass
-              'dark:bg-neutral-900/50 dark:border-white/10 dark:shadow-neutral-950/50',
+              "dark:bg-neutral-900/50 dark:border-white/10 dark:shadow-neutral-950/50",
               // Hover effects
-              'hover:bg-white/80 hover:shadow-xl hover:border-white/60',
-              'dark:hover:bg-neutral-800/60 dark:hover:border-white/20',
+              "hover:bg-white/80 hover:shadow-xl hover:border-white/60",
+              "dark:hover:bg-neutral-800/60 dark:hover:border-white/20",
               // Ring highlight on open
-              open && 'ring-2 ring-primary/30 dark:ring-primary/20',
-              separated ? 'p-0' : '',
+              open && "ring-2 ring-primary/30 dark:ring-primary/20",
+              separated ? "p-0" : "",
             )}
           >
             <button
               type="button"
               className={cx(
-                'flex w-full items-center justify-between gap-4 px-5 py-4 rounded-xl transition-colors duration-200',
+                "flex w-full items-center justify-between gap-4 px-5 py-4 rounded-xl transition-colors duration-200",
                 // Text colors
-                'text-neutral-700 dark:text-neutral-200',
+                "text-neutral-700 dark:text-neutral-200",
                 // Hover state
-                'hover:bg-white/40 dark:hover:bg-white/5',
+                "hover:bg-white/40 dark:hover:bg-white/5",
                 separated
-                  ? 'border-b border-neutral-200/50 dark:border-white/10'
-                  : '',
+                  ? "border-b border-neutral-200/50 dark:border-white/10"
+                  : "",
                 item.disabled
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'cursor-pointer',
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer",
               )}
               aria-expanded={open}
               aria-controls={`${item.id}-content`}
@@ -107,11 +107,11 @@ export const Accordion = ({
               </div>
               <span
                 className={cx(
-                  'p-1.5 rounded-lg transition-all duration-300',
-                  'bg-neutral-100/80 dark:bg-white/10',
-                  'text-neutral-600 dark:text-neutral-300',
+                  "p-1.5 rounded-lg transition-all duration-300",
+                  "bg-neutral-100/80 dark:bg-white/10",
+                  "text-neutral-600 dark:text-neutral-300",
                   open &&
-                    'rotate-180 bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary-400',
+                    "rotate-180 bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary-400",
                 )}
               >
                 {caret}
@@ -122,8 +122,8 @@ export const Accordion = ({
               role="region"
               aria-labelledby={`${item.id}-trigger`}
               className={cx(
-                'overflow-hidden transition-all duration-300 ease-in-out',
-                open ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0',
+                "overflow-hidden transition-all duration-300 ease-in-out",
+                open ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0",
               )}
             >
               <div className="px-5 pb-5 pt-2 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">

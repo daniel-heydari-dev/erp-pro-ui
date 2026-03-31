@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Drawer } from './Drawer';
-import type { DrawerPosition, DrawerProps } from './types';
+import { StorySurface } from "../../shared/storybook";
+import { Drawer } from "./Drawer";
+import type { DrawerPosition, DrawerProps } from "./types";
 
 const meta: Meta<typeof Drawer> = {
-  title: 'Layout/Drawer',
+  title: "Layout/Drawer",
   component: Drawer,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Edge-anchored overlay for settings panels, navigation trays, and mobile bottom sheets.',
+          "Edge-anchored overlay for settings panels, navigation trays, and mobile bottom sheets.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     position: {
-      control: 'radio',
-      options: ['left', 'right', 'top', 'bottom'],
+      control: "radio",
+      options: ["left", "right", "top", "bottom"],
     },
-    title: { control: 'text' },
-    description: { control: 'text' },
+    title: { control: "text" },
+    description: { control: "text" },
     footer: {
       control: false,
-      description: 'Optional custom footer area for action buttons.',
+      description: "Optional custom footer area for action buttons.",
     },
   },
 };
@@ -35,7 +35,7 @@ const meta: Meta<typeof Drawer> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-type DrawerStoryProps = Omit<DrawerProps, 'open' | 'onOpenChange'> & {
+type DrawerStoryProps = Omit<DrawerProps, "open" | "onOpenChange"> & {
   position: DrawerPosition;
   triggerLabel?: string;
 };

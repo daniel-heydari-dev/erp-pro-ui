@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'erp-pro-ui/styles.css';
+@import "tailwindcss";
+@import "erp-pro-ui/styles.css";
 
 /* Include Storybook files for Tailwind class scanning */
 @source "../.storybook/**/*.{js,ts,jsx,tsx}";

@@ -4,13 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
-type HoverBorderGradientProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  containerClassName?: string;
-  className?: string;
-  duration?: number;
-  clockwise?: boolean;
-  children?: React.ReactNode;
-};
+type HoverBorderGradientProps =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    containerClassName?: string;
+    className?: string;
+    duration?: number;
+    clockwise?: boolean;
+    children?: React.ReactNode;
+  };
 
 const movingMap: Record<Direction, string> = {
   TOP: "radial-gradient(50.7% 50% at 50% 0%, var(--color-hover-gradient) 0%, transparent 100%)",
@@ -43,7 +44,7 @@ export function HoverBorderGradient({
         : (index + 1) % directions.length;
       return directions[nextIndex];
     },
-    [clockwise]
+    [clockwise],
   );
 
   useEffect(() => {
@@ -65,21 +66,21 @@ export function HoverBorderGradient({
       onMouseLeave={handleMouseLeave}
       className={mergeClassNames(
         "relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-lg border border-neutral-300 dark:border-white/10 p-px transition duration-500",
-        containerClassName
+        containerClassName,
       )}
       {...props}
     >
       <div
         className={mergeClassNames(
           "bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white z-10 w-auto rounded-[inherit] px-4 py-2",
-          className
+          className,
         )}
       >
         {children}
       </div>
       <motion.div
         className={mergeClassNames(
-          "absolute inset-0 z-0 flex-none overflow-hidden rounded-[inherit]"
+          "absolute inset-0 z-0 flex-none overflow-hidden rounded-[inherit]",
         )}
         style={{
           filter: "blur(2px)",

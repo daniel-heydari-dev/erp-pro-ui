@@ -1,82 +1,82 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../shared/storybook';
-import { Typography } from './Typography';
+import { StorySurface } from "../shared/storybook";
+import { Typography } from "./Typography";
 
 const meta: Meta<typeof Typography> = {
-  title: 'Foundations/Typography',
+  title: "Foundations/Typography",
   component: Typography,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Opinionated typography primitives for headlines, body text, captions, and gradient-driven marketing emphasis.',
+          "Opinionated typography primitives for headlines, body text, captions, and gradient-driven marketing emphasis.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
+      control: "select",
       options: [
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'body1',
-        'body2',
-        'caption',
-        'overline',
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "body1",
+        "body2",
+        "caption",
+        "overline",
       ],
-      description: 'Predefined sizing and font weight presets.',
+      description: "Predefined sizing and font weight presets.",
     },
     align: {
-      control: 'inline-radio',
-      options: ['left', 'center', 'right', 'justify'],
-      description: 'Text alignment.',
+      control: "inline-radio",
+      options: ["left", "center", "right", "justify"],
+      description: "Text alignment.",
     },
     weight: {
-      control: 'select',
+      control: "select",
       options: [
-        'thin',
-        'extralight',
-        'light',
-        'normal',
-        'medium',
-        'semibold',
-        'bold',
-        'extrabold',
-        'black',
+        "thin",
+        "extralight",
+        "light",
+        "normal",
+        "medium",
+        "semibold",
+        "bold",
+        "extrabold",
+        "black",
       ],
-      description: 'Font weight overrides.',
+      description: "Font weight overrides.",
     },
     tracking: {
-      control: 'select',
-      options: ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
-      description: 'Letter spacing overrides.',
+      control: "select",
+      options: ["tighter", "tight", "normal", "wide", "wider", "widest"],
+      description: "Letter spacing overrides.",
     },
     italic: {
-      control: 'boolean',
-      description: 'Whether to apply italic styling.',
+      control: "boolean",
+      description: "Whether to apply italic styling.",
     },
     gradient: {
-      control: 'select',
+      control: "select",
       options: [
         false,
         true,
-        'primary',
-        'ocean',
-        'sunset',
-        'aurora',
-        'neon',
-        'forest',
-        'galaxy',
+        "primary",
+        "ocean",
+        "sunset",
+        "aurora",
+        "neon",
+        "forest",
+        "galaxy",
       ],
-      description: 'Apply a text gradient to the typography.',
+      description: "Apply a text gradient to the typography.",
     },
   },
 };
@@ -85,7 +85,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function HeroSpecimenExample() {
-  const [sampleText, setSampleText] = useState('Build for precision.');
+  const [sampleText, setSampleText] = useState("Build for precision.");
 
   return (
     <StorySurface
@@ -97,8 +97,8 @@ function HeroSpecimenExample() {
           className="ui:absolute ui:inset-0 ui:opacity-20"
           style={{
             backgroundImage:
-              'radial-gradient(#ffffff 0.5px, transparent 0.5px)',
-            backgroundSize: '24px 24px',
+              "radial-gradient(#ffffff 0.5px, transparent 0.5px)",
+            backgroundSize: "24px 24px",
           }}
         />
         <Typography
@@ -132,8 +132,8 @@ function HeroSpecimenExample() {
  */
 export const Default: Story = {
   args: {
-    children: 'The quick brown fox jumps over the lazy dog.',
-    variant: 'body1',
+    children: "The quick brown fox jumps over the lazy dog.",
+    variant: "body1",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-2xl">

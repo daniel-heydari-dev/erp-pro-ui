@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export interface CalendarProps {
   value?: Date | null;
   range?: { start: Date | null; end: Date | null };
-  selectionMode?: 'single' | 'range';
+  selectionMode?: "single" | "range";
   onSelect?: (date: Date) => void;
   onRangeSelect?: (range: { start: Date | null; end: Date | null }) => void;
   month?: number;

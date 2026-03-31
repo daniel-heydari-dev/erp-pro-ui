@@ -46,24 +46,24 @@ function MyComponent() {
 
 ## Props
 
-| Prop                  | Type                                               | Default       | Description                              |
-| --------------------- | -------------------------------------------------- | ------------- | ---------------------------------------- |
-| `columns`             | `Column[]`                                         | required      | Array of column definitions              |
-| `data`                | `T[]`                                              | required      | Array of data objects                    |
-| `isLoading`           | `boolean`                                          | `false`       | Show loading spinner                     |
-| `pageSize`            | `number`                                           | `10`          | Initial page size                        |
-| `maxHeight`           | `string`                                           | `'500px'`     | Max height for the scrollable table      |
-| `filterOptions`       | `FilterOption[]`                                   | auto          | Custom filter options                    |
-| `serverSideFiltering` | `boolean`                                          | `false`       | Enable server-side filtering mode        |
-| `searchPlaceholder`   | `string`                                           | `'Search ...'`| Search input placeholder                 |
-| `totalCount`          | `number`                                           | -             | Total rows available from the backend    |
-| `onSearch`            | `(query: string) => void`                          | -             | Search callback                          |
-| `onFilterChange`      | `(filters: FilterValues) => void`                  | -             | Filter change callback                   |
-| `onFiltersApply`      | `(filters: FilterValues) => void`                  | -             | Server-side filter callback              |
-| `onPaginationChange`  | `(pageIndex: number, pageSize: number) => void`    | -             | Backend pagination callback              |
-| `onColumnToggle`      | `(columnId: string) => void`                       | -             | Column visibility callback               |
-| `onExport`            | `() => void`                                       | -             | Export or refresh callback               |
-| `onRowAction`         | `(action: string, row: T) => void`                 | -             | Row action callback                      |
+| Prop                  | Type                                            | Default        | Description                           |
+| --------------------- | ----------------------------------------------- | -------------- | ------------------------------------- |
+| `columns`             | `Column[]`                                      | required       | Array of column definitions           |
+| `data`                | `T[]`                                           | required       | Array of data objects                 |
+| `isLoading`           | `boolean`                                       | `false`        | Show loading spinner                  |
+| `pageSize`            | `number`                                        | `10`           | Initial page size                     |
+| `maxHeight`           | `string`                                        | `'500px'`      | Max height for the scrollable table   |
+| `filterOptions`       | `FilterOption[]`                                | auto           | Custom filter options                 |
+| `serverSideFiltering` | `boolean`                                       | `false`        | Enable server-side filtering mode     |
+| `searchPlaceholder`   | `string`                                        | `'Search ...'` | Search input placeholder              |
+| `totalCount`          | `number`                                        | -              | Total rows available from the backend |
+| `onSearch`            | `(query: string) => void`                       | -              | Search callback                       |
+| `onFilterChange`      | `(filters: FilterValues) => void`               | -              | Filter change callback                |
+| `onFiltersApply`      | `(filters: FilterValues) => void`               | -              | Server-side filter callback           |
+| `onPaginationChange`  | `(pageIndex: number, pageSize: number) => void` | -              | Backend pagination callback           |
+| `onColumnToggle`      | `(columnId: string) => void`                    | -              | Column visibility callback            |
+| `onExport`            | `() => void`                                    | -              | Export or refresh callback            |
+| `onRowAction`         | `(action: string, row: T) => void`              | -              | Row action callback                   |
 
 ## Column Definition
 
@@ -191,8 +191,8 @@ function UsersTable() {
       onColumnToggle={(colId) => {
         setColumns((cols) =>
           cols.map((col) =>
-            col.id === colId ? { ...col, visible: !col.visible } : col
-          )
+            col.id === colId ? { ...col, visible: !col.visible } : col,
+          ),
         );
       }}
       onRowAction={(action, row) => {

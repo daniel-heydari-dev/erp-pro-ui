@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { Checkbox } from '../checkbox';
-import { Input } from '../input';
-import { Label } from './Label';
+import { StorySurface } from "../../shared/storybook";
+import { Checkbox } from "../checkbox";
+import { Input } from "../input";
+import { Label } from "./Label";
 
 const meta: Meta<typeof Label> = {
-  title: 'Forms/Label',
+  title: "Forms/Label",
   component: Label,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Accessible label element for connecting descriptive text to form controls.',
+          "Accessible label element for connecting descriptive text to form controls.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    children: { control: 'text', description: 'Label text.' },
+    children: { control: "text", description: "Label text." },
     required: {
-      control: 'boolean',
-      description: 'Appends a required asterisk marker.',
+      control: "boolean",
+      description: "Appends a required asterisk marker.",
     },
   },
 };
@@ -36,7 +36,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    children: 'Email Address',
+    children: "Email Address",
   },
   decorators: [
     (StoryFn) => (
@@ -53,7 +53,7 @@ export const Default: Story = {
  */
 export const Required: Story = {
   args: {
-    children: 'Password',
+    children: "Password",
     required: true,
   },
   decorators: [

@@ -1,46 +1,47 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Tooltip } from './Tooltip';
+import { StorySurface } from "../../shared/storybook";
+import { Tooltip } from "./Tooltip";
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Layout/Tooltip',
+  title: "Layout/Tooltip",
   component: Tooltip,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Compact contextual hint for controls, validation support, and secondary actions.',
+          "Compact contextual hint for controls, validation support, and secondary actions.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     position: {
-      control: 'radio',
-      options: ['top', 'bottom', 'left', 'right'],
+      control: "radio",
+      options: ["top", "bottom", "left", "right"],
       description:
-        'Controls where the tooltip pops up relative to the element.',
+        "Controls where the tooltip pops up relative to the element.",
     },
     trigger: {
-      control: 'radio',
-      options: ['hover', 'click', 'focus'],
-      description: 'What action invokes the tooltip.',
+      control: "radio",
+      options: ["hover", "click", "focus"],
+      description: "What action invokes the tooltip.",
     },
-    delayShow: { control: 'number' },
-    delayHide: { control: 'number' },
-    disabled: { control: 'boolean' },
-    arrow: { control: 'boolean' },
-    maxWidth: { control: 'number' },
+    delayShow: { control: "number" },
+    delayHide: { control: "number" },
+    disabled: { control: "boolean" },
+    arrow: { control: "boolean" },
+    maxWidth: { control: "number" },
     open: {
       control: false,
-      description: 'Controlled visibility state, usually managed by parent state.',
+      description:
+        "Controlled visibility state, usually managed by parent state.",
     },
     onOpenChange: {
       control: false,
-      description: 'Callback fired when open state changes.',
+      description: "Callback fired when open state changes.",
     },
   },
 };
@@ -162,13 +163,16 @@ export const ControlledVisibility: Story = {
     const [open, setOpen] = useState(false);
 
     return (
-      <StorySurface widthClassName="ui:w-full ui:max-w-lg" className="ui:min-h-56">
+      <StorySurface
+        widthClassName="ui:w-full ui:max-w-lg"
+        className="ui:min-h-56"
+      >
         <div className="ui:flex ui:items-center ui:gap-3">
           <button
             onClick={() => setOpen((prev) => !prev)}
             className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
           >
-            {open ? 'Hide tooltip' : 'Show tooltip'}
+            {open ? "Hide tooltip" : "Show tooltip"}
           </button>
 
           <Tooltip

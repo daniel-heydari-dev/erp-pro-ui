@@ -1,4 +1,4 @@
-import type { FC, SVGProps } from 'react';
+import type { FC, SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement> & {
   className?: string; // Allows passing Tailwind or custom class names

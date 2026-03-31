@@ -1,76 +1,76 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Dialog } from './Dialog';
-import type { DialogProps } from './types';
+import { StorySurface } from "../../shared/storybook";
+import { Dialog } from "./Dialog";
+import type { DialogProps } from "./types";
 
 const meta = {
-  title: 'Overlays/Dialog',
+  title: "Overlays/Dialog",
   component: Dialog,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     controls: { expanded: true },
     docs: {
       description: {
         component:
-          'Controlled overlay surface with preset action layouts and multiple motion variants.',
+          "Controlled overlay surface with preset action layouts and multiple motion variants.",
       },
     },
   },
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['default', 'destructive', 'success', 'warning', 'info'],
-      description: 'Controls the styling and intent of the preset buttons.',
+      control: "select",
+      options: ["default", "destructive", "success", "warning", "info"],
+      description: "Controls the styling and intent of the preset buttons.",
     },
     preset: {
-      control: 'radio',
-      options: ['custom', 'alert', 'confirm'],
-      description: 'Changes the built-in footer configuration.',
+      control: "radio",
+      options: ["custom", "alert", "confirm"],
+      description: "Changes the built-in footer configuration.",
     },
     animation: {
-      control: 'select',
+      control: "select",
       options: [
-        'fade',
-        'scale',
-        'slideUp',
-        'slideDown',
-        'slideLeft',
-        'slideRight',
-        'elastic',
-        'bounce',
-        'flip',
-        'zoom',
+        "fade",
+        "scale",
+        "slideUp",
+        "slideDown",
+        "slideLeft",
+        "slideRight",
+        "elastic",
+        "bounce",
+        "flip",
+        "zoom",
       ],
-      description: 'Choose the entrance/exit animation of the Dialog.',
+      description: "Choose the entrance/exit animation of the Dialog.",
     },
     closeOnOverlay: {
-      control: 'boolean',
-      description: 'Whether clicking the backdrop closes the dialog.',
+      control: "boolean",
+      description: "Whether clicking the backdrop closes the dialog.",
     },
     showClose: {
-      control: 'boolean',
-      description: 'Whether the top-right close icon is visible.',
+      control: "boolean",
+      description: "Whether the top-right close icon is visible.",
     },
     confirmLabel: {
-      control: 'text',
-      description: 'Primary action label for alert/confirm presets.',
+      control: "text",
+      description: "Primary action label for alert/confirm presets.",
     },
     cancelLabel: {
-      control: 'text',
-      description: 'Secondary action label for confirm preset.',
+      control: "text",
+      description: "Secondary action label for confirm preset.",
     },
-    title: { control: 'text' },
-    description: { control: 'text' },
+    title: { control: "text" },
+    description: { control: "text" },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Dialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-type DialogStoryProps = Omit<DialogProps, 'open' | 'onOpenChange'>;
+type DialogStoryProps = Omit<DialogProps, "open" | "onOpenChange">;
 
 function DialogDemo(props: DialogStoryProps) {
   const [open, setOpen] = useState(false);
@@ -80,7 +80,7 @@ function DialogDemo(props: DialogStoryProps) {
         onClick={() => setOpen(true)}
         className="ui:cursor-pointer ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
       >
-        Open {props.title || 'Dialog'}
+        Open {props.title || "Dialog"}
       </button>
       <Dialog open={open} onOpenChange={setOpen} {...props} />
     </StorySurface>

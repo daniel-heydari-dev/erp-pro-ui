@@ -1,48 +1,44 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import {
-  StoryPanel,
-  StorySection,
-  StorySurface,
-} from '../../shared/storybook';
-import MultiSelectCombobox from './MultiSelectCombobox';
+import { StoryPanel, StorySection, StorySurface } from "../../shared/storybook";
+import MultiSelectCombobox from "./MultiSelectCombobox";
 
 const options = [
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Angular', value: 'angular' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Next.js', value: 'nextjs' },
-  { label: 'Nuxt.js', value: 'nuxtjs' },
-  { label: 'Tailwind CSS', value: 'tailwind' },
-  { label: 'TypeScript', value: 'typescript' },
-  { label: 'Framer Motion', value: 'framer' },
+  { label: "React", value: "react" },
+  { label: "Vue", value: "vue" },
+  { label: "Angular", value: "angular" },
+  { label: "Svelte", value: "svelte" },
+  { label: "Next.js", value: "nextjs" },
+  { label: "Nuxt.js", value: "nuxtjs" },
+  { label: "Tailwind CSS", value: "tailwind" },
+  { label: "TypeScript", value: "typescript" },
+  { label: "Framer Motion", value: "framer" },
 ];
 
 const meta: Meta<typeof MultiSelectCombobox> = {
-  title: 'Forms/MultiSelectCombobox',
+  title: "Forms/MultiSelectCombobox",
   component: MultiSelectCombobox,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Combines search and multi-tag selection in a compact control for filtering, permission assignment, and taxonomy tagging.',
+          "Combines search and multi-tag selection in a compact control for filtering, permission assignment, and taxonomy tagging.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    placeholder: { control: 'text' },
-    options: { control: false, description: 'Available selectable options.' },
-    value: { control: false, description: 'Controlled selected values.' },
-    onChange: { control: false, description: 'Called when selection changes.' },
+    placeholder: { control: "text" },
+    options: { control: false, description: "Available selectable options." },
+    value: { control: false, description: "Controlled selected values." },
+    onChange: { control: false, description: "Called when selection changes." },
     className: {
       control: false,
-      description: 'Additional classes for the wrapper.',
+      description: "Additional classes for the wrapper.",
     },
-    bgClassName: { control: 'text' },
+    bgClassName: { control: "text" },
   },
 };
 
@@ -50,7 +46,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function BasicUsageExample() {
-  const [values, setValues] = useState<string[]>(['react', 'nextjs']);
+  const [values, setValues] = useState<string[]>(["react", "nextjs"]);
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -65,7 +61,7 @@ function BasicUsageExample() {
 }
 
 function SelectionSummaryExample() {
-  const [values, setValues] = useState<string[]>(['react', 'nextjs']);
+  const [values, setValues] = useState<string[]>(["react", "nextjs"]);
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
@@ -101,7 +97,7 @@ function SelectionSummaryExample() {
 }
 
 function DenseToolbarExample() {
-  const [values, setValues] = useState<string[]>(['react', 'nextjs']);
+  const [values, setValues] = useState<string[]>(["react", "nextjs"]);
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">

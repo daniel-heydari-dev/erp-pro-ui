@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../shared/storybook';
+import { StorySurface } from "../shared/storybook";
 import {
   ActivityIcon,
   ArrowDownIcon,
@@ -32,61 +32,61 @@ import {
   ShoppingCartIcon,
   TrashIcon,
   UserIcon,
-} from './index';
+} from "./index";
 
 const iconEntries = [
-  { name: 'ActivityIcon', component: ActivityIcon },
-  { name: 'ArrowDownIcon', component: ArrowDownIcon },
-  { name: 'ArrowLeftIcon', component: ArrowLeftIcon },
-  { name: 'ArrowRightIcon', component: ArrowRightIcon },
-  { name: 'ArrowUpDownIcon', component: ArrowUpDownIcon },
-  { name: 'ArrowUpIcon', component: ArrowUpIcon },
-  { name: 'BellIcon', component: BellIcon },
-  { name: 'BriefcaseBusinessIcon', component: BriefcaseBusinessIcon },
-  { name: 'CheckIcon', component: CheckIcon },
-  { name: 'ChevronDownIcon', component: ChevronDownIcon },
-  { name: 'ChevronLeftIcon', component: ChevronLeftIcon },
-  { name: 'ChevronRightIcon', component: ChevronRightIcon },
-  { name: 'ChevronUpIcon', component: ChevronUpIcon },
-  { name: 'ChevronsLeftIcon', component: ChevronsLeftIcon },
-  { name: 'ChevronsRightIcon', component: ChevronsRightIcon },
-  { name: 'CircleIcon', component: CircleIcon },
-  { name: 'CloseIcon', component: CloseIcon },
-  { name: 'DragIcon', component: DragIcon },
-  { name: 'EllipsisIcon', component: EllipsisIcon },
-  { name: 'EllipsisVerticalIcon', component: EllipsisVerticalIcon },
-  { name: 'EyeIcon', component: EyeIcon },
-  { name: 'EyeOffIcon', component: EyeOffIcon },
-  { name: 'FullScreenIcon', component: FullScreenIcon },
-  { name: 'HomeIcon', component: HomeIcon },
-  { name: 'PackageIcon', component: PackageIcon },
-  { name: 'SearchIcon', component: SearchIcon },
-  { name: 'SettingsIcon', component: SettingsIcon },
-  { name: 'ShoppingCartIcon', component: ShoppingCartIcon },
-  { name: 'TrashIcon', component: TrashIcon },
-  { name: 'UserIcon', component: UserIcon },
+  { name: "ActivityIcon", component: ActivityIcon },
+  { name: "ArrowDownIcon", component: ArrowDownIcon },
+  { name: "ArrowLeftIcon", component: ArrowLeftIcon },
+  { name: "ArrowRightIcon", component: ArrowRightIcon },
+  { name: "ArrowUpDownIcon", component: ArrowUpDownIcon },
+  { name: "ArrowUpIcon", component: ArrowUpIcon },
+  { name: "BellIcon", component: BellIcon },
+  { name: "BriefcaseBusinessIcon", component: BriefcaseBusinessIcon },
+  { name: "CheckIcon", component: CheckIcon },
+  { name: "ChevronDownIcon", component: ChevronDownIcon },
+  { name: "ChevronLeftIcon", component: ChevronLeftIcon },
+  { name: "ChevronRightIcon", component: ChevronRightIcon },
+  { name: "ChevronUpIcon", component: ChevronUpIcon },
+  { name: "ChevronsLeftIcon", component: ChevronsLeftIcon },
+  { name: "ChevronsRightIcon", component: ChevronsRightIcon },
+  { name: "CircleIcon", component: CircleIcon },
+  { name: "CloseIcon", component: CloseIcon },
+  { name: "DragIcon", component: DragIcon },
+  { name: "EllipsisIcon", component: EllipsisIcon },
+  { name: "EllipsisVerticalIcon", component: EllipsisVerticalIcon },
+  { name: "EyeIcon", component: EyeIcon },
+  { name: "EyeOffIcon", component: EyeOffIcon },
+  { name: "FullScreenIcon", component: FullScreenIcon },
+  { name: "HomeIcon", component: HomeIcon },
+  { name: "PackageIcon", component: PackageIcon },
+  { name: "SearchIcon", component: SearchIcon },
+  { name: "SettingsIcon", component: SettingsIcon },
+  { name: "ShoppingCartIcon", component: ShoppingCartIcon },
+  { name: "TrashIcon", component: TrashIcon },
+  { name: "UserIcon", component: UserIcon },
 ];
 
 const meta: Meta<typeof ActivityIcon> = {
-  title: 'Foundations/Icons',
+  title: "Foundations/Icons",
   component: ActivityIcon,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Reference gallery for the exported SVG icon set. All icons accept standard SVG props plus color/title helpers.',
+          "Reference gallery for the exported SVG icon set. All icons accept standard SVG props plus color/title helpers.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    width: { control: 'number' },
-    height: { control: 'number' },
-    color: { control: 'color' },
-    className: { control: 'text' },
-    title: { control: 'text' },
-    titleId: { control: 'text' },
+    width: { control: "number" },
+    height: { control: "number" },
+    color: { control: "color" },
+    className: { control: "text" },
+    title: { control: "text" },
+    titleId: { control: "text" },
   },
 };
 

@@ -1,2 +1,2 @@
-export { GradualBlur } from './GradualBlur';
-export type { GradualBlurProps } from './types';
+export { GradualBlur } from "./GradualBlur";
+export type { GradualBlurProps } from "./types";

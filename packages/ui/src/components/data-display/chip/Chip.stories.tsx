@@ -1,51 +1,57 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { Chip } from './Chip';
+import { StorySurface } from "../../shared/storybook";
+import { Chip } from "./Chip";
 
 const meta: Meta<typeof Chip> = {
-  title: 'Data Display/Chip',
+  title: "Data Display/Chip",
   component: Chip,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Compact token for statuses, filters, assignments, and removable selections.',
+          "Compact token for statuses, filters, assignments, and removable selections.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['filled', 'outlined', 'soft', 'glass'],
+      control: "select",
+      options: ["filled", "outlined", "soft", "glass"],
     },
     color: {
-      control: 'select',
+      control: "select",
       options: [
-        'default',
-        'primary',
-        'secondary',
-        'success',
-        'warning',
-        'error',
-        'info',
+        "default",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info",
       ],
     },
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    disabled: { control: 'boolean' },
+    size: { control: "select", options: ["sm", "md", "lg"] },
+    disabled: { control: "boolean" },
     dot: {
-      control: 'boolean',
-      description: 'Shows a pulsing status dot.',
+      control: "boolean",
+      description: "Shows a pulsing status dot.",
     },
-    dotColor: { control: 'text' },
-    startIcon: { control: false, description: 'Optional leading icon.' },
-    endIcon: { control: false, description: 'Optional trailing icon.' },
-    onClick: { control: false, description: 'Click handler for interactive chips.' },
-    onRemove: { control: false, description: 'Remove handler to show a dismiss button.' },
-    maxWidth: { control: 'text' },
+    dotColor: { control: "text" },
+    startIcon: { control: false, description: "Optional leading icon." },
+    endIcon: { control: false, description: "Optional trailing icon." },
+    onClick: {
+      control: false,
+      description: "Click handler for interactive chips.",
+    },
+    onRemove: {
+      control: false,
+      description: "Remove handler to show a dismiss button.",
+    },
+    maxWidth: { control: "text" },
   },
 };
 
@@ -58,9 +64,9 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    children: 'Pending Review',
-    variant: 'soft',
-    color: 'warning',
+    children: "Pending Review",
+    variant: "soft",
+    color: "warning",
     dot: true,
   },
   render: (args) => (
@@ -121,31 +127,33 @@ export const StatusBoard: Story = {
 };
 
 function InteractiveFiltersExample() {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'review'>('all');
+  const [activeFilter, setActiveFilter] = useState<"all" | "active" | "review">(
+    "all",
+  );
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
       <div className="ui:flex ui:flex-wrap ui:gap-3">
         <Chip
-          variant={activeFilter === 'all' ? 'filled' : 'outlined'}
+          variant={activeFilter === "all" ? "filled" : "outlined"}
           color="primary"
-          onClick={() => setActiveFilter('all')}
+          onClick={() => setActiveFilter("all")}
           startIcon={<span>🔍</span>}
         >
           All orders
         </Chip>
         <Chip
-          variant={activeFilter === 'active' ? 'filled' : 'outlined'}
+          variant={activeFilter === "active" ? "filled" : "outlined"}
           color="success"
-          onClick={() => setActiveFilter('active')}
+          onClick={() => setActiveFilter("active")}
           startIcon={<span>●</span>}
         >
           Active only
         </Chip>
         <Chip
-          variant={activeFilter === 'review' ? 'filled' : 'outlined'}
+          variant={activeFilter === "review" ? "filled" : "outlined"}
           color="warning"
-          onClick={() => setActiveFilter('review')}
+          onClick={() => setActiveFilter("review")}
           startIcon={<span>⏳</span>}
         >
           Pending review
@@ -164,7 +172,7 @@ export const InteractiveFilters: Story = {
 };
 
 function RemovableFiltersExample() {
-  const [filters, setFilters] = useState(['Active', 'Enterprise', 'Berlin']);
+  const [filters, setFilters] = useState(["Active", "Enterprise", "Berlin"]);
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
@@ -175,9 +183,7 @@ function RemovableFiltersExample() {
             variant="soft"
             color="info"
             onRemove={() =>
-              setFilters((current) =>
-                current.filter((item) => item !== filter),
-              )
+              setFilters((current) => current.filter((item) => item !== filter))
             }
           >
             {filter}

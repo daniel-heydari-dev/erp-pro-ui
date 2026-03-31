@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { Card } from './Card';
+import { StorySurface } from "../../shared/storybook";
+import { Card } from "./Card";
 
 const meta: Meta<typeof Card> = {
-  title: 'Layout/Card',
+  title: "Layout/Card",
   component: Card,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Compact content card for summary blocks, empty states, and lightweight dashboard callouts.',
+          "Compact content card for summary blocks, empty states, and lightweight dashboard callouts.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     title: {
-      control: 'text',
-      description: 'Primary heading displayed at the top of the card.',
+      control: "text",
+      description: "Primary heading displayed at the top of the card.",
     },
     description: {
-      control: 'text',
-      description: 'Supporting text displayed under the title.',
+      control: "text",
+      description: "Supporting text displayed under the title.",
     },
   },
 };
@@ -37,8 +37,8 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    title: 'Project Update',
-    description: 'The new UI components have been successfully deployed.',
+    title: "Project Update",
+    description: "The new UI components have been successfully deployed.",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-lg">

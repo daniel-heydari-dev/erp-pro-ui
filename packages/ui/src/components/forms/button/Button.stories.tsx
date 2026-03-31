@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StoryStack, StorySurface } from '../../shared/storybook';
-import { Button } from './Button';
+import { StoryStack, StorySurface } from "../../shared/storybook";
+import { Button } from "./Button";
 
 const meta = {
-  title: 'Forms/Button',
+  title: "Forms/Button",
   component: Button,
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -12,45 +12,45 @@ const meta = {
     </StorySurface>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     controls: { expanded: true },
     docs: {
       description: {
         component:
-          'Primary action button with predictable sizing and content slots for labels or inline icons.',
+          "Primary action button with predictable sizing and content slots for labels or inline icons.",
       },
     },
   },
   argTypes: {
     primary: {
-      control: 'boolean',
-      description: 'Use primary style (filled) or secondary (glass)',
+      control: "boolean",
+      description: "Use primary style (filled) or secondary (glass)",
     },
     backgroundColor: {
-      control: 'color',
-      description: 'Custom background color override',
+      control: "color",
+      description: "Custom background color override",
     },
     size: {
-      control: 'radio',
-      options: ['small', 'medium', 'large'],
-      description: 'Button size',
+      control: "radio",
+      options: ["small", "medium", "large"],
+      description: "Button size",
     },
-    label: { control: 'text', description: 'Text label for the button' },
+    label: { control: "text", description: "Text label for the button" },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the button is disabled',
+      control: "boolean",
+      description: "Whether the button is disabled",
     },
     type: {
-      control: 'radio',
-      options: ['button', 'submit', 'reset'],
-      description: 'Native button type attribute.',
+      control: "radio",
+      options: ["button", "submit", "reset"],
+      description: "Native button type attribute.",
     },
     onClick: {
       control: false,
-      description: 'Click handler callback.',
+      description: "Click handler callback.",
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -62,7 +62,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    children: 'Click Me',
+    children: "Click Me",
   },
 };
 
@@ -73,7 +73,7 @@ export const Default: Story = {
 export const Primary: Story = {
   args: {
     primary: true,
-    children: 'Primary Action',
+    children: "Primary Action",
   },
 };
 

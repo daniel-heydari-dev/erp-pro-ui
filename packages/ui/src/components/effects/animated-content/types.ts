@@ -1,33 +1,33 @@
-import type { JSX, ReactNode } from 'react';
+import type { JSX, ReactNode } from "react";
 
-export type AnimationDirection = 'horizontal' | 'vertical';
+export type AnimationDirection = "horizontal" | "vertical";
 export type AnimationEase =
-  | 'linear'
-  | 'easeIn'
-  | 'easeOut'
-  | 'easeInOut'
-  | 'circIn'
-  | 'circOut'
-  | 'circInOut'
-  | 'backIn'
-  | 'backOut'
-  | 'backInOut'
-  | 'anticipate'
-  | 'bounce'
-  | 'elastic';
+  | "linear"
+  | "easeIn"
+  | "easeOut"
+  | "easeInOut"
+  | "circIn"
+  | "circOut"
+  | "circInOut"
+  | "backIn"
+  | "backOut"
+  | "backInOut"
+  | "anticipate"
+  | "bounce"
+  | "elastic";
 
 export type AnimationPreset =
-  | 'fade'
-  | 'scale'
-  | 'slideUp'
-  | 'slideDown'
-  | 'slideLeft'
-  | 'slideRight'
-  | 'elastic'
-  | 'bounce'
-  | 'flip'
-  | 'zoom'
-  | 'custom';
+  | "fade"
+  | "scale"
+  | "slideUp"
+  | "slideDown"
+  | "slideLeft"
+  | "slideRight"
+  | "elastic"
+  | "bounce"
+  | "flip"
+  | "zoom"
+  | "custom";
 
 export interface AnimatedContentProps {
   /** Content to animate */

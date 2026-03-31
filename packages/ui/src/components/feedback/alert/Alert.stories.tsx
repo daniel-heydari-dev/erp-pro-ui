@@ -7,9 +7,9 @@ const meta: Meta<typeof Alert> = {
   parameters: { layout: "padded" },
   tags: ["autodocs"],
   argTypes: {
-    variant: { 
-      control: "select", 
-      options: ["info", "success", "warning", "destructive"] 
+    variant: {
+      control: "select",
+      options: ["info", "success", "warning", "destructive"],
     },
     title: { control: "text" },
     description: { control: "text" },
@@ -62,7 +62,8 @@ export const Warning: Story = {
 export const Destructive: Story = {
   args: {
     title: "Payment Failed",
-    description: "Your recent subscription payment could not be processed. Please update your billing info.",
+    description:
+      "Your recent subscription payment could not be processed. Please update your billing info.",
     variant: "destructive",
   },
 };

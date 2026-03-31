@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySection, StorySurface } from '../../shared/storybook';
-import { Switch } from './Switch';
+import { StorySection, StorySurface } from "../../shared/storybook";
+import { Switch } from "./Switch";
 
 const meta: Meta<typeof Switch> = {
-  title: 'Forms/Switch',
+  title: "Forms/Switch",
   component: Switch,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Binary control for toggling preferences and feature flags in forms and settings panels.',
+          "Binary control for toggling preferences and feature flags in forms and settings panels.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    checked: { control: false, description: 'Controlled checked state.' },
-    onChange: { control: false, description: 'Checked state change callback.' },
-    label: { control: 'text', description: 'Optional text label.' },
-    disabled: { control: 'boolean', description: 'Disables interaction.' },
-    error: { control: 'text', description: 'Validation feedback message.' },
+    checked: { control: false, description: "Controlled checked state." },
+    onChange: { control: false, description: "Checked state change callback." },
+    label: { control: "text", description: "Optional text label." },
+    disabled: { control: "boolean", description: "Disables interaction." },
+    error: { control: "text", description: "Validation feedback message." },
   },
 };
 
@@ -91,7 +91,7 @@ export const Checked: Story = {
  */
 export const Disabled: Story = {
   args: {
-    label: 'Disabled switch',
+    label: "Disabled switch",
     disabled: true,
   },
   decorators: [

@@ -29,8 +29,10 @@ export interface SkeletonTextProps extends Omit<SkeletonProps, "variant"> {
   lines?: number;
 }
 
-export interface SkeletonAvatarProps
-  extends Omit<SkeletonProps, "variant" | "width" | "height"> {
+export interface SkeletonAvatarProps extends Omit<
+  SkeletonProps,
+  "variant" | "width" | "height"
+> {
   /** Size of the avatar */
   size?: number | string;
 }
@@ -79,7 +81,7 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       lineGap = 8,
       lastLineWidth = "80%",
     },
-    ref
+    ref,
   ) => {
     const baseStyles = `
       bg-neutral-200 dark:bg-neutral-700
@@ -145,7 +147,7 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
         style={getSize()}
       />
     );
-  }
+  },
 );
 
 Skeleton.displayName = "Skeleton";
@@ -154,7 +156,7 @@ Skeleton.displayName = "Skeleton";
 const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>(
   ({ lines = 3, ...props }, ref) => {
     return <Skeleton ref={ref} variant="text" lines={lines} {...props} />;
-  }
+  },
 );
 
 SkeletonText.displayName = "SkeletonText";
@@ -175,7 +177,7 @@ const SkeletonAvatar = forwardRef<HTMLDivElement, SkeletonAvatarProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
 SkeletonAvatar.displayName = "SkeletonAvatar";
@@ -219,7 +221,7 @@ const SkeletonImage = forwardRef<
       className = "",
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <Skeleton
@@ -232,7 +234,7 @@ const SkeletonImage = forwardRef<
         {...props}
       />
     );
-  }
+  },
 );
 
 SkeletonImage.displayName = "SkeletonImage";
@@ -249,7 +251,7 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
       className = "",
       animation = "pulse",
     },
-    ref
+    ref,
   ) => {
     return (
       <div
@@ -302,7 +304,7 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 SkeletonCard.displayName = "SkeletonCard";
@@ -313,10 +315,7 @@ const SkeletonTableRow = forwardRef<
   { columns?: number; animation?: SkeletonAnimation; className?: string }
 >(({ columns = 4, animation = "pulse", className = "" }, ref) => {
   return (
-    <div
-      ref={ref}
-      className={`flex items-center gap-4 py-3 ${className}`}
-    >
+    <div ref={ref} className={`flex items-center gap-4 py-3 ${className}`}>
       {Array.from({ length: columns }).map((_, index) => (
         <Skeleton
           key={index}
@@ -351,13 +350,10 @@ const SkeletonListItem = forwardRef<
       animation = "pulse",
       className = "",
     },
-    ref
+    ref,
   ) => {
     return (
-      <div
-        ref={ref}
-        className={`flex items-center gap-3 py-3 ${className}`}
-      >
+      <div ref={ref} className={`flex items-center gap-3 py-3 ${className}`}>
         {showAvatar && <SkeletonAvatar size={48} animation={animation} />}
         <div className="flex-1">
           <Skeleton
@@ -379,7 +375,7 @@ const SkeletonListItem = forwardRef<
         {showAction && <SkeletonButton size="sm" animation={animation} />}
       </div>
     );
-  }
+  },
 );
 
 SkeletonListItem.displayName = "SkeletonListItem";

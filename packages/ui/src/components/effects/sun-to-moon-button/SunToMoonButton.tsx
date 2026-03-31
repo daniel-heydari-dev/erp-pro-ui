@@ -1,5 +1,5 @@
-import { useThemeContext } from '../../../foundations/theme';
-import { motion } from 'framer-motion';
+import { useThemeContext } from "../../../foundations/theme";
+import { motion } from "framer-motion";
 
 export interface SunToMoonButtonProps {
   showLabelAndImage?: boolean;
@@ -50,14 +50,14 @@ export default function SunToMoonButton({
     hidden: {
       opacity: 0,
       scale: 2,
-      strokeDasharray: '20, 1000',
+      strokeDasharray: "20, 1000",
       strokeDashoffset: 0,
-      filter: 'blur(0px)',
+      filter: "blur(0px)",
     },
     visible: {
       opacity: [0, 1, 0],
       strokeDashoffset: [0, -50, -100],
-      filter: ['blur(2px)', 'blur(2px)', 'blur(0px)'],
+      filter: ["blur(2px)", "blur(2px)", "blur(0px)"],
       transition: {
         duration: 0.75,
       },
@@ -65,14 +65,14 @@ export default function SunToMoonButton({
   };
 
   const sunPath =
-    'M70 49.5C70 60.8218 60.8218 70 49.5 70C38.1782 70 29 60.8218 29 49.5C29 38.1782 38.1782 29 49.5 29C60 29 69.5 38 70 49.5Z';
+    "M70 49.5C70 60.8218 60.8218 70 49.5 70C38.1782 70 29 60.8218 29 49.5C29 38.1782 38.1782 29 49.5 29C60 29 69.5 38 70 49.5Z";
   const moonPath =
-    'M70 49.5C70 60.8218 60.8218 70 49.5 70C38.1782 70 29 60.8218 29 49.5C29 38.1782 38.1782 29 49.5 29C39 45 49.5 59.5 70 49.5Z';
+    "M70 49.5C70 60.8218 60.8218 70 49.5 70C38.1782 70 29 60.8218 29 49.5C29 38.1782 38.1782 29 49.5 29C39 45 49.5 59.5 70 49.5Z";
   const fallbackPath = sunPath;
 
   // Ensure we have valid paths at all times
   // Light mode = sun, Dark mode = moon
-  const currentPath = mode === 'light' ? sunPath : moonPath;
+  const currentPath = mode === "light" ? sunPath : moonPath;
   const safeCurrentPath = currentPath || fallbackPath;
 
   return (
@@ -84,7 +84,7 @@ export default function SunToMoonButton({
       <span className="flex items-center">
         {showLabelAndImage && (
           <span className="mr-2 text-neutral-900 dark:text-white">
-            {mode === 'light' ? 'Light' : 'Dark'}
+            {mode === "light" ? "Light" : "Dark"}
           </span>
         )}
 
@@ -105,7 +105,7 @@ export default function SunToMoonButton({
               d={moonPath}
               className="absolute top-0 left-0 stroke-blue-100"
               initial="hidden"
-              animate={mode === 'light' ? 'hidden' : 'visible'}
+              animate={mode === "light" ? "hidden" : "visible"}
             />
           )}
 
@@ -113,11 +113,11 @@ export default function SunToMoonButton({
           <motion.g
             variants={raysVariants}
             initial="hidden"
-            animate={mode === 'dark' ? 'hidden' : 'visible'}
+            animate={mode === "dark" ? "hidden" : "visible"}
             style={{
-              strokeLinecap: 'round',
+              strokeLinecap: "round",
               strokeWidth: 6,
-              stroke: 'var(--color-yellow-500)',
+              stroke: "var(--color-yellow-500)",
             }}
           >
             <motion.path
@@ -138,16 +138,16 @@ export default function SunToMoonButton({
           <motion.path
             d={safeCurrentPath}
             fill="transparent"
-            transition={{ duration: 1, type: 'spring' }}
+            transition={{ duration: 1, type: "spring" }}
             initial={false}
             animate={
-              mode === 'light'
+              mode === "light"
                 ? {
                     d: sunPath || fallbackPath,
                     rotate: 0,
                     scale: 1,
-                    stroke: 'var(--color-yellow-500)',
-                    fill: 'var(--color-yellow-500)',
+                    stroke: "var(--color-yellow-500)",
+                    fill: "var(--color-yellow-500)",
                     fillOpacity: 0.5,
                     strokeOpacity: 1,
                   }
@@ -155,8 +155,8 @@ export default function SunToMoonButton({
                     d: moonPath || fallbackPath,
                     rotate: -360,
                     scale: 2,
-                    stroke: 'var(--color-blue-400)',
-                    fill: 'var(--color-blue-400)',
+                    stroke: "var(--color-blue-400)",
+                    fill: "var(--color-blue-400)",
                     fillOpacity: 0.35,
                     strokeOpacity: 1,
                   }

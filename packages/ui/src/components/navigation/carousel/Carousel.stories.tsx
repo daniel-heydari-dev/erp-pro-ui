@@ -1,38 +1,38 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { Carousel } from './Carousel';
+import { StorySurface } from "../../shared/storybook";
+import { Carousel } from "./Carousel";
 
 const imageItems = [
   {
-    id: '1',
-    image: 'https://picsum.photos/1200/600?random=10',
-    title: 'Majestic Peaks',
-    description: 'Explore the highest mountains in the world.',
+    id: "1",
+    image: "https://picsum.photos/1200/600?random=10",
+    title: "Majestic Peaks",
+    description: "Explore the highest mountains in the world.",
   },
   {
-    id: '2',
-    image: 'https://picsum.photos/1200/600?random=11',
-    title: 'Ocean Breeze',
-    description: 'The calmest waters for your next vacation.',
+    id: "2",
+    image: "https://picsum.photos/1200/600?random=11",
+    title: "Ocean Breeze",
+    description: "The calmest waters for your next vacation.",
   },
   {
-    id: '3',
-    image: 'https://picsum.photos/1200/600?random=12',
-    title: 'Urban Jungle',
-    description: 'Modern architecture meet classic city vibes.',
+    id: "3",
+    image: "https://picsum.photos/1200/600?random=12",
+    title: "Urban Jungle",
+    description: "Modern architecture meet classic city vibes.",
   },
   {
-    id: '4',
-    image: 'https://picsum.photos/1200/600?random=13',
-    title: 'Forest Retreat',
-    description: 'Unwind in the heart of nature.',
+    id: "4",
+    image: "https://picsum.photos/1200/600?random=13",
+    title: "Forest Retreat",
+    description: "Unwind in the heart of nature.",
   },
 ];
 
 const contentItems = [
   {
-    id: '1',
+    id: "1",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:bg-blue-500/10 ui:text-2xl ui:font-bold">
         Custom Slide 1
@@ -40,7 +40,7 @@ const contentItems = [
     ),
   },
   {
-    id: '2',
+    id: "2",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:bg-purple-500/10 ui:text-2xl ui:font-bold">
         Custom Slide 2
@@ -48,7 +48,7 @@ const contentItems = [
     ),
   },
   {
-    id: '3',
+    id: "3",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:bg-green-500/10 ui:text-2xl ui:font-bold">
         Custom Slide 3
@@ -59,7 +59,7 @@ const contentItems = [
 
 const minimalCards = [
   {
-    id: 'ops-1',
+    id: "ops-1",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
         <div>
@@ -75,7 +75,7 @@ const minimalCards = [
     ),
   },
   {
-    id: 'ops-2',
+    id: "ops-2",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
         <div>
@@ -91,7 +91,7 @@ const minimalCards = [
     ),
   },
   {
-    id: 'ops-3',
+    id: "ops-3",
     content: (
       <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
         <div>
@@ -109,41 +109,41 @@ const minimalCards = [
 ];
 
 const meta: Meta<typeof Carousel> = {
-  title: 'Layout/Carousel',
+  title: "Layout/Carousel",
   component: Carousel,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Displays image or custom-content slides with autoplay, drag navigation, arrows, dots, and multiple transition styles.',
+          "Displays image or custom-content slides with autoplay, drag navigation, arrows, dots, and multiple transition styles.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     animation: {
-      control: 'select',
-      options: ['slide', 'fade', 'scale', 'flip', 'cube', 'cards'],
+      control: "select",
+      options: ["slide", "fade", "scale", "flip", "cube", "cards"],
     },
-    variant: { control: 'radio', options: ['default', 'glass', 'minimal'] },
-    autoPlay: { control: 'number' },
-    height: { control: 'number' },
-    showArrows: { control: 'boolean' },
-    showDots: { control: 'boolean' },
-    infinite: { control: 'boolean' },
-    pauseOnHover: { control: 'boolean' },
-    draggable: { control: 'boolean' },
-    animationDuration: { control: 'number' },
+    variant: { control: "radio", options: ["default", "glass", "minimal"] },
+    autoPlay: { control: "number" },
+    height: { control: "number" },
+    showArrows: { control: "boolean" },
+    showDots: { control: "boolean" },
+    infinite: { control: "boolean" },
+    pauseOnHover: { control: "boolean" },
+    draggable: { control: "boolean" },
+    animationDuration: { control: "number" },
     items: {
       control: false,
-      description: 'Slides with image metadata or custom content.',
+      description: "Slides with image metadata or custom content.",
     },
-    renderArrow: { control: false, description: 'Custom arrow renderer.' },
-    renderDot: { control: false, description: 'Custom dot renderer.' },
+    renderArrow: { control: false, description: "Custom arrow renderer." },
+    renderDot: { control: false, description: "Custom dot renderer." },
     onSlideChange: {
       control: false,
-      description: 'Called when the active slide changes.',
+      description: "Called when the active slide changes.",
     },
   },
 };

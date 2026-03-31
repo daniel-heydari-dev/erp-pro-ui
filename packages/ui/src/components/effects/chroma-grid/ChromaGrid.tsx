@@ -22,8 +22,12 @@ const defaultColors = [
   "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
 ];
 
-const getAnimation = (animation: string, index: number, staggerDelay: number) => {
-  const delay = index * staggerDelay / 1000;
+const getAnimation = (
+  animation: string,
+  index: number,
+  staggerDelay: number,
+) => {
+  const delay = (index * staggerDelay) / 1000;
 
   switch (animation) {
     case "wave":
@@ -36,7 +40,12 @@ const getAnimation = (animation: string, index: number, staggerDelay: number) =>
       return {
         initial: { scale: 0.8, opacity: 0 },
         animate: { scale: 1, opacity: 1 },
-        transition: { delay, duration: 0.5, type: "spring" as const, stiffness: 200 },
+        transition: {
+          delay,
+          duration: 0.5,
+          type: "spring" as const,
+          stiffness: 200,
+        },
       };
     case "fadeIn":
       return {
@@ -48,7 +57,13 @@ const getAnimation = (animation: string, index: number, staggerDelay: number) =>
       return {
         initial: { scale: 0, opacity: 0 },
         animate: { scale: 1, opacity: 1 },
-        transition: { delay, duration: 0.5, type: "spring" as const, stiffness: 300, damping: 20 },
+        transition: {
+          delay,
+          duration: 0.5,
+          type: "spring" as const,
+          stiffness: 300,
+          damping: 20,
+        },
       };
     default:
       return {};
@@ -60,7 +75,10 @@ const getHoverEffect = (effect: string) => {
     case "lift":
       return { y: -8, transition: { duration: 0.3 } };
     case "glow":
-      return { boxShadow: "0 0 30px rgba(115, 103, 240, 0.5)", transition: { duration: 0.3 } };
+      return {
+        boxShadow: "0 0 30px rgba(115, 103, 240, 0.5)",
+        transition: { duration: 0.3 },
+      };
     case "scale":
       return { scale: 1.05, transition: { duration: 0.3 } };
     case "tilt":
@@ -110,9 +128,10 @@ const GridItem = ({
     });
   };
 
-  const gridSpan = item.size && item.size > 1
-    ? { gridColumn: `span ${item.size}`, gridRow: `span ${item.size}` }
-    : {};
+  const gridSpan =
+    item.size && item.size > 1
+      ? { gridColumn: `span ${item.size}`, gridRow: `span ${item.size}` }
+      : {};
 
   const variantStyles = {
     glass: {
@@ -131,10 +150,11 @@ const GridItem = ({
         "relative overflow-hidden cursor-pointer transition-shadow",
         borderRadiusMap[borderRadius as keyof typeof borderRadiusMap],
         variant === "glass" && "border border-white/20 dark:border-white/10",
-        item.className
+        item.className,
       )}
       style={{
-        minHeight: item.size && item.size > 1 ? minHeight * item.size : minHeight,
+        minHeight:
+          item.size && item.size > 1 ? minHeight * item.size : minHeight,
         ...gridSpan,
         ...variantStyles[variant as keyof typeof variantStyles],
         ...(variant !== "glass" && { background: color }),

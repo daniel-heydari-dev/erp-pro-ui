@@ -34,18 +34,23 @@
 }
 
 .main-nav .nav-items::before {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-gray-300), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gray-300),
+    transparent
+  );
 }
 
 .main-nav .nav-items::after {
   pointer-events: none;
-  content: '';
+  content: "";
   position: fixed;
   left: 0;
   top: 114px;
@@ -156,13 +161,18 @@
 }
 
 .preview-footer::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(39, 30, 55, 0.6), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(39, 30, 55, 0.6),
+    transparent
+  );
 }
 
 .demo-container-dots {
@@ -170,7 +180,7 @@
 }
 
 .demo-container-dots::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -181,12 +191,36 @@
   pointer-events: none;
   z-index: 0;
   mask:
-    linear-gradient(to right, transparent 0%, black 35%, black 55%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, black 35%, black 55%, transparent 100%);
+    linear-gradient(
+      to right,
+      transparent 0%,
+      black 35%,
+      black 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 35%,
+      black 55%,
+      transparent 100%
+    );
   mask-composite: intersect;
   -webkit-mask:
-    linear-gradient(to right, transparent 0%, black 35%, black 55%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, black 35%, black 55%, transparent 100%);
+    linear-gradient(
+      to right,
+      transparent 0%,
+      black 35%,
+      black 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 35%,
+      black 55%,
+      transparent 100%
+    );
   -webkit-mask-composite: source-in;
 }
 
@@ -393,7 +427,7 @@ div:has(> .props-table) {
 }
 
 .cli-divider::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   top: 50%;

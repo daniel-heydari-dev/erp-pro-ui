@@ -11,8 +11,6 @@ function PixelTransition({
   className = '',
   once = false,
   style = {},
-  aspectRatio = '100%'
-  style = {}
 }) {
   const containerRef = useRef(null);
   const pixelGridRef = useRef(null);
@@ -22,7 +20,9 @@ function PixelTransition({
   const [isActive, setIsActive] = useState(false);
 
   const isTouchDevice =
-    'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia('(pointer: coarse)').matches;
 
   useEffect(() => {
     const pixelGridEl = pixelGridRef.current;
@@ -48,7 +48,7 @@ function PixelTransition({
     }
   }, [gridSize, pixelColor]);
 
-  const animatePixels = activate => {
+  const animatePixels = (activate) => {
     setIsActive(activate);
 
     const pixelGridEl = pixelGridRef.current;
@@ -73,8 +73,8 @@ function PixelTransition({
       duration: 0,
       stagger: {
         each: staggerDuration,
-        from: 'random'
-      }
+        from: 'random',
+      },
     });
 
     delayedCallRef.current = gsap.delayedCall(animationStepDuration, () => {
@@ -88,8 +88,8 @@ function PixelTransition({
       delay: animationStepDuration,
       stagger: {
         each: staggerDuration,
-        from: 'random'
-      }
+        from: 'random',
+      },
     });
   };
 
@@ -142,7 +142,10 @@ function PixelTransition({
         {secondContent}
       </div>
 
-      <div ref={pixelGridRef} className="absolute inset-0 w-full h-full pointer-events-none z-[3]" />
+      <div
+        ref={pixelGridRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-[3]"
+      />
     </div>
   );
 }

@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { BorderBeam } from './BorderBeam';
+import { StorySurface } from "../../shared/storybook";
+import { BorderBeam } from "./BorderBeam";
 
 const meta: Meta<typeof BorderBeam> = {
-  title: 'Effects/BorderBeam',
+  title: "Effects/BorderBeam",
   component: BorderBeam,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Decorative animated beam that travels around a bordered container for emphasis on cards, promos, and feature callouts.',
+          "Decorative animated beam that travels around a bordered container for emphasis on cards, promos, and feature callouts.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    size: { control: 'number' },
-    duration: { control: 'number' },
-    borderWidth: { control: 'number' },
-    anchor: { control: 'number' },
-    colorFrom: { control: 'color' },
-    colorTo: { control: 'color' },
-    delay: { control: 'number' },
-    className: { control: 'text' },
+    size: { control: "number" },
+    duration: { control: "number" },
+    borderWidth: { control: "number" },
+    anchor: { control: "number" },
+    colorFrom: { control: "color" },
+    colorTo: { control: "color" },
+    delay: { control: "number" },
+    className: { control: "text" },
   },
 };
 
@@ -36,8 +36,8 @@ export const FeatureCard: Story = {
     size: 160,
     duration: 12,
     borderWidth: 1,
-    colorFrom: '#ffaa40',
-    colorTo: '#9c40ff',
+    colorFrom: "#ffaa40",
+    colorTo: "#9c40ff",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-3xl">

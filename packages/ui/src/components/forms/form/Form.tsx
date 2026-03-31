@@ -69,7 +69,7 @@ export const Form = ({
     <form
       className={cx(
         "w-full space-y-6 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6",
-        className
+        className,
       )}
       {...props}
     >
@@ -129,10 +129,7 @@ export const FormDescription = ({
 }: FormDescriptionProps) => (
   <p
     id={id}
-    className={cx(
-      "text-sm text-neutral-500 dark:text-neutral-400",
-      className
-    )}
+    className={cx("text-sm text-neutral-500 dark:text-neutral-400", className)}
   >
     {children}
   </p>
@@ -209,12 +206,7 @@ export const FormField = ({
 
   if (layout === "inline") {
     return (
-      <div
-        className={cx(
-          "flex flex-wrap items-start gap-6",
-          className
-        )}
-      >
+      <div className={cx("flex flex-wrap items-start gap-6", className)}>
         <div className="min-w-[200px] space-y-1">
           {labelNode}
           {description && (
@@ -257,11 +249,7 @@ export const FormActions = ({
   className = "",
 }: FormActionsProps) => (
   <div
-    className={cx(
-      "flex flex-wrap gap-3",
-      actionsAlignMap[align],
-      className
-    )}
+    className={cx("flex flex-wrap gap-3", actionsAlignMap[align], className)}
   >
     {children}
   </div>

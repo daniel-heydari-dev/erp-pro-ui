@@ -67,7 +67,10 @@ export const PieChart: React.FC<PieChartProps> = ({
 
           <Legend
             iconType="circle"
-            wrapperStyle={{ fontSize: "12px", color: "var(--color-neutral-300)" }}
+            wrapperStyle={{
+              fontSize: "12px",
+              color: "var(--color-neutral-300)",
+            }}
           />
         </RechartsPieChart>
       </ResponsiveContainer>

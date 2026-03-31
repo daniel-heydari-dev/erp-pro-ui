@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { ButtonHoverBorderGradient } from './ButtonHoverBorderGradient';
+import { StorySurface } from "../../shared/storybook";
+import { ButtonHoverBorderGradient } from "./ButtonHoverBorderGradient";
 
 const meta: Meta<typeof ButtonHoverBorderGradient> = {
-  title: 'Visuals/ButtonHoverBorderGradient',
+  title: "Visuals/ButtonHoverBorderGradient",
   component: ButtonHoverBorderGradient,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Prebuilt CTA button with animated border emphasis for marketing or media-trigger actions.',
+          "Prebuilt CTA button with animated border emphasis for marketing or media-trigger actions.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -31,7 +31,7 @@ export const Default: Story = {
       <div
         style={
           {
-            '--color-hover-gradient': 'rgba(236, 72, 153, 0.8)',
+            "--color-hover-gradient": "rgba(236, 72, 153, 0.8)",
           } as React.CSSProperties
         }
       >
@@ -68,7 +68,7 @@ export const ActionSet: Story = {
         <div
           style={
             {
-              '--color-hover-gradient': 'rgba(59, 130, 246, 0.8)',
+              "--color-hover-gradient": "rgba(59, 130, 246, 0.8)",
             } as React.CSSProperties
           }
         >
@@ -79,7 +79,7 @@ export const ActionSet: Story = {
         <div
           style={
             {
-              '--color-hover-gradient': 'rgba(16, 185, 129, 0.8)',
+              "--color-hover-gradient": "rgba(16, 185, 129, 0.8)",
             } as React.CSSProperties
           }
         >

@@ -1,4 +1,4 @@
-import type { JSX, ReactNode } from 'react';
+import type { JSX, ReactNode } from "react";
 
 export interface GradualBlurProps {
   /** Content to animate */
@@ -18,7 +18,7 @@ export interface GradualBlurProps {
   /** Start visible? (if false, waits for trigger) */
   visible?: boolean;
   /** Direction of reveal (optional slide effect) */
-  direction?: 'none' | 'top' | 'bottom' | 'left' | 'right';
+  direction?: "none" | "top" | "bottom" | "left" | "right";
   /** Distance for slide effect in pixels */
   distance?: number;
   /** Custom class name */

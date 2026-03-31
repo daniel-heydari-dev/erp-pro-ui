@@ -1,35 +1,35 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { Button } from '../../forms/button';
-import { StorySurface } from '../../shared/storybook';
-import { ToastProvider, useToast, type ToastPosition } from './Toast';
+import { Button } from "../../forms/button";
+import { StorySurface } from "../../shared/storybook";
+import { ToastProvider, useToast, type ToastPosition } from "./Toast";
 
 const toastPositions: ToastPosition[] = [
-  'top-left',
-  'top-center',
-  'top-right',
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
+  "top-left",
+  "top-center",
+  "top-right",
+  "bottom-left",
+  "bottom-center",
+  "bottom-right",
 ];
 
 const meta: Meta<typeof ToastProvider> = {
-  title: 'Data Display/Toast',
+  title: "Data Display/Toast",
   component: ToastProvider,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Toast provides global, non-blocking feedback for async actions, background jobs, and system updates. These stories show provider setup, variant helpers, promise handling, and runtime position changes.',
+          "Toast provides global, non-blocking feedback for async actions, background jobs, and system updates. These stories show provider setup, variant helpers, promise handling, and runtime position changes.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     position: {
-      control: 'select',
+      control: "select",
       options: toastPositions,
     },
   },
@@ -44,15 +44,15 @@ function ToastWorkflowDemo() {
 
   const handleSync = () => {
     const id = loading({
-      title: 'Syncing inventory',
-      description: 'Uploading 12 warehouse adjustments...',
+      title: "Syncing inventory",
+      description: "Uploading 12 warehouse adjustments...",
     });
 
     window.setTimeout(() => {
       update(id, {
-        type: 'success',
-        title: 'Sync complete',
-        description: 'All stock levels are now reconciled.',
+        type: "success",
+        title: "Sync complete",
+        description: "All stock levels are now reconciled.",
         duration: 3500,
         dismissible: true,
       });
@@ -78,8 +78,8 @@ function ToastWorkflowDemo() {
               primary
               onClick={() =>
                 success({
-                  title: 'Changes published',
-                  description: 'The pricing update is live across all regions.',
+                  title: "Changes published",
+                  description: "The pricing update is live across all regions.",
                 })
               }
             />
@@ -87,9 +87,9 @@ function ToastWorkflowDemo() {
               label="Review Warning"
               onClick={() =>
                 warning({
-                  title: 'Approval needed',
+                  title: "Approval needed",
                   description:
-                    '2 discount requests are still pending manager review.',
+                    "2 discount requests are still pending manager review.",
                 })
               }
             />
@@ -97,15 +97,15 @@ function ToastWorkflowDemo() {
               label="Toast With Action"
               onClick={() =>
                 toast({
-                  title: 'Plan updated',
-                  description: 'Billing moved to annual renewal.',
+                  title: "Plan updated",
+                  description: "Billing moved to annual renewal.",
                   action: {
-                    label: 'Undo',
+                    label: "Undo",
                     onClick: () =>
                       info({
-                        title: 'Reverted',
+                        title: "Reverted",
                         description:
-                          'The subscription was restored to monthly billing.',
+                          "The subscription was restored to monthly billing.",
                       }),
                   },
                 })
@@ -153,23 +153,23 @@ function ToastPromiseDemo() {
     });
 
     void promise(task, {
-      loading: 'Importing catalog data...',
+      loading: "Importing catalog data...",
       success: (data) =>
         `Imported ${data.imported} products into the summer collection.`,
-      error: 'Import failed.',
+      error: "Import failed.",
     }).catch(() => undefined);
   };
 
   const handleFailure = () => {
     const task = new Promise<never>((_, reject) => {
-      window.setTimeout(() => reject(new Error('Connection timed out')), 1800);
+      window.setTimeout(() => reject(new Error("Connection timed out")), 1800);
     });
 
     void promise(task, {
-      loading: 'Connecting to ERP...',
-      success: 'Connected successfully.',
+      loading: "Connecting to ERP...",
+      success: "Connected successfully.",
       error: (error) =>
-        error instanceof Error ? error.message : 'Failed to complete request.',
+        error instanceof Error ? error.message : "Failed to complete request.",
     }).catch(() => undefined);
   };
 
@@ -228,7 +228,7 @@ function PositionControls({
                 onPositionChange(option);
                 window.setTimeout(() => {
                   toast({
-                    title: 'Position updated',
+                    title: "Position updated",
                     description: `New toasts now appear at ${option}.`,
                   });
                 }, 0);
@@ -242,7 +242,7 @@ function PositionControls({
 }
 
 function ToastPositionDemo() {
-  const [position, setPosition] = useState<ToastPosition>('top-right');
+  const [position, setPosition] = useState<ToastPosition>("top-right");
 
   return (
     <ToastProvider position={position}>

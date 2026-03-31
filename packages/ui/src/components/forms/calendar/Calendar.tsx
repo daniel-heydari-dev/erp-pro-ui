@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
-import type { CalendarProps } from './types';
+import type { CalendarProps } from "./types";
 
-const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const getDaysInMonth = (month: number, year: number) => {
   const firstDay = new Date(year, month, 1);
@@ -46,14 +46,14 @@ const isSameDay = (left: Date | null, right: Date | null) => {
 export const Calendar = ({
   value = null,
   range,
-  selectionMode = 'single',
+  selectionMode = "single",
   onSelect,
   onRangeSelect,
   month,
   year,
   onMonthChange,
   footer,
-  className = '',
+  className = "",
 }: CalendarProps) => {
   const today = new Date();
   const [internalMonth, setInternalMonth] = useState(month ?? today.getMonth());
@@ -93,7 +93,7 @@ export const Calendar = ({
   };
 
   const handleSelect = (date: Date) => {
-    if (selectionMode === 'range') {
+    if (selectionMode === "range") {
       const existingRange = currentRange;
       let nextRange = existingRange;
 
@@ -131,8 +131,8 @@ export const Calendar = ({
         </button>
         <p className="text-sm font-medium text-heading">
           {new Date(currentYear, currentMonth).toLocaleString(undefined, {
-            month: 'long',
-            year: 'numeric',
+            month: "long",
+            year: "numeric",
           })}
         </p>
         <button
@@ -156,13 +156,14 @@ export const Calendar = ({
         ))}
 
         {days.map((date, index) => {
-          const isSelected = selectionMode === 'single' && isSameDay(date, value);
+          const isSelected =
+            selectionMode === "single" && isSameDay(date, value);
           const isToday = isSameDay(date, today);
-          const inRange = selectionMode === 'range' && isInRange(date);
+          const inRange = selectionMode === "range" && isInRange(date);
           const isRangeStart =
-            selectionMode === 'range' && isSameDay(date, currentRange.start);
+            selectionMode === "range" && isSameDay(date, currentRange.start);
           const isRangeEnd =
-            selectionMode === 'range' && isSameDay(date, currentRange.end);
+            selectionMode === "range" && isSameDay(date, currentRange.end);
 
           if (!date) {
             return <span key={`empty-${index}`} />;
@@ -174,12 +175,12 @@ export const Calendar = ({
               key={date.toISOString()}
               className={`rounded-md px-0 py-2 text-sm transition-colors ${
                 isSelected || isRangeStart || isRangeEnd
-                  ? 'bg-ring text-white'
+                  ? "bg-ring text-white"
                   : inRange
-                    ? 'bg-ring/10 text-heading'
+                    ? "bg-ring/10 text-heading"
                     : isToday
-                      ? 'border border-ring text-heading'
-                      : 'text-muted-foreground'
+                      ? "border border-ring text-heading"
+                      : "text-muted-foreground"
               }`}
               onClick={() => handleSelect(date)}
             >

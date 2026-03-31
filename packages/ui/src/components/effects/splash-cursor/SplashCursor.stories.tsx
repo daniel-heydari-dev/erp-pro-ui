@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from '../../forms/button';
-import { SplashCursor } from './SplashCursor';
+import { Button } from "../../forms/button";
+import { SplashCursor } from "./SplashCursor";
 
 const meta: Meta<typeof SplashCursor> = {
-  title: 'Visuals/SplashCursor',
+  title: "Visuals/SplashCursor",
   component: SplashCursor,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component:
-          'SplashCursor adds pointer-reactive particles inside a bounded surface. These stories cover the docs variants, a branded customization example, and a more intentional hero treatment.',
+          "SplashCursor adds pointer-reactive particles inside a bounded surface. These stories cover the docs variants, a branded customization example, and a more intentional hero treatment.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['splash', 'glow', 'trail', 'ripple'],
+      control: "select",
+      options: ["splash", "glow", "trail", "ripple"],
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg', 'xl'],
+      control: "select",
+      options: ["sm", "md", "lg", "xl"],
     },
   },
 };
@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 
 function CanvasFrame({
   children,
-  className = 'ui:h-[420px]',
+  className = "ui:h-[420px]",
 }: {
   children: React.ReactNode;
   className?: string;
@@ -46,7 +46,7 @@ function CanvasFrame({
 }
 
 export const HeroInteraction: Story = {
-  args: { variant: 'splash' },
+  args: { variant: "splash" },
   render: (args) => (
     <div className="ui:p-6">
       <CanvasFrame className="ui:bg-neutral-950">
@@ -80,27 +80,27 @@ export const VariantGallery: Story = {
     <div className="ui:grid ui:gap-6 ui:p-6 md:ui:grid-cols-2">
       {[
         {
-          label: 'Trail',
-          hint: 'Move to leave light traces.',
-          variant: 'trail' as const,
+          label: "Trail",
+          hint: "Move to leave light traces.",
+          variant: "trail" as const,
           particleCount: 20,
         },
         {
-          label: 'Ripple',
-          hint: 'Click to generate expanding rings.',
-          variant: 'ripple' as const,
-          size: 'lg' as const,
+          label: "Ripple",
+          hint: "Click to generate expanding rings.",
+          variant: "ripple" as const,
+          size: "lg" as const,
         },
         {
-          label: 'Glow',
-          hint: 'Soft cursor halo for premium surfaces.',
-          variant: 'glow' as const,
+          label: "Glow",
+          hint: "Soft cursor halo for premium surfaces.",
+          variant: "glow" as const,
           blur: 20,
         },
         {
-          label: 'Splash',
-          hint: 'Burst particles on motion and click.',
-          variant: 'splash' as const,
+          label: "Splash",
+          hint: "Burst particles on motion and click.",
+          variant: "splash" as const,
           particleCount: 30,
           duration: 1200,
         },

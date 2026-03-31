@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 
-import { StorySurface } from '../../shared/storybook';
-import { GradualBlur } from './GradualBlur';
+import { StorySurface } from "../../shared/storybook";
+import { GradualBlur } from "./GradualBlur";
 
 const meta: Meta<typeof GradualBlur> = {
-  title: 'Visuals/GradualBlur',
+  title: "Visuals/GradualBlur",
   component: GradualBlur,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Blur-and-reveal motion wrapper for hero copy, feature panels, and staged content sections.',
+          "Blur-and-reveal motion wrapper for hero copy, feature panels, and staged content sections.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     direction: {
-      control: 'select',
-      options: ['none', 'top', 'bottom', 'left', 'right'],
+      control: "select",
+      options: ["none", "top", "bottom", "left", "right"],
     },
   },
 };
@@ -37,7 +37,8 @@ export const ScrollReveal: Story = {
             Viewport-triggered reveal
           </p>
           <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            This mirrors the docs scroll behavior inside a bounded container so the effect can be tested directly in Storybook.
+            This mirrors the docs scroll behavior inside a bounded container so
+            the effect can be tested directly in Storybook.
           </p>
         </div>
         <div className="ui:flex ui:h-[400px] ui:items-center ui:justify-center ui:overflow-y-auto ui:rounded-2xl ui:bg-muted/40 ui:p-6">
@@ -51,9 +52,12 @@ export const ScrollReveal: Story = {
               duration={1}
               className="ui:max-w-sm ui:rounded-2xl ui:border ui:border-border ui:bg-background ui:p-8 ui:text-center ui:shadow-xl"
             >
-              <h3 className="ui:text-2xl ui:font-bold ui:text-foreground">Revealed Content</h3>
+              <h3 className="ui:text-2xl ui:font-bold ui:text-foreground">
+                Revealed Content
+              </h3>
               <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
-                This card clears from blur as it enters view, which works well for product sections and editorial blocks.
+                This card clears from blur as it enters view, which works well
+                for product sections and editorial blocks.
               </p>
             </GradualBlur>
           </div>
@@ -72,50 +76,59 @@ export const DirectionalGallery: Story = {
             Directional reveal comparisons
           </p>
           <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Combine blur with movement to stage feature tiles, metric highlights, or onboarding steps.
+            Combine blur with movement to stage feature tiles, metric
+            highlights, or onboarding steps.
           </p>
         </div>
         <div className="ui:grid ui:gap-4 md:ui:grid-cols-2 xl:ui:grid-cols-4">
-        {[
-          {
-            direction: 'top',
-            label: 'Up',
-            accent: 'ui:border-blue-500/20 ui:bg-blue-500/10 ui:text-blue-600 dark:ui:text-blue-400',
-            arrow: '↑',
-          },
-          {
-            direction: 'bottom',
-            label: 'Down',
-            accent: 'ui:border-purple-500/20 ui:bg-purple-500/10 ui:text-purple-600 dark:ui:text-purple-400',
-            arrow: '↓',
-          },
-          {
-            direction: 'left',
-            label: 'Left',
-            accent: 'ui:border-emerald-500/20 ui:bg-emerald-500/10 ui:text-emerald-600 dark:ui:text-emerald-400',
-            arrow: '←',
-          },
-          {
-            direction: 'right',
-            label: 'Right',
-            accent: 'ui:border-amber-500/20 ui:bg-amber-500/10 ui:text-amber-600 dark:ui:text-amber-400',
-            arrow: '→',
-          },
-        ].map((item, index) => (
-          <GradualBlur
-            key={item.label}
-            direction={item.direction as 'top' | 'left' | 'right' | 'bottom'}
-            distance={40}
-            delay={0.1 + index * 0.1}
-          >
-            <div className={`ui:flex ui:h-32 ui:flex-col ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:shadow-sm ${item.accent}`}>
-              <span className="ui:text-3xl ui:font-semibold">{item.arrow}</span>
-              <span className="ui:mt-2 ui:text-xs ui:font-bold ui:uppercase ui:tracking-[0.18em]">
-                {item.label}
-              </span>
-            </div>
-          </GradualBlur>
-        ))}
+          {[
+            {
+              direction: "top",
+              label: "Up",
+              accent:
+                "ui:border-blue-500/20 ui:bg-blue-500/10 ui:text-blue-600 dark:ui:text-blue-400",
+              arrow: "↑",
+            },
+            {
+              direction: "bottom",
+              label: "Down",
+              accent:
+                "ui:border-purple-500/20 ui:bg-purple-500/10 ui:text-purple-600 dark:ui:text-purple-400",
+              arrow: "↓",
+            },
+            {
+              direction: "left",
+              label: "Left",
+              accent:
+                "ui:border-emerald-500/20 ui:bg-emerald-500/10 ui:text-emerald-600 dark:ui:text-emerald-400",
+              arrow: "←",
+            },
+            {
+              direction: "right",
+              label: "Right",
+              accent:
+                "ui:border-amber-500/20 ui:bg-amber-500/10 ui:text-amber-600 dark:ui:text-amber-400",
+              arrow: "→",
+            },
+          ].map((item, index) => (
+            <GradualBlur
+              key={item.label}
+              direction={item.direction as "top" | "left" | "right" | "bottom"}
+              distance={40}
+              delay={0.1 + index * 0.1}
+            >
+              <div
+                className={`ui:flex ui:h-32 ui:flex-col ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:shadow-sm ${item.accent}`}
+              >
+                <span className="ui:text-3xl ui:font-semibold">
+                  {item.arrow}
+                </span>
+                <span className="ui:mt-2 ui:text-xs ui:font-bold ui:uppercase ui:tracking-[0.18em]">
+                  {item.label}
+                </span>
+              </div>
+            </GradualBlur>
+          ))}
         </div>
       </div>
     </StorySurface>
@@ -134,7 +147,7 @@ export const ManualTrigger: Story = {
             onClick={() => setVisible((current) => !current)}
             className="ui:rounded-lg ui:bg-primary ui:px-4 ui:py-2 ui:text-sm ui:font-semibold ui:text-white"
           >
-            {visible ? 'Hide' : 'Show'} Component
+            {visible ? "Hide" : "Show"} Component
           </button>
 
           <GradualBlur

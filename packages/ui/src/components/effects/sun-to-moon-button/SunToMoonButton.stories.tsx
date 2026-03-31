@@ -1,25 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import SunToMoonButton from './SunToMoonButton';
+import { StorySurface } from "../../shared/storybook";
+import SunToMoonButton from "./SunToMoonButton";
 
 const meta = {
-  title: 'Foundations/Theme/SunToMoonButton',
+  title: "Foundations/Theme/SunToMoonButton",
   component: SunToMoonButton,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     controls: { expanded: true },
     docs: {
       description: {
         component:
-          'Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes.',
+          "Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes.",
       },
     },
   },
   argTypes: {
-    showLabelAndImage: { control: 'boolean' },
+    showLabelAndImage: { control: "boolean" },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof SunToMoonButton>;
 
 export default meta;

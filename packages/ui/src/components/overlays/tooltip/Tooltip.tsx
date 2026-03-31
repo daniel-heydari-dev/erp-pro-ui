@@ -100,7 +100,7 @@ export default function Tooltip({
         setInternalOpen(value);
       }
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange],
   );
 
   const clearTimeouts = useCallback(() => {
@@ -188,11 +188,7 @@ export default function Tooltip({
   };
 
   return (
-    <div
-      ref={triggerRef}
-      className="relative inline-flex"
-      {...triggerProps}
-    >
+    <div ref={triggerRef} className="relative inline-flex" {...triggerProps}>
       {children}
       <AnimatePresence>
         {isOpen && !disabled && (

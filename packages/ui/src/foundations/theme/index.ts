@@ -1,6 +1,6 @@
-export { ThemeProvider, useThemeContext } from './ThemeProvider';
+export { ThemeProvider, useThemeContext } from "./ThemeProvider";
 export type {
   ThemeModeType,
   ThemeColorType,
   UseThemeType,
-} from './ThemeProvider';
+} from "./ThemeProvider";

@@ -1,46 +1,46 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export type DialogVariant =
   /** Standard look and feel with primary brand colors */
-  | 'default'
+  | "default"
   /** Error/Critical state with red accents for destructive actions */
-  | 'destructive'
+  | "destructive"
   /** Positive state with green accents for successful operations */
-  | 'success'
+  | "success"
   /** Caution state with amber accents to warn the user */
-  | 'warning'
+  | "warning"
   /** Informational state with blue accents for helpful tips */
-  | 'info';
+  | "info";
 
 export type DialogPreset =
   /** No preset buttons, use children or the footer prop to provide your own */
-  | 'custom'
+  | "custom"
   /** Single "OK" button for simple notices */
-  | 'alert'
+  | "alert"
   /** "Cancel" and "Confirm" buttons for choices requiring verification */
-  | 'confirm';
+  | "confirm";
 
 export type DialogAnimation =
   /** Smooth opacity transition without movement */
-  | 'fade'
+  | "fade"
   /** Default spring-based scale up effect from the center */
-  | 'scale'
+  | "scale"
   /** Enters by sliding up from the bottom boundary */
-  | 'slideUp'
+  | "slideUp"
   /** Enters by sliding down from the top boundary */
-  | 'slideDown'
+  | "slideDown"
   /** Enters by sliding in from the right side of the screen */
-  | 'slideLeft'
+  | "slideLeft"
   /** Enters by sliding in from the left side of the screen */
-  | 'slideRight'
+  | "slideRight"
   /** High-energy entrance with overshoot and bounce back */
-  | 'elastic'
+  | "elastic"
   /** Gravity-style bounce dropping from the top */
-  | 'bounce'
+  | "bounce"
   /** Modern 3D perspective flip along the X-axis */
-  | 'flip'
+  | "flip"
   /** Cinematic entrance featuring rotation and scaling */
-  | 'zoom';
+  | "zoom";
 
 export interface DialogProps {
   /** Controls if the dialog is visible. Controlled component state. */

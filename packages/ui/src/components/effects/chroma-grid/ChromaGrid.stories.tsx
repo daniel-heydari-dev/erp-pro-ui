@@ -1,104 +1,104 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StoryIntro, StorySection, StorySurface } from '../../shared/storybook';
-import { ChromaGrid } from './ChromaGrid';
+import { StoryIntro, StorySection, StorySurface } from "../../shared/storybook";
+import { ChromaGrid } from "./ChromaGrid";
 
 const launchItems = [
   {
-    id: 'design-system',
-    title: 'Design',
-    description: 'A polished surface for launch campaigns and product reveals.',
-    icon: '🎨',
+    id: "design-system",
+    title: "Design",
+    description: "A polished surface for launch campaigns and product reveals.",
+    icon: "🎨",
   },
   {
-    id: 'speed',
-    title: 'Performance',
-    description: 'Fast transitions with minimal layout overhead.',
-    icon: '⚡',
+    id: "speed",
+    title: "Performance",
+    description: "Fast transitions with minimal layout overhead.",
+    icon: "⚡",
   },
   {
-    id: 'security',
-    title: 'Security',
+    id: "security",
+    title: "Security",
     description:
-      'A larger focal card for trust, compliance, or differentiators.',
-    icon: '🔒',
+      "A larger focal card for trust, compliance, or differentiators.",
+    icon: "🔒",
     size: 2 as const,
   },
   {
-    id: 'global',
-    title: 'Global',
+    id: "global",
+    title: "Global",
     description:
-      'Use compact cards for supporting benefits and supporting proof points.',
-    icon: '🌐',
+      "Use compact cards for supporting benefits and supporting proof points.",
+    icon: "🌐",
   },
   {
-    id: 'insights',
-    title: 'Insights',
-    description: 'Mix small and large cards without losing rhythm.',
-    icon: '📈',
+    id: "insights",
+    title: "Insights",
+    description: "Mix small and large cards without losing rhythm.",
+    icon: "📈",
   },
   {
-    id: 'quality',
-    title: 'Quality',
-    description: 'Suitable for premium feature grids and showcase sections.',
-    icon: '🏆',
+    id: "quality",
+    title: "Quality",
+    description: "Suitable for premium feature grids and showcase sections.",
+    icon: "🏆",
   },
 ];
 
 const operationsItems = [
   {
-    id: 'fulfillment',
-    title: 'Fulfillment',
-    description: '98.4% same-day dispatch',
-    icon: '📦',
+    id: "fulfillment",
+    title: "Fulfillment",
+    description: "98.4% same-day dispatch",
+    icon: "📦",
   },
   {
-    id: 'returns',
-    title: 'Returns',
-    description: '7 queues cleared before noon',
-    icon: '↩️',
+    id: "returns",
+    title: "Returns",
+    description: "7 queues cleared before noon",
+    icon: "↩️",
   },
   {
-    id: 'revenue',
-    title: 'Revenue Ops',
-    description: 'Forecast adjusted across 3 regions',
-    icon: '💹',
+    id: "revenue",
+    title: "Revenue Ops",
+    description: "Forecast adjusted across 3 regions",
+    icon: "💹",
     size: 2 as const,
   },
   {
-    id: 'risk',
-    title: 'Risk',
-    description: 'No payment exceptions in the last hour',
-    icon: '🛡️',
+    id: "risk",
+    title: "Risk",
+    description: "No payment exceptions in the last hour",
+    icon: "🛡️",
   },
   {
-    id: 'inventory',
-    title: 'Inventory',
-    description: '21 replenishment alerts resolved',
-    icon: '🏷️',
+    id: "inventory",
+    title: "Inventory",
+    description: "21 replenishment alerts resolved",
+    icon: "🏷️",
   },
 ];
 
 const pulseItems = [
-  { id: 'north', title: 'North', description: '12 campaigns live', icon: '🧭' },
-  { id: 'south', title: 'South', description: '8 regional promos', icon: '📣' },
-  { id: 'east', title: 'East', description: '3 launches queued', icon: '🚀' },
-  { id: 'west', title: 'West', description: '9 enterprise demos', icon: '🛰️' },
+  { id: "north", title: "North", description: "12 campaigns live", icon: "🧭" },
+  { id: "south", title: "South", description: "8 regional promos", icon: "📣" },
+  { id: "east", title: "East", description: "3 launches queued", icon: "🚀" },
+  { id: "west", title: "West", description: "9 enterprise demos", icon: "🛰️" },
 ];
 
 const meta: Meta<typeof ChromaGrid> = {
-  title: 'Visuals/ChromaGrid',
+  title: "Visuals/ChromaGrid",
   component: ChromaGrid,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'ChromaGrid builds animated feature mosaics for landing pages, launch sections, and dashboard overviews. These stories cover docs-aligned gradients, glass layouts, and animation-heavy compact boards.',
+          "ChromaGrid builds animated feature mosaics for landing pages, launch sections, and dashboard overviews. These stories cover docs-aligned gradients, glass layouts, and animation-heavy compact boards.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     items: { control: false },
     style: { control: false },

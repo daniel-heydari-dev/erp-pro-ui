@@ -72,11 +72,12 @@ export const SpotlightCard = ({
     setIsHovered(false);
   };
 
-  const spotlightStyle = spotlightEnabled && isHovered
-    ? {
-      background: `radial-gradient(${spotlightSize}px circle at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 80%)`,
-    }
-    : {};
+  const spotlightStyle =
+    spotlightEnabled && isHovered
+      ? {
+          background: `radial-gradient(${spotlightSize}px circle at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 80%)`,
+        }
+      : {};
 
   return (
     <motion.div
@@ -87,7 +88,7 @@ export const SpotlightCard = ({
         paddingMap[padding],
         variantStyles[variant],
         onClick && "cursor-pointer",
-        className
+        className,
       )}
       style={style}
       onMouseMove={handleMouseMove}
@@ -114,7 +115,7 @@ export const SpotlightCard = ({
         <motion.div
           className={mergeClassNames(
             "pointer-events-none absolute inset-0 z-0",
-            borderRadiusMap[borderRadius]
+            borderRadiusMap[borderRadius],
           )}
           style={{
             background: `radial-gradient(${spotlightSize * 0.6}px circle at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor.replace("0.15", "0.3")}, transparent 70%)`,

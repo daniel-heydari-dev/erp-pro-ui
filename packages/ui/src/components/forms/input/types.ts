@@ -1,10 +1,10 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { InputHTMLAttributes, ReactNode } from "react";
 
 export enum InputState {
-  DEFAULT = 'default',
-  DISABLED = 'disabled',
-  ERROR = 'error',
-  SUCCESS = 'success',
+  DEFAULT = "default",
+  DISABLED = "disabled",
+  ERROR = "error",
+  SUCCESS = "success",
 }
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

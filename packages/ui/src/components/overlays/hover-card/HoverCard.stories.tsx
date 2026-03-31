@@ -1,34 +1,46 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import { HoverCard } from './HoverCard';
+import { StorySurface } from "../../shared/storybook";
+import { HoverCard } from "./HoverCard";
 
 const meta: Meta<typeof HoverCard> = {
-  title: 'Layout/HoverCard',
+  title: "Layout/HoverCard",
   component: HoverCard,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Rich hover preview for people, entities, and metadata where a plain tooltip would be too small.',
+          "Rich hover preview for people, entities, and metadata where a plain tooltip would be too small.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    position: { control: 'radio', options: ['top', 'bottom', 'left', 'right'] },
-    align: { control: 'radio', options: ['start', 'center', 'end'] },
-    openDelay: { control: 'number' },
-    closeDelay: { control: 'number' },
-    arrow: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-    width: { control: 'text' },
-    maxWidth: { control: 'text' },
-    className: { control: false, description: 'Custom class for the card container.' },
-    triggerClassName: { control: false, description: 'Custom class for the trigger wrapper.' },
-    children: { control: false, description: 'Trigger element that opens the card on hover.' },
-    content: { control: false, description: 'Content rendered inside the hover card.' },
+    position: { control: "radio", options: ["top", "bottom", "left", "right"] },
+    align: { control: "radio", options: ["start", "center", "end"] },
+    openDelay: { control: "number" },
+    closeDelay: { control: "number" },
+    arrow: { control: "boolean" },
+    disabled: { control: "boolean" },
+    width: { control: "text" },
+    maxWidth: { control: "text" },
+    className: {
+      control: false,
+      description: "Custom class for the card container.",
+    },
+    triggerClassName: {
+      control: false,
+      description: "Custom class for the trigger wrapper.",
+    },
+    children: {
+      control: false,
+      description: "Trigger element that opens the card on hover.",
+    },
+    content: {
+      control: false,
+      description: "Content rendered inside the hover card.",
+    },
   },
 };
 
@@ -96,7 +108,8 @@ export const TeamMemberPreview: Story = {
               </div>
             </div>
             <p className="ui:text-sm ui:text-muted-foreground">
-              Owns receiving audits, transfer approvals, and supplier escalation.
+              Owns receiving audits, transfer approvals, and supplier
+              escalation.
             </p>
           </div>
         }
@@ -118,8 +131,8 @@ export const DelayAndWidth: Story = {
     openDelay: 350,
     closeDelay: 100,
     arrow: false,
-    width: '300px',
-    maxWidth: '360px',
+    width: "300px",
+    maxWidth: "360px",
   },
   render: (args) => (
     <StorySurface
@@ -132,7 +145,8 @@ export const DelayAndWidth: Story = {
           <div className="ui:space-y-2">
             <h4 className="ui:text-base ui:font-semibold">Supplier Snapshot</h4>
             <p className="ui:text-sm ui:text-muted-foreground">
-              Last shipment arrived 2 days ago. 97% on-time delivery this quarter.
+              Last shipment arrived 2 days ago. 97% on-time delivery this
+              quarter.
             </p>
             <p className="ui:text-sm ui:text-muted-foreground">
               Next expected delivery: Friday, 10:30.

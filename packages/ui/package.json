@@ -17,6 +17,18 @@
       "default": "./dist/index.mjs"
     },
     "./styles.css": "./dist/styles.css",
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.mjs",
+      "require": "./dist/catalog.cjs",
+      "default": "./dist/catalog.mjs"
+    },
+    "./docs": {
+      "types": "./dist/docs.d.ts",
+      "import": "./dist/docs.mjs",
+      "require": "./dist/docs.cjs",
+      "default": "./dist/docs.mjs"
+    },
     "./theme": {
       "types": "./dist/foundations/theme/index.d.ts",
       "import": "./dist/theme.mjs",
@@ -300,9 +312,11 @@
     "package.json"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "node ./scripts/validate-contract.mjs && vite build",
+    "contract:check": "node ./scripts/validate-contract.mjs",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "story:check": "node ./scripts/validate-story-metadata.mjs",
+    "typecheck": "node ./scripts/validate-contract.mjs && tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",

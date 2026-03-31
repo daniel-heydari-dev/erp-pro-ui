@@ -70,6 +70,13 @@ export type FilterValue =
   | { min?: number; max?: number };
 export type FilterValues = Record<string, FilterValue>;
 
+export interface DataTableBulkActionContext<T> {
+  selectedRows: T[];
+  selectedCount: number;
+  clearSelection: () => void;
+  disableBulkSelection: () => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DataTableProps<T = Record<string, any>> {
   columns: {
@@ -92,6 +99,12 @@ export interface DataTableProps<T = Record<string, any>> {
   onExport?: () => void;
   onRowAction?: (action: string, row: T) => void;
   onBulkDelete?: (rows: T[]) => void;
+  renderBulkActions?: (
+    context: DataTableBulkActionContext<T>,
+  ) => React.ReactNode;
+  renderBulkActionCard?: (
+    context: DataTableBulkActionContext<T>,
+  ) => React.ReactNode;
   onFilterChange?: (filters: FilterValues) => void;
   // Filter options - can include async filters
   filterOptions?: FilterOption[];
@@ -1050,6 +1063,8 @@ interface DataTableToolbarProps<T> {
   bulkDeleteEnabled: boolean;
   bulkSelectionActive: boolean;
   selectedCount: number;
+  bulkActionsContent?: React.ReactNode;
+  bulkActionCard?: React.ReactNode;
   onToggleBulkSelection: () => void;
   onBulkDeleteSelected: () => void;
   onExport?: () => void;
@@ -1067,6 +1082,8 @@ function DataTableToolbar<T>({
   bulkDeleteEnabled,
   bulkSelectionActive,
   selectedCount,
+  bulkActionsContent,
+  bulkActionCard,
   onToggleBulkSelection,
   onBulkDeleteSelected,
   onExport,
@@ -1076,83 +1093,60 @@ function DataTableToolbar<T>({
   columns,
   onColumnToggle,
 }: DataTableToolbarProps<T>) {
+  const hasSelectedRows = selectedCount > 0;
+
   return (
-    <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-neutral-200 dark:border-neutral-700">
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        {bulkDeleteEnabled ? (
-          <FilterButton
-            icon={
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V9m-7-4h7m0 0v7m0-7L10 14"
-                />
-              </svg>
-            }
-            label={bulkSelectionActive ? 'Disable bulk selection' : 'Enable bulk selection'}
-            onClick={onToggleBulkSelection}
-            hasActive={bulkSelectionActive}
-          />
-        ) : null}
-
-        {bulkSelectionActive ? (
-          <ToolbarIconButton
-            title={selectedCount > 0 ? `Delete ${selectedCount} selected rows` : 'Select rows to delete'}
-            onClick={onBulkDeleteSelected}
-            disabled={selectedCount === 0}
-          >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"
-              />
-            </svg>
-          </ToolbarIconButton>
-        ) : null}
-
-        <SearchField
-          value={searchQuery}
-          onChange={onSearchChange}
-          placeholder={searchPlaceholder}
-        />
-      </div>
-
-      <div className="flex items-center gap-1">
-        <ToolbarIconButton onClick={onExport} title="Refresh">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+    <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+          {bulkDeleteEnabled ? (
+            <FilterButton
+              icon={
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  className="h-6.5 w-6.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.75}
+                    d="M4.25 10V18.85A1.25 1.25 0 005.5 20.1H14"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.75}
+                    d="M7 5.75h10A1.25 1.25 0 0118.25 7v10A1.25 1.25 0 0117 18.25H7A1.25 1.25 0 015.75 17V7A1.25 1.25 0 017 5.75z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.75}
+                    d="m9.25 12 2.25 2.25 4.25-4.5"
+                  />
+                </svg>
+              }
+              label={
+                bulkSelectionActive
+                  ? 'Disable bulk selection'
+                  : 'Enable bulk selection'
+              }
+              onClick={onToggleBulkSelection}
+              hasActive={bulkSelectionActive}
             />
-          </svg>
-        </ToolbarIconButton>
+          ) : null}
 
-        <div className="relative">
-          <ToolbarIconButton
-            onClick={onToggleColumnMenu}
-            title="Column settings"
-          >
+          <SearchField
+            value={searchQuery}
+            onChange={onSearchChange}
+            placeholder={searchPlaceholder}
+          />
+        </div>
+
+        <div className="flex items-center gap-1 self-end lg:self-auto">
+          <ToolbarIconButton onClick={onExport} title="Refresh">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -1163,34 +1157,84 @@ function DataTableToolbar<T>({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
           </ToolbarIconButton>
-          <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
-            <ColumnToggle
-              columns={columns}
-              onToggle={(id) => {
-                onColumnToggle?.(id);
-              }}
-              onShowAll={() => {
-                columns.forEach((column) => {
-                  if (column.visible === false) {
-                    onColumnToggle?.(column.id);
-                  }
-                });
-              }}
-              onHideAll={() => {
-                columns.forEach((column) => {
-                  if (column.visible !== false) {
-                    onColumnToggle?.(column.id);
-                  }
-                });
-              }}
-            />
-          </FilterDropdown>
+
+          <div className="relative">
+            <ToolbarIconButton
+              onClick={onToggleColumnMenu}
+              title="Column settings"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M7 12h10m-7 6h4"
+                />
+              </svg>
+            </ToolbarIconButton>
+
+            <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
+              <ColumnToggle
+                columns={columns}
+                onToggle={(columnId) => {
+                  onColumnToggle?.(columnId);
+                }}
+              />
+            </FilterDropdown>
+          </div>
         </div>
       </div>
+
+      {bulkSelectionActive && hasSelectedRows
+        ? (bulkActionCard ?? (
+            <div className="mt-3 flex flex-col gap-3 rounded-xl border border-neutral-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 dark:shadow-black/20 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
+                <span className="inline-flex items-center rounded-full border border-primary-200 bg-primary-100/80 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:border-primary-400/20 dark:bg-primary-500/15 dark:text-primary-200">
+                  Bulk actions
+                </span>
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                  {selectedCount} {selectedCount === 1 ? 'row' : 'rows'}{' '}
+                  selected
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {bulkActionsContent}
+                {bulkDeleteEnabled ? (
+                  <button
+                    type="button"
+                    onClick={onBulkDeleteSelected}
+                    className="inline-flex items-center gap-2 rounded-lg border border-primary-400/30 bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-lg shadow-primary-500/20 transition-colors hover:bg-primary-600"
+                  >
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"
+                      />
+                    </svg>
+                    Delete selected
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          ))
+        : null}
     </div>
   );
 }
@@ -1274,7 +1318,8 @@ function DataTableRows<T>({
   onCloseRowMenu,
   onRowAction,
 }: DataTableRowsProps<T>) {
-  const colSpan = table.getVisibleLeafColumns().length + (bulkSelectionActive ? 2 : 1);
+  const colSpan =
+    table.getVisibleLeafColumns().length + (bulkSelectionActive ? 2 : 1);
 
   if (isLoading) {
     return <LoadingTableState colSpan={colSpan} />;
@@ -1341,6 +1386,8 @@ export default function DataTable<T = Record<string, any>>({
   onExport,
   onRowAction,
   onBulkDelete,
+  renderBulkActions,
+  renderBulkActionCard,
   onFilterChange,
   onFiltersApply,
   serverSideFiltering = false,
@@ -1360,7 +1407,9 @@ export default function DataTable<T = Record<string, any>>({
   const [visibleFilters, setVisibleFilters] = React.useState<string[]>([]);
   const [activeFilters, setActiveFilters] = React.useState<FilterValues>({});
   const [bulkSelectionActive, setBulkSelectionActive] = React.useState(false);
-  const [selectedRowIds, setSelectedRowIds] = React.useState<Record<string, boolean>>({});
+  const [selectedRowIds, setSelectedRowIds] = React.useState<
+    Record<string, boolean>
+  >({});
   const [rowMenuOpen, setRowMenuOpen] = React.useState<number | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -1457,11 +1506,15 @@ export default function DataTable<T = Record<string, any>>({
   const visibleRows = table.getRowModel().rows;
   const bulkDeleteEnabled = typeof onBulkDelete === 'function';
   const selectedRows = React.useMemo(
-    () => visibleRows.filter((row) => selectedRowIds[row.id]).map((row) => row.original),
+    () =>
+      visibleRows
+        .filter((row) => selectedRowIds[row.id])
+        .map((row) => row.original),
     [selectedRowIds, visibleRows],
   );
   const allVisibleRowsSelected =
-    visibleRows.length > 0 && visibleRows.every((row) => selectedRowIds[row.id]);
+    visibleRows.length > 0 &&
+    visibleRows.every((row) => selectedRowIds[row.id]);
 
   React.useEffect(() => {
     updatePagination((previous) =>
@@ -1620,6 +1673,28 @@ export default function DataTable<T = Record<string, any>>({
     onBulkDelete(selectedRows);
     setSelectedRowIds({});
   }, [onBulkDelete, selectedRows]);
+
+  const handleClearSelectedRows = React.useCallback(() => {
+    setSelectedRowIds({});
+  }, []);
+
+  const handleDisableBulkSelection = React.useCallback(() => {
+    setBulkSelectionActive(false);
+    setSelectedRowIds({});
+  }, []);
+
+  const bulkActionContext = React.useMemo<DataTableBulkActionContext<T>>(
+    () => ({
+      selectedRows,
+      selectedCount: selectedRows.length,
+      clearSelection: handleClearSelectedRows,
+      disableBulkSelection: handleDisableBulkSelection,
+    }),
+    [handleClearSelectedRows, handleDisableBulkSelection, selectedRows],
+  );
+
+  const bulkActionsContent = renderBulkActions?.(bulkActionContext);
+  const bulkActionCard = renderBulkActionCard?.(bulkActionContext);
 
   const handleOpenProfile = React.useCallback(() => {
     setProfileOpen(true);
@@ -1780,6 +1855,8 @@ export default function DataTable<T = Record<string, any>>({
           bulkDeleteEnabled={bulkDeleteEnabled}
           bulkSelectionActive={bulkSelectionActive}
           selectedCount={selectedRows.length}
+          bulkActionsContent={bulkActionsContent}
+          bulkActionCard={bulkActionCard}
           onToggleBulkSelection={handleToggleBulkSelection}
           onBulkDeleteSelected={handleBulkDeleteSelected}
           onExport={onExport}

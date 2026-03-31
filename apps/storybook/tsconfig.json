@@ -3,7 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "erp-pro-ui": ["../../packages/ui/src/index.ts"],
+      "erp-pro-ui/theme": ["../../packages/ui/src/foundations/theme/index.ts"],
+      "erp-pro-ui/catalog": ["../../packages/ui/src/catalog.ts"]
     }
   },
   "include": ["src", ".storybook", "vite.config.ts"],

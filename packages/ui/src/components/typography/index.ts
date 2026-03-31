@@ -1,4 +1,4 @@
-export { Typography } from './Typography';
+export { Typography } from "./Typography";
 export type {
   TypographyProps,
   TypographyVariant,
@@ -6,4 +6,4 @@ export type {
   TypographyWeight,
   TypographyTracking,
   TypographyGradient,
-} from './Typography';
+} from "./Typography";

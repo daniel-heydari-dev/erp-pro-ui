@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import type { RefObject } from 'react';
+import { useEffect, useState } from "react";
+import type { RefObject } from "react";
 
 const focusableSelectors = [
-  'a[href]',
-  'button:not([disabled])',
-  'textarea:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
+  "a[href]",
+  "button:not([disabled])",
+  "textarea:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
   '[tabindex]:not([tabindex="-1"])',
 ];
 
 const scheduleMicrotask = (callback: () => void) => {
-  if (typeof queueMicrotask === 'function') {
+  if (typeof queueMicrotask === "function") {
     queueMicrotask(callback);
     return;
   }
@@ -24,9 +24,9 @@ const scheduleMicrotask = (callback: () => void) => {
 
 export const useBodyScrollLock = (active: boolean) => {
   useEffect(() => {
-    if (!active || typeof window === 'undefined') return;
+    if (!active || typeof window === "undefined") return;
     const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = overflow;
     };
@@ -38,15 +38,15 @@ export const useFocusTrap = (
   active: boolean,
 ) => {
   useEffect(() => {
-    if (!active || typeof window === 'undefined') return;
+    if (!active || typeof window === "undefined") return;
     const container = containerRef.current;
     if (!container) return;
 
     const getFocusable = () =>
       Array.from(
-        container.querySelectorAll<HTMLElement>(focusableSelectors.join(',')),
+        container.querySelectorAll<HTMLElement>(focusableSelectors.join(",")),
       ).filter(
-        (el) => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden'),
+        (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden"),
       );
 
     const focusable = getFocusable();
@@ -55,7 +55,7 @@ export const useFocusTrap = (
     first?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab' || focusable.length === 0) return;
+      if (event.key !== "Tab" || focusable.length === 0) return;
       if (event.shiftKey) {
         if (document.activeElement === first) {
           event.preventDefault();
@@ -67,8 +67,8 @@ export const useFocusTrap = (
       }
     };
 
-    container.addEventListener('keydown', handleKeyDown);
-    return () => container.removeEventListener('keydown', handleKeyDown);
+    container.addEventListener("keydown", handleKeyDown);
+    return () => container.removeEventListener("keydown", handleKeyDown);
   }, [containerRef, active]);
 };
 
@@ -98,11 +98,11 @@ export const useOverlayTransition = (open: boolean, duration = 200) => {
   }, [open, duration]);
 
   const shouldRender = open || closing;
-  const transitionState: 'open' | 'closing' | 'closed' = open
-    ? 'open'
+  const transitionState: "open" | "closing" | "closed" = open
+    ? "open"
     : closing
-      ? 'closing'
-      : 'closed';
+      ? "closing"
+      : "closed";
 
   return { shouldRender, transitionState };
 };

@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-import { PasswordCriteria } from './PasswordCriteria';
+import { PasswordCriteria } from "./PasswordCriteria";
 
 export interface PasswordStrengthMeterProps {
   password: string;
@@ -28,19 +28,19 @@ export function PasswordStrengthMeter({
   // Determine strength color based on the calculated strength
   const getColor = (strength: number): string => {
     const colors = [
-      'bg-red-500',
-      'bg-red-400',
-      'bg-yellow-500',
-      'bg-yellow-400',
-      'bg-green-500',
+      "bg-red-500",
+      "bg-red-400",
+      "bg-yellow-500",
+      "bg-yellow-400",
+      "bg-green-500",
     ];
-    return colors[strength] || 'bg-gray-600';
+    return colors[strength] || "bg-gray-600";
   };
 
   // Get a text label corresponding to the password strength
   const getStrengthText = (strength: number): string => {
-    const strengthLevels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
-    return strengthLevels[strength] || 'Very Weak';
+    const strengthLevels = ["Very Weak", "Weak", "Fair", "Good", "Strong"];
+    return strengthLevels[strength] || "Very Weak";
   };
 
   return (
@@ -63,7 +63,7 @@ export function PasswordStrengthMeter({
             className={`h-1 w-1/4 rounded-full transition-colors duration-300 ${
               index < strength
                 ? getColor(strength)
-                : 'bg-neutral-300 dark:bg-neutral-600'
+                : "bg-neutral-300 dark:bg-neutral-600"
             }`}
           />
         ))}

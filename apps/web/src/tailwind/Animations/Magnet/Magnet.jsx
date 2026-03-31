@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 const Magnet = ({
   children,
   padding = 100,
   disabled = false,
   magnetStrength = 2,
-  activeTransition = 'transform 0.3s ease-out',
-  inactiveTransition = 'transform 0.5s ease-in-out',
-  wrapperClassName = '',
-  innerClassName = '',
+  activeTransition = "transform 0.3s ease-out",
+  inactiveTransition = "transform 0.5s ease-in-out",
+  wrapperClassName = "",
+  innerClassName = "",
   ...props
 }) => {
   const [isActive, setIsActive] = useState(false);
@@ -21,10 +21,11 @@ const Magnet = ({
       return;
     }
 
-    const handleMouseMove = e => {
+    const handleMouseMove = (e) => {
       if (!magnetRef.current) return;
 
-      const { left, top, width, height } = magnetRef.current.getBoundingClientRect();
+      const { left, top, width, height } =
+        magnetRef.current.getBoundingClientRect();
       const centerX = left + width / 2;
       const centerY = top + height / 2;
 
@@ -43,9 +44,9 @@ const Magnet = ({
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [padding, disabled, magnetStrength]);
 
@@ -55,7 +56,7 @@ const Magnet = ({
     <div
       ref={magnetRef}
       className={wrapperClassName}
-      style={{ position: 'relative', display: 'inline-block' }}
+      style={{ position: "relative", display: "inline-block" }}
       {...props}
     >
       <div
@@ -63,7 +64,7 @@ const Magnet = ({
         style={{
           transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
           transition: transitionStyle,
-          willChange: 'transform'
+          willChange: "transform",
         }}
       >
         {children}

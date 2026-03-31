@@ -7,12 +7,10 @@ const basePanel =
   "relative flex flex-col backdrop-blur-xl bg-white/70 dark:bg-neutral-900/70 p-6 shadow-2xl border-white/20 dark:border-white/10 rounded-sm";
 
 const positionClasses: Record<DrawerPosition, string> = {
-  right:
-    "h-[calc(100%-8px)] my-1 mr-1 w-full max-w-md ml-auto border",
+  right: "h-[calc(100%-8px)] my-1 mr-1 w-full max-w-md ml-auto border",
   left: "h-[calc(100%-8px)] my-1 ml-1 w-full max-w-md mr-auto border",
   top: "w-[calc(100%-8px)] mx-1 mt-1 max-h-[80vh] border",
-  bottom:
-    "w-[calc(100%-8px)] mx-1 mb-1 max-h-[80vh] mt-auto border",
+  bottom: "w-[calc(100%-8px)] mx-1 mb-1 max-h-[80vh] mt-auto border",
 };
 
 const getVariants = (position: DrawerPosition) => {

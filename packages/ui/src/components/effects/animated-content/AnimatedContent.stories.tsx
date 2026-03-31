@@ -1,61 +1,61 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState, type ComponentProps } from 'react';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState, type ComponentProps } from "react";
 
 import {
   StoryIntro,
   StoryPanel,
   StorySection,
   StorySurface,
-} from '../../shared/storybook';
-import { AnimatedContent } from './AnimatedContent';
+} from "../../shared/storybook";
+import { AnimatedContent } from "./AnimatedContent";
 
 const comparisonPresets = [
-  { preset: 'fade', label: 'Fade' },
-  { preset: 'scale', label: 'Scale' },
-  { preset: 'slideUp', label: 'Slide Up' },
-  { preset: 'bounce', label: 'Bounce' },
-  { preset: 'flip', label: 'Flip' },
-  { preset: 'zoom', label: 'Zoom' },
+  { preset: "fade", label: "Fade" },
+  { preset: "scale", label: "Scale" },
+  { preset: "slideUp", label: "Slide Up" },
+  { preset: "bounce", label: "Bounce" },
+  { preset: "flip", label: "Flip" },
+  { preset: "zoom", label: "Zoom" },
 ] as const;
 
 const staggeredMetrics = [
-  { label: 'New leads', value: '184' },
-  { label: 'Qualified', value: '72' },
-  { label: 'Closed', value: '29' },
+  { label: "New leads", value: "184" },
+  { label: "Qualified", value: "72" },
+  { label: "Closed", value: "29" },
 ] as const;
 
 const meta: Meta<typeof AnimatedContent> = {
-  title: 'Visuals/AnimatedContent',
+  title: "Visuals/AnimatedContent",
   component: AnimatedContent,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Reusable entrance animation wrapper for cards, hero content, and staggered dashboards.',
+          "Reusable entrance animation wrapper for cards, hero content, and staggered dashboards.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     preset: {
-      control: 'select',
+      control: "select",
       options: [
-        'fade',
-        'scale',
-        'slideUp',
-        'slideDown',
-        'slideLeft',
-        'slideRight',
-        'elastic',
-        'bounce',
-        'flip',
-        'zoom',
-        'custom',
+        "fade",
+        "scale",
+        "slideUp",
+        "slideDown",
+        "slideLeft",
+        "slideRight",
+        "elastic",
+        "bounce",
+        "flip",
+        "zoom",
+        "custom",
       ],
     },
-    ease: { control: 'text' },
-    duration: { control: 'number' },
+    ease: { control: "text" },
+    duration: { control: "number" },
   },
 };
 
@@ -64,7 +64,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    preset: 'slideUp',
+    preset: "slideUp",
     duration: 0.5,
   },
   render: (args: ComponentProps<typeof AnimatedContent>) => (
@@ -117,14 +117,24 @@ export const PresetGallery: Story = {
               Replay Animations
             </button>
           </div>
-          <div key={instanceKey} className="ui:grid ui:gap-4 md:ui:grid-cols-2 xl:ui:grid-cols-3">
+          <div
+            key={instanceKey}
+            className="ui:grid ui:gap-4 md:ui:grid-cols-2 xl:ui:grid-cols-3"
+          >
             {comparisonPresets.map((item, index) => (
-              <AnimatedContent key={item.label} preset={item.preset} delay={index * 0.12} duration={0.8}>
+              <AnimatedContent
+                key={item.label}
+                preset={item.preset}
+                delay={index * 0.12}
+                duration={0.8}
+              >
                 <StoryPanel className="ui:flex ui:min-h-32 ui:flex-col ui:items-center ui:justify-center ui:p-5 ui:text-center">
                   <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-primary/10 ui:text-sm ui:font-bold ui:text-primary">
                     {item.label}
                   </div>
-                  <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">{item.preset}</p>
+                  <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">
+                    {item.preset}
+                  </p>
                 </StoryPanel>
               </AnimatedContent>
             ))}
@@ -161,7 +171,12 @@ export const EasingCurves: Story = {
                 Back Out
               </StoryPanel>
             </AnimatedContent>
-            <AnimatedContent preset="slideRight" ease="anticipate" duration={1} delay={0.2}>
+            <AnimatedContent
+              preset="slideRight"
+              ease="anticipate"
+              duration={1}
+              delay={0.2}
+            >
               <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground">
                 Anticipate
               </StoryPanel>
@@ -178,7 +193,11 @@ export const StaggeredBoard: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
         {staggeredMetrics.map((card, index) => (
-          <AnimatedContent key={card.label} preset="slideUp" delay={index * 0.14}>
+          <AnimatedContent
+            key={card.label}
+            preset="slideUp"
+            delay={index * 0.14}
+          >
             <StoryPanel className="ui:rounded-2xl ui:p-5">
               <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
                 {card.label}
