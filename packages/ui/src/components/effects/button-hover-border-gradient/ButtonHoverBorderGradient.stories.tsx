@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { PlayIcon } from "../../icons";
 import { StorySurface } from "../../shared/storybook";
 import { ButtonHoverBorderGradient } from "./ButtonHoverBorderGradient";
 
@@ -36,20 +37,7 @@ export const Default: Story = {
         }
       >
         <ButtonHoverBorderGradient>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="ui:w-5 ui:h-5"
-          >
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
+          <PlayIcon className="ui:h-5 ui:w-5" aria-hidden="true" />
           <span className="ui:font-bold">Play Video</span>
         </ButtonHoverBorderGradient>
       </div>

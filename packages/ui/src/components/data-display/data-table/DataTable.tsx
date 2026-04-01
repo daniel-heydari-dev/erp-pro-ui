@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,32 +8,48 @@ import {
   type ColumnDef,
   type PaginationState,
   type Table,
-} from '@tanstack/react-table';
-import { Combobox } from '../../forms/combobox';
-import { MultiSelectCombobox } from '../../forms/multi-select-combobox';
-import { Checkbox } from '../../forms/checkbox';
-import { Input } from '../../forms/input';
-import { Select } from '../../forms/select';
-import { Switch } from '../../forms/switch';
+} from "@tanstack/react-table";
+import { Combobox } from "../../forms/combobox";
+import { MultiSelectCombobox } from "../../forms/multi-select-combobox";
+import { Checkbox } from "../../forms/checkbox";
+import { Input } from "../../forms/input";
+import { Select } from "../../forms/select";
+import { Switch } from "../../forms/switch";
 import {
   DatePicker,
   type DatePickerValue,
   type DateRangeValue,
-} from '../../forms/date-picker';
+} from "../../forms/date-picker";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  ColumnsIcon,
+  EllipsisVerticalIcon,
+  FilterIcon,
+  FilterProfileIcon,
+  FilterXIcon,
+  LoaderIcon,
+  RefreshIcon,
+  SearchIcon,
+  SelectionIcon,
+  TrashIcon,
+} from "../../icons";
 
 // Filter option type - can be static or async
 export interface FilterOption {
   id: string;
   label: string;
   type?:
-    | 'text'
-    | 'select'
-    | 'combobox'
-    | 'checkbox'
-    | 'switch'
-    | 'date'
-    | 'date-range'
-    | 'number-range';
+    | "text"
+    | "select"
+    | "combobox"
+    | "checkbox"
+    | "switch"
+    | "date"
+    | "date-range"
+    | "number-range";
   placeholder?: string;
   options?: string[]; // Static options
   // Async options support
@@ -165,8 +181,8 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
     title={label}
     className={`p-2 rounded-lg transition-colors ${
       hasActive
-        ? 'bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-400'
-        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700'
+        ? "bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-400"
+        : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700"
     }`}
   >
     {icon}
@@ -250,12 +266,12 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
   onClose,
   onSaveProfile,
 }) => {
-  const [profileName, setProfileName] = React.useState('');
+  const [profileName, setProfileName] = React.useState("");
 
   const handleSave = () => {
     if (profileName.trim()) {
       onSaveProfile(profileName);
-      setProfileName('');
+      setProfileName("");
       onClose();
     }
   };
@@ -284,7 +300,7 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
           onChange={(e) => setProfileName(e.target.value)}
           placeholder="Enter value"
           className="w-full px-4 py-3 border-2 border-primary-500 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-300"
-          onKeyPress={(e) => e.key === 'Enter' && handleSave()}
+          onKeyPress={(e) => e.key === "Enter" && handleSave()}
         />
 
         <div className="flex gap-4">
@@ -316,7 +332,7 @@ type AsyncFilterOptionsState = Record<
 type NumberRangeFilterValue = { min?: number; max?: number };
 
 const ICON_BUTTON_CLASS_NAME =
-  'p-2 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors';
+  "p-2 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors";
 const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:opacity-40 disabled:cursor-not-allowed`;
 
 const isFilterValueEmpty = (value?: FilterValue | null): boolean => {
@@ -324,19 +340,19 @@ const isFilterValueEmpty = (value?: FilterValue | null): boolean => {
     return true;
   }
 
-  if (typeof value === 'string') {
-    return value === '';
+  if (typeof value === "string") {
+    return value === "";
   }
 
   if (Array.isArray(value)) {
     return value.length === 0;
   }
 
-  if (value instanceof Date || typeof value === 'boolean') {
+  if (value instanceof Date || typeof value === "boolean") {
     return false;
   }
 
-  if ('start' in value || 'end' in value) {
+  if ("start" in value || "end" in value) {
     const rangeValue = value as DateRangeValue;
     return !rangeValue.start && !rangeValue.end;
   }
@@ -354,14 +370,14 @@ const toSelectOptions = (options?: string[]) =>
   }));
 
 const getStringFilterValue = (value?: FilterValue): string =>
-  typeof value === 'string' ? value : '';
+  typeof value === "string" ? value : "";
 
 const getMultiStringFilterValue = (value?: FilterValue): string[] => {
   if (Array.isArray(value)) {
     return value;
   }
 
-  return typeof value === 'string' && value ? [value] : [];
+  return typeof value === "string" && value ? [value] : [];
 };
 
 const getNumberRangeFilterValue = (
@@ -369,9 +385,9 @@ const getNumberRangeFilterValue = (
 ): NumberRangeFilterValue => {
   if (
     !value ||
-    typeof value !== 'object' ||
-    'start' in value ||
-    'end' in value
+    typeof value !== "object" ||
+    "start" in value ||
+    "end" in value
   ) {
     return {};
   }
@@ -385,9 +401,9 @@ const getDateFilterValue = (value?: FilterValue): DatePickerValue =>
 const getDateRangeFilterValue = (value?: FilterValue): DateRangeValue => {
   if (
     value &&
-    typeof value === 'object' &&
-    'start' in value &&
-    'end' in value
+    typeof value === "object" &&
+    "start" in value &&
+    "end" in value
   ) {
     return value as DateRangeValue;
   }
@@ -396,7 +412,7 @@ const getDateRangeFilterValue = (value?: FilterValue): DateRangeValue => {
 };
 
 function buildGeneratedFilterOptions<T>(
-  columns: DataTableProps<T>['columns'],
+  columns: DataTableProps<T>["columns"],
   data: T[],
 ): FilterOption[] {
   return columns
@@ -406,7 +422,7 @@ function buildGeneratedFilterOptions<T>(
 
       data.forEach((row) => {
         const value = (row as Record<string, unknown>)[column.id];
-        if (value !== undefined && value !== null && value !== '') {
+        if (value !== undefined && value !== null && value !== "") {
           uniqueValues.add(String(value));
         }
       });
@@ -421,7 +437,7 @@ function buildGeneratedFilterOptions<T>(
 }
 
 function resolveFilterOptions<T>(
-  columns: DataTableProps<T>['columns'],
+  columns: DataTableProps<T>["columns"],
   data: T[],
   externalFilterOptions: FilterOption[] | undefined,
   asyncFilterOptions: AsyncFilterOptionsState,
@@ -469,11 +485,11 @@ function matchesFilterValue(
   }
 
   switch (filterOption?.type) {
-    case 'text':
+    case "text":
       return String(rowValue)
         .toLowerCase()
         .includes(String(filterValue).toLowerCase());
-    case 'number-range': {
+    case "number-range": {
       const rangeValue = getNumberRangeFilterValue(filterValue);
       const numericValue = Number(rowValue);
       if (rangeValue.min !== undefined && numericValue < rangeValue.min) {
@@ -484,7 +500,7 @@ function matchesFilterValue(
       }
       return true;
     }
-    case 'date-range': {
+    case "date-range": {
       const rangeValue = getDateRangeFilterValue(filterValue);
       if (!rangeValue.start) {
         return true;
@@ -495,13 +511,13 @@ function matchesFilterValue(
       }
       return !rangeValue.end || timeValue <= rangeValue.end.getTime();
     }
-    case 'date': {
+    case "date": {
       const selectedDate = filterValue as Date;
       const rowDate = new Date(rowValue as string | number | Date);
       return selectedDate.toDateString() === rowDate.toDateString();
     }
-    case 'switch':
-    case 'checkbox':
+    case "switch":
+    case "checkbox":
       return Boolean(rowValue) === Boolean(filterValue);
     default: {
       const rowValueString = String(rowValue).toLowerCase();
@@ -511,7 +527,7 @@ function matchesFilterValue(
         );
       }
 
-      return typeof filterValue !== 'string'
+      return typeof filterValue !== "string"
         ? true
         : rowValueString === filterValue.toLowerCase();
     }
@@ -606,25 +622,10 @@ function useAsyncFilterOptions(
 function LoadingFilterField({ label }: { label: string }) {
   return (
     <div className="h-10 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 rounded-md px-3">
-      <svg
+      <LoaderIcon
         className="w-4 h-4 animate-spin text-neutral-400"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        />
-      </svg>
+        aria-hidden="true"
+      />
       <span className="ml-2 text-sm text-neutral-500">{label}</span>
     </div>
   );
@@ -641,10 +642,10 @@ function NumberRangeFilter({ value, onChange }: NumberRangeFilterProps) {
       <Input
         type="number"
         placeholder="Min"
-        value={value.min ?? ''}
+        value={value.min ?? ""}
         onChange={(event) => {
           const min =
-            event.target.value === '' ? undefined : Number(event.target.value);
+            event.target.value === "" ? undefined : Number(event.target.value);
           onChange({ ...value, min });
         }}
         className="h-9 px-2 text-xs"
@@ -653,10 +654,10 @@ function NumberRangeFilter({ value, onChange }: NumberRangeFilterProps) {
       <Input
         type="number"
         placeholder="Max"
-        value={value.max ?? ''}
+        value={value.max ?? ""}
         onChange={(event) => {
           const max =
-            event.target.value === '' ? undefined : Number(event.target.value);
+            event.target.value === "" ? undefined : Number(event.target.value);
           onChange({ ...value, max });
         }}
         className="h-9 px-2 text-xs"
@@ -682,10 +683,10 @@ function FilterFieldControl({
     return <LoadingFilterField label={filter.label} />;
   }
 
-  const activeClassName = isActive ? 'border-primary-500' : '';
+  const activeClassName = isActive ? "border-primary-500" : "";
 
   switch (filter.type) {
-    case 'text':
+    case "text":
       return (
         <Input
           value={getStringFilterValue(value)}
@@ -694,7 +695,7 @@ function FilterFieldControl({
           className={activeClassName}
         />
       );
-    case 'select':
+    case "select":
       return (
         <Select
           value={getStringFilterValue(value)}
@@ -704,8 +705,8 @@ function FilterFieldControl({
           className={activeClassName}
         />
       );
-    case 'switch':
-    case 'checkbox':
+    case "switch":
+    case "checkbox":
       return (
         <Switch
           checked={Boolean(value)}
@@ -713,7 +714,7 @@ function FilterFieldControl({
           label={filter.label}
         />
       );
-    case 'date':
+    case "date":
       return (
         <DatePicker
           mode="single"
@@ -722,7 +723,7 @@ function FilterFieldControl({
           placeholder={filter.placeholder || filter.label}
         />
       );
-    case 'date-range':
+    case "date-range":
       return (
         <DatePicker
           mode="range"
@@ -731,7 +732,7 @@ function FilterFieldControl({
           placeholder={filter.placeholder || filter.label}
         />
       );
-    case 'number-range':
+    case "number-range":
       return (
         <NumberRangeFilter
           value={getNumberRangeFilterValue(value)}
@@ -745,7 +746,7 @@ function FilterFieldControl({
           onChange={(values) => onChange(values)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? 'border-primary-500 border-2' : ''}
+          className={isActive ? "border-primary-500 border-2" : ""}
         />
       ) : (
         <Combobox
@@ -753,7 +754,7 @@ function FilterFieldControl({
           onChange={(nextValue) => onChange(nextValue)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? 'border-primary-500 border-2' : ''}
+          className={isActive ? "border-primary-500 border-2" : ""}
         />
       );
   }
@@ -795,25 +796,16 @@ interface SearchFieldProps {
 function SearchField({ value, onChange, placeholder }: SearchFieldProps) {
   return (
     <div className="relative w-[300px]">
-      <svg
+      <SearchIcon
         className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-neutral-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-      </svg>
+        aria-hidden="true"
+      />
       <Input
         type="text"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        style={{ paddingLeft: '2.75rem' }}
+        style={{ paddingLeft: "2.75rem" }}
       />
     </div>
   );
@@ -842,9 +834,7 @@ function RowActionsCell<T>({
         onClick={() => onToggle(rowIndex)}
         className="p-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-600 text-neutral-500"
       >
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-        </svg>
+        <EllipsisVerticalIcon className="w-5 h-5" aria-hidden="true" />
       </button>
       {isOpen ? (
         <>
@@ -852,7 +842,7 @@ function RowActionsCell<T>({
           <div className="absolute right-0 top-full mt-1 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 z-50 min-w-32 py-1">
             <button
               onClick={() => {
-                onRowAction?.('edit', row);
+                onRowAction?.("edit", row);
                 onClose();
               }}
               className="w-full text-left px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-700"
@@ -861,7 +851,7 @@ function RowActionsCell<T>({
             </button>
             <button
               onClick={() => {
-                onRowAction?.('delete', row);
+                onRowAction?.("delete", row);
                 onClose();
               }}
               className="w-full text-left px-4 py-2 text-sm text-error hover:bg-neutral-50 dark:hover:bg-neutral-700"
@@ -917,19 +907,7 @@ function DataTablePagination<T>({
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-            />
-          </svg>
+          <ChevronsLeftIcon className="w-4 h-4" aria-hidden="true" />
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -937,19 +915,7 @@ function DataTablePagination<T>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ChevronLeftIcon className="w-4 h-4" aria-hidden="true" />
         </ToolbarIconButton>
 
         <span className="px-3 py-1 text-sm text-neutral-700 dark:text-neutral-300">
@@ -961,19 +927,7 @@ function DataTablePagination<T>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+          <ChevronRightIcon className="w-4 h-4" aria-hidden="true" />
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -981,19 +935,7 @@ function DataTablePagination<T>({
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 5l7 7-7 7M5 5l7 7-7 7"
-            />
-          </svg>
+          <ChevronsRightIcon className="w-4 h-4" aria-hidden="true" />
         </ToolbarIconButton>
       </div>
     </div>
@@ -1071,7 +1013,7 @@ interface DataTableToolbarProps<T> {
   columnMenuOpen: boolean;
   onToggleColumnMenu: () => void;
   onCloseColumnMenu: () => void;
-  columns: DataTableProps<T>['columns'];
+  columns: DataTableProps<T>["columns"];
   onColumnToggle?: (columnId: string) => void;
 }
 
@@ -1102,36 +1044,12 @@ function DataTableToolbar<T>({
           {bulkDeleteEnabled ? (
             <FilterButton
               icon={
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  className="h-6.5 w-6.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.75}
-                    d="M4.25 10V18.85A1.25 1.25 0 005.5 20.1H14"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.75}
-                    d="M7 5.75h10A1.25 1.25 0 0118.25 7v10A1.25 1.25 0 0117 18.25H7A1.25 1.25 0 015.75 17V7A1.25 1.25 0 017 5.75z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.75}
-                    d="m9.25 12 2.25 2.25 4.25-4.5"
-                  />
-                </svg>
+                <SelectionIcon className="h-6.5 w-6.5" aria-hidden="true" />
               }
               label={
                 bulkSelectionActive
-                  ? 'Disable bulk selection'
-                  : 'Enable bulk selection'
+                  ? "Disable bulk selection"
+                  : "Enable bulk selection"
               }
               onClick={onToggleBulkSelection}
               hasActive={bulkSelectionActive}
@@ -1147,19 +1065,7 @@ function DataTableToolbar<T>({
 
         <div className="flex items-center gap-1 self-end lg:self-auto">
           <ToolbarIconButton onClick={onExport} title="Refresh">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
+            <RefreshIcon className="w-5 h-5" aria-hidden="true" />
           </ToolbarIconButton>
 
           <div className="relative">
@@ -1167,19 +1073,7 @@ function DataTableToolbar<T>({
               onClick={onToggleColumnMenu}
               title="Column settings"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M7 12h10m-7 6h4"
-                />
-              </svg>
+              <ColumnsIcon className="w-5 h-5" aria-hidden="true" />
             </ToolbarIconButton>
 
             <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
@@ -1202,7 +1096,7 @@ function DataTableToolbar<T>({
                   Bulk actions
                 </span>
                 <p className="text-sm font-medium text-neutral-900 dark:text-white">
-                  {selectedCount} {selectedCount === 1 ? 'row' : 'rows'}{' '}
+                  {selectedCount} {selectedCount === 1 ? "row" : "rows"}{" "}
                   selected
                 </p>
               </div>
@@ -1215,19 +1109,7 @@ function DataTableToolbar<T>({
                     onClick={onBulkDeleteSelected}
                     className="inline-flex items-center gap-2 rounded-lg border border-primary-400/30 bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-lg shadow-primary-500/20 transition-colors hover:bg-primary-600"
                   >
-                    <svg
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"
-                      />
-                    </svg>
+                    <TrashIcon className="h-4 w-4" aria-hidden="true" />
                     Delete selected
                   </button>
                 ) : null}
@@ -1258,25 +1140,10 @@ function LoadingTableState({ colSpan }: { colSpan: number }) {
   return (
     <TableStateRow colSpan={colSpan}>
       <div className="flex flex-col items-center gap-3">
-        <svg
+        <LoaderIcon
           className="w-8 h-8 animate-spin text-primary-500"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          />
-        </svg>
+          aria-hidden="true"
+        />
         <span>Loading data...</span>
       </div>
     </TableStateRow>
@@ -1372,7 +1239,7 @@ function DataTableRows<T>({
 const usesManualPagination = (
   totalCount?: number,
   onPaginationChange?: (pageIndex: number, pageSize: number) => void,
-) => totalCount !== undefined || typeof onPaginationChange === 'function';
+) => totalCount !== undefined || typeof onPaginationChange === "function";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function DataTable<T = Record<string, any>>({
@@ -1381,7 +1248,7 @@ export default function DataTable<T = Record<string, any>>({
   isLoading = false,
   onColumnToggle,
   pageSize = 10,
-  maxHeight = '500px',
+  maxHeight = "500px",
   onSearch,
   onExport,
   onRowAction,
@@ -1392,7 +1259,7 @@ export default function DataTable<T = Record<string, any>>({
   onFiltersApply,
   serverSideFiltering = false,
   filterOptions: externalFilterOptions,
-  searchPlaceholder = 'Search ...',
+  searchPlaceholder = "Search ...",
   totalCount,
   onPaginationChange,
 }: DataTableProps<T>) {
@@ -1411,7 +1278,7 @@ export default function DataTable<T = Record<string, any>>({
     Record<string, boolean>
   >({});
   const [rowMenuOpen, setRowMenuOpen] = React.useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   const asyncFilterOptions = useAsyncFilterOptions(
     externalFilterOptions,
@@ -1457,7 +1324,7 @@ export default function DataTable<T = Record<string, any>>({
         accessorKey: col.id,
         header: col.label,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cell: (info: any) => info.getValue() || '-',
+        cell: (info: any) => info.getValue() || "-",
       })),
     [visibleColumns],
   );
@@ -1470,7 +1337,7 @@ export default function DataTable<T = Record<string, any>>({
     ) => {
       setPagination((previous) => {
         const nextPagination =
-          typeof updater === 'function' ? updater(previous) : updater;
+          typeof updater === "function" ? updater(previous) : updater;
 
         if (
           previous.pageIndex !== nextPagination.pageIndex ||
@@ -1504,7 +1371,7 @@ export default function DataTable<T = Record<string, any>>({
   });
 
   const visibleRows = table.getRowModel().rows;
-  const bulkDeleteEnabled = typeof onBulkDelete === 'function';
+  const bulkDeleteEnabled = typeof onBulkDelete === "function";
   const selectedRows = React.useMemo(
     () =>
       visibleRows
@@ -1531,8 +1398,8 @@ export default function DataTable<T = Record<string, any>>({
         ),
       );
 
-      const previousKeys = Object.keys(previous).sort().join('|');
-      const nextKeys = Object.keys(nextSelection).sort().join('|');
+      const previousKeys = Object.keys(previous).sort().join("|");
+      const nextKeys = Object.keys(nextSelection).sort().join("|");
 
       return previousKeys === nextKeys ? previous : nextSelection;
     });
@@ -1726,8 +1593,8 @@ export default function DataTable<T = Record<string, any>>({
                   key={filter.id}
                   className={`min-w-[200px] ${
                     index > 0
-                      ? 'pl-3 border-l border-neutral-200 dark:border-neutral-600'
-                      : ''
+                      ? "pl-3 border-l border-neutral-200 dark:border-neutral-600"
+                      : ""
                   }`}
                 >
                   <FilterFieldControl
@@ -1748,19 +1615,7 @@ export default function DataTable<T = Record<string, any>>({
               onClick={handleToggleFilterSelector}
               title="Add filter"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 4h18l-7 8v6l-4 2v-8L3 4z"
-                />
-              </svg>
+              <FilterIcon className="w-5 h-5" aria-hidden="true" />
             </ToolbarIconButton>
             <FilterDropdown
               isOpen={filterSelectorOpen}
@@ -1781,24 +1636,7 @@ export default function DataTable<T = Record<string, any>>({
             disabled={!hasActiveFilters}
             title="Clear filters"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 4h18l-7 8v6l-4 2v-8L3 4z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 17l4 4m0-4l-4 4"
-              />
-            </svg>
+            <FilterXIcon className="w-5 h-5" aria-hidden="true" />
           </ToolbarIconButton>
 
           <div className="relative">
@@ -1806,28 +1644,7 @@ export default function DataTable<T = Record<string, any>>({
               onClick={handleToggleProfileMenu}
               title="Filter profiles"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                {/* Person head */}
-                <circle cx="9" cy="7" r="3" />
-                {/* Person body */}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 21v-2a4 4 0 014-4h4"
-                />
-                {/* Small funnel */}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 12h6l-3 3.5v2.5l-1.5 1v-3.5L15 12z"
-                />
-              </svg>
+              <FilterProfileIcon className="w-5 h-5" aria-hidden="true" />
             </ToolbarIconButton>
             <FilterDropdown
               isOpen={profileMenuOpen}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { ZapIcon } from "../../icons";
 import { StorySurface } from "../../shared/storybook";
 import { SpotlightCard } from "./SpotlightCard";
 
@@ -44,19 +45,10 @@ export const Default: Story = {
       <SpotlightCard className="ui:w-full" {...args}>
         <div className="ui:flex ui:h-[200px] ui:flex-col ui:items-center ui:justify-center ui:gap-4">
           <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-full ui:bg-primary/20">
-            <svg
+            <ZapIcon
               className="ui:h-8 ui:w-8 ui:text-primary"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
+              aria-hidden="true"
+            />
           </div>
           <h3 className="ui:text-xl ui:font-bold ui:text-white">
             Lightning Fast

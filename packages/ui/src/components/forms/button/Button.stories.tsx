@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { SearchIcon } from "../../icons";
 import { StoryStack, StorySurface } from "../../shared/storybook";
 import { Button } from "./Button";
 
@@ -110,25 +111,6 @@ export const Disabled: Story = {
   ),
 };
 
-// Simple SVG icon for demonstration purposes without external dependencies
-function SearchIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
-
 /**
  * ## With Icon
  * Buttons can contain children alongside text, which is perfect for rendering icons.
@@ -138,10 +120,10 @@ export const WithIcon: Story = {
     <StorySurface widthClassName="ui:max-w-xl">
       <StoryStack className="ui:flex-row ui:flex-wrap ui:items-center ui:gap-4">
         <Button primary>
-          <SearchIcon /> Search
+          <SearchIcon width={16} height={16} /> Search
         </Button>
         <Button>
-          Settings <SearchIcon />
+          Settings <SearchIcon width={16} height={16} />
         </Button>
       </StoryStack>
     </StorySurface>
