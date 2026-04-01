@@ -19,7 +19,7 @@ const SpotlightCardDoc = () => {
           spotlightColor="rgba(115, 103, 240, 0.2)"
         >
           <div className="space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+            <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center text-accent">
               <svg
                 className="w-6 h-6"
                 fill="none"

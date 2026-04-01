@@ -111,9 +111,9 @@ const Combobox: React.FC<ComboboxProps> = ({
                 className={mergeClassNames(
                   "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground dark:text-white transition",
                   opt.value === value
-                    ? "bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 font-semibold"
+                    ? "bg-accent-subtle text-accent font-semibold"
                     : "",
-                  "hover:bg-primary-500 hover:text-white",
+                  "hover:bg-accent hover:text-on-accent",
                 )}
                 onClick={() => {
                   onChange(opt.value);
@@ -123,11 +123,7 @@ const Combobox: React.FC<ComboboxProps> = ({
               >
                 <span className="flex w-5 items-center justify-center">
                   {opt.value === value && (
-                    <CheckIcon
-                      className="text-primary-500"
-                      width={18}
-                      height={18}
-                    />
+                    <CheckIcon className="text-accent" width={18} height={18} />
                   )}
                 </span>
                 <span className="min-w-0 flex-1 truncate">{opt.label}</span>
@@ -138,7 +134,7 @@ const Combobox: React.FC<ComboboxProps> = ({
           {createOptionLabel && onCreateOption && (
             <div className="sticky bottom-0 z-10 border-t border-white/20 dark:border-white/10 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm rounded-b-md">
               <div
-                className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-foreground dark:text-white transition hover:bg-primary-500 hover:text-white"
+                className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-foreground dark:text-white transition hover:bg-accent hover:text-on-accent"
                 onClick={() => {
                   onCreateOption();
                   setSearch("");

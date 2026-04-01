@@ -39,34 +39,33 @@ const sizeConfig: Record<
 const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
   const baseStyles = {
     default: {
-      completed: "bg-primary-500 text-white shadow-md shadow-primary-500/30",
+      completed: "bg-accent text-on-accent shadow-md shadow-accent/25",
       current:
-        "bg-primary-500 text-white ring-4 ring-primary-500/30 shadow-lg shadow-primary-500/40",
+        "bg-accent text-on-accent ring-4 ring-focus/40 shadow-lg shadow-accent/30",
       upcoming:
         "bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400",
       error: "bg-red-500 text-white ring-4 ring-red-500/30",
     },
     glass: {
       completed:
-        "bg-primary-500/80 text-white backdrop-blur-xl border border-primary-500/30 shadow-lg shadow-primary-500/20",
+        "bg-accent/85 text-on-accent backdrop-blur-xl border border-accent/30 shadow-lg shadow-accent/20",
       current:
-        "bg-primary-500/90 text-white backdrop-blur-xl border-2 border-primary-500 ring-4 ring-primary-500/20 shadow-xl shadow-primary-500/30",
+        "bg-accent/90 text-on-accent backdrop-blur-xl border-2 border-accent ring-4 ring-focus/30 shadow-xl shadow-accent/30",
       upcoming:
         "bg-white/60 text-neutral-500 backdrop-blur-xl border border-white/40 dark:bg-neutral-800/60 dark:text-neutral-400 dark:border-white/10",
       error:
         "bg-red-500/80 text-white backdrop-blur-xl border border-red-400/30 ring-4 ring-red-500/20",
     },
     minimal: {
-      completed: "bg-primary-100 text-primary-500 dark:bg-primary-900/20",
-      current: "bg-primary-500 text-white shadow-sm",
+      completed: "bg-accent-subtle text-accent",
+      current: "bg-accent text-on-accent shadow-sm",
       upcoming:
         "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
       error: "bg-red-100 text-red-500 dark:bg-red-900/30",
     },
     outlined: {
-      completed: "bg-transparent text-primary-500 border-2 border-primary-500",
-      current:
-        "bg-primary-500 text-white border-2 border-primary-500 shadow-lg",
+      completed: "bg-transparent text-accent border-2 border-accent",
+      current: "bg-accent text-on-accent border-2 border-accent shadow-lg",
       upcoming:
         "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
       error: "bg-transparent text-red-500 border-2 border-red-500",
@@ -245,7 +244,7 @@ export const Stepper = ({
               {/* Animated fill connector */}
               {animated ? (
                 <motion.div
-                  className="absolute top-0 left-0 bg-primary-500 rounded-full"
+                  className="absolute top-0 left-0 bg-accent rounded-full"
                   initial={{ [isVertical ? "height" : "width"]: 0 }}
                   animate={{
                     [isVertical ? "height" : "width"]:
@@ -259,7 +258,7 @@ export const Stepper = ({
                 />
               ) : (
                 <div
-                  className="absolute top-0 left-0 bg-primary-500 rounded-full"
+                  className="absolute top-0 left-0 bg-accent rounded-full"
                   style={{
                     ...(isVertical
                       ? {
@@ -322,7 +321,7 @@ export const Stepper = ({
               onClick={() => handleStepClick(index)}
               disabled={!isClickable}
               className={mergeClassNames(
-                "relative z-10 flex-shrink-0 flex items-center justify-center bg-white dark:bg-neutral-900 rounded-full", // Mask background line
+                "relative z-10 shrink-0 flex items-center justify-center bg-white dark:bg-neutral-900 rounded-full", // Mask background line
                 isClickable ? "cursor-pointer" : "cursor-default",
                 // Horizontal offset logic for end items to align with text
                 !isVertical && index === 0 && "mx-0",
@@ -365,7 +364,7 @@ export const Stepper = ({
                   "font-medium transition-colors duration-200",
                   config.text,
                   status === "current"
-                    ? "text-primary-500 dark:text-primary-400"
+                    ? "text-accent"
                     : status === "completed"
                       ? "text-neutral-700 dark:text-neutral-200"
                       : status === "error"

@@ -6,7 +6,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "erp-pro-ui": ["../../packages/ui/src/index.ts"],
-      "erp-pro-ui/catalog": ["../../packages/ui/src/catalog.ts"]
+      "erp-pro-ui/catalog": ["../../packages/ui/src/catalog.ts"],
+      "erp-pro-ui/docs": ["../../packages/ui/src/docs.ts"]
     }
   },
   "include": ["src", "vite.config.ts"],

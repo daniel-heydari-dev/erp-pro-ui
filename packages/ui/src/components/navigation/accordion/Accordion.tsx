@@ -62,7 +62,7 @@ export const Accordion = ({
               "hover:bg-white/80 hover:shadow-xl hover:border-white/60",
               "dark:hover:bg-neutral-800/60 dark:hover:border-white/20",
               // Ring highlight on open
-              open && "ring-2 ring-primary-500/30 dark:ring-primary-500/20",
+              open && "ring-2 ring-focus/40",
               separated ? "p-0" : "",
             )}
           >
@@ -102,8 +102,7 @@ export const Accordion = ({
                   "p-1.5 rounded-lg transition-all duration-300",
                   "bg-neutral-100/80 dark:bg-white/10",
                   "text-neutral-600 dark:text-neutral-300",
-                  open &&
-                    "rotate-180 bg-primary-100 text-primary-500 dark:bg-primary-900/30 dark:text-primary-400",
+                  open && "rotate-180 bg-accent-subtle text-accent",
                 )}
               >
                 {caret}

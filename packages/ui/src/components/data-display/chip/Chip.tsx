@@ -65,7 +65,7 @@ const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
     default:
       "bg-gradient-to-br from-neutral-100 to-neutral-200 text-neutral-800 shadow-sm dark:from-neutral-700 dark:to-neutral-800 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-600",
     primary:
-      "bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md shadow-primary-500/30 dark:shadow-primary-500/20",
+      "bg-linear-to-br from-accent to-accent-hover text-on-accent shadow-md shadow-accent/30 dark:shadow-accent/20",
     secondary:
       "bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-md shadow-purple-500/30 dark:shadow-purple-500/20",
     success:
@@ -80,7 +80,7 @@ const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
     default:
       "border-2 border-neutral-300 text-neutral-700 bg-transparent dark:border-neutral-600 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800/50",
     primary:
-      "border-2 border-primary-500 text-primary-600 bg-transparent dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20",
+      "border-2 border-accent bg-transparent text-accent hover:bg-accent-subtle",
     secondary:
       "border-2 border-purple-500 text-purple-600 bg-transparent dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20",
     success:
@@ -95,7 +95,7 @@ const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
     default:
       "bg-neutral-100 text-neutral-800 dark:bg-neutral-800/60 dark:text-neutral-200 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/50",
     primary:
-      "bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 backdrop-blur-sm border border-primary-200/50 dark:border-primary-800/50",
+      "border border-accent/20 bg-accent-subtle text-accent backdrop-blur-sm",
     secondary:
       "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 backdrop-blur-sm border border-purple-200/50 dark:border-purple-800/50",
     success:
@@ -110,7 +110,7 @@ const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
     default:
       "bg-white/70 text-neutral-800 dark:bg-neutral-800/70 dark:text-neutral-100 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg",
     primary:
-      "bg-primary-500/20 text-primary-700 dark:bg-primary-500/30 dark:text-primary-200 backdrop-blur-xl border border-primary-300/30 dark:border-primary-400/20 shadow-lg shadow-primary-500/10",
+      "border border-accent/20 bg-accent/15 text-accent backdrop-blur-xl shadow-lg shadow-accent/10",
     secondary:
       "bg-purple-500/20 text-purple-700 dark:bg-purple-500/30 dark:text-purple-200 backdrop-blur-xl border border-purple-300/30 dark:border-purple-400/20 shadow-lg shadow-purple-500/10",
     success:
@@ -125,7 +125,7 @@ const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
 
 const dotColorStyles: Record<ChipColor, string> = {
   default: "bg-neutral-500 dark:bg-neutral-400",
-  primary: "bg-primary-500",
+  primary: "bg-accent",
   secondary: "bg-purple-500",
   success: "bg-green-500",
   warning: "bg-amber-500",

@@ -17,263 +17,172 @@ export interface ColorPaletteProps {
   className?: string;
 }
 
-// ============================================================================
-// LIGHT THEME COLORS
-// ============================================================================
 const lightThemeGroups: ColorGroup[] = [
   {
-    name: "Theme Primary Scale",
+    name: "Active Accent Scale",
     colors: [
-      { name: "primary-50", value: "#f5f4fe", textColor: "dark" },
-      { name: "primary-100", value: "#ebe9fd", textColor: "dark" },
-      { name: "primary-200", value: "#dad6fb", textColor: "dark" },
-      { name: "primary-300", value: "#bfb8f8", textColor: "dark" },
-      { name: "primary-400", value: "#9d91f3", textColor: "dark" },
-      { name: "primary-500", value: "#7367f0", textColor: "light" },
-      { name: "primary-600", value: "#5a4de6", textColor: "light" },
-      { name: "primary-700", value: "#4a3dd2", textColor: "light" },
-      { name: "primary-800", value: "#3e33af", textColor: "light" },
-      { name: "primary-900", value: "#352d8e", textColor: "light" },
-      { name: "primary-950", value: "#201b54", textColor: "light" },
+      { name: "primary-50", value: "#f6efff", textColor: "dark" },
+      { name: "primary-100", value: "#ead9fd", textColor: "dark" },
+      { name: "primary-200", value: "#d8b3fb", textColor: "dark" },
+      { name: "primary-300", value: "#c084fc", textColor: "dark" },
+      { name: "primary-400", value: "#a855f7", textColor: "light" },
+      { name: "primary-500", value: "#9333ea", textColor: "light" },
+      { name: "primary-600", value: "#7e22ce", textColor: "light" },
+      { name: "primary-700", value: "#6b21a8", textColor: "light" },
+      { name: "primary-800", value: "#581c87", textColor: "light" },
+      { name: "primary-900", value: "#3b0764", textColor: "light" },
     ],
   },
   {
-    name: "Neutral Scale",
+    name: "Semantic Surfaces",
     colors: [
-      { name: "secondary-50", value: "#f8fafc", textColor: "dark" },
-      { name: "secondary-100", value: "#f1f5f9", textColor: "dark" },
-      { name: "secondary-200", value: "#e2e8f0", textColor: "dark" },
-      { name: "secondary-300", value: "#cbd5e1", textColor: "dark" },
-      { name: "secondary-400", value: "#94a3b8", textColor: "dark" },
-      { name: "secondary-500", value: "#64748b", textColor: "light" },
-      { name: "secondary-600", value: "#475569", textColor: "light" },
-      { name: "secondary-700", value: "#334155", textColor: "light" },
-      { name: "secondary-800", value: "#1e293b", textColor: "light" },
-      { name: "secondary-900", value: "#0f172a", textColor: "light" },
-      { name: "secondary-950", value: "#020617", textColor: "light" },
+      { name: "bg-canvas", value: "#f4f7fe", textColor: "dark" },
+      { name: "bg-surface", value: "#ffffff", textColor: "dark" },
+      { name: "bg-elevated", value: "#ffffff", textColor: "dark" },
+      { name: "bg-muted", value: "#f4f3f8", textColor: "dark" },
+      { name: "accent-subtle", value: "#f3e8fd", textColor: "dark" },
     ],
   },
   {
-    name: "Success",
+    name: "Semantic Foreground",
     colors: [
-      { name: "success-50", value: "#f0fdf4", textColor: "dark" },
-      { name: "success-100", value: "#dcfce7", textColor: "dark" },
-      { name: "success-200", value: "#bbf7d0", textColor: "dark" },
-      { name: "success-300", value: "#86efac", textColor: "dark" },
-      { name: "success-400", value: "#4ade80", textColor: "dark" },
-      { name: "success-500", value: "#22c55e", textColor: "light" },
-      { name: "success-600", value: "#16a34a", textColor: "light" },
-      { name: "success-700", value: "#15803d", textColor: "light" },
-      { name: "success-800", value: "#166534", textColor: "light" },
-      { name: "success-900", value: "#14532d", textColor: "light" },
-      { name: "success-950", value: "#052e16", textColor: "light" },
+      { name: "fg", value: "#1e293b", textColor: "light" },
+      { name: "fg-muted", value: "#475467", textColor: "light" },
+      { name: "fg-subtle", value: "#64748b", textColor: "light" },
+      { name: "on-accent", value: "#ffffff", textColor: "dark" },
     ],
   },
   {
-    name: "Warning",
+    name: "Semantic Borders",
     colors: [
-      { name: "warning-50", value: "#fffbeb", textColor: "dark" },
-      { name: "warning-100", value: "#fef3c7", textColor: "dark" },
-      { name: "warning-200", value: "#fde68a", textColor: "dark" },
-      { name: "warning-300", value: "#fcd34d", textColor: "dark" },
-      { name: "warning-400", value: "#fbbf24", textColor: "dark" },
-      { name: "warning-500", value: "#f59e0b", textColor: "dark" },
-      { name: "warning-600", value: "#d97706", textColor: "light" },
-      { name: "warning-700", value: "#b45309", textColor: "light" },
-      { name: "warning-800", value: "#92400e", textColor: "light" },
-      { name: "warning-900", value: "#78350f", textColor: "light" },
-      { name: "warning-950", value: "#451a03", textColor: "light" },
+      { name: "border", value: "#e5e7eb", textColor: "dark" },
+      { name: "border-strong", value: "#d1d5db", textColor: "dark" },
+      { name: "border-muted", value: "#f3f4f6", textColor: "dark" },
+      { name: "border-field", value: "#e9e8e8", textColor: "dark" },
+      { name: "focus-ring", value: "#c595f2", textColor: "dark" },
     ],
   },
   {
-    name: "Error / Destructive",
+    name: "Semantic Status",
     colors: [
-      { name: "error-50", value: "#fef2f2", textColor: "dark" },
-      { name: "error-100", value: "#fee2e2", textColor: "dark" },
-      { name: "error-200", value: "#fecaca", textColor: "dark" },
-      { name: "error-300", value: "#fca5a5", textColor: "dark" },
-      { name: "error-400", value: "#f87171", textColor: "dark" },
-      { name: "error-500", value: "#ef4444", textColor: "light" },
-      { name: "error-600", value: "#dc2626", textColor: "light" },
-      { name: "error-700", value: "#b91c1c", textColor: "light" },
-      { name: "error-800", value: "#991b1b", textColor: "light" },
-      { name: "error-900", value: "#7f1d1d", textColor: "light" },
-      { name: "error-950", value: "#450a0a", textColor: "light" },
+      { name: "success", value: "#1eb564", textColor: "light" },
+      { name: "warning", value: "#ff9500", textColor: "dark" },
+      { name: "danger", value: "#e31d1c", textColor: "light" },
+      { name: "info", value: "#0085c4", textColor: "light" },
+      { name: "disabled", value: "#d2d2d3", textColor: "dark" },
     ],
   },
   {
-    name: "Info",
+    name: "Compatibility Aliases",
     colors: [
-      { name: "info-50", value: "#eff6ff", textColor: "dark" },
-      { name: "info-100", value: "#dbeafe", textColor: "dark" },
-      { name: "info-200", value: "#bfdbfe", textColor: "dark" },
-      { name: "info-300", value: "#93c5fd", textColor: "dark" },
-      { name: "info-400", value: "#60a5fa", textColor: "dark" },
-      { name: "info-500", value: "#3b82f6", textColor: "light" },
-      { name: "info-600", value: "#2563eb", textColor: "light" },
-      { name: "info-700", value: "#1d4ed8", textColor: "light" },
-      { name: "info-800", value: "#1e40af", textColor: "light" },
-      { name: "info-900", value: "#1e3a8a", textColor: "light" },
-      { name: "info-950", value: "#172554", textColor: "light" },
-    ],
-  },
-  {
-    name: "Gray / Neutral",
-    colors: [
-      { name: "gray-50", value: "#fafafa", textColor: "dark" },
-      { name: "gray-100", value: "#f4f4f5", textColor: "dark" },
-      { name: "gray-200", value: "#e4e4e7", textColor: "dark" },
-      { name: "gray-300", value: "#d4d4d8", textColor: "dark" },
-      { name: "gray-400", value: "#a1a1aa", textColor: "dark" },
-      { name: "gray-500", value: "#71717a", textColor: "light" },
-      { name: "gray-600", value: "#52525b", textColor: "light" },
-      { name: "gray-700", value: "#3f3f46", textColor: "light" },
-      { name: "gray-800", value: "#27272a", textColor: "light" },
-      { name: "gray-900", value: "#18181b", textColor: "light" },
-      { name: "gray-950", value: "#09090b", textColor: "light" },
-    ],
-  },
-  {
-    name: "Background (Light Theme)",
-    colors: [
-      { name: "background", value: "#ffffff", textColor: "dark" },
-      { name: "background-subtle", value: "#f8fafc", textColor: "dark" },
-      { name: "background-muted", value: "#f1f5f9", textColor: "dark" },
-      { name: "surface", value: "#ffffff", textColor: "dark" },
-      { name: "surface-raised", value: "#f8fafc", textColor: "dark" },
-      { name: "card", value: "#ffffff", textColor: "dark" },
-      { name: "popover", value: "#ffffff", textColor: "dark" },
-    ],
-  },
-  {
-    name: "Text (Light Theme)",
-    colors: [
-      { name: "text-primary", value: "#1e293b", textColor: "light" },
-      { name: "text-secondary", value: "#475467", textColor: "light" },
-      { name: "text-muted", value: "#64748b", textColor: "light" },
-      { name: "text-disabled", value: "#94a3b8", textColor: "dark" },
-      { name: "text-placeholder", value: "#a1a1aa", textColor: "dark" },
-      { name: "text-inverse", value: "#ffffff", textColor: "dark" },
-    ],
-  },
-  {
-    name: "Border (Light Theme)",
-    colors: [
-      { name: "border", value: "#e2e8f0", textColor: "dark" },
-      { name: "border-muted", value: "#f1f5f9", textColor: "dark" },
-      { name: "border-strong", value: "#cbd5e1", textColor: "dark" },
-      { name: "ring", value: "#7367f0", textColor: "light" },
-      { name: "input", value: "#e2e8f0", textColor: "dark" },
+      { name: "--color-primary", value: "#4318ff", textColor: "light" },
+      {
+        name: "--color-background-primary",
+        value: "#f4f7fe",
+        textColor: "dark",
+      },
+      {
+        name: "--color-background-secondary",
+        value: "#ffffff",
+        textColor: "dark",
+      },
+      { name: "--color-text-primary", value: "#1e293b", textColor: "light" },
+      { name: "--color-border-primary", value: "#d1d5db", textColor: "dark" },
     ],
   },
 ];
 
-// ============================================================================
-// DARK THEME COLORS
-// ============================================================================
 const darkThemeGroups: ColorGroup[] = [
   {
-    name: "Theme Primary Scale (Dark)",
+    name: "Active Accent Scale (Dark)",
     colors: [
-      { name: "primary-50", value: "#201b54", textColor: "light" },
-      { name: "primary-100", value: "#352d8e", textColor: "light" },
-      { name: "primary-200", value: "#3e33af", textColor: "light" },
-      { name: "primary-300", value: "#4a3dd2", textColor: "light" },
-      { name: "primary-400", value: "#5a4de6", textColor: "light" },
-      { name: "primary-500", value: "#7367f0", textColor: "light" },
-      { name: "primary-600", value: "#9d91f3", textColor: "dark" },
-      { name: "primary-700", value: "#bfb8f8", textColor: "dark" },
-      { name: "primary-800", value: "#dad6fb", textColor: "dark" },
-      { name: "primary-900", value: "#ebe9fd", textColor: "dark" },
-      { name: "primary-950", value: "#f5f4fe", textColor: "dark" },
+      { name: "primary-50", value: "#f6efff", textColor: "dark" },
+      { name: "primary-100", value: "#ead9fd", textColor: "dark" },
+      { name: "primary-200", value: "#d8b3fb", textColor: "dark" },
+      { name: "primary-300", value: "#c084fc", textColor: "dark" },
+      { name: "primary-400", value: "#a855f7", textColor: "light" },
+      { name: "primary-500", value: "#9333ea", textColor: "light" },
+      { name: "primary-600", value: "#7e22ce", textColor: "light" },
+      { name: "primary-700", value: "#6b21a8", textColor: "light" },
+      { name: "primary-800", value: "#581c87", textColor: "light" },
+      { name: "primary-900", value: "#3b0764", textColor: "light" },
     ],
   },
   {
-    name: "Neutral Scale (Dark)",
+    name: "Semantic Surfaces (Dark)",
     colors: [
-      { name: "secondary-50", value: "#020617", textColor: "light" },
-      { name: "secondary-100", value: "#0f172a", textColor: "light" },
-      { name: "secondary-200", value: "#1e293b", textColor: "light" },
-      { name: "secondary-300", value: "#334155", textColor: "light" },
-      { name: "secondary-400", value: "#475569", textColor: "light" },
-      { name: "secondary-500", value: "#64748b", textColor: "light" },
-      { name: "secondary-600", value: "#94a3b8", textColor: "dark" },
-      { name: "secondary-700", value: "#cbd5e1", textColor: "dark" },
-      { name: "secondary-800", value: "#e2e8f0", textColor: "dark" },
-      { name: "secondary-900", value: "#f1f5f9", textColor: "dark" },
-      { name: "secondary-950", value: "#f8fafc", textColor: "dark" },
+      { name: "bg-canvas", value: "#070f2e", textColor: "light" },
+      { name: "bg-surface", value: "#111c44", textColor: "light" },
+      { name: "bg-elevated", value: "#111c44", textColor: "light" },
+      { name: "bg-muted", value: "#18254f", textColor: "light" },
+      { name: "accent-subtle", value: "#24194b", textColor: "light" },
     ],
   },
   {
-    name: "Background (Dark Theme)",
+    name: "Semantic Foreground (Dark)",
     colors: [
-      { name: "background", value: "#09090b", textColor: "light" },
-      { name: "background-subtle", value: "#18181b", textColor: "light" },
-      { name: "background-muted", value: "#27272a", textColor: "light" },
-      { name: "surface", value: "#18181b", textColor: "light" },
-      { name: "surface-raised", value: "#27272a", textColor: "light" },
-      { name: "card", value: "#18181b", textColor: "light" },
-      { name: "popover", value: "#27272a", textColor: "light" },
+      { name: "fg", value: "#f1f5f9", textColor: "dark" },
+      { name: "fg-muted", value: "#cbd5e1", textColor: "dark" },
+      { name: "fg-subtle", value: "#94a3b8", textColor: "dark" },
+      { name: "on-accent", value: "#ffffff", textColor: "dark" },
     ],
   },
   {
-    name: "Text (Dark Theme)",
+    name: "Semantic Borders (Dark)",
     colors: [
-      { name: "text-primary", value: "#f1f5f9", textColor: "dark" },
-      { name: "text-secondary", value: "#f1f5f9", textColor: "dark" },
-      { name: "text-muted", value: "#71717a", textColor: "light" },
-      { name: "text-disabled", value: "#52525b", textColor: "light" },
-      { name: "text-placeholder", value: "#71717a", textColor: "light" },
-      { name: "text-inverse", value: "#09090b", textColor: "light" },
+      { name: "border", value: "#4b5563", textColor: "light" },
+      { name: "border-strong", value: "#374151", textColor: "light" },
+      { name: "border-muted", value: "#6b7280", textColor: "light" },
+      { name: "border-field", value: "#545b58", textColor: "light" },
+      { name: "focus-ring", value: "#b57fe7", textColor: "dark" },
     ],
   },
   {
-    name: "Border (Dark Theme)",
+    name: "Semantic Status (Dark)",
     colors: [
-      { name: "border", value: "#27272a", textColor: "light" },
-      { name: "border-muted", value: "#18181b", textColor: "light" },
-      { name: "border-strong", value: "#3f3f46", textColor: "light" },
-      { name: "ring", value: "#7367f0", textColor: "light" },
-      { name: "input", value: "#27272a", textColor: "light" },
+      { name: "success", value: "#22c55e", textColor: "light" },
+      { name: "warning", value: "#f59e42", textColor: "dark" },
+      { name: "danger", value: "#ef4444", textColor: "light" },
+      { name: "info", value: "#38bdf8", textColor: "dark" },
+      { name: "disabled", value: "#4b5563", textColor: "light" },
+    ],
+  },
+  {
+    name: "Compatibility Aliases (Dark)",
+    colors: [
+      { name: "--color-primary", value: "#4318ff", textColor: "light" },
+      {
+        name: "--color-background-primary",
+        value: "#070f2e",
+        textColor: "light",
+      },
+      {
+        name: "--color-background-secondary",
+        value: "#111c44",
+        textColor: "light",
+      },
+      { name: "--color-text-primary", value: "#f1f5f9", textColor: "dark" },
+      { name: "--color-border-primary", value: "#374151", textColor: "light" },
     ],
   },
 ];
 
-// ============================================================================
-// GRADIENTS
-// ============================================================================
 const gradientGroups: ColorGroup[] = [
   {
-    name: "Primary Gradients",
+    name: "Semantic Gradients",
     colors: [
-      { name: "primary-gradient-start", value: "#7367f0", textColor: "light" },
-      { name: "primary-gradient-end", value: "#9d91f3", textColor: "light" },
+      { name: "accent-gradient-start", value: "#9333ea", textColor: "light" },
+      { name: "accent-gradient-end", value: "#7e22ce", textColor: "light" },
+      { name: "accent-secondary", value: "#4318ff", textColor: "light" },
     ],
   },
   {
-    name: "Accent Gradients",
-    colors: [
-      { name: "accent-gradient-start", value: "#7367f0", textColor: "light" },
-      { name: "accent-gradient-end", value: "#3b82f6", textColor: "light" },
-    ],
-  },
-  {
-    name: "Success Gradients",
+    name: "Status Gradients",
     colors: [
       { name: "success-gradient-start", value: "#22c55e", textColor: "light" },
       { name: "success-gradient-end", value: "#16a34a", textColor: "light" },
-    ],
-  },
-  {
-    name: "Warning Gradients",
-    colors: [
       { name: "warning-gradient-start", value: "#f59e0b", textColor: "dark" },
       { name: "warning-gradient-end", value: "#d97706", textColor: "light" },
-    ],
-  },
-  {
-    name: "Error Gradients",
-    colors: [
       { name: "error-gradient-start", value: "#ef4444", textColor: "light" },
       { name: "error-gradient-end", value: "#dc2626", textColor: "light" },
     ],
@@ -352,40 +261,37 @@ function GradientPreview() {
   return (
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
-        Gradient Examples
+        Semantic Gradient Examples
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Primary Gradient */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
             style={{
-              background: "linear-gradient(135deg, #7367f0, #9d91f3)",
+              background: "linear-gradient(135deg, #9333ea, #7e22ce)",
             }}
           >
-            Primary Gradient
+            Accent Gradient
           </div>
           <code className="text-xs text-neutral-500">
-            linear-gradient(135deg, #7367f0, #9d91f3)
+            linear-gradient(135deg, #9333ea, #7e22ce)
           </code>
         </div>
 
-        {/* Primary to Info */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
             style={{
-              background: "linear-gradient(135deg, #7367f0, #3b82f6)",
+              background: "linear-gradient(135deg, #9333ea, #4318ff)",
             }}
           >
-            Primary to Info
+            Accent to Brand Primary
           </div>
           <code className="text-xs text-neutral-500">
-            linear-gradient(135deg, #7367f0, #3b82f6)
+            linear-gradient(135deg, #9333ea, #4318ff)
           </code>
         </div>
 
-        {/* Success Gradient */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
@@ -400,7 +306,6 @@ function GradientPreview() {
           </code>
         </div>
 
-        {/* Warning Gradient */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-neutral-900 font-medium"
@@ -415,7 +320,6 @@ function GradientPreview() {
           </code>
         </div>
 
-        {/* Error Gradient */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
@@ -430,63 +334,17 @@ function GradientPreview() {
           </code>
         </div>
 
-        {/* Glass Effect */}
         <div className="flex flex-col gap-2">
           <div
             className="h-24 rounded-lg flex items-center justify-center text-white font-medium backdrop-blur-xl border border-white/20"
             style={{
-              background: "rgba(115, 103, 240, 0.7)",
+              background: "rgba(147, 51, 234, 0.7)",
             }}
           >
             Glass Effect
           </div>
           <code className="text-xs text-neutral-500">
-            rgba(115, 103, 240, 0.7) + backdrop-blur
-          </code>
-        </div>
-
-        {/* Mesh Gradient */}
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
-            style={{
-              background:
-                "radial-gradient(at 40% 20%, #7367f0 0px, transparent 50%), radial-gradient(at 80% 0%, #3b82f6 0px, transparent 50%), radial-gradient(at 0% 50%, #22c55e 0px, transparent 50%), radial-gradient(at 80% 50%, #9d91f3 0px, transparent 50%), radial-gradient(at 0% 100%, #7367f0 0px, transparent 50%)",
-              backgroundColor: "#1e293b",
-            }}
-          >
-            Mesh Gradient
-          </div>
-          <code className="text-xs text-neutral-500">radial-gradient mesh</code>
-        </div>
-
-        {/* Navigation Active */}
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-white font-medium"
-            style={{
-              background:
-                "linear-gradient(270deg, rgba(115, 103, 240, 0.7), rgb(115, 103, 240))",
-              boxShadow: "0 2px 6px rgba(115, 103, 240, 0.3)",
-            }}
-          >
-            Nav Active State
-          </div>
-          <code className="text-xs text-neutral-500">270deg with opacity</code>
-        </div>
-
-        {/* Dark Surface */}
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-white font-medium border border-white/10"
-            style={{
-              background: "linear-gradient(180deg, #27272a, #18181b)",
-            }}
-          >
-            Dark Surface
-          </div>
-          <code className="text-xs text-neutral-500">
-            linear-gradient(180deg, #27272a, #18181b)
+            rgba(147, 51, 234, 0.7) + backdrop-blur
           </code>
         </div>
       </div>
@@ -498,68 +356,57 @@ function UsageExamples() {
   return (
     <div className="mt-8 p-6 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl">
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
-        CSS Variables Usage
+        Recommended Usage
       </h3>
       <div className="space-y-4">
         <div className="p-4 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <h4 className="font-medium text-neutral-900 dark:text-white mb-2">
-            Tailwind Config
+            Semantic utilities first
           </h4>
           <pre className="text-xs font-mono text-neutral-600 dark:text-neutral-400 overflow-x-auto">
-            {`// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#f5f4fe',
-          500: '#7367f0',
-          600: '#5a4de6',
-        },
-        success: {
-          500: '#22c55e',
-        },
-        warning: {
-          500: '#f59e0b',
-        },
-        error: {
-          500: '#ef4444',
-        },
-        info: {
-          500: '#3b82f6',
-        },
-      },
-    },
-  },
+            {`<section className="bg-surface text-fg border border-border rounded-2xl p-6">
+  <h2 className="text-accent text-xl font-semibold">Semantic theme</h2>
+  <p className="text-fg-muted">Use utilities generated by colors.css.</p>
+  <button className="bg-accent text-on-accent hover:bg-accent-hover rounded-lg px-4 py-2">
+    Save changes
+  </button>
+</section>`}
+          </pre>
+        </div>
+
+        <div className="p-4 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-700">
+          <h4 className="font-medium text-neutral-900 dark:text-white mb-2">
+            Raw design-system variables
+          </h4>
+          <pre className="text-xs font-mono text-neutral-600 dark:text-neutral-400 overflow-x-auto">
+            {`.dashboard-shell {
+  background: var(--ds-color-bg-surface);
+  color: var(--ds-color-fg);
+  border: 1px solid var(--ds-color-border);
+}
+
+.dashboard-shell a {
+  color: var(--ds-color-accent);
+}
+
+html[data-brand="teal"][data-mode="dark"] {
+  color-scheme: dark;
 }`}
           </pre>
         </div>
 
         <div className="p-4 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-700">
           <h4 className="font-medium text-neutral-900 dark:text-white mb-2">
-            CSS Variables
+            Compatibility aliases for migration
           </h4>
           <pre className="text-xs font-mono text-neutral-600 dark:text-neutral-400 overflow-x-auto">
             {`:root {
   --color-primary: #4318ff;
-  --color-secondary: #9333ea;
-  --color-purple: #9333ea;
-  --color-teal: #3f9cae;
-  --color-yellow: #ca8a04;
-  --color-green: #10b981;
-
   --color-background-primary: #f4f7fe;
-  --color-background-secondary: #ffffff;
   --color-text-primary: #1e293b;
-  --color-text-secondary: #475467;
-  --color-border-primary: #d1d5db;
 }
 
-[data-theme="purple-dark"] {
-  --color-background-primary: #070f2e;
-  --color-text-primary: #f1f5f9;
-  --color-border-primary: #374151;
-}`}
+/* Supported for migration. Prefer semantic utilities or --ds-* in new code. */`}
           </pre>
         </div>
       </div>
@@ -602,19 +449,19 @@ export default function ColorPalette({
         Color Palette
       </h2>
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
-        Primary color:{" "}
+        Preferred contract:{" "}
         <code className="font-mono bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
-          #4318ff
+          semantic utilities and --ds-* tokens
         </code>{" "}
-        • Click any swatch to copy the color value.
+        • Compatibility aliases remain available for migration. Click any swatch
+        to copy the color value.
       </p>
 
-      {/* Theme Toggle Info */}
       <div className="mb-6 flex flex-wrap gap-2">
         <span
           className={`px-3 py-1 rounded-full text-xs font-medium ${
             theme === "light" || theme === "all"
-              ? "bg-primary-100 text-primary-700"
+              ? "bg-accent-subtle text-accent"
               : "bg-neutral-100 text-neutral-500"
           }`}
         >
@@ -623,14 +470,14 @@ export default function ColorPalette({
         <span
           className={`px-3 py-1 rounded-full text-xs font-medium ${
             theme === "dark" || theme === "all"
-              ? "bg-primary-100 text-primary-700"
+              ? "bg-accent-subtle text-accent"
               : "bg-neutral-100 text-neutral-500"
           }`}
         >
           Dark Theme
         </span>
         {showGradients && (
-          <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+          <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent-subtle text-accent">
             Gradients
           </span>
         )}

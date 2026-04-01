@@ -181,7 +181,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
     title={label}
     className={`p-2 rounded-lg transition-colors ${
       hasActive
-        ? "bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-400"
+        ? "bg-accent-subtle text-accent"
         : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700"
     }`}
   >
@@ -223,7 +223,7 @@ export const ColumnToggle: React.FC<ColumnToggleProps> = ({
             type="checkbox"
             checked={col.visible !== false}
             onChange={() => onToggle(col.id)}
-            className="w-4 h-4 rounded cursor-pointer accent-primary-500"
+            className="w-4 h-4 rounded cursor-pointer accent-accent"
           />
           <span className="text-sm text-neutral-700 dark:text-neutral-300">
             {col.label}
@@ -237,7 +237,7 @@ export const ColumnToggle: React.FC<ColumnToggleProps> = ({
         {onShowAll && (
           <button
             onClick={onShowAll}
-            className="flex-1 text-xs font-semibold text-primary-500 hover:text-primary-600 py-1"
+            className="flex-1 py-1 text-xs font-semibold text-accent hover:text-accent-hover"
           >
             SHOW ALL
           </button>
@@ -291,7 +291,7 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
           Add new profile
         </h2>
 
-        <label className="block text-sm font-medium text-primary-500 mb-2">
+        <label className="mb-2 block text-sm font-medium text-accent">
           Enter filter profile name:
         </label>
         <input
@@ -299,7 +299,7 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
           value={profileName}
           onChange={(e) => setProfileName(e.target.value)}
           placeholder="Enter value"
-          className="w-full px-4 py-3 border-2 border-primary-500 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-300"
+          className="mb-6 w-full rounded-lg border-2 border-accent bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-focus dark:bg-neutral-700 dark:text-white dark:placeholder:text-neutral-500"
           onKeyPress={(e) => e.key === "Enter" && handleSave()}
         />
 
@@ -683,7 +683,7 @@ function FilterFieldControl({
     return <LoadingFilterField label={filter.label} />;
   }
 
-  const activeClassName = isActive ? "border-primary-500" : "";
+  const activeClassName = isActive ? "border-accent" : "";
 
   switch (filter.type) {
     case "text":
@@ -746,7 +746,7 @@ function FilterFieldControl({
           onChange={(values) => onChange(values)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-primary-500 border-2" : ""}
+          className={isActive ? "border-accent border-2" : ""}
         />
       ) : (
         <Combobox
@@ -754,7 +754,7 @@ function FilterFieldControl({
           onChange={(nextValue) => onChange(nextValue)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-primary-500 border-2" : ""}
+          className={isActive ? "border-accent border-2" : ""}
         />
       );
   }
@@ -973,7 +973,7 @@ function FilterSelectorMenu({
             onChange={(event) =>
               onToggleFilter(filter.id, event.target.checked)
             }
-            className="w-4 h-4 rounded cursor-pointer accent-primary-500"
+            className="w-4 h-4 rounded cursor-pointer accent-accent"
           />
           <span className="text-sm text-neutral-700 dark:text-neutral-300">
             {filter.label}
@@ -983,7 +983,7 @@ function FilterSelectorMenu({
       <div className="flex gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700">
         <button
           onClick={onShowAll}
-          className="flex-1 text-xs font-semibold text-primary-500 hover:text-primary-600 py-1"
+          className="flex-1 py-1 text-xs font-semibold text-accent hover:text-accent-hover"
         >
           SHOW ALL
         </button>
@@ -1092,7 +1092,7 @@ function DataTableToolbar<T>({
         ? (bulkActionCard ?? (
             <div className="mt-3 flex flex-col gap-3 rounded-xl border border-neutral-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 dark:shadow-black/20 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-full border border-primary-200 bg-primary-100/80 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-primary-700 dark:border-primary-400/20 dark:bg-primary-500/15 dark:text-primary-200">
+                <span className="inline-flex items-center rounded-full border border-accent/20 bg-accent-subtle px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-accent">
                   Bulk actions
                 </span>
                 <p className="text-sm font-medium text-neutral-900 dark:text-white">
@@ -1107,7 +1107,7 @@ function DataTableToolbar<T>({
                   <button
                     type="button"
                     onClick={onBulkDeleteSelected}
-                    className="inline-flex items-center gap-2 rounded-lg border border-primary-400/30 bg-primary-500 px-3 py-2 text-sm font-medium text-primary-foreground shadow-lg shadow-primary-500/20 transition-colors hover:bg-primary-600"
+                    className="inline-flex items-center gap-2 rounded-lg border border-accent/20 bg-accent px-3 py-2 text-sm font-medium text-on-accent shadow-lg shadow-accent/20 transition-colors hover:bg-accent-hover"
                   >
                     <TrashIcon className="h-4 w-4" aria-hidden="true" />
                     Delete selected
@@ -1141,7 +1141,7 @@ function LoadingTableState({ colSpan }: { colSpan: number }) {
     <TableStateRow colSpan={colSpan}>
       <div className="flex flex-col items-center gap-3">
         <LoaderIcon
-          className="w-8 h-8 animate-spin text-primary-500"
+          className="w-8 h-8 animate-spin text-accent"
           aria-hidden="true"
         />
         <span>Loading data...</span>
@@ -1653,7 +1653,7 @@ export default function DataTable<T = Record<string, any>>({
               <div className="p-2 min-w-48">
                 <button
                   onClick={handleOpenProfile}
-                  className="w-full text-left px-4 py-3 text-primary-500 font-medium hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded-lg border-2 border-dashed border-primary-300"
+                  className="w-full rounded-lg border-2 border-dashed border-accent/40 px-4 py-3 text-left font-medium text-accent hover:bg-accent-subtle"
                 >
                   Save new filter profile
                 </button>

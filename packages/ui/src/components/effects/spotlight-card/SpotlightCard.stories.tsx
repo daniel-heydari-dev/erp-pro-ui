@@ -44,9 +44,9 @@ export const Default: Story = {
     >
       <SpotlightCard className="ui:w-full" {...args}>
         <div className="ui:flex ui:h-[200px] ui:flex-col ui:items-center ui:justify-center ui:gap-4">
-          <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-full ui:bg-primary-100">
+          <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-full ui:bg-accent-subtle">
             <ZapIcon
-              className="ui:h-8 ui:w-8 ui:text-primary-500"
+              className="ui:h-8 ui:w-8 ui:text-accent"
               aria-hidden="true"
             />
           </div>

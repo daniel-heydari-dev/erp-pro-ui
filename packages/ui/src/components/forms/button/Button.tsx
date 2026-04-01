@@ -18,10 +18,9 @@ const baseClasses = `
   disabled:cursor-not-allowed
 `;
 const variantClassMap = {
-  primary:
-    "bg-primary-500 hover:bg-primary-600 text-primary-foreground shadow-md",
+  primary: "bg-accent hover:bg-accent-hover text-on-accent shadow-2",
   secondary:
-    "bg-neutral-200 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 text-neutral-800 dark:text-white shadow-sm hover:bg-neutral-300 dark:hover:bg-neutral-600",
+    "bg-surface border border-border text-fg shadow-1 hover:border-border-strong hover:bg-canvas",
 };
 const sizeClassMap = {
   small: "py-2 px-3 text-xs",

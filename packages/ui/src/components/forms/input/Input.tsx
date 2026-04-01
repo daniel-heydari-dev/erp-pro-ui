@@ -68,8 +68,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     ${
                       visible ? `${radius}px` : "0px"
                     } circle at ${mouseX}px ${mouseY}px,
-                    #3b82f6,
-                    transparent 70%
+                    var(--ds-color-accent),
+                    transparent 90%
                   )
                 `,
           }}
@@ -77,7 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           onMouseEnter={!disabled ? () => setVisible(true) : undefined}
           onMouseLeave={!disabled ? () => setVisible(false) : undefined}
           className={mergeClassNames(
-            "group/input rounded-lg p-[2px] transition duration-300 hover:border-blue-500 dark:hover:border-blue-500",
+            "group/input rounded-lg p-[2px] transition duration-300 hover:border-accent",
             wrapperStateStyles[state],
             extra,
           )}
@@ -99,7 +99,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               placeholder={placeholder}
               disabled={disabled}
               className={mergeClassNames(
-                "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-[2px] focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-[2px] focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 bgClassName,
                 inputStateStyles[state],
                 className,

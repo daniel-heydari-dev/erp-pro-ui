@@ -53,6 +53,8 @@ In your global stylesheet:
 
 That single import already loads the packaged colors, fonts, foundations, and generated Tailwind v4 tokens. You do not need a local Tailwind theme extension just to use the library palette.
 
+Prefer the semantic utilities and `--ds-*` tokens in new code. The older `--color-*` and `primary-*` aliases are still shipped as a migration surface, not as the preferred authoring API.
+
 If you only want the raw design tokens without the Tailwind bridge, import the internal token layer directly instead:
 
 ```css
@@ -179,6 +181,8 @@ The token system is split into stable layers:
 - Internal design-system tokens: `--ds-*`
 - Semantic utility aliases: `bg-surface`, `text-fg`, `border-border`, `bg-accent`, `text-on-accent`, `outline-focus`
 - Compatibility color variables: `--color-primary`, `--color-background-primary`, `--color-text-primary`, and the existing `primary-50` through `primary-900` theme scale
+
+For new components, use the semantic utility layer or the `--ds-*` variables directly. Keep the compatibility aliases for migration work and external consumers that still rely on the legacy contract.
 
 ### Theme switching
 

@@ -163,8 +163,8 @@ const typeStyles: Record<
   },
   loading: {
     bg: "bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700",
-    icon: "text-primary-500",
-    iconBg: "bg-primary-100 dark:bg-primary-900/30",
+    icon: "text-accent",
+    iconBg: "bg-accent-subtle",
   },
 };
 
@@ -341,7 +341,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
                 action.onClick();
                 onDismiss(toast.id);
               }}
-              className="mt-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
+              className="mt-2 text-sm font-medium text-accent hover:underline"
             >
               {action.label}
             </button>

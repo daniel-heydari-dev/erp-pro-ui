@@ -147,16 +147,16 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                   className={mergeClassNames(
                     "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-neutral-900 dark:text-white transition",
                     opt.value === value
-                      ? "bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 font-semibold"
+                      ? "bg-accent-subtle text-accent font-semibold"
                       : "",
-                    "hover:bg-primary-500 hover:text-white",
+                    "hover:bg-accent hover:text-on-accent",
                   )}
                   onClick={() => handleSelect(opt.value)}
                 >
                   <span className="flex w-5 items-center justify-center">
                     {opt.value === value && (
                       <CheckIcon
-                        className="text-primary-500"
+                        className="text-accent"
                         width={18}
                         height={18}
                       />

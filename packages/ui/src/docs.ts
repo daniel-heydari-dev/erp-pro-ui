@@ -490,7 +490,7 @@ export const libraryInstallSteps = [
   {
     title: "Use colors and fonts directly",
     description:
-      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from the shared semantic tokens.",
+      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from the shared semantic tokens. Prefer semantic utilities and --ds-* tokens in new code; the legacy --color-* aliases remain for migration.",
     examples: [
       {
         title: "Raw token import",
@@ -512,7 +512,7 @@ export const libraryInstallSteps = [
   {
     title: "Wrap your app with ThemeProvider",
     description:
-      "Use ThemeProvider at the root so shared brand and mode attributes are applied as data-brand and data-mode for the token system.",
+      "Use ThemeProvider at the root so shared brand and mode attributes are applied as data-brand and data-mode for the token system. The older data-theme attribute is still written for compatibility, but brand and mode are the primary contract.",
     examples: [
       {
         title: "Root provider",

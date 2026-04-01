@@ -36,7 +36,7 @@ const AnimatedContentDoc = () => {
         >
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="fade" duration={0.8}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Fade
               </div>
             </AnimatedContent>
@@ -44,7 +44,7 @@ const AnimatedContentDoc = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="scale" duration={0.8} delay={0.2}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Scale
               </div>
             </AnimatedContent>
@@ -52,7 +52,7 @@ const AnimatedContentDoc = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="slideUp" duration={0.8} delay={0.4}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Slide Up
               </div>
             </AnimatedContent>
@@ -60,7 +60,7 @@ const AnimatedContentDoc = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="bounce" duration={1} delay={0.6}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Bounce
               </div>
             </AnimatedContent>
@@ -68,7 +68,7 @@ const AnimatedContentDoc = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="flip" duration={0.8} delay={0.8}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Flip
               </div>
             </AnimatedContent>
@@ -76,7 +76,7 @@ const AnimatedContentDoc = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <AnimatedContent preset="zoom" duration={0.8} delay={1}>
-              <div className="w-20 h-20 bg-primary/20 rounded-lg flex items-center justify-center border border-primary/30 font-bold">
+              <div className="w-20 h-20 bg-accent-subtle rounded-lg flex items-center justify-center border border-accent/20 text-accent font-bold">
                 Zoom
               </div>
             </AnimatedContent>

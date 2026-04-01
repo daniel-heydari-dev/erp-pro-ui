@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { mergeClassNames } from '../../../utils';
+import { useEffect, useRef, useState } from "react";
+import { mergeClassNames } from "../../../utils";
 
 export interface BackgroundGradientAnimationProps {
   gradientBackgroundStart?: string;
@@ -19,16 +19,16 @@ export interface BackgroundGradientAnimationProps {
 }
 
 export const BackgroundGradientAnimation = ({
-  gradientBackgroundStart = 'rgb(108, 0, 162)',
-  gradientBackgroundEnd = 'rgb(0, 17, 82)',
-  firstColor = '18, 113, 255',
-  secondColor = '221, 74, 255',
-  thirdColor = '100, 220, 255',
-  fourthColor = '200, 50, 50',
-  fifthColor = '180, 180, 50',
-  pointerColor = '140, 100, 255',
-  size = '80%',
-  blendingValue = 'hard-light',
+  gradientBackgroundStart = "rgb(108, 0, 162)",
+  gradientBackgroundEnd = "rgb(0, 17, 82)",
+  firstColor = "18, 113, 255",
+  secondColor = "221, 74, 255",
+  thirdColor = "100, 220, 255",
+  fourthColor = "200, 50, 50",
+  fifthColor = "180, 180, 50",
+  pointerColor = "140, 100, 255",
+  size = "80%",
+  blendingValue = "hard-light",
   children,
   className,
   interactive = true,
@@ -83,7 +83,7 @@ export const BackgroundGradientAnimation = ({
   };
 
   const [isSafari] = useState(() =>
-    typeof navigator !== 'undefined'
+    typeof navigator !== "undefined"
       ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
       : false,
   );
@@ -94,13 +94,13 @@ export const BackgroundGradientAnimation = ({
     transformOrigin: string,
     opacity: number = 1,
   ): React.CSSProperties => ({
-    position: 'absolute',
+    position: "absolute",
     width: size,
     height: size,
     top: `calc(50% - ${size} / 2)`,
     left: `calc(50% - ${size} / 2)`,
     background: `radial-gradient(circle at center, rgba(${color}, 0.8) 0, rgba(${color}, 0) 50%) no-repeat`,
-    mixBlendMode: blendingValue as React.CSSProperties['mixBlendMode'],
+    mixBlendMode: blendingValue as React.CSSProperties["mixBlendMode"],
     transformOrigin,
     opacity,
   });
@@ -109,7 +109,7 @@ export const BackgroundGradientAnimation = ({
     <div
       ref={containerRef}
       className={mergeClassNames(
-        'h-screen w-screen relative overflow-hidden top-0 left-0',
+        "h-screen w-screen relative overflow-hidden top-0 left-0",
         containerClassName,
       )}
       style={{
@@ -134,11 +134,11 @@ export const BackgroundGradientAnimation = ({
           </filter>
         </defs>
       </svg>
-      <div className={mergeClassNames('', className)}>{children}</div>
+      <div className={mergeClassNames("", className)}>{children}</div>
       <div
         className="h-full w-full"
         style={{
-          filter: isSafari ? 'blur(24px)' : 'url(#blurMe) blur(40px)',
+          filter: isSafari ? "blur(24px)" : "url(#blurMe) blur(40px)",
         }}
       >
         {/* First blob */}
@@ -146,8 +146,8 @@ export const BackgroundGradientAnimation = ({
           className="ui:animate-gradient-first"
           style={blobStyle(
             firstColor,
-            'animate-gradient-first',
-            'center center',
+            "animate-gradient-first",
+            "center center",
           )}
         />
         {/* Second blob */}
@@ -155,8 +155,8 @@ export const BackgroundGradientAnimation = ({
           className="ui:animate-gradient-second"
           style={blobStyle(
             secondColor,
-            'animate-gradient-second',
-            'calc(50% - 400px)',
+            "animate-gradient-second",
+            "calc(50% - 400px)",
           )}
         />
         {/* Third blob */}
@@ -164,8 +164,8 @@ export const BackgroundGradientAnimation = ({
           className="ui:animate-gradient-third"
           style={blobStyle(
             thirdColor,
-            'animate-gradient-third',
-            'calc(50% + 400px)',
+            "animate-gradient-third",
+            "calc(50% + 400px)",
           )}
         />
         {/* Fourth blob */}
@@ -173,8 +173,8 @@ export const BackgroundGradientAnimation = ({
           className="ui:animate-gradient-fourth"
           style={blobStyle(
             fourthColor,
-            'animate-gradient-fourth',
-            'calc(50% - 200px)',
+            "animate-gradient-fourth",
+            "calc(50% - 200px)",
             0.7,
           )}
         />
@@ -183,8 +183,8 @@ export const BackgroundGradientAnimation = ({
           className="ui:animate-gradient-fifth"
           style={blobStyle(
             fifthColor,
-            'animate-gradient-fifth',
-            'calc(50% - 800px) calc(50% + 800px)',
+            "animate-gradient-fifth",
+            "calc(50% - 800px) calc(50% + 800px)",
           )}
         />
 
@@ -194,13 +194,13 @@ export const BackgroundGradientAnimation = ({
             onMouseMove={handleMouseMove}
             className="absolute w-full h-full"
             style={{
-              top: '-50%',
-              left: '-50%',
-              willChange: 'transform',
+              top: "-50%",
+              left: "-50%",
+              willChange: "transform",
               opacity: 0.7,
               background: `radial-gradient(circle at center, rgba(${pointerColor}, 0.8) 0, rgba(${pointerColor}, 0) 50%) no-repeat`,
               mixBlendMode:
-                blendingValue as React.CSSProperties['mixBlendMode'],
+                blendingValue as React.CSSProperties["mixBlendMode"],
             }}
           />
         )}

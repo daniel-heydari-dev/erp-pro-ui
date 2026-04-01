@@ -123,7 +123,7 @@ const [date, setDate] = useState<Date | null>(new Date());
             <div className="flex justify-between border-t border-white/10 pt-3">
               <button
                 onClick={() => setDate(new Date())}
-                className="text-xs font-semibold text-primary hover:underline"
+                className="text-xs font-semibold text-accent hover:underline"
               >
                 Today
               </button>

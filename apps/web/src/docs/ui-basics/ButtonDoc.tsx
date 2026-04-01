@@ -121,7 +121,7 @@ const ButtonDoc = () => {
           onClick={handleAsyncSave}
         />
         {saved && (
-          <p className="text-sm text-primary">Profile saved successfully.</p>
+          <p className="text-sm text-accent">Profile saved successfully.</p>
         )}
       </div>
 

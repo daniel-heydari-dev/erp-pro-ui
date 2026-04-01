@@ -87,7 +87,7 @@ export const Staggered: Story = {
       <div className="ui:flex ui:flex-wrap ui:gap-4">
         {[1, 2, 3].map((i) => (
           <AnimatedContent key={i} preset="bounce" delay={i * 0.15}>
-            <div className="ui:flex ui:h-24 ui:w-24 ui:items-center ui:justify-center ui:rounded-xl ui:bg-primary-500 ui:text-2xl ui:font-bold ui:text-white ui:shadow-lg">
+            <div className="ui:flex ui:h-24 ui:w-24 ui:items-center ui:justify-center ui:rounded-xl ui:bg-accent ui:text-2xl ui:font-bold ui:text-on-accent ui:shadow-lg">
               {i}
             </div>
           </AnimatedContent>
@@ -129,7 +129,7 @@ export const PresetGallery: Story = {
                 duration={0.8}
               >
                 <StoryPanel className="ui:flex ui:min-h-32 ui:flex-col ui:items-center ui:justify-center ui:p-5 ui:text-center">
-                  <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-primary-100 ui:text-sm ui:font-bold ui:text-primary-500">
+                  <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-accent-subtle ui:text-sm ui:font-bold ui:text-accent">
                     {item.label}
                   </div>
                   <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">

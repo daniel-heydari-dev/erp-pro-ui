@@ -116,9 +116,9 @@ const variantStyles: Record<
   { icon: string; button: string; iconColor: string }
 > = {
   default: {
-    icon: "bg-primary-100 dark:bg-primary-900/30",
-    button: "bg-primary-500 hover:bg-primary-600 text-white",
-    iconColor: "text-primary-500 dark:text-primary-400",
+    icon: "bg-accent-subtle",
+    button: "bg-accent hover:bg-accent-hover text-on-accent",
+    iconColor: "text-accent",
   },
   destructive: {
     icon: "bg-red-100 dark:bg-red-900/30",

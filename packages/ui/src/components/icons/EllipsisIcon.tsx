@@ -7,7 +7,7 @@ type IconProps = SVGProps<SVGSVGElement> & {
 };
 
 export const EllipsisIcon: FC<IconProps> = ({
-  className = "text-text-primary",
+  className = "text-fg",
   title,
   titleId,
   ...props

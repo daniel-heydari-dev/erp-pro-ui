@@ -65,18 +65,18 @@ const variantStyles: Record<
 > = {
   outlined: {
     base: "border border-neutral-300 dark:border-neutral-600 bg-transparent rounded-lg",
-    focus: "focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20",
+    focus: "focus:border-accent focus:ring-2 focus:ring-focus",
     error: "border-red-500 dark:border-red-500",
   },
   filled: {
     base: "border border-transparent bg-neutral-100 dark:bg-neutral-800 rounded-lg",
     focus:
-      "focus:border-primary-500 focus:bg-transparent focus:ring-2 focus:ring-primary-500/20",
+      "focus:border-accent focus:bg-transparent focus:ring-2 focus:ring-focus",
     error: "bg-red-50 dark:bg-red-900/20 border-red-500",
   },
   underlined: {
     base: "border-b-2 border-neutral-300 dark:border-neutral-600 bg-transparent rounded-none",
-    focus: "focus:border-primary-500",
+    focus: "focus:border-accent",
     error: "border-red-500 dark:border-red-500",
   },
 };

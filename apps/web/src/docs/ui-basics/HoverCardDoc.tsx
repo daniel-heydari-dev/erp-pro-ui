@@ -16,7 +16,7 @@ const HoverCardDoc = () => {
         <HoverCard
           content={
             <div className="flex gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg border border-primary/20">
+              <div className="w-12 h-12 rounded-full bg-accent-subtle flex items-center justify-center text-accent font-bold text-lg border border-accent/20">
                 EP
               </div>
               <div className="flex-1">
@@ -41,7 +41,7 @@ const HoverCardDoc = () => {
             </div>
           }
         >
-          <span className="text-primary font-bold underline decoration-primary/30 underline-offset-4 cursor-pointer hover:decoration-primary transition-all duration-300">
+          <span className="text-accent font-bold underline decoration-accent/30 underline-offset-4 cursor-pointer hover:decoration-accent transition-all duration-300">
             erp pro
           </span>
         </HoverCard>

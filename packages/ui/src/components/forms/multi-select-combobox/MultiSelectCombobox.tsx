@@ -89,13 +89,13 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
             selectedLabels.map((label, index) => (
               <span
                 key={value[index]}
-                className="inline-flex items-center gap-1 rounded-md bg-primary-100 dark:bg-primary-900/40 px-2 py-0.5 text-xs font-medium text-primary-700 dark:text-primary-300"
+                className="inline-flex items-center gap-1 rounded-md bg-accent-subtle px-2 py-0.5 text-xs font-medium text-accent"
               >
                 {label}
                 <button
                   type="button"
                   onClick={(e) => handleRemoveTag(value[index], e)}
-                  className="ml-0.5 rounded-full p-0.5 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
+                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-accent-subtle"
                 >
                   <CloseIcon className="w-3 h-3" aria-hidden="true" />
                 </button>
@@ -142,7 +142,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                   className={mergeClassNames(
                     "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition",
                     isSelected
-                      ? "bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300"
+                      ? "bg-accent-subtle text-accent"
                       : "text-foreground dark:text-white hover:bg-neutral-100 dark:hover:bg-white/10",
                   )}
                   onClick={() => handleOptionClick(option.value)}
@@ -151,7 +151,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                     className={mergeClassNames(
                       "flex h-4 w-4 items-center justify-center rounded border transition",
                       isSelected
-                        ? "border-primary-500 bg-primary-500 text-white"
+                        ? "border-accent bg-accent text-on-accent"
                         : "border-neutral-300 dark:border-neutral-600",
                     )}
                   >

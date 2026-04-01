@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from '../../shared/storybook';
-import DataTable, { type FilterOption } from './DataTable';
+import { StorySurface } from "../../shared/storybook";
+import DataTable, { type FilterOption } from "./DataTable";
 
 type UserRow = {
   id: string;
@@ -15,92 +15,92 @@ type UserRow = {
 
 const sampleData: UserRow[] = [
   {
-    id: '1',
-    name: 'Alice Security',
-    status: 'Active',
-    role: 'Admin',
-    location: 'Berlin',
-    lastSeen: '2026-03-29',
+    id: "1",
+    name: "Alice Security",
+    status: "Active",
+    role: "Admin",
+    location: "Berlin",
+    lastSeen: "2026-03-29",
   },
   {
-    id: '2',
-    name: 'Bob Developer',
-    status: 'Inactive',
-    role: 'User',
-    location: 'Hamburg',
-    lastSeen: '2026-03-24',
+    id: "2",
+    name: "Bob Developer",
+    status: "Inactive",
+    role: "User",
+    location: "Hamburg",
+    lastSeen: "2026-03-24",
   },
   {
-    id: '3',
-    name: 'Charlie Operations',
-    status: 'Active',
-    role: 'Operator',
-    location: 'Amsterdam',
-    lastSeen: '2026-03-30',
+    id: "3",
+    name: "Charlie Operations",
+    status: "Active",
+    role: "Operator",
+    location: "Amsterdam",
+    lastSeen: "2026-03-30",
   },
   {
-    id: '4',
-    name: 'Diana Manager',
-    status: 'Active',
-    role: 'Manager',
-    location: 'Berlin',
-    lastSeen: '2026-03-28',
+    id: "4",
+    name: "Diana Manager",
+    status: "Active",
+    role: "Manager",
+    location: "Berlin",
+    lastSeen: "2026-03-28",
   },
   {
-    id: '5',
-    name: 'Evan Design',
-    status: 'Inactive',
-    role: 'User',
-    location: 'Paris',
-    lastSeen: '2026-03-18',
+    id: "5",
+    name: "Evan Design",
+    status: "Inactive",
+    role: "User",
+    location: "Paris",
+    lastSeen: "2026-03-18",
   },
   {
-    id: '6',
-    name: 'Fatima Supply',
-    status: 'Active',
-    role: 'Analyst',
-    location: 'Lisbon',
-    lastSeen: '2026-03-27',
+    id: "6",
+    name: "Fatima Supply",
+    status: "Active",
+    role: "Analyst",
+    location: "Lisbon",
+    lastSeen: "2026-03-27",
   },
 ];
 
 const columns = [
-  { id: 'name', label: 'Full Name', filterable: true, priority: 1 },
-  { id: 'status', label: 'Status', filterable: true, priority: 1 },
+  { id: "name", label: "Full Name", filterable: true, priority: 1 },
+  { id: "status", label: "Status", filterable: true, priority: 1 },
   {
-    id: 'role',
-    label: 'Role',
+    id: "role",
+    label: "Role",
     filterable: true,
     multiFilter: true,
     priority: 2,
   },
-  { id: 'location', label: 'Location', filterable: true, priority: 2 },
-  { id: 'lastSeen', label: 'Last Seen', filterable: false, priority: 3 },
+  { id: "location", label: "Location", filterable: true, priority: 2 },
+  { id: "lastSeen", label: "Last Seen", filterable: false, priority: 3 },
 ];
 
 const filterOptions: FilterOption[] = [
   {
-    id: 'status',
-    label: 'Status',
-    type: 'select',
-    options: ['Active', 'Inactive'],
+    id: "status",
+    label: "Status",
+    type: "select",
+    options: ["Active", "Inactive"],
   },
   {
-    id: 'role',
-    label: 'Role',
-    type: 'combobox',
+    id: "role",
+    label: "Role",
+    type: "combobox",
     multiple: true,
-    options: ['Admin', 'Manager', 'Operator', 'Analyst', 'User'],
+    options: ["Admin", "Manager", "Operator", "Analyst", "User"],
   },
   {
-    id: 'location',
-    label: 'Location',
-    type: 'select',
-    options: ['Berlin', 'Hamburg', 'Amsterdam', 'Paris', 'Lisbon'],
+    id: "location",
+    label: "Location",
+    type: "select",
+    options: ["Berlin", "Hamburg", "Amsterdam", "Paris", "Lisbon"],
   },
 ];
 
-function DefaultWorkspaceStory(props: Story['args']) {
+function DefaultWorkspaceStory(props: Story["args"]) {
   const [rows, setRows] = useState(sampleData);
 
   return (
@@ -175,7 +175,7 @@ function BulkSelectionCustomActionsStory() {
 
         {reviewedIds.length > 0 ? (
           <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-4 ui:py-3 ui:text-sm ui:text-card-foreground">
-            Reviewed rows: {reviewedIds.join(', ')}
+            Reviewed rows: {reviewedIds.join(", ")}
           </div>
         ) : null}
       </div>
@@ -184,18 +184,18 @@ function BulkSelectionCustomActionsStory() {
 }
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Data Display/DataTable',
+  title: "Data Display/DataTable",
   component: DataTable,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Operational table with search, filters, pagination, and responsive column handling for back-office workflows.',
+          "Operational table with search, filters, pagination, and responsive column handling for back-office workflows.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -209,9 +209,9 @@ export const Default: Story = {
   args: {
     columns,
     pageSize: 5,
-    searchPlaceholder: 'Search team members...',
+    searchPlaceholder: "Search team members...",
   },
-  render: (args: Story['args']) => <DefaultWorkspaceStory {...args} />,
+  render: (args: Story["args"]) => <DefaultWorkspaceStory {...args} />,
 };
 
 /**

@@ -154,6 +154,10 @@ export function createUiConsumerAliases({
       replacement: path.resolve(uiPackageRoot, "src/catalog.ts"),
     },
     {
+      find: /^erp-pro-ui\/docs$/,
+      replacement: path.resolve(uiPackageRoot, "src/docs.ts"),
+    },
+    {
       find: /^erp-pro-ui\/styles\.css$/,
       replacement: path.resolve(uiPackageRoot, "src/styles.css"),
     },

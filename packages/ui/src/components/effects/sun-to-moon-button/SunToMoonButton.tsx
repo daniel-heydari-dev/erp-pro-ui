@@ -173,7 +173,7 @@ export default function SunToMoonButton({
           </span>
           <span className="my-1 flex w-[150px] justify-between">
             <span className="mb-1 w-[80px] rounded-full bg-neutral-300 p-1 dark:bg-neutral-600"></span>
-            <span className="mb-1 w-[30px] rounded-full bg-primary-500 p-1"></span>
+            <span className="mb-1 w-[30px] rounded-full bg-accent p-1"></span>
           </span>
         </span>
       )}

@@ -71,7 +71,7 @@ const AccordionDoc = () => {
         <div className="space-y-2 pt-2">
           <div className="flex items-center justify-between rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800">
             <span className="text-sm">Daily digest</span>
-            <span className="text-xs text-primary">Enabled</span>
+            <span className="text-xs text-accent">Enabled</span>
           </div>
           <div className="flex items-center justify-between rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800">
             <span className="text-sm">Incident SMS</span>

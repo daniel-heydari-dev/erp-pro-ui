@@ -68,7 +68,7 @@ const [values, setValues] = useState<string[]>([]);
             values.map((v) => (
               <code
                 key={v}
-                className="px-2 py-1 rounded bg-primary/10 text-primary text-xs"
+                className="px-2 py-1 rounded bg-accent-subtle text-accent text-xs"
               >
                 {v}
               </code>

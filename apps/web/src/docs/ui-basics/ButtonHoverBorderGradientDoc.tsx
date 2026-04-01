@@ -19,7 +19,7 @@ const ButtonHoverBorderGradientDoc = () => {
           {/* Offset the component's hardcoded m-40 */}
           <ButtonHoverBorderGradient>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span>Launch Application</span>
             </div>
           </ButtonHoverBorderGradient>

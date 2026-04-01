@@ -9,7 +9,7 @@ const colorClasses: Record<NonNullable<CheckboxProps["color"]>, string> = {
   green: "checked:bg-green-500 dark:checked:bg-green-400",
   yellow: "checked:bg-yellow-500 dark:checked:bg-yellow-400",
   teal: "checked:bg-teal-500 dark:checked:bg-teal-400",
-  primary: "checked:bg-primary-500 dark:checked:bg-primary-500",
+  primary: "checked:bg-accent dark:checked:bg-accent",
 };
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(

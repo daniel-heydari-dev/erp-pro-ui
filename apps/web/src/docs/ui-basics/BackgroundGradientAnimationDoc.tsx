@@ -30,7 +30,7 @@ const BackgroundGradientAnimationDoc = () => {
               Modern, interactive gradient animations for high-end landing
               pages. Move your mouse to interact with the center light.
             </p>
-            <button className="px-8 py-3 bg-white text-primary font-bold rounded-full shadow-2xl hover:scale-105 transition-transform">
+            <button className="px-8 py-3 bg-white text-accent font-bold rounded-full shadow-2xl hover:scale-105 transition-transform">
               Get Started
             </button>
           </div>

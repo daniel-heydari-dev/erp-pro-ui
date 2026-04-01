@@ -79,7 +79,7 @@ function SelectionSummaryExample() {
               values.map((value) => (
                 <code
                   key={value}
-                  className="ui:rounded ui:bg-primary-100 ui:px-2 ui:py-1 ui:text-xs ui:text-primary-500"
+                  className="ui:rounded ui:bg-accent-subtle ui:px-2 ui:py-1 ui:text-xs ui:text-accent"
                 >
                   {value}
                 </code>

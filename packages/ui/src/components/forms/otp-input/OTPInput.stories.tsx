@@ -74,7 +74,7 @@ function ControlledOTPExample() {
         />
         <p className="ui:text-sm ui:text-muted-foreground">
           Entered Code:{" "}
-          <span className="ui:font-mono ui:font-bold ui:text-primary-500">
+          <span className="ui:font-mono ui:font-bold ui:text-accent">
             {value || "------"}
           </span>
         </p>

@@ -108,7 +108,7 @@ const SplashCursorDoc = () => {
           particleCount={15}
           className="w-full h-full flex items-center justify-center"
         >
-          <div className="px-6 py-3 bg-white dark:bg-neutral-800 rounded-full shadow-lg font-bold text-primary">
+          <div className="px-6 py-3 bg-white dark:bg-neutral-800 rounded-full shadow-lg font-bold text-accent">
             Custom Style
           </div>
         </SplashCursor>
