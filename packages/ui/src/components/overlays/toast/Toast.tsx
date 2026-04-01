@@ -137,24 +137,24 @@ const typeStyles: Record<
   { bg: string; icon: string; iconBg: string }
 > = {
   success: {
-    bg: "bg-white dark:bg-neutral-800 border-green-200 dark:border-green-800",
-    icon: "text-green-500",
-    iconBg: "bg-green-100 dark:bg-green-900/30",
+    bg: "bg-white dark:bg-neutral-800 border-success-border",
+    icon: "text-success",
+    iconBg: "bg-success-subtle",
   },
   error: {
-    bg: "bg-white dark:bg-neutral-800 border-red-200 dark:border-red-800",
-    icon: "text-red-500",
-    iconBg: "bg-red-100 dark:bg-red-900/30",
+    bg: "bg-white dark:bg-neutral-800 border-danger-border",
+    icon: "text-danger",
+    iconBg: "bg-danger-subtle",
   },
   warning: {
-    bg: "bg-white dark:bg-neutral-800 border-amber-200 dark:border-amber-800",
-    icon: "text-amber-500",
-    iconBg: "bg-amber-100 dark:bg-amber-900/30",
+    bg: "bg-white dark:bg-neutral-800 border-warning-border",
+    icon: "text-warning",
+    iconBg: "bg-warning-subtle",
   },
   info: {
-    bg: "bg-white dark:bg-neutral-800 border-blue-200 dark:border-blue-800",
-    icon: "text-blue-500",
-    iconBg: "bg-blue-100 dark:bg-blue-900/30",
+    bg: "bg-white dark:bg-neutral-800 border-info-border",
+    icon: "text-info",
+    iconBg: "bg-info-subtle",
   },
   default: {
     bg: "bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700",
@@ -295,13 +295,13 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
             <motion.div
               className={`h-full ${
                 type === "success"
-                  ? "bg-green-500"
+                  ? "bg-success"
                   : type === "error"
-                    ? "bg-red-500"
+                    ? "bg-destructive"
                     : type === "warning"
-                      ? "bg-amber-500"
+                      ? "bg-warning"
                       : type === "info"
-                        ? "bg-blue-500"
+                        ? "bg-info"
                         : "bg-neutral-400"
               }`}
               style={{ width: `${progress}%` }}
@@ -313,7 +313,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
         {/* Icon */}
         {displayIcon && (
           <div
-            className={`flex-shrink-0 p-1.5 rounded-full ${styles.iconBg} ${styles.icon}`}
+            className={`shrink-0 p-1.5 rounded-full ${styles.iconBg} ${styles.icon}`}
           >
             {displayIcon}
           </div>
@@ -539,7 +539,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     <ToastContext.Provider value={contextValue}>
       {children}
       <div
-        className={`fixed z-[100] flex flex-col pointer-events-none ${positionStyles[position]} ${containerClassName}`}
+        className={`fixed z-100 flex flex-col pointer-events-none ${positionStyles[position]} ${containerClassName}`}
         style={{ gap: `${gap}px` }}
       >
         <AnimatePresence mode="popLayout">

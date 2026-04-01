@@ -115,6 +115,12 @@
       "require": "./dist/chip.cjs",
       "default": "./dist/chip.mjs"
     },
+    "./progress-bar": {
+      "types": "./dist/components/data-display/progress-bar/index.d.ts",
+      "import": "./dist/progress-bar.mjs",
+      "require": "./dist/progress-bar.cjs",
+      "default": "./dist/progress-bar.mjs"
+    },
     "./chroma-grid": {
       "types": "./dist/components/effects/chroma-grid/index.d.ts",
       "import": "./dist/chroma-grid.mjs",
@@ -320,11 +326,12 @@
     "package.json"
   ],
   "scripts": {
-    "build": "node ./scripts/validate-contract.mjs && vite build",
+    "build": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && vite build",
     "contract:check": "node ./scripts/validate-contract.mjs",
-    "lint": "eslint .",
+    "lint": "eslint . && node ./scripts/validate-primitive-consumers.mjs",
+    "primitive-consumer:check": "node ./scripts/validate-primitive-consumers.mjs",
     "story:check": "node ./scripts/validate-story-metadata.mjs",
-    "typecheck": "node ./scripts/validate-contract.mjs && tsc --noEmit"
+    "typecheck": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -352,11 +359,13 @@
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
+    "@storybook/react-vite": "^10.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.183.1",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.1.0",
+    "storybook": "^10.3.3",
     "terser": "^5.46.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tooltip, Button } from "erp-pro-ui";
+import { Button, Input, Tooltip } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -77,11 +77,9 @@ const TooltipDoc = () => {
         </Tooltip>
         {/* Focus requires tab navigation to test properly */}
         <Tooltip content="Triggered by Focus" trigger="focus">
-          <input
-            type="text"
-            placeholder="Focus me"
-            className="px-3 py-2 border rounded-md dark:bg-neutral-800 dark:border-neutral-700"
-          />
+          <div className="w-56">
+            <Input placeholder="Focus me" />
+          </div>
         </Tooltip>
       </div>
 
@@ -104,12 +102,12 @@ const TooltipDoc = () => {
               Reorder threshold
             </span>
             <Tooltip content="When stock drops below this number, the SKU appears in the replenishment queue.">
-              <button
+              <Button
                 aria-label="Threshold help"
-                className="flex h-6 w-6 items-center justify-center rounded-full border border-neutral-300 text-xs font-semibold dark:border-neutral-700"
+                className="h-6 w-6 rounded-full border-neutral-300 px-0 py-0 text-xs font-semibold shadow-none hover:bg-transparent hover:opacity-100 dark:border-neutral-700"
               >
                 ?
-              </button>
+              </Button>
             </Tooltip>
           </div>
           <div className="rounded-md border border-neutral-200 px-3 py-2 text-sm text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
@@ -122,7 +120,7 @@ const TooltipDoc = () => {
         code={`<div className="flex items-center gap-2">
   <span>Reorder threshold</span>
   <Tooltip content="When stock drops below this number, the SKU appears in the replenishment queue.">
-    <button aria-label="Threshold help">?</button>
+    <Button aria-label="Threshold help">?</Button>
   </Tooltip>
 </div>`}
       />

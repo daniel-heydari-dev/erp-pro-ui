@@ -17,7 +17,7 @@ const SplashCursorDoc = () => {
         The default variant creates a "splash" of particles as you move your
         mouse.
       </p>
-      <div className="docs-showcase-card h-[400px]">
+      <div className="docs-showcase-card h-100">
         <SplashCursor className="w-full h-full flex items-center justify-center bg-neutral-900/10 rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
           <div className="text-neutral-400 font-medium">
             Move or click anywhere in this area
@@ -28,7 +28,7 @@ const SplashCursorDoc = () => {
       <CodeBlock
         code={`import { SplashCursor } from 'erp-pro-ui';
 
-<SplashCursor className="h-[400px]">
+<SplashCursor className="h-100">
   <div>Content inside the interactive area</div>
 </SplashCursor>`}
       />
@@ -41,7 +41,7 @@ const SplashCursorDoc = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         <div className="space-y-2">
           <h4 className="text-sm font-semibold px-1">Trail Variant</h4>
-          <div className="docs-showcase-card h-[200px]">
+          <div className="docs-showcase-card h-50">
             <SplashCursor
               variant="trail"
               particleCount={20}
@@ -53,7 +53,7 @@ const SplashCursorDoc = () => {
         </div>
         <div className="space-y-2">
           <h4 className="text-sm font-semibold px-1">Ripple Variant</h4>
-          <div className="docs-showcase-card h-[200px]">
+          <div className="docs-showcase-card h-50">
             <SplashCursor
               variant="ripple"
               className="w-full h-full flex items-center justify-center"
@@ -64,7 +64,7 @@ const SplashCursorDoc = () => {
         </div>
         <div className="space-y-2">
           <h4 className="text-sm font-semibold px-1">Glow Variant</h4>
-          <div className="docs-showcase-card h-[200px]">
+          <div className="docs-showcase-card h-50">
             <SplashCursor
               variant="glow"
               blur={20}
@@ -76,7 +76,7 @@ const SplashCursorDoc = () => {
         </div>
         <div className="space-y-2">
           <h4 className="text-sm font-semibold px-1">Burst Variant</h4>
-          <div className="docs-showcase-card h-[200px]">
+          <div className="docs-showcase-card h-50">
             <SplashCursor
               variant="splash"
               particleCount={30}
@@ -100,7 +100,7 @@ const SplashCursorDoc = () => {
       <p className="docs-paragraph">
         You can control colors, particle sizes, and density.
       </p>
-      <div className="docs-showcase-card h-[300px]">
+      <div className="docs-showcase-card h-75">
         <SplashCursor
           color="#ff0080"
           secondaryColor="#7928ca"

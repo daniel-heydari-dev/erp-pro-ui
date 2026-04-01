@@ -18,10 +18,7 @@ export const PasswordCriteria = ({ password }: PasswordCriteriaProps) => {
       {criteria.map((item) => (
         <div key={item.label} className="flex items-center text-xs">
           {item.met ? (
-            <CheckIcon
-              className="mr-2 size-4 text-green-500"
-              title="CheckIcon"
-            />
+            <CheckIcon className="mr-2 size-4 text-success" title="CheckIcon" />
           ) : (
             <CloseIcon
               className="mr-2 size-4 text-neutral-400 dark:text-neutral-500"
@@ -31,7 +28,7 @@ export const PasswordCriteria = ({ password }: PasswordCriteriaProps) => {
           <span
             className={
               item.met
-                ? "text-green-500"
+                ? "text-success"
                 : "text-neutral-500 dark:text-neutral-400"
             }
           >

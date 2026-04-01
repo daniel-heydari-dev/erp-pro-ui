@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeftIcon, ArrowRightIcon, Button } from "erp-pro-ui";
 
 type NavItem = {
   route: string;
@@ -13,21 +14,29 @@ type DocsButtonBarProps = {
 
 const DocsButtonBar = ({ next, previous, prev }: DocsButtonBarProps) => {
   const backItem = previous || prev;
+  const navigate = useNavigate();
 
   return (
     <div className="docs-button-bar">
       {backItem ? (
-        <Link to={backItem.route} className="docs-button docs-button-primary">
-          FaArrowLeft
+        <Button
+          primary
+          onClick={() => navigate(backItem.route)}
+          className="min-w-[12rem] justify-between"
+        >
+          <ArrowLeftIcon className="h-4 w-4" aria-hidden="true" />
           <span>{backItem.label}</span>
-        </Link>
+        </Button>
       ) : null}
 
       {next ? (
-        <Link to={next.route} className="docs-button docs-button-secondary">
+        <Button
+          onClick={() => navigate(next.route)}
+          className="min-w-[12rem] justify-between"
+        >
           <span>{next.label}</span>
-          FaArrowRight
-        </Link>
+          <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+        </Button>
       ) : null}
     </div>
   );

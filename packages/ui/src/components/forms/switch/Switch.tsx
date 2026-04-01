@@ -18,7 +18,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           htmlFor={switchId}
           className={`
             relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full transition-colors duration-200
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background
             disabled:cursor-not-allowed disabled:opacity-50
             ${checked ? "bg-accent" : "bg-zinc-300 dark:bg-zinc-600"}
           `

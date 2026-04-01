@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Button } from "../../forms/button";
+import { ProgressBar } from "../progress-bar";
 import { StorySurface } from "../../shared/storybook";
 import DataTable, { type FilterOption } from "./DataTable";
 
@@ -100,6 +102,74 @@ const filterOptions: FilterOption[] = [
   },
 ];
 
+type CapacityRow = {
+  id: string;
+  zone: string;
+  owner: string;
+  status: string;
+  usedUnits: number;
+  capacityPercent: number;
+};
+
+const capacityData: CapacityRow[] = [
+  {
+    id: "zone-1",
+    zone: "North Rack A",
+    owner: "A. Security",
+    status: "Stable",
+    usedUnits: 142,
+    capacityPercent: 71,
+  },
+  {
+    id: "zone-2",
+    zone: "Cold Storage B",
+    owner: "F. Supply",
+    status: "Watch",
+    usedUnits: 176,
+    capacityPercent: 88,
+  },
+  {
+    id: "zone-3",
+    zone: "Overflow C",
+    owner: "C. Operations",
+    status: "Healthy",
+    usedUnits: 96,
+    capacityPercent: 48,
+  },
+  {
+    id: "zone-4",
+    zone: "Dispatch D",
+    owner: "D. Manager",
+    status: "Stable",
+    usedUnits: 118,
+    capacityPercent: 59,
+  },
+];
+
+const capacityColumns = [
+  { id: "zone", label: "Zone", filterable: true, priority: 1 },
+  { id: "owner", label: "Owner", filterable: true, priority: 2 },
+  { id: "status", label: "Status", filterable: true, priority: 2 },
+  {
+    id: "capacityPercent",
+    label: "Utilization",
+    priority: 1,
+    renderCell: ({ value, row }: { value: unknown; row: CapacityRow }) => (
+      <div className="min-w-55">
+        <ProgressBar
+          value={typeof value === "number" ? value : 0}
+          max={100}
+          label={`${row.usedUnits} units`}
+          size="sm"
+          tone={
+            typeof value === "number" && value >= 85 ? "warning" : "default"
+          }
+        />
+      </div>
+    ),
+  },
+];
+
 function DefaultWorkspaceStory(props: Story["args"]) {
   const [rows, setRows] = useState(sampleData);
 
@@ -153,17 +223,16 @@ function BulkSelectionCustomActionsStory() {
           pageSize={5}
           searchPlaceholder="Search team members..."
           renderBulkActions={({ selectedRows, clearSelection }) => (
-            <button
-              type="button"
+            <Button
               onClick={() => {
                 const nextReviewedIds = selectedRows.map((row) => row.id);
                 setReviewedIds(nextReviewedIds);
                 clearSelection();
               }}
-              className="inline-flex items-center rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-100"
+              className="ui:text-sm"
             >
               Mark reviewed
-            </button>
+            </Button>
           )}
           onBulkDelete={(selectedRows) => {
             const selectedIds = new Set(selectedRows.map((row) => row.id));
@@ -246,6 +315,23 @@ export const CompactAuditQueue: Story = {
         pageSize={3}
         maxHeight="320px"
         searchPlaceholder="Search audit queue..."
+      />
+    </StorySurface>
+  ),
+};
+
+/**
+ * ## Capacity Monitoring
+ * Shows a richer cell using the shared ProgressBar via columns[].renderCell.
+ */
+export const CapacityMonitoring: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <DataTable
+        data={capacityData}
+        columns={capacityColumns}
+        pageSize={4}
+        searchPlaceholder="Search zones or owners..."
       />
     </StorySurface>
   ),

@@ -12,6 +12,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { normalizeChartColors } from "./chartPalette";
+
 export interface StackedBarData {
   name: string;
   [key: string]: string | number;
@@ -32,6 +34,17 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
   yAxisDomain,
   className = "",
 }) => {
+  const normalizedCategories = React.useMemo(() => {
+    const normalizedColors = normalizeChartColors(
+      categories.map((category) => category.color),
+    );
+
+    return categories.map((category, index) => ({
+      ...category,
+      color: normalizedColors[index] ?? category.color,
+    }));
+  }, [categories]);
+
   return (
     <div className={`w-full ${className}`} style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -42,31 +55,34 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
-            stroke="var(--color-neutral-800, #262626)"
+            stroke="var(--ds-color-border)"
             opacity={0.4}
           />
           <XAxis
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dy={10}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dx={-10}
             domain={yAxisDomain}
           />
           <Tooltip
-            cursor={{ fill: "var(--color-neutral-800, rgba(38, 38, 38, 0.4))" }}
+            cursor={{
+              fill: "color-mix(in srgb, var(--ds-color-accent) 10%, transparent)",
+            }}
             contentStyle={{
-              backgroundColor: "rgba(10, 10, 10, 0.9)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor:
+                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
+              border: "1px solid var(--ds-color-border)",
               borderRadius: "8px",
               backdropFilter: "blur(8px)",
-              color: "#fff",
+              color: "var(--ds-color-fg)",
             }}
           />
           <Legend
@@ -78,9 +94,9 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
             }}
           />
 
-          {categories.map((cat, index) => {
+          {normalizedCategories.map((cat, index) => {
             // Apply rounded radius only to the top bar in the stack
-            const isTop = index === categories.length - 1;
+            const isTop = index === normalizedCategories.length - 1;
             const radius: [number, number, number, number] = isTop
               ? [6, 6, 0, 0]
               : [0, 0, 0, 0];

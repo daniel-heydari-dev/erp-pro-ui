@@ -21,8 +21,8 @@ const meta: Meta<typeof BorderBeam> = {
     duration: { control: "number" },
     borderWidth: { control: "number" },
     anchor: { control: "number" },
-    colorFrom: { control: "color" },
-    colorTo: { control: "color" },
+    colorFrom: { control: "text" },
+    colorTo: { control: "text" },
     delay: { control: "number" },
     className: { control: "text" },
   },
@@ -36,8 +36,8 @@ export const FeatureCard: Story = {
     size: 160,
     duration: 12,
     borderWidth: 1,
-    colorFrom: "#ffaa40",
-    colorTo: "#9c40ff",
+    colorFrom: "var(--ds-color-accent)",
+    colorTo: "var(--ds-color-accent-hover)",
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-3xl">
@@ -63,13 +63,17 @@ export const BeamVariants: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl" className="ui:block">
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
         <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
-          <BorderBeam colorFrom="#00cfe8" colorTo="#7367f0" duration={10} />
+          <BorderBeam
+            colorFrom="var(--ds-color-info)"
+            colorTo="var(--ds-color-accent)"
+            duration={10}
+          />
           <p className="ui:text-sm ui:font-medium">Cool signal</p>
         </div>
         <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
           <BorderBeam
-            colorFrom="#ff9f43"
-            colorTo="#ff4c51"
+            colorFrom="var(--ds-color-warning)"
+            colorTo="var(--ds-color-danger)"
             duration={8}
             size={140}
           />

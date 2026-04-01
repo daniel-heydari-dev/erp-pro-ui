@@ -11,12 +11,12 @@ const sizeConfig = {
 };
 
 const defaultColors = [
-  "#7367f0",
-  "#9b87f5",
-  "#6366f1",
-  "#8b5cf6",
-  "#a78bfa",
-  "#c4b5fd",
+  "var(--ds-color-accent)",
+  "var(--ds-color-accent-hover)",
+  "var(--ds-color-info)",
+  "var(--ds-color-success)",
+  "var(--ds-color-warning)",
+  "var(--ds-color-danger)",
 ];
 
 export const SplashCursor = ({
@@ -180,6 +180,12 @@ export const SplashCursor = ({
   };
 
   const cursorPos = smooth ? smoothPos : mousePos;
+  const glowColor =
+    color && secondaryColor
+      ? `color-mix(in srgb, ${color} 60%, ${secondaryColor})`
+      : color
+        ? `color-mix(in srgb, ${color} 35%, transparent)`
+        : "color-mix(in srgb, var(--ds-color-accent) 35%, transparent)";
 
   return (
     <div
@@ -201,7 +207,7 @@ export const SplashCursor = ({
             width: sizeConfig[size].base * 2,
             height: sizeConfig[size].base * 2,
             transform: "translate(-50%, -50%)",
-            background: `radial-gradient(circle, ${color || defaultColors[0]}40 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
             filter: blur ? `blur(${blur}px)` : undefined,
           }}
           initial={{ scale: 0, opacity: 0 }}

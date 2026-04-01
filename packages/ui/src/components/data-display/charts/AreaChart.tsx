@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { normalizeChartColors } from "./chartPalette";
+
 export interface AreaChartData {
   name: string;
   [key: string]: string | number;
@@ -31,6 +33,17 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   className = "",
   showGrid = true,
 }) => {
+  const normalizedCategories = React.useMemo(() => {
+    const normalizedColors = normalizeChartColors(
+      categories.map((category) => category.color),
+    );
+
+    return categories.map((category, index) => ({
+      ...category,
+      color: normalizedColors[index] ?? category.color,
+    }));
+  }, [categories]);
+
   return (
     <div className={`w-full ${className}`} style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -39,7 +52,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>
-            {categories.map((cat) => (
+            {normalizedCategories.map((cat) => (
               <linearGradient
                 key={`gradient-${cat.key}`}
                 id={`color-${cat.key}`}
@@ -58,7 +71,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke="var(--color-neutral-800, #262626)"
+              stroke="var(--ds-color-border)"
               opacity={0.5}
             />
           )}
@@ -67,29 +80,30 @@ export const AreaChart: React.FC<AreaChartProps> = ({
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dy={10}
           />
 
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dx={-10}
           />
 
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(10, 10, 10, 0.9)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor:
+                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
+              border: "1px solid var(--ds-color-border)",
               borderRadius: "8px",
               backdropFilter: "blur(8px)",
-              color: "#fff",
+              color: "var(--ds-color-fg)",
             }}
-            itemStyle={{ color: "#fff" }}
+            itemStyle={{ color: "var(--ds-color-fg)" }}
           />
 
-          {categories.map((cat) => (
+          {normalizedCategories.map((cat) => (
             <Area
               key={cat.key}
               type="monotone"

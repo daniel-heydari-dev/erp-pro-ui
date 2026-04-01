@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import { Tooltip } from "./Tooltip";
 
@@ -60,9 +61,7 @@ export const Default: Story = {
       className="ui:min-h-56"
     >
       <Tooltip content="Tooltip helper text" {...args}>
-        <button className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md bg-white dark:bg-neutral-800 text-foreground cursor-default">
-          Hover over me
-        </button>
+        <Button label="Hover over me" />
       </Tooltip>
     </StorySurface>
   ),
@@ -80,24 +79,16 @@ export const Positions: Story = {
     >
       <div className="ui:flex ui:flex-wrap ui:items-center ui:gap-8">
         <Tooltip content="Tooltip on top" position="top">
-          <button className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md cursor-default">
-            Top
-          </button>
+          <Button label="Top" />
         </Tooltip>
         <Tooltip content="Tooltip on right" position="right">
-          <button className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md cursor-default">
-            Right
-          </button>
+          <Button label="Right" />
         </Tooltip>
         <Tooltip content="Tooltip on bottom" position="bottom">
-          <button className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md cursor-default">
-            Bottom
-          </button>
+          <Button label="Bottom" />
         </Tooltip>
         <Tooltip content="Tooltip on left" position="left">
-          <button className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md cursor-default">
-            Left
-          </button>
+          <Button label="Left" />
         </Tooltip>
       </div>
     </StorySurface>
@@ -119,9 +110,7 @@ export const ClickTrigger: Story = {
         trigger="click"
         position="bottom"
       >
-        <button className="ui:rounded-md ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-          Why is this locked?
-        </button>
+        <Button label="Why is this locked?" />
       </Tooltip>
     </StorySurface>
   ),
@@ -138,12 +127,12 @@ export const FormHint: Story = {
         <div className="ui:flex ui:items-center ui:gap-2">
           <span className="ui:text-sm ui:font-medium">Reorder threshold</span>
           <Tooltip content="When stock drops below this count, the SKU appears in the replenishment queue.">
-            <button
+            <Button
               aria-label="Threshold help"
-              className="ui:flex ui:h-6 ui:w-6 ui:items-center ui:justify-center ui:rounded-full ui:border ui:border-border ui:text-xs ui:font-semibold"
+              className="ui:h-6 ui:w-6 ui:rounded-full ui:px-0 ui:py-0 ui:text-xs ui:font-semibold"
             >
               ?
-            </button>
+            </Button>
           </Tooltip>
         </div>
         <div className="ui:rounded-md ui:border ui:border-border ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground">
@@ -168,12 +157,9 @@ export const ControlledVisibility: Story = {
         className="ui:min-h-56"
       >
         <div className="ui:flex ui:items-center ui:gap-3">
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-          >
+          <Button onClick={() => setOpen((prev) => !prev)} primary>
             {open ? "Hide tooltip" : "Show tooltip"}
-          </button>
+          </Button>
 
           <Tooltip
             content="Controlled tooltips are helpful when visibility follows external workflow state."
@@ -182,9 +168,7 @@ export const ControlledVisibility: Story = {
             trigger="click"
             position="right"
           >
-            <button className="ui:rounded-md ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-              Controlled target
-            </button>
+            <Button label="Controlled target" />
           </Tooltip>
         </div>
       </StorySurface>

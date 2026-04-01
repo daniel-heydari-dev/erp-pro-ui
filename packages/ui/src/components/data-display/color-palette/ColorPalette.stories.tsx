@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import ColorPalette from "./ColorPalette";
 
@@ -144,9 +145,7 @@ export const BrandAndModeMatrix: Story = {
 
                 <div className="ui:space-y-3 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
                   <div className="ui:flex ui:items-center ui:gap-2">
-                    <button className="ui:rounded-lg ui:bg-accent ui:px-3 ui:py-2 ui:text-sm ui:font-medium ui:text-on-accent">
-                      Primary action
-                    </button>
+                    <Button label="Primary action" primary />
                     <span className="ui:rounded-full ui:border ui:border-border ui:bg-surface ui:px-3 ui:py-1 ui:text-xs ui:text-fg-muted">
                       Surface token
                     </span>

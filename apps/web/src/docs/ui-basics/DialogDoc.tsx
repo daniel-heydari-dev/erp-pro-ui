@@ -296,13 +296,14 @@ const Example = () => {
               "zoom",
             ] as DialogAnimation[]
           ).map((anim) => (
-            <button
+            <Button
               key={anim}
               onClick={() => openAnimation(anim)}
-              className="px-3 py-1.5 text-sm rounded-md bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+              size="small"
+              className="bg-neutral-100 px-3 py-1.5 text-sm shadow-none hover:bg-neutral-200 hover:opacity-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
             >
               {anim}
-            </button>
+            </Button>
           ))}
         </div>
 

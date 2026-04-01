@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../button";
 import { StorySurface } from "../../shared/storybook";
 import { Calendar } from "./Calendar";
 
@@ -88,20 +89,18 @@ function FooterActionsExample() {
         onSelect={setDate}
         footer={
           <div className="ui:flex ui:justify-between ui:border-t ui:border-border ui:pt-3">
-            <button
-              type="button"
+            <Button
+              label="Today"
+              size="small"
               onClick={() => setDate(new Date())}
-              className="ui:text-xs ui:font-semibold ui:text-accent"
-            >
-              Today
-            </button>
-            <button
-              type="button"
+              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-accent ui:shadow-none"
+            />
+            <Button
+              label="Clear"
+              size="small"
               onClick={() => setDate(null)}
-              className="ui:text-xs ui:font-semibold ui:text-muted-foreground"
-            >
-              Clear
-            </button>
+              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-muted-foreground ui:shadow-none"
+            />
           </div>
         }
       />

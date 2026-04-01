@@ -31,6 +31,9 @@ export {
   AreaChart,
   BarChart,
   PieChart,
+  chartColorTokens,
+  getChartColorVar,
+  getChartPalette,
 } from "./components/data-display/charts";
 export type {
   StackedBarData,
@@ -38,6 +41,8 @@ export type {
   AreaChartData,
   BarChartData,
   PieChartData,
+  ChartColorSlot,
+  ChartColorToken,
 } from "./components/data-display/charts";
 
 export { Accordion } from "./components/navigation/accordion";
@@ -76,6 +81,13 @@ export type {
   ChipSize,
 } from "./components/data-display/chip";
 
+export { ProgressBar } from "./components/data-display/progress-bar";
+export type {
+  ProgressBarProps,
+  ProgressBarSize,
+  ProgressBarTone,
+} from "./components/data-display/progress-bar";
+
 export { ChromaGrid } from "./components/effects/chroma-grid";
 
 export { ColorPalette } from "./components/data-display/color-palette";
@@ -99,6 +111,8 @@ export {
   FilterProfile,
 } from "./components/data-display/data-table";
 export type {
+  DataTableCellRenderContext,
+  DataTableColumn,
   DataTableProps,
   FilterOption,
   FilterValue,

@@ -1144,7 +1144,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
           select-none
           absolute
           font-black
-          [font-size:4rem]
+          text-[4rem]
           left-[1.6em]
           top-1/2
           transform
@@ -1154,8 +1154,8 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${
             isMoving
-              ? "opacity-0 pointer-events-none duration-[100ms]"
-              : "opacity-100 pointer-events-auto duration-[500ms]"
+              ? "opacity-0 pointer-events-none duration-100"
+              : "opacity-100 pointer-events-auto duration-500"
           }
         `}
           >
@@ -1174,8 +1174,8 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${
             isMoving
-              ? "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2"
-              : "opacity-100 pointer-events-auto duration-[500ms] translate-x-[-90%] -translate-y-1/2"
+              ? "opacity-0 pointer-events-none duration-100 translate-x-[-60%] -translate-y-1/2"
+              : "opacity-100 pointer-events-auto duration-500 translate-x-[-90%] -translate-y-1/2"
           }
         `}
           >
@@ -1188,8 +1188,8 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
           absolute
           left-1/2
           z-10
-          w-[60px]
-          h-[60px]
+          w-15
+          h-15
           grid
           place-items-center
           bg-[#00ffff]
@@ -1201,12 +1201,12 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${
             isMoving
-              ? "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2"
-              : "bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2"
+              ? "-bottom-20 opacity-0 pointer-events-none duration-100 scale-0 -translate-x-1/2"
+              : "bottom-[3.8em] opacity-100 pointer-events-auto duration-500 scale-100 -translate-x-1/2"
           }
         `}
           >
-            <p className="select-none relative text-[#060010] top-[2px] text-[26px]">
+            <p className="select-none relative text-[#060010] top-0.5 text-[26px]">
               &#x2197;
             </p>
           </div>

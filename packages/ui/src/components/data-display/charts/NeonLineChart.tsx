@@ -11,6 +11,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import {
+  getChartColorVar,
+  normalizeChartColorValue,
+  normalizeChartColors,
+} from "./chartPalette";
+
 interface DataPoint {
   name: string;
   value: number;
@@ -28,11 +34,20 @@ interface NeonLineChartProps {
 export const NeonLineChart: React.FC<NeonLineChartProps> = ({
   data,
   height = 300,
-  lineColorStop1 = "#00f0ff",
-  lineColorStop2 = "#ff00e5",
-  glowColor = "rgba(255, 0, 229, 0.4)",
+  lineColorStop1 = getChartColorVar(2),
+  lineColorStop2 = getChartColorVar(1),
+  glowColor = getChartColorVar(1),
   className = "",
 }) => {
+  const [normalizedStop1, normalizedStop2] = React.useMemo(
+    () => normalizeChartColors([lineColorStop1, lineColorStop2]),
+    [lineColorStop1, lineColorStop2],
+  );
+  const normalizedGlowColor = React.useMemo(
+    () => normalizeChartColorValue(glowColor) ?? getChartColorVar(1),
+    [glowColor],
+  );
+
   return (
     <div className={`w-full relative ${className}`} style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -43,8 +58,8 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
           <defs>
             {/* Linear Gradient for the Line */}
             <linearGradient id="neonGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={lineColorStop1} />
-              <stop offset="100%" stopColor={lineColorStop2} />
+              <stop offset="0%" stopColor={normalizedStop1} />
+              <stop offset="100%" stopColor={normalizedStop2} />
             </linearGradient>
 
             {/* Glowing Drop Shadow Filter */}
@@ -53,14 +68,14 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
                 dx="0"
                 dy="6"
                 stdDeviation="8"
-                floodColor={glowColor}
+                floodColor={normalizedGlowColor}
                 floodOpacity="0.8"
               />
               <feDropShadow
                 dx="0"
                 dy="0"
                 stdDeviation="15"
-                floodColor={lineColorStop1}
+                floodColor={normalizedStop1}
                 floodOpacity="0.3"
               />
             </filter>
@@ -70,7 +85,7 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
-            stroke="var(--color-neutral-800, #262626)"
+            stroke="var(--ds-color-border)"
             opacity={0.5}
           />
 
@@ -78,26 +93,27 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dy={10}
           />
 
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "var(--color-neutral-400, #a3a3a3)", fontSize: 12 }}
+            tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
             dx={-10}
           />
 
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(10, 10, 10, 0.8)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor:
+                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
+              border: "1px solid var(--ds-color-border)",
               borderRadius: "8px",
               backdropFilter: "blur(8px)",
-              color: "#fff",
+              color: "var(--ds-color-fg)",
             }}
-            itemStyle={{ color: "#fff" }}
+            itemStyle={{ color: "var(--ds-color-fg)" }}
           />
 
           {/* The Neon Line */}
@@ -109,8 +125,8 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
             dot={false}
             activeDot={{
               r: 6,
-              fill: "#fff",
-              stroke: lineColorStop2,
+              fill: "var(--ds-color-surface)",
+              stroke: normalizedStop2,
               strokeWidth: 2,
             }}
             filter="url(#neonGlow)"

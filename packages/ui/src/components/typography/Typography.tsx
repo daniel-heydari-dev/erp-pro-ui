@@ -110,8 +110,7 @@ const trackingStyles: Record<TypographyTracking, string> = {
 };
 
 const gradientStyles: Record<string, string> = {
-  primary:
-    "bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent",
+  primary: "bg-clip-text text-transparent",
   ocean:
     "bg-linear-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent",
   sunset:
@@ -138,6 +137,7 @@ export const Typography = ({
   style,
 }: TypographyProps) => {
   const Component = as || variantMapping[variant];
+  const gradientVariant = gradient === true ? "primary" : gradient;
 
   const getGradientClass = () => {
     if (!gradient) return "";
@@ -145,9 +145,18 @@ export const Typography = ({
     return gradientStyles[gradient] || gradientStyles.primary;
   };
 
+  const computedStyle: React.CSSProperties | undefined =
+    gradientVariant === "primary"
+      ? {
+          ...style,
+          backgroundImage:
+            "linear-gradient(90deg, var(--ds-color-accent), var(--ds-color-accent-hover))",
+        }
+      : style;
+
   return (
     <Component
-      style={style}
+      style={computedStyle}
       className={mergeClassNames(
         variantStyles[variant],
         align && alignStyles[align],

@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { normalizeChartColors } from "./chartPalette";
+
 export interface BarChartData {
   name: string;
   [key: string]: string | number;
@@ -31,6 +33,17 @@ export const BarChart: React.FC<BarChartProps> = ({
   className = "",
   layout = "horizontal",
 }) => {
+  const normalizedCategories = React.useMemo(() => {
+    const normalizedColors = normalizeChartColors(
+      categories.map((category) => category.color),
+    );
+
+    return categories.map((category, index) => ({
+      ...category,
+      color: normalizedColors[index] ?? category.color,
+    }));
+  }, [categories]);
+
   return (
     <div className={`w-full ${className}`} style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -43,7 +56,7 @@ export const BarChart: React.FC<BarChartProps> = ({
             strokeDasharray="3 3"
             horizontal={layout === "horizontal"}
             vertical={layout === "vertical"}
-            stroke="var(--color-neutral-800, #262626)"
+            stroke="var(--ds-color-border)"
             opacity={0.4}
           />
 
@@ -54,7 +67,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fill: "var(--ds-color-fg-muted)",
                   fontSize: 12,
                 }}
                 dy={10}
@@ -63,7 +76,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fill: "var(--ds-color-fg-muted)",
                   fontSize: 12,
                 }}
                 dx={-10}
@@ -76,7 +89,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fill: "var(--ds-color-fg-muted)",
                   fontSize: 12,
                 }}
                 dy={10}
@@ -87,7 +100,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "var(--color-neutral-400, #a3a3a3)",
+                  fill: "var(--ds-color-fg-muted)",
                   fontSize: 12,
                 }}
                 dx={-10}
@@ -96,17 +109,20 @@ export const BarChart: React.FC<BarChartProps> = ({
           )}
 
           <Tooltip
-            cursor={{ fill: "var(--color-neutral-800, rgba(38, 38, 38, 0.4))" }}
+            cursor={{
+              fill: "color-mix(in srgb, var(--ds-color-accent) 10%, transparent)",
+            }}
             contentStyle={{
-              backgroundColor: "rgba(10, 10, 10, 0.9)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor:
+                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
+              border: "1px solid var(--ds-color-border)",
               borderRadius: "8px",
               backdropFilter: "blur(8px)",
-              color: "#fff",
+              color: "var(--ds-color-fg)",
             }}
           />
 
-          {categories.map((cat) => (
+          {normalizedCategories.map((cat) => (
             <Bar
               key={cat.key}
               dataKey={cat.key}

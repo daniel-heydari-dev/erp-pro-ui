@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Calendar } from "erp-pro-ui";
+import { Button, Calendar } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
 const CalendarDoc = () => {
   const [date, setDate] = useState<Date | null>(new Date());
+  const [visibleMonth, setVisibleMonth] = useState({ month: 0, year: 2027 });
   const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
     start: new Date(),
     end: new Date(new Date().setDate(new Date().getDate() + 5)),
@@ -85,23 +86,35 @@ const [date, setDate] = useState<Date | null>(new Date());
       </p>
       <div className="docs-showcase-card flex-col items-center">
         <Calendar
-          month={0}
-          year={2027}
+          month={visibleMonth.month}
+          year={visibleMonth.year}
           onMonthChange={(nextMonth, nextYear) => {
-            console.log("Navigate to", nextMonth, nextYear);
+            setVisibleMonth({ month: nextMonth, year: nextYear });
           }}
           value={date}
           onSelect={setDate}
           className="rounded-md border shadow"
         />
+        <div className="mt-4 text-sm text-neutral-500">
+          Viewing:{" "}
+          {new Date(visibleMonth.year, visibleMonth.month).toLocaleString(
+            undefined,
+            {
+              month: "long",
+              year: "numeric",
+            },
+          )}
+        </div>
       </div>
 
       <CodeBlock
-        code={`<Calendar
-  month={0}
-  year={2027}
+        code={`const [visibleMonth, setVisibleMonth] = useState({ month: 0, year: 2027 });
+
+<Calendar
+  month={visibleMonth.month}
+  year={visibleMonth.year}
   onMonthChange={(nextMonth, nextYear) => {
-    console.log(nextMonth, nextYear);
+    setVisibleMonth({ month: nextMonth, year: nextYear });
   }}
   value={date}
   onSelect={setDate}
@@ -121,18 +134,20 @@ const [date, setDate] = useState<Date | null>(new Date());
           className="rounded-md border shadow"
           footer={
             <div className="flex justify-between border-t border-white/10 pt-3">
-              <button
+              <Button
                 onClick={() => setDate(new Date())}
-                className="text-xs font-semibold text-accent hover:underline"
+                size="small"
+                className="h-auto border-none bg-transparent px-0 py-0 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
               >
                 Today
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setDate(null)}
-                className="text-xs font-semibold text-neutral-500 hover:underline"
+                size="small"
+                className="h-auto border-none bg-transparent px-0 py-0 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-700 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
               >
                 Clear
-              </button>
+              </Button>
             </div>
           }
         />
@@ -144,8 +159,8 @@ const [date, setDate] = useState<Date | null>(new Date());
   onSelect={setDate}
   footer={
     <div className="flex justify-between border-t p-2">
-      <button onClick={() => setDate(new Date())}>Today</button>
-      <button onClick={() => setDate(null)}>Clear</button>
+      <Button label="Today" size="small" onClick={() => setDate(new Date())} />
+      <Button label="Clear" size="small" onClick={() => setDate(null)} />
     </div>
   }
 />`}

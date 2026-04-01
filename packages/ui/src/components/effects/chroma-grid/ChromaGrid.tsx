@@ -12,14 +12,14 @@ const borderRadiusMap = {
 };
 
 const defaultColors = [
-  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-  "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-  "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-  "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-  "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-  "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
-  "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+  "linear-gradient(135deg, var(--ds-color-accent) 0%, var(--ds-color-accent-hover) 100%)",
+  "linear-gradient(135deg, var(--ds-color-accent) 0%, var(--ds-color-info) 100%)",
+  "linear-gradient(135deg, var(--ds-color-info) 0%, var(--ds-color-accent-hover) 100%)",
+  "linear-gradient(135deg, var(--ds-color-success) 0%, var(--ds-color-accent) 100%)",
+  "linear-gradient(135deg, var(--ds-color-warning) 0%, var(--ds-color-accent) 100%)",
+  "linear-gradient(135deg, var(--ds-color-danger) 0%, var(--ds-color-warning) 100%)",
+  "linear-gradient(135deg, var(--ds-color-accent-hover) 0%, var(--ds-color-success) 100%)",
+  "linear-gradient(135deg, var(--ds-color-info) 0%, var(--ds-color-success) 100%)",
 ];
 
 const getAnimation = (
@@ -76,7 +76,8 @@ const getHoverEffect = (effect: string) => {
       return { y: -8, transition: { duration: 0.3 } };
     case "glow":
       return {
-        boxShadow: "0 0 30px rgba(115, 103, 240, 0.5)",
+        boxShadow:
+          "0 0 30px color-mix(in srgb, var(--ds-color-accent) 45%, transparent)",
         transition: { duration: 0.3 },
       };
     case "scale":

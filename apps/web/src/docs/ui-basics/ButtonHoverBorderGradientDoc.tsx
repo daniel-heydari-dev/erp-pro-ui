@@ -13,7 +13,7 @@ const ButtonHoverBorderGradientDoc = () => {
 
       {/* Basic Usage */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
-      <div className="docs-showcase-card h-[250px] flex items-center justify-center p-0">
+      <div className="docs-showcase-card h-62.5 flex items-center justify-center p-0">
         <div className="-mt-40">
           {" "}
           {/* Offset the component's hardcoded m-40 */}
@@ -39,7 +39,7 @@ const ButtonHoverBorderGradientDoc = () => {
         Use this variant for a small group of premium calls to action such as
         demo launches or trial starts.
       </p>
-      <div className="docs-showcase-card h-[280px] flex items-center justify-center p-0">
+      <div className="docs-showcase-card h-70 flex items-center justify-center p-0">
         <div className="-mt-40 flex flex-wrap items-center justify-center gap-8">
           <ButtonHoverBorderGradient>
             <span className="font-semibold">Watch Demo</span>

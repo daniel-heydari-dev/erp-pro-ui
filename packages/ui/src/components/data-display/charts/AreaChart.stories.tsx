@@ -14,8 +14,8 @@ const financeData = [
 ];
 
 const financeCategories = [
-  { key: "revenue", color: "#7367f0" },
-  { key: "expenses", color: "#ff4c51" },
+  { key: "revenue", color: "var(--ds-chart-1)" },
+  { key: "expenses", color: "var(--ds-chart-5)" },
 ];
 
 const demandData = [
@@ -27,9 +27,9 @@ const demandData = [
 ];
 
 const demandCategories = [
-  { key: "inbound", color: "#00cfe8" },
-  { key: "outbound", color: "#28c76f" },
-  { key: "returns", color: "#ff9f43" },
+  { key: "inbound", color: "var(--ds-chart-2)" },
+  { key: "outbound", color: "var(--ds-chart-3)" },
+  { key: "returns", color: "var(--ds-chart-4)" },
 ];
 
 const meta: Meta<typeof AreaChart> = {
@@ -97,7 +97,7 @@ export const MinimalPresentation: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
       <AreaChart
         data={financeData}
-        categories={[{ key: "revenue", color: "#7367f0" }]}
+        categories={[{ key: "revenue", color: "var(--ds-chart-1)" }]}
         height={320}
         showGrid={false}
         className="ui:px-2"

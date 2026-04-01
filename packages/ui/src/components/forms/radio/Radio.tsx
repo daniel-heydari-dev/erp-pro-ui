@@ -6,12 +6,12 @@ import { mergeClassNames } from "../../../utils";
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "-");
 
 const colorValues: Record<RadioColor, string> = {
-  red: "#ef4444",
-  blue: "#3b82f6",
-  green: "#22c55e",
-  yellow: "#eab308",
-  teal: "#14b8a6",
-  primary: "var(--color-primary)",
+  red: "var(--ds-color-danger)",
+  blue: "var(--ds-color-info)",
+  green: "var(--ds-color-success)",
+  yellow: "var(--ds-color-warning)",
+  teal: "var(--ds-brand-teal)",
+  primary: "var(--ds-color-accent)",
 };
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
@@ -21,7 +21,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       label,
       error,
       id,
-      color = "blue",
+      color = "primary",
       bgClassName = "",
       ...props
     },
@@ -53,7 +53,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           </label>
         )}
         {error && (
-          <p className="text-sm font-medium text-red-500 mt-1">{error}</p>
+          <p className="mt-1 text-sm font-medium text-destructive">{error}</p>
         )}
       </div>
     );

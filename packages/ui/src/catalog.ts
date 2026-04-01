@@ -118,6 +118,12 @@ export const uiCatalogItems = [
     storybookTitle: "Data Display/Chip",
   },
   {
+    name: "Progress Bar",
+    slug: "progress-bar",
+    packageExportPath: "progress-bar",
+    storybookTitle: "Data Display/ProgressBar",
+  },
+  {
     name: "Calendar",
     slug: "calendar",
     packageExportPath: "calendar",

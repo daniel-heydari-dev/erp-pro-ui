@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Input } from "../forms/input";
 import { StorySurface } from "../shared/storybook";
 import { Typography } from "./Typography";
 
@@ -113,11 +114,13 @@ function HeroSpecimenExample() {
         </Typography>
         <div className="ui:absolute ui:bottom-8 ui:left-1/2 ui:w-full ui:max-w-2xl ui:-translate-x-1/2 ui:px-4 ui:z-20">
           <div className="ui:flex ui:items-center ui:gap-4 ui:rounded-2xl ui:border ui:border-white/10 ui:bg-white/5 ui:px-6 ui:py-3 ui:backdrop-blur-xl">
-            <input
+            <Input
               value={sampleText}
               onChange={(event) => setSampleText(event.target.value)}
-              className="ui:flex-1 ui:bg-transparent ui:text-sm ui:text-white ui:outline-none ui:placeholder:text-white/30"
               placeholder="Type something..."
+              extra="ui:border-transparent"
+              bgClassName="ui:bg-transparent"
+              className="ui:flex-1 ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-sm ui:text-white"
             />
           </div>
         </div>

@@ -28,13 +28,13 @@ export function PasswordStrengthMeter({
   // Determine strength color based on the calculated strength
   const getColor = (strength: number): string => {
     const colors = [
-      "bg-red-500",
-      "bg-red-400",
-      "bg-yellow-500",
-      "bg-yellow-400",
-      "bg-green-500",
+      "bg-danger",
+      "bg-danger",
+      "bg-warning",
+      "bg-warning",
+      "bg-success",
     ];
-    return colors[strength] || "bg-gray-600";
+    return colors[strength] || "bg-neutral-600";
   };
 
   // Get a text label corresponding to the password strength

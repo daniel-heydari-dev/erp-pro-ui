@@ -121,24 +121,24 @@ const variantStyles: Record<
     iconColor: "text-accent",
   },
   destructive: {
-    icon: "bg-red-100 dark:bg-red-900/30",
-    button: "bg-red-500 hover:bg-red-600 text-white",
-    iconColor: "text-red-500 dark:text-red-400",
+    icon: "bg-danger-subtle",
+    button: "bg-destructive hover:opacity-90 text-white",
+    iconColor: "text-danger",
   },
   success: {
-    icon: "bg-green-100 dark:bg-green-900/30",
-    button: "bg-green-500 hover:bg-green-600 text-white",
-    iconColor: "text-green-500 dark:text-green-400",
+    icon: "bg-success-subtle",
+    button: "bg-success hover:opacity-90 text-white",
+    iconColor: "text-success",
   },
   warning: {
-    icon: "bg-amber-100 dark:bg-amber-900/30",
-    button: "bg-amber-500 hover:bg-amber-600 text-white",
-    iconColor: "text-amber-500 dark:text-amber-400",
+    icon: "bg-warning-subtle",
+    button: "bg-warning hover:opacity-90 text-neutral-950",
+    iconColor: "text-warning",
   },
   info: {
-    icon: "bg-blue-100 dark:bg-blue-900/30",
-    button: "bg-blue-500 hover:bg-blue-600 text-white",
-    iconColor: "text-blue-500 dark:text-blue-400",
+    icon: "bg-info-subtle",
+    button: "bg-info hover:opacity-90 text-white",
+    iconColor: "text-info",
   },
 };
 
@@ -293,7 +293,7 @@ export const Dialog = ({
             transition={currentTransition}
           >
             {/* Subtle gradient overlay for crystal effect */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 dark:from-white/5 dark:to-transparent pointer-events-none rounded-2xl" />
+            <div className="absolute inset-0 bg-linear-to-tr from-white/10 via-transparent to-white/5 dark:from-white/5 dark:to-transparent pointer-events-none rounded-2xl" />
 
             {/* Close button */}
             {showClose && (
@@ -316,7 +316,7 @@ export const Dialog = ({
               {/* Icon */}
               {preset !== "custom" && (
                 <div
-                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${styles.icon}`}
+                  className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${styles.icon}`}
                 >
                   <span className={styles.iconColor}>
                     {icon || <VariantIcon variant={variant} />}

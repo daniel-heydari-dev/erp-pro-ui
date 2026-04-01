@@ -74,6 +74,10 @@ const breakdownData = [
 const LandingPage = () => {
   const navigate = useNavigate();
   const openDocs = (path: string) => () => navigate(path);
+  const navLinkButtonClassName =
+    "h-auto border-none bg-transparent px-0 py-0 text-sm font-medium text-zinc-400 shadow-none hover:bg-transparent hover:text-white hover:opacity-100";
+  const footerLinkButtonClassName =
+    "h-auto border-none bg-transparent px-0 py-0 text-left text-sm font-medium text-zinc-500 shadow-none hover:bg-transparent hover:text-white hover:opacity-100";
 
   return (
     <div className="relative min-h-screen bg-[#050510] text-zinc-100 selection:bg-purple-500/30 overflow-x-hidden">
@@ -114,34 +118,30 @@ const LandingPage = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <button
-            type="button"
+          <Button
             onClick={openDocs("/ui-basics/spotlight-card")}
-            className="hover:text-white transition-colors"
+            className={navLinkButtonClassName}
           >
             Features
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             onClick={openDocs("/ui-basics/button")}
-            className="hover:text-white transition-colors"
+            className={navLinkButtonClassName}
           >
             Components
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             onClick={openDocs("/get-started/introduction")}
-            className="hover:text-white transition-colors"
+            className={navLinkButtonClassName}
           >
             Documentation
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             onClick={openDocs("/ui-basics/data-table")}
-            className="hover:text-white transition-colors"
+            className={navLinkButtonClassName}
           >
             Examples
-          </button>
+          </Button>
           <Button
             onClick={() => navigate("/get-started/introduction")}
             className="px-5 py-2 border border-zinc-800 hover:border-zinc-600 rounded-md transition-all"
@@ -326,31 +326,28 @@ const LandingPage = () => {
             <h4 className="font-semibold text-sm">Quick links</h4>
             <ul className="space-y-2 text-sm text-zinc-500">
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/ui-basics/spotlight-card")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   Features
-                </button>
+                </Button>
               </li>
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/ui-basics/button")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   Components
-                </button>
+                </Button>
               </li>
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/ui-basics/dialog")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   Examples
-                </button>
+                </Button>
               </li>
             </ul>
           </div>
@@ -359,31 +356,28 @@ const LandingPage = () => {
             <h4 className="font-semibold text-sm">Social</h4>
             <ul className="space-y-2 text-sm text-zinc-500">
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/get-started/introduction")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   About
-                </button>
+                </Button>
               </li>
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/ui-basics/data-table")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   Tables
-                </button>
+                </Button>
               </li>
               <li>
-                <button
-                  type="button"
+                <Button
                   onClick={openDocs("/ui-basics/typography")}
-                  className="hover:text-white"
+                  className={footerLinkButtonClassName}
                 >
                   Typography
-                </button>
+                </Button>
               </li>
             </ul>
           </div>

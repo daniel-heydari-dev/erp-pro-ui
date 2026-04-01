@@ -4,7 +4,7 @@ import type { DrawerProps, DrawerPosition } from "./types";
 import { useOverlayEffects } from "../../shared/overlay";
 
 const basePanel =
-  "relative flex flex-col backdrop-blur-xl bg-white/70 dark:bg-neutral-900/70 p-6 shadow-2xl border-white/20 dark:border-white/10 rounded-sm";
+  "relative flex flex-col overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-white/80 via-white/68 to-white/52 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22),0_8px_28px_rgba(15,23,42,0.14)] ring-1 ring-inset ring-white/25 backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:from-neutral-950/84 dark:via-neutral-950/72 dark:to-neutral-900/58 dark:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_10px_30px_rgba(0,0,0,0.3)] dark:ring-white/10";
 
 const positionClasses: Record<DrawerPosition, string> = {
   right: "h-[calc(100%-8px)] my-1 mr-1 w-full max-w-md ml-auto border",
@@ -63,7 +63,7 @@ export const Drawer = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/40"
+            className="fixed inset-0 bg-slate-950/24 backdrop-blur-[3px] dark:bg-black/44"
             onClick={() => onOpenChange?.(false)}
           />
           <motion.div
@@ -80,34 +80,52 @@ export const Drawer = ({
             variants={variants}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/30 via-white/10 to-transparent dark:from-white/10 dark:via-white/[0.03] dark:to-transparent"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-white/40 to-transparent dark:from-white/12"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-10 top-[-72px] h-40 w-40 rounded-full bg-white/35 blur-3xl dark:bg-sky-200/10"
+            />
             <button
               type="button"
-              className="absolute right-4 top-4 text-neutral-500 dark:text-neutral-400 transition-colors hover:text-neutral-900 dark:hover:text-white text-xl font-light"
+              className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/35 bg-white/45 text-lg font-light text-foreground shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-white/72 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
               aria-label="Close drawer"
               onClick={() => onOpenChange?.(false)}
             >
               ×
             </button>
-            {(title || description) && (
-              <header className="space-y-1 pr-6">
-                {title && (
-                  <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
-                    {title}
-                  </h2>
-                )}
-                {description && (
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    {description}
-                  </p>
-                )}
-              </header>
-            )}
-            {children && (
-              <div className="mt-4 flex-1 overflow-auto space-y-4">
-                {children}
-              </div>
-            )}
-            {footer && <footer className="mt-6">{footer}</footer>}
+            <div className="relative z-10 flex h-full flex-col">
+              {(title || description) && (
+                <header className="space-y-1 pr-10">
+                  {title && (
+                    <h2 className="text-lg font-semibold tracking-tight text-foreground">
+                      {title}
+                    </h2>
+                  )}
+                  {description && (
+                    <p className="text-sm text-muted-foreground">
+                      {description}
+                    </p>
+                  )}
+                </header>
+              )}
+              {children && (
+                <div className="mt-4 flex-1 overflow-auto space-y-4 pr-1">
+                  {children}
+                </div>
+              )}
+              {footer && (
+                <footer className="mt-6 border-t border-white/20 pt-4 dark:border-white/10">
+                  {footer}
+                </footer>
+              )}
+            </div>
           </motion.div>
         </div>
       )}

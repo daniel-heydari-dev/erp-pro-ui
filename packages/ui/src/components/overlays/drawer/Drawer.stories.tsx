@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import { Drawer } from "./Drawer";
 import type { DrawerPosition, DrawerProps } from "./types";
@@ -44,12 +45,9 @@ function DrawerDemo({ triggerLabel, ...props }: DrawerStoryProps) {
   const [open, setOpen] = useState(false);
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <button
-        onClick={() => setOpen(true)}
-        className="ui:px-4 ui:py-2 ui:bg-neutral-900 dark:ui:bg-white ui:text-white dark:ui:text-neutral-900 ui:font-medium ui:rounded-md ui:cursor-pointer"
-      >
+      <Button primary onClick={() => setOpen(true)}>
         {triggerLabel ?? `Open ${props.position} Drawer`}
-      </button>
+      </Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
@@ -106,12 +104,8 @@ export const SettingsPanel: Story = {
       description="Adjust notifications, approval behavior, and visibility from one side panel."
       footer={
         <div className="ui:flex ui:justify-end ui:gap-3">
-          <button className="ui:rounded-md ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-            Cancel
-          </button>
-          <button className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900">
-            Save changes
-          </button>
+          <Button label="Cancel" />
+          <Button label="Save changes" primary />
         </div>
       }
     >
@@ -147,12 +141,9 @@ export const ControlledWorkflow: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
-        <button
-          onClick={() => setOpen(true)}
-          className="ui:cursor-pointer ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-        >
+        <Button primary onClick={() => setOpen(true)}>
           Open approval panel
-        </button>
+        </Button>
 
         <Drawer
           open={open}
@@ -162,18 +153,12 @@ export const ControlledWorkflow: Story = {
           description="Review details and confirm before the transfer is queued."
           footer={
             <div className="ui:flex ui:justify-end ui:gap-3">
-              <button
-                className="ui:rounded-md ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium"
+              <Button label="Cancel" onClick={() => setOpen(false)} />
+              <Button
+                label="Queue transfer"
+                primary
                 onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-                onClick={() => setOpen(false)}
-              >
-                Queue transfer
-              </button>
+              />
             </div>
           }
         >

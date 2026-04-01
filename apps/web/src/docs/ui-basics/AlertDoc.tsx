@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Alert } from "erp-pro-ui";
+import { Alert, Button, CloseIcon } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -122,24 +122,13 @@ const AlertDoc = () => {
               title="New receiving flow available"
               description="You can now bulk-confirm ASN receipts directly from the inbound table."
             />
-            <button
+            <Button
               onClick={() => setShowDismissible(false)}
-              className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+              aria-label="Dismiss alert"
+              className="absolute top-4 right-4 h-8 w-8 border-none bg-transparent px-0 py-0 text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-900 hover:opacity-100 dark:hover:text-white"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+              <CloseIcon className="h-4 w-4" aria-hidden="true" />
+            </Button>
           </div>
         )}
       </div>
@@ -150,9 +139,7 @@ const AlertDoc = () => {
 {show && (
   <div className="relative max-w-3xl">
     <Alert title="New receiving flow available" description="..." />
-    <button onClick={() => setShow(false)} className="absolute top-4 right-4">
-      Close
-    </button>
+    <Button aria-label="Dismiss alert" onClick={() => setShow(false)}>Close</Button>
   </div>
 )}`}
       />

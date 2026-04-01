@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState, type ComponentProps } from "react";
 
+import { Button } from "../../forms/button";
 import {
   StoryIntro,
   StoryPanel,
@@ -109,13 +110,10 @@ export const PresetGallery: Story = {
               title="Preset comparison"
               description="Replay multiple built-in entrance styles side by side when choosing motion for a section."
             />
-            <button
-              type="button"
+            <Button
+              label="Replay Animations"
               onClick={() => setInstanceKey((current) => current + 1)}
-              className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-foreground"
-            >
-              Replay Animations
-            </button>
+            />
           </div>
           <div
             key={instanceKey}
@@ -157,13 +155,10 @@ export const EasingCurves: Story = {
               title="Easing comparison"
               description="Easing changes the personality of the same preset without changing layout."
             />
-            <button
-              type="button"
+            <Button
+              label="Replay Curves"
               onClick={() => setInstanceKey((current) => current + 1)}
-              className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-foreground"
-            >
-              Replay Curves
-            </button>
+            />
           </div>
           <div key={instanceKey} className="ui:flex ui:flex-wrap ui:gap-6">
             <AnimatedContent preset="slideRight" ease="backOut" duration={1}>

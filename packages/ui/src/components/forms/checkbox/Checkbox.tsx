@@ -4,12 +4,12 @@ import { forwardRef, useId } from "react";
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "-");
 
 const colorClasses: Record<NonNullable<CheckboxProps["color"]>, string> = {
-  red: "checked:bg-red-500 dark:checked:bg-red-400",
-  blue: "checked:bg-blue-500 dark:checked:bg-blue-400",
-  green: "checked:bg-green-500 dark:checked:bg-green-400",
-  yellow: "checked:bg-yellow-500 dark:checked:bg-yellow-400",
-  teal: "checked:bg-teal-500 dark:checked:bg-teal-400",
-  primary: "checked:bg-accent dark:checked:bg-accent",
+  red: "checked:bg-[var(--ds-color-danger)]",
+  blue: "checked:bg-[var(--ds-color-info)]",
+  green: "checked:bg-[var(--ds-color-success)]",
+  yellow: "checked:bg-[var(--ds-color-warning)]",
+  teal: "checked:bg-[var(--ds-brand-teal)]",
+  primary: "checked:bg-accent",
 };
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -55,7 +55,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               isPredefinedColor
                 ? colorClasses[color as keyof typeof colorClasses]
                 : ""
-            } ${error ? "border-red-500 dark:border-red-400" : ""} ${extra} ${className}`}
+            } ${error ? "border-destructive" : ""} ${extra} ${className}`}
             {...props}
           />
           {label && (

@@ -39,15 +39,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const wrapperStateStyles: Record<InputState, string> = {
       [InputState.DISABLED]: "bg-muted border-none",
       [InputState.ERROR]: "border-destructive ",
-      [InputState.SUCCESS]: "border-green-500 dark:border-green-400 ",
+      [InputState.SUCCESS]: "border-success-border ",
       [InputState.DEFAULT]: "border-border ",
     };
 
     const inputStateStyles: Record<InputState, string> = {
       [InputState.DISABLED]: "placeholder:!text-muted-foreground",
       [InputState.ERROR]: "text-destructive placeholder:text-destructive",
-      [InputState.SUCCESS]:
-        "text-green-500 placeholder:text-green-500 dark:text-green-400 dark:placeholder:text-green-400",
+      [InputState.SUCCESS]: "text-success placeholder:text-success",
       [InputState.DEFAULT]: "text-foreground",
     };
 
@@ -99,7 +98,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               placeholder={placeholder}
               disabled={disabled}
               className={mergeClassNames(
-                "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-[2px] focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 bgClassName,
                 inputStateStyles[state],
                 className,

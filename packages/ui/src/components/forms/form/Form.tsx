@@ -51,8 +51,8 @@ const messageIntentMap: Record<
   string
 > = {
   default: "text-neutral-500 dark:text-neutral-400",
-  error: "text-red-500 dark:text-red-400",
-  success: "text-emerald-600 dark:text-emerald-400",
+  error: "text-destructive",
+  success: "text-success",
 };
 
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "-");
@@ -194,7 +194,7 @@ export const FormField = ({
         className="text-sm font-medium text-neutral-900 dark:text-white"
       >
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="ml-1 text-destructive">*</span>}
       </label>
       {helperAction && (
         <div className="text-xs text-neutral-500 dark:text-neutral-400">

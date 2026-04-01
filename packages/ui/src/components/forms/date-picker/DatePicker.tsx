@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { Calendar } from "../calendar";
 
@@ -31,6 +32,7 @@ export const DatePicker = ({
   presets,
 }: DatePickerProps) => {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<DatePickerValue>(
     value ?? (mode === "range" ? emptyRange : null),
@@ -66,6 +68,9 @@ export const DatePicker = ({
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const radius = 100;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -86,6 +91,12 @@ export const DatePicker = ({
     };
   }, [open]);
 
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top } = event.currentTarget.getBoundingClientRect();
+    mouseX.set(event.clientX - left);
+    mouseY.set(event.clientY - top);
+  };
+
   const handlePresetClick = (getValue: () => DatePickerValue) => {
     const next = getValue();
     updateValue(next);
@@ -96,25 +107,51 @@ export const DatePicker = ({
     <div ref={containerRef} className={`w-full space-y-2 ${className}`.trim()}>
       {label && <p className="text-sm font-medium text-heading">{label}</p>}
       <div className="relative">
-        <button
-          type="button"
-          className={`flex w-full items-center justify-between rounded-md border border-black/5 dark:border-white/10 backdrop-blur-xl bg-white/40 dark:bg-zinc-950/40 px-3 py-2 text-sm shadow-sm ${
-            disabled ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={() => !disabled && setOpen((prev) => !prev)}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-          disabled={disabled}
+        <motion.div
+          style={{
+            backgroundImage: disabled
+              ? "none"
+              : useMotionTemplate`
+                  radial-gradient(
+                    ${
+                      visible ? `${radius}px` : "0px"
+                    } circle at ${mouseX}px ${mouseY}px,
+                    var(--ds-color-accent),
+                    transparent 90%
+                  )
+                `,
+          }}
+          onMouseMove={!disabled ? handleMouseMove : undefined}
+          onMouseEnter={!disabled ? () => setVisible(true) : undefined}
+          onMouseLeave={!disabled ? () => setVisible(false) : undefined}
+          className={
+            disabled
+              ? "group/date-picker rounded-lg border-none bg-muted p-[2px]"
+              : "group/date-picker rounded-lg border-border p-[2px]"
+          }
         >
-          <span
-            className={
-              displayValue ? "text-foreground" : "text-muted-foreground"
-            }
+          <button
+            type="button"
+            className={`shadow-input flex w-full items-center justify-between rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out ${
+              disabled
+                ? "cursor-not-allowed opacity-50"
+                : "group-hover/date-picker:shadow-none"
+            }`}
+            onClick={() => !disabled && setOpen((prev) => !prev)}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            disabled={disabled}
           >
-            {displayValue || placeholder}
-          </span>
-          <span aria-hidden="true">📅</span>
-        </button>
+            <span
+              className={
+                displayValue ? "text-foreground" : "text-muted-foreground"
+              }
+            >
+              {displayValue || placeholder}
+            </span>
+            <span aria-hidden="true">📅</span>
+          </button>
+        </motion.div>
         {open && !disabled && (
           <div className="absolute left-0 top-12 z-40 dropdown-panel">
             <Calendar
@@ -146,7 +183,7 @@ export const DatePicker = ({
                   <button
                     key={preset.label}
                     type="button"
-                    className="rounded-full border border-input px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-ring hover:text-heading"
+                    className="rounded-full border border-input px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-accent hover:bg-accent-subtle hover:text-accent"
                     onClick={() => handlePresetClick(preset.value)}
                   >
                     {preset.label}

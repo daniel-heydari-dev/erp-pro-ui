@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
+  Button,
+  Input,
+  Select,
   Typography,
   TypographyAlign,
   TypographyWeight,
@@ -17,6 +20,29 @@ const TypographyDoc = () => {
     useState<TypographyTracking>("tighter");
   const [activeGradient, setActiveGradient] =
     useState<TypographyGradient>("galaxy");
+
+  const weightOptions = [
+    { label: "Thin", value: "thin" },
+    { label: "Light", value: "light" },
+    { label: "Normal", value: "normal" },
+    { label: "Medium", value: "medium" },
+    { label: "Semibold", value: "semibold" },
+    { label: "Bold", value: "bold" },
+    { label: "Black", value: "black" },
+  ];
+  const trackingOptions = [
+    { label: "Tighter", value: "tighter" },
+    { label: "Tight", value: "tight" },
+    { label: "Normal", value: "normal" },
+    { label: "Wide", value: "wide" },
+  ];
+  const gradientOptions = [
+    { label: "Galaxy", value: "galaxy" },
+    { label: "Ocean", value: "ocean" },
+    { label: "Sunset", value: "sunset" },
+    { label: "Neon", value: "neon" },
+    { label: "Primary", value: "primary" },
+  ];
 
   const fontSizes = [
     { label: "text-9xl", size: "128px", rem: "8rem", tracking: "-0.05em" },
@@ -74,28 +100,24 @@ const TypographyDoc = () => {
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col gap-4 w-full max-w-2xl px-4 z-20">
             <div className="flex items-center gap-4 px-6 py-3 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl">
-              <input
+              <Input
                 value={sampleText}
                 onChange={(e) => setSampleText(e.target.value)}
-                className="bg-transparent border-none outline-none text-white text-sm flex-1 font-medium placeholder-white/30"
                 placeholder="Type something..."
+                extra="border-transparent hover:border-white/20"
+                bgClassName="bg-transparent"
+                className="flex-1 border-none bg-transparent px-0 py-0 text-sm font-medium text-white placeholder:text-white/30 shadow-none focus-visible:ring-0"
               />
               <div className="h-4 w-px bg-white/10" />
-              <select
+              <Select
                 value={activeWeight}
                 onChange={(e) =>
                   setActiveWeight(e.target.value as TypographyWeight)
                 }
-                className="bg-transparent border-none outline-none text-white/70 text-[10px] font-bold uppercase tracking-wider cursor-pointer hover:text-white transition-colors"
-              >
-                <option value="thin">Thin</option>
-                <option value="light">Light</option>
-                <option value="normal">Normal</option>
-                <option value="medium">Medium</option>
-                <option value="semibold">Semibold</option>
-                <option value="bold">Bold</option>
-                <option value="black">Black</option>
-              </select>
+                options={weightOptions}
+                className="min-w-32"
+                bgClassName="bg-transparent"
+              />
             </div>
 
             <div className="flex items-center justify-between gap-6 px-6 py-2 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl">
@@ -105,13 +127,17 @@ const TypographyDoc = () => {
                 </span>
                 <div className="flex gap-1">
                   {(["left", "center", "right"] as const).map((a) => (
-                    <button
+                    <Button
                       key={a}
                       onClick={() => setActiveAlign(a)}
-                      className={`w-6 h-6 rounded flex items-center justify-center text-[10px] transition-colors ${activeAlign === a ? "bg-white text-black" : "hover:bg-white/10 text-white/50"}`}
+                      className={`h-6 w-6 rounded px-0 py-0 text-[10px] shadow-none hover:opacity-100 ${
+                        activeAlign === a
+                          ? "border-white bg-white text-black hover:bg-white"
+                          : "border-transparent bg-transparent text-white/50 hover:bg-white/10 hover:text-white"
+                      }`}
                     >
                       {a[0].toUpperCase()}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -120,37 +146,30 @@ const TypographyDoc = () => {
                 <span className="text-[9px] uppercase tracking-tighter text-white/40 font-black">
                   Tracking
                 </span>
-                <select
+                <Select
                   value={activeTracking}
                   onChange={(e) =>
                     setActiveTracking(e.target.value as TypographyTracking)
                   }
-                  className="bg-transparent border-none outline-none text-white/70 text-[10px] font-bold uppercase tracking-wider cursor-pointer hover:text-white transition-colors"
-                >
-                  <option value="tighter">Tighter</option>
-                  <option value="tight">Tight</option>
-                  <option value="normal">Normal</option>
-                  <option value="wide">Wide</option>
-                </select>
+                  options={trackingOptions}
+                  className="min-w-30"
+                  bgClassName="bg-transparent"
+                />
               </div>
               <div className="h-3 w-px bg-white/10" />
               <div className="flex items-center gap-3">
                 <span className="text-[9px] uppercase tracking-tighter text-white/40 font-black">
                   Gradient
                 </span>
-                <select
+                <Select
                   value={activeGradient.toString()}
                   onChange={(e) =>
                     setActiveGradient(e.target.value as TypographyGradient)
                   }
-                  className="bg-transparent border-none outline-none text-white/70 text-[10px] font-bold uppercase tracking-wider cursor-pointer hover:text-white transition-colors"
-                >
-                  <option value="galaxy">Galaxy</option>
-                  <option value="ocean">Ocean</option>
-                  <option value="sunset">Sunset</option>
-                  <option value="neon">Neon</option>
-                  <option value="primary">Primary</option>
-                </select>
+                  options={gradientOptions}
+                  className="min-w-32"
+                  bgClassName="bg-transparent"
+                />
               </div>
             </div>
           </div>

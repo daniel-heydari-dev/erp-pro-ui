@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { CheckIcon, ChevronDownIcon, CloseIcon } from "../../icons";
 import { mergeClassNames } from "../../../utils";
@@ -23,11 +24,15 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
   onChange,
   placeholder = "Select...",
   className,
-  bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
+  bgClassName = "bg-background-secondary",
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const radius = 100;
 
   // Filter options by search
   const filteredOptions = options.filter((opt) =>
@@ -47,6 +52,12 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
     }
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top } = event.currentTarget.getBoundingClientRect();
+    mouseX.set(event.clientX - left);
+    mouseY.set(event.clientY - top);
+  };
 
   const handleOptionClick = (optionValue: string) => {
     if (value.includes(optionValue)) {
@@ -71,56 +82,76 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
       className={mergeClassNames("relative w-full", className)}
       tabIndex={0}
     >
-      <div
-        className={mergeClassNames(
-          "flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-black/5 dark:border-white/10 px-3 py-2 text-sm text-foreground transition focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-sm",
-          bgClassName,
-          "hover:bg-white/60 dark:hover:bg-white/10",
-        )}
-        onClick={() => {
-          setOpen((o) => {
-            if (o) setSearch("");
-            return !o;
-          });
+      <motion.div
+        style={{
+          backgroundImage: useMotionTemplate`
+            radial-gradient(
+              ${visible ? `${radius}px` : "0px"} circle at ${mouseX}px ${mouseY}px,
+              var(--ds-color-accent),
+              transparent 90%
+            )
+          `,
         }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setVisible(true)}
+        onMouseLeave={() => setVisible(false)}
+        className="group/multi-combobox rounded-lg border-border p-[2px] transition duration-300 hover:border-accent"
       >
-        <div className="flex flex-1 flex-wrap gap-1">
-          {selectedLabels.length > 0 ? (
-            selectedLabels.map((label, index) => (
-              <span
-                key={value[index]}
-                className="inline-flex items-center gap-1 rounded-md bg-accent-subtle px-2 py-0.5 text-xs font-medium text-accent"
-              >
-                {label}
-                <button
-                  type="button"
-                  onClick={(e) => handleRemoveTag(value[index], e)}
-                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-accent-subtle"
-                >
-                  <CloseIcon className="w-3 h-3" aria-hidden="true" />
-                </button>
-              </span>
-            ))
-          ) : (
-            <span className="text-muted-foreground">{placeholder}</span>
-          )}
-        </div>
-        <span
+        <div
           className={mergeClassNames(
-            "ml-2 transition-transform duration-300 flex-shrink-0",
-            open ? "rotate-180" : "rotate-0",
+            "shadow-input flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/multi-combobox:shadow-none",
+            bgClassName,
           )}
+          onClick={() => {
+            setOpen((o) => {
+              if (o) setSearch("");
+              return !o;
+            });
+          }}
         >
-          <ChevronDownIcon width={24} height={24} color="#a1a1a1" />
-        </span>
-      </div>
+          <div className="flex flex-1 flex-wrap gap-1">
+            {selectedLabels.length > 0 ? (
+              selectedLabels.map((label, index) => (
+                <span
+                  key={value[index]}
+                  className="inline-flex items-center gap-1 rounded-md bg-accent-subtle px-2 py-0.5 text-xs font-medium text-accent"
+                >
+                  {label}
+                  <button
+                    type="button"
+                    onClick={(e) => handleRemoveTag(value[index], e)}
+                    className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-accent/10"
+                  >
+                    <CloseIcon className="w-3 h-3" aria-hidden="true" />
+                  </button>
+                </span>
+              ))
+            ) : (
+              <span className="text-muted-foreground">{placeholder}</span>
+            )}
+          </div>
+          <span
+            className={mergeClassNames(
+              "ml-2 shrink-0 text-muted-foreground transition-transform duration-300",
+              open ? "rotate-180" : "rotate-0",
+            )}
+          >
+            <ChevronDownIcon
+              width={24}
+              height={24}
+              color="currentColor"
+              className="h-5 w-5"
+            />
+          </span>
+        </div>
+      </motion.div>
       {open && (
-        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-md border border-white/20 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl shadow-xl transition">
+        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition">
           {/* Sticky search input */}
-          <div className="sticky top-0 z-10 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm rounded-t-md">
+          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-elevated/95 backdrop-blur-sm">
             <input
               autoFocus
-              className="w-full border-b border-white/20 dark:border-white/10 bg-transparent px-3 py-2 text-sm text-foreground dark:text-white outline-none placeholder:text-muted-foreground"
+              className="w-full bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent"
               placeholder="Type to search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -143,7 +174,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                     "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition",
                     isSelected
                       ? "bg-accent-subtle text-accent"
-                      : "text-foreground dark:text-white hover:bg-neutral-100 dark:hover:bg-white/10",
+                      : "text-foreground hover:bg-accent hover:text-on-accent",
                   )}
                   onClick={() => handleOptionClick(option.value)}
                 >
@@ -152,7 +183,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                       "flex h-4 w-4 items-center justify-center rounded border transition",
                       isSelected
                         ? "border-accent bg-accent text-on-accent"
-                        : "border-neutral-300 dark:border-neutral-600",
+                        : "border-border",
                     )}
                   >
                     {isSelected && <CheckIcon width={12} height={12} />}

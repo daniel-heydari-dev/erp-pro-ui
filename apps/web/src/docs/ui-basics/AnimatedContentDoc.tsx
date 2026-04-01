@@ -1,7 +1,7 @@
-import { AnimatedContent } from "erp-pro-ui";
+import { useState } from "react";
+import { AnimatedContent, Button } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
-import { useState } from "react";
 
 const AnimatedContentDoc = () => {
   const [key, setKey] = useState(0);
@@ -23,12 +23,9 @@ const AnimatedContentDoc = () => {
         bounce, and flip.
       </p>
       <div className="docs-showcase-card h-auto p-8 flex flex-col items-center gap-12">
-        <button
-          onClick={replay}
-          className="docs-button docs-button-secondary mb-4"
-        >
+        <Button onClick={replay} className="mb-4">
           Replay Animations
-        </button>
+        </Button>
 
         <div
           key={key}
@@ -102,7 +99,7 @@ const AnimatedContentDoc = () => {
       <p className="docs-paragraph">
         Fine-tune the animation feel with different easing functions.
       </p>
-      <div className="docs-showcase-card h-[250px] flex items-center justify-center gap-12">
+      <div className="docs-showcase-card h-62.5 flex items-center justify-center gap-12">
         <div key={`ease-${key}`} className="flex gap-8">
           <AnimatedContent preset="slideRight" ease="backOut" duration={1}>
             <div className="px-6 py-3 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 font-bold">

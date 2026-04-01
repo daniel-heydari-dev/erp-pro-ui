@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Switch } from "erp-pro-ui";
+import { Button, Switch } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -60,13 +60,9 @@ const [alertsEnabled, setAlertsEnabled] = useState(true);
             checked={publicApiEnabled}
             onChange={(event) => setPublicApiEnabled(event.target.checked)}
           />
-          <button
-            onClick={saveSettings}
-            disabled={saving}
-            className="docs-button docs-button-primary"
-          >
+          <Button onClick={saveSettings} disabled={saving} primary>
             {saving ? "Saving..." : "Save changes"}
-          </button>
+          </Button>
         </div>
       </div>
 

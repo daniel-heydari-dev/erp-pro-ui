@@ -2,10 +2,10 @@ import { InfoCircleIcon } from "../../icons";
 import type { AlertProps } from "./types";
 
 const variantClasses: Record<NonNullable<AlertProps["variant"]>, string> = {
-  info: "border-ring bg-ring/10",
-  success: "border-emerald-500 bg-emerald-500/10",
-  warning: "border-amber-500 bg-amber-500/10",
-  destructive: "border-destructive bg-destructive/10",
+  info: "border-info-border bg-info-subtle",
+  success: "border-success-border bg-success-subtle",
+  warning: "border-warning-border bg-warning-subtle",
+  destructive: "border-danger-border bg-danger-subtle",
 };
 
 const defaultIcon = <InfoCircleIcon className="h-5 w-5" aria-hidden="true" />;

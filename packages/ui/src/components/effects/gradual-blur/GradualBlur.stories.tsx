@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import { GradualBlur } from "./GradualBlur";
 
@@ -142,13 +143,9 @@ export const ManualTrigger: Story = {
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-3xl">
         <div className="ui:flex ui:min-h-[260px] ui:flex-col ui:items-center ui:justify-center ui:gap-6">
-          <button
-            type="button"
-            onClick={() => setVisible((current) => !current)}
-            className="ui:rounded-lg ui:bg-accent ui:px-4 ui:py-2 ui:text-sm ui:font-semibold ui:text-on-accent"
-          >
+          <Button primary onClick={() => setVisible((current) => !current)}>
             {visible ? "Hide" : "Show"} Component
-          </button>
+          </Button>
 
           <GradualBlur
             triggerOnView={false}

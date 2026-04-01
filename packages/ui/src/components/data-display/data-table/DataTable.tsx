@@ -5,10 +5,13 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
   flexRender,
+  type CellContext,
   type ColumnDef,
   type PaginationState,
   type Table,
 } from "@tanstack/react-table";
+import { Chip } from "../chip";
+import { Button } from "../../forms/button";
 import { Combobox } from "../../forms/combobox";
 import { MultiSelectCombobox } from "../../forms/multi-select-combobox";
 import { Checkbox } from "../../forms/checkbox";
@@ -25,7 +28,6 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-  ColumnsIcon,
   EllipsisVerticalIcon,
   FilterIcon,
   FilterProfileIcon,
@@ -34,6 +36,7 @@ import {
   RefreshIcon,
   SearchIcon,
   SelectionIcon,
+  SettingsIcon,
   TrashIcon,
 } from "../../icons";
 
@@ -93,17 +96,26 @@ export interface DataTableBulkActionContext<T> {
   disableBulkSelection: () => void;
 }
 
+export interface DataTableCellRenderContext<T> {
+  value: unknown;
+  row: T;
+  rowIndex: number;
+  columnId: string;
+}
+
+export interface DataTableColumn<T> {
+  id: string;
+  label: string;
+  visible?: boolean;
+  filterable?: boolean;
+  multiFilter?: boolean;
+  priority?: number;
+  renderCell?: (context: DataTableCellRenderContext<T>) => React.ReactNode;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DataTableProps<T = Record<string, any>> {
-  columns: {
-    id: string;
-    label: string;
-    visible?: boolean;
-    filterable?: boolean; // Enable filtering for this column
-    multiFilter?: boolean; // Enable multi-select filter for this column
-    /** Priority for responsive display (1 = always visible, higher = hidden earlier on small screens) */
-    priority?: number;
-  }[];
+  columns: DataTableColumn<T>[];
   data: T[];
   isLoading?: boolean; // Table data loading state
   onColumnToggle?: (columnId: string) => void;
@@ -136,6 +148,22 @@ export interface DataTableProps<T = Record<string, any>> {
   onPaginationChange?: (pageIndex: number, pageSize: number) => void;
 }
 
+function renderDefaultCellValue(value: unknown): React.ReactNode {
+  if (value === undefined || value === null || value === "") {
+    return "-";
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0 ? value.join(", ") : "-";
+  }
+
+  return value as React.ReactNode;
+}
+
 interface FilterDropdownProps {
   isOpen: boolean;
   onClose: () => void;
@@ -156,7 +184,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="absolute top-full right-0 mt-2 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 z-50 min-w-64">
+      <div className="absolute top-full right-0 z-50 mt-2 min-w-64 overflow-hidden rounded-[4px] border border-white/45 bg-neutral-50 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-white/35 backdrop-blur-2xl dark:border-white/10 dark:bg-neutral-800/50 dark:shadow-[0_22px_48px_rgba(0,0,0,0.42)] dark:ring-white/6">
         {children}
       </div>
     </>
@@ -176,17 +204,18 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   onClick,
   hasActive,
 }) => (
-  <button
+  <Button
     onClick={onClick}
     title={label}
-    className={`p-2 rounded-lg transition-colors ${
+    aria-label={label}
+    className={`h-10 min-w-10 px-0 py-0 shadow-none ${
       hasActive
-        ? "bg-accent-subtle text-accent"
-        : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+        ? "border-accent/20 bg-accent-subtle text-accent hover:bg-accent-subtle hover:opacity-100"
+        : "border-transparent bg-transparent text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 hover:opacity-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
     }`}
   >
     {icon}
-  </button>
+  </Button>
 );
 
 interface ColumnToggleProps {
@@ -215,40 +244,38 @@ export const ColumnToggle: React.FC<ColumnToggleProps> = ({
 
     <div className="space-y-2 max-h-64 overflow-y-auto">
       {columns.map((col) => (
-        <label
+        <div
           key={col.id}
-          className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-neutral-50 dark:hover:bg-neutral-700 rounded"
+          className="rounded-[8px] px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-700"
         >
-          <input
-            type="checkbox"
+          <Checkbox
             checked={col.visible !== false}
             onChange={() => onToggle(col.id)}
-            className="w-4 h-4 rounded cursor-pointer accent-accent"
+            label={col.label}
           />
-          <span className="text-sm text-neutral-700 dark:text-neutral-300">
-            {col.label}
-          </span>
-        </label>
+        </div>
       ))}
     </div>
 
     {(onShowAll || onHideAll) && (
-      <div className="flex gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700">
+      <div className="flex gap-2 border-t border-neutral-200 pt-2 dark:border-neutral-700">
         {onShowAll && (
-          <button
+          <Button
             onClick={onShowAll}
-            className="flex-1 py-1 text-xs font-semibold text-accent hover:text-accent-hover"
+            size="small"
+            className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
           >
             SHOW ALL
-          </button>
+          </Button>
         )}
         {onHideAll && (
-          <button
+          <Button
             onClick={onHideAll}
-            className="flex-1 text-xs font-semibold text-neutral-500 hover:text-neutral-600 py-1"
+            size="small"
+            className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-600 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
           >
             HIDE ALL
-          </button>
+          </Button>
         )}
       </div>
     )}
@@ -294,30 +321,28 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
         <label className="mb-2 block text-sm font-medium text-accent">
           Enter filter profile name:
         </label>
-        <input
+        <Input
           type="text"
           value={profileName}
           onChange={(e) => setProfileName(e.target.value)}
           placeholder="Enter value"
-          className="mb-6 w-full rounded-lg border-2 border-accent bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-focus dark:bg-neutral-700 dark:text-white dark:placeholder:text-neutral-500"
-          onKeyPress={(e) => e.key === "Enter" && handleSave()}
+          className=""
+          onKeyDown={(e) => e.key === "Enter" && handleSave()}
         />
 
-        <div className="flex gap-4">
-          <button
-            onClick={onClose}
-            className="flex-1 px-4 py-3 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-200 font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2"
-          >
-            <span>🗑️</span>
-            CANCEL
-          </button>
-          <button
+        <div className="flex justify-end gap-3 mt-6">
+          <Button onClick={onClose} className="min-w-28" size="medium">
+            Cancel
+          </Button>
+          <Button
             onClick={handleSave}
             disabled={!profileName.trim()}
-            className="flex-1 px-4 py-3 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-semibold hover:bg-neutral-800 dark:hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="min-w-28"
+            size="medium"
+            primary
           >
-            SAVE
-          </button>
+            Save
+          </Button>
         </div>
       </div>
     </div>
@@ -332,8 +357,10 @@ type AsyncFilterOptionsState = Record<
 type NumberRangeFilterValue = { min?: number; max?: number };
 
 const ICON_BUTTON_CLASS_NAME =
-  "p-2 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors";
+  "inline-flex items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-700";
 const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:opacity-40 disabled:cursor-not-allowed`;
+const TABLE_CONTROL_ICON_CLASS_NAME = "h-[18px] w-[18px] shrink-0";
+const TABLE_COMPLEX_ICON_CLASS_NAME = "h-5 w-5 shrink-0";
 
 const isFilterValueEmpty = (value?: FilterValue | null): boolean => {
   if (value === undefined || value === null) {
@@ -774,16 +801,19 @@ function ToolbarIconButton({
   children,
 }: ToolbarIconButtonProps) {
   return (
-    <button
+    <Button
       onClick={onClick}
       disabled={disabled}
       title={title}
+      aria-label={title}
       className={
-        disabled ? DISABLED_ICON_BUTTON_CLASS_NAME : ICON_BUTTON_CLASS_NAME
+        disabled
+          ? `${DISABLED_ICON_BUTTON_CLASS_NAME} h-10 w-10 shrink-0 border-transparent bg-transparent px-0 py-0 text-base shadow-none hover:bg-transparent hover:opacity-100`
+          : `${ICON_BUTTON_CLASS_NAME} h-10 w-10 shrink-0 border-transparent bg-transparent px-0 py-0 text-base shadow-none hover:opacity-100`
       }
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
@@ -797,7 +827,7 @@ function SearchField({ value, onChange, placeholder }: SearchFieldProps) {
   return (
     <div className="relative w-[300px]">
       <SearchIcon
-        className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-neutral-400"
+        className={`pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-neutral-400 ${TABLE_CONTROL_ICON_CLASS_NAME}`}
         aria-hidden="true"
       />
       <Input
@@ -830,34 +860,38 @@ function RowActionsCell<T>({
 }: RowActionsCellProps<T>) {
   return (
     <td className="px-2 py-3 text-right relative">
-      <button
+      <Button
         onClick={() => onToggle(rowIndex)}
-        className="p-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-600 text-neutral-500"
+        aria-label="Open row actions"
+        className="h-8 w-8 border-none bg-transparent px-0 py-0 text-neutral-500 shadow-none hover:bg-neutral-100 hover:text-neutral-700 hover:opacity-100 dark:hover:bg-neutral-600 dark:hover:text-neutral-200"
       >
-        <EllipsisVerticalIcon className="w-5 h-5" aria-hidden="true" />
-      </button>
+        <EllipsisVerticalIcon
+          className={TABLE_CONTROL_ICON_CLASS_NAME}
+          aria-hidden="true"
+        />
+      </Button>
       {isOpen ? (
         <>
           <div className="fixed inset-0 z-40" onClick={onClose} />
           <div className="absolute right-0 top-full mt-1 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 z-50 min-w-32 py-1">
-            <button
+            <Button
               onClick={() => {
                 onRowAction?.("edit", row);
                 onClose();
               }}
-              className="w-full text-left px-4 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-700"
+              className="w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 shadow-none hover:bg-neutral-50 hover:text-neutral-900 hover:opacity-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:hover:text-white"
             >
               Edit
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => {
                 onRowAction?.("delete", row);
                 onClose();
               }}
-              className="w-full text-left px-4 py-2 text-sm text-error hover:bg-neutral-50 dark:hover:bg-neutral-700"
+              className="w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal text-error shadow-none hover:bg-neutral-50 hover:text-error hover:opacity-100 dark:hover:bg-neutral-700"
             >
               Delete
-            </button>
+            </Button>
           </div>
         </>
       ) : null}
@@ -889,25 +923,31 @@ function DataTablePagination<T>({
         </span>
       </div>
 
-      <div className="flex items-center gap-2">
-        <select
-          value={pageSize}
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <span className="text-sm text-neutral-600 dark:text-neutral-400">
+          Rows
+        </span>
+        <Select
+          value={String(pageSize)}
           onChange={(event) => table.setPageSize(Number(event.target.value))}
-          className="px-2 py-1 text-sm border border-neutral-200 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
-        >
-          {[10, 20, 30, 50, 100].map((size) => (
-            <option key={size} value={size}>
-              {size} / page
-            </option>
-          ))}
-        </select>
+          aria-label="Rows per page"
+          containerClassName="w-24 min-w-24 shrink-0"
+          triggerClassName="px-3 font-medium text-neutral-900 dark:text-white"
+          options={[10, 20, 30, 50, 100].map((size) => ({
+            value: String(size),
+            label: String(size),
+          }))}
+        />
 
         <ToolbarIconButton
           title="First page"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          <ChevronsLeftIcon className="w-4 h-4" aria-hidden="true" />
+          <ChevronsLeftIcon
+            className={TABLE_CONTROL_ICON_CLASS_NAME}
+            aria-hidden="true"
+          />
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -915,10 +955,13 @@ function DataTablePagination<T>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          <ChevronLeftIcon className="w-4 h-4" aria-hidden="true" />
+          <ChevronLeftIcon
+            className={TABLE_CONTROL_ICON_CLASS_NAME}
+            aria-hidden="true"
+          />
         </ToolbarIconButton>
 
-        <span className="px-3 py-1 text-sm text-neutral-700 dark:text-neutral-300">
+        <span className="inline-flex h-10 shrink-0 items-center rounded-lg px-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
           Page {pageIndex + 1} of {table.getPageCount()}
         </span>
 
@@ -927,7 +970,10 @@ function DataTablePagination<T>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          <ChevronRightIcon className="w-4 h-4" aria-hidden="true" />
+          <ChevronRightIcon
+            className={TABLE_CONTROL_ICON_CLASS_NAME}
+            aria-hidden="true"
+          />
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -935,7 +981,10 @@ function DataTablePagination<T>({
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          <ChevronsRightIcon className="w-4 h-4" aria-hidden="true" />
+          <ChevronsRightIcon
+            className={TABLE_CONTROL_ICON_CLASS_NAME}
+            aria-hidden="true"
+          />
         </ToolbarIconButton>
       </div>
     </div>
@@ -959,40 +1008,35 @@ function FilterSelectorMenu({
 }: FilterSelectorMenuProps) {
   return (
     <div className="p-2 min-w-48 space-y-1">
-      <div className="text-xs font-semibold text-neutral-500 px-2 pb-2">
+      <div className="px-2 pb-2 text-xs font-semibold text-neutral-500 dark:text-neutral-300">
         Show filters
       </div>
       {filterOptions.map((filter) => (
-        <label
-          key={filter.id}
-          className="flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-700"
-        >
-          <input
-            type="checkbox"
+        <div key={filter.id} className="min-w-36">
+          <Checkbox
             checked={visibleFilters.includes(filter.id)}
             onChange={(event) =>
               onToggleFilter(filter.id, event.target.checked)
             }
-            className="w-4 h-4 rounded cursor-pointer accent-accent"
+            label={filter.label}
           />
-          <span className="text-sm text-neutral-700 dark:text-neutral-300">
-            {filter.label}
-          </span>
-        </label>
+        </div>
       ))}
-      <div className="flex gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-700">
-        <button
+      <div className="flex gap-2 border-t border-neutral-200 pt-2 dark:border-neutral-700">
+        <Button
           onClick={onShowAll}
-          className="flex-1 py-1 text-xs font-semibold text-accent hover:text-accent-hover"
+          size="small"
+          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
         >
           SHOW ALL
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={onHideAll}
-          className="flex-1 text-xs font-semibold text-neutral-500 hover:text-neutral-600 py-1"
+          size="small"
+          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-600 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
         >
           HIDE ALL
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -1015,6 +1059,8 @@ interface DataTableToolbarProps<T> {
   onCloseColumnMenu: () => void;
   columns: DataTableProps<T>["columns"];
   onColumnToggle?: (columnId: string) => void;
+  onShowAllColumns: () => void;
+  onHideAllColumns: () => void;
 }
 
 function DataTableToolbar<T>({
@@ -1034,6 +1080,8 @@ function DataTableToolbar<T>({
   onCloseColumnMenu,
   columns,
   onColumnToggle,
+  onShowAllColumns,
+  onHideAllColumns,
 }: DataTableToolbarProps<T>) {
   const hasSelectedRows = selectedCount > 0;
 
@@ -1044,7 +1092,10 @@ function DataTableToolbar<T>({
           {bulkDeleteEnabled ? (
             <FilterButton
               icon={
-                <SelectionIcon className="h-6.5 w-6.5" aria-hidden="true" />
+                <SelectionIcon
+                  className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                  aria-hidden="true"
+                />
               }
               label={
                 bulkSelectionActive
@@ -1065,7 +1116,10 @@ function DataTableToolbar<T>({
 
         <div className="flex items-center gap-1 self-end lg:self-auto">
           <ToolbarIconButton onClick={onExport} title="Refresh">
-            <RefreshIcon className="w-5 h-5" aria-hidden="true" />
+            <RefreshIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
           </ToolbarIconButton>
 
           <div className="relative">
@@ -1073,7 +1127,10 @@ function DataTableToolbar<T>({
               onClick={onToggleColumnMenu}
               title="Column settings"
             >
-              <ColumnsIcon className="w-5 h-5" aria-hidden="true" />
+              <SettingsIcon
+                className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                aria-hidden="true"
+              />
             </ToolbarIconButton>
 
             <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
@@ -1082,6 +1139,8 @@ function DataTableToolbar<T>({
                 onToggle={(columnId) => {
                   onColumnToggle?.(columnId);
                 }}
+                onShowAll={onShowAllColumns}
+                onHideAll={onHideAllColumns}
               />
             </FilterDropdown>
           </div>
@@ -1090,11 +1149,16 @@ function DataTableToolbar<T>({
 
       {bulkSelectionActive && hasSelectedRows
         ? (bulkActionCard ?? (
-            <div className="mt-3 flex flex-col gap-3 rounded-xl border border-neutral-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 dark:shadow-black/20 lg:flex-row lg:items-center lg:justify-between">
+            <div className="mt-2 flex flex-col gap-2 rounded-[4px] border border-neutral-200 bg-neutral-50 px-3 py-2 shadow-sm dark:border-neutral-700 dark:bg-neutral-800/50 dark:shadow-black/25 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-full border border-accent/20 bg-accent-subtle px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-accent">
+                <Chip
+                  variant="soft"
+                  color="primary"
+                  size="sm"
+                  className="uppercase tracking-wide"
+                >
                   Bulk actions
-                </span>
+                </Chip>
                 <p className="text-sm font-medium text-neutral-900 dark:text-white">
                   {selectedCount} {selectedCount === 1 ? "row" : "rows"}{" "}
                   selected
@@ -1104,14 +1168,15 @@ function DataTableToolbar<T>({
               <div className="flex flex-wrap items-center gap-2">
                 {bulkActionsContent}
                 {bulkDeleteEnabled ? (
-                  <button
-                    type="button"
+                  <Button
                     onClick={onBulkDeleteSelected}
-                    className="inline-flex items-center gap-2 rounded-lg border border-accent/20 bg-accent px-3 py-2 text-sm font-medium text-on-accent shadow-lg shadow-accent/20 transition-colors hover:bg-accent-hover"
+                    primary
+                    size="small"
+                    className="border-accent/20 px-3 py-2 text-sm text-on-accent shadow-lg shadow-accent/20 hover:bg-accent-hover hover:opacity-100"
                   >
                     <TrashIcon className="h-4 w-4" aria-hidden="true" />
                     Delete selected
-                  </button>
+                  </Button>
                 ) : null}
               </div>
             </div>
@@ -1279,6 +1344,29 @@ export default function DataTable<T = Record<string, any>>({
   >({});
   const [rowMenuOpen, setRowMenuOpen] = React.useState<number | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [columnVisibility, setColumnVisibility] = React.useState<
+    Record<string, boolean>
+  >(() =>
+    Object.fromEntries(
+      columns.map((column) => [column.id, column.visible !== false]),
+    ),
+  );
+
+  const columnsVisibilitySignature = React.useMemo(
+    () =>
+      columns
+        .map((column) => `${column.id}:${column.visible !== false}`)
+        .join("|"),
+    [columns],
+  );
+
+  React.useEffect(() => {
+    setColumnVisibility(
+      Object.fromEntries(
+        columns.map((column) => [column.id, column.visible !== false]),
+      ),
+    );
+  }, [columns, columnsVisibilitySignature]);
 
   const asyncFilterOptions = useAsyncFilterOptions(
     externalFilterOptions,
@@ -1295,9 +1383,18 @@ export default function DataTable<T = Record<string, any>>({
     );
   }, [columns, data, externalFilterOptions, asyncFilterOptions]);
 
+  const resolvedColumns = React.useMemo(
+    () =>
+      columns.map((column) => ({
+        ...column,
+        visible: columnVisibility[column.id] ?? column.visible !== false,
+      })),
+    [columnVisibility, columns],
+  );
+
   const visibleColumns = React.useMemo(
-    () => columns.filter((column) => column.visible !== false),
-    [columns],
+    () => resolvedColumns.filter((column) => column.visible !== false),
+    [resolvedColumns],
   );
   const manualPagination = usesManualPagination(totalCount, onPaginationChange);
   const pageCount =
@@ -1323,8 +1420,20 @@ export default function DataTable<T = Record<string, any>>({
         id: col.id,
         accessorKey: col.id,
         header: col.label,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cell: (info: any) => info.getValue() || "-",
+        cell: (info: CellContext<T, unknown>) => {
+          const value = info.getValue();
+
+          if (col.renderCell) {
+            return col.renderCell({
+              value,
+              row: info.row.original,
+              rowIndex: info.row.index,
+              columnId: col.id,
+            });
+          }
+
+          return renderDefaultCellValue(value);
+        },
       })),
     [visibleColumns],
   );
@@ -1485,6 +1594,29 @@ export default function DataTable<T = Record<string, any>>({
     setColumnMenuOpen((previous) => !previous);
   }, []);
 
+  const handleToggleColumnVisibility = React.useCallback(
+    (columnId: string) => {
+      setColumnVisibility((previous) => ({
+        ...previous,
+        [columnId]: !(previous[columnId] ?? true),
+      }));
+      onColumnToggle?.(columnId);
+    },
+    [onColumnToggle],
+  );
+
+  const handleShowAllColumns = React.useCallback(() => {
+    setColumnVisibility(
+      Object.fromEntries(columns.map((column) => [column.id, true])),
+    );
+  }, [columns]);
+
+  const handleHideAllColumns = React.useCallback(() => {
+    setColumnVisibility(
+      Object.fromEntries(columns.map((column) => [column.id, false])),
+    );
+  }, [columns]);
+
   const handleToggleBulkSelection = React.useCallback(() => {
     setBulkSelectionActive((previous) => {
       if (previous) {
@@ -1581,7 +1713,7 @@ export default function DataTable<T = Record<string, any>>({
   return (
     <div className="space-y-0">
       {/* Row 1: Filters Row - Separated with border */}
-      <div className="flex items-center justify-between gap-4 py-4 px-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg mb-4">
+      <div className="mb-4 flex items-center justify-between gap-4 rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-4 dark:border-neutral-700 dark:bg-neutral-800/50">
         <div className="flex items-center gap-3 flex-wrap">
           {filterOptions
             .filter((filter) => visibleFilters.includes(filter.id))
@@ -1593,7 +1725,7 @@ export default function DataTable<T = Record<string, any>>({
                   key={filter.id}
                   className={`min-w-[200px] ${
                     index > 0
-                      ? "pl-3 border-l border-neutral-200 dark:border-neutral-600"
+                      ? "border-l border-neutral-200 pl-3 dark:border-neutral-600"
                       : ""
                   }`}
                 >
@@ -1615,7 +1747,10 @@ export default function DataTable<T = Record<string, any>>({
               onClick={handleToggleFilterSelector}
               title="Add filter"
             >
-              <FilterIcon className="w-5 h-5" aria-hidden="true" />
+              <FilterIcon
+                className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                aria-hidden="true"
+              />
             </ToolbarIconButton>
             <FilterDropdown
               isOpen={filterSelectorOpen}
@@ -1636,7 +1771,10 @@ export default function DataTable<T = Record<string, any>>({
             disabled={!hasActiveFilters}
             title="Clear filters"
           >
-            <FilterXIcon className="w-5 h-5" aria-hidden="true" />
+            <FilterXIcon
+              className={TABLE_COMPLEX_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
           </ToolbarIconButton>
 
           <div className="relative">
@@ -1644,19 +1782,22 @@ export default function DataTable<T = Record<string, any>>({
               onClick={handleToggleProfileMenu}
               title="Filter profiles"
             >
-              <FilterProfileIcon className="w-5 h-5" aria-hidden="true" />
+              <FilterProfileIcon
+                className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                aria-hidden="true"
+              />
             </ToolbarIconButton>
             <FilterDropdown
               isOpen={profileMenuOpen}
               onClose={() => setProfileMenuOpen(false)}
             >
               <div className="p-2 min-w-48">
-                <button
+                <Button
                   onClick={handleOpenProfile}
-                  className="w-full rounded-lg border-2 border-dashed border-accent/40 px-4 py-3 text-left font-medium text-accent hover:bg-accent-subtle"
+                  className="w-full justify-start border-2 border-dashed border-accent/40 bg-transparent px-4 py-3 text-left text-sm font-medium text-accent shadow-none hover:bg-accent-subtle hover:opacity-100"
                 >
                   Save new filter profile
-                </button>
+                </Button>
               </div>
             </FilterDropdown>
           </div>
@@ -1664,7 +1805,7 @@ export default function DataTable<T = Record<string, any>>({
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+      <div className="bg-background-secondary rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
         <DataTableToolbar
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
@@ -1680,21 +1821,23 @@ export default function DataTable<T = Record<string, any>>({
           columnMenuOpen={columnMenuOpen}
           onToggleColumnMenu={handleToggleColumnMenu}
           onCloseColumnMenu={() => setColumnMenuOpen(false)}
-          columns={columns}
-          onColumnToggle={onColumnToggle}
+          columns={resolvedColumns}
+          onColumnToggle={handleToggleColumnVisibility}
+          onShowAllColumns={handleShowAllColumns}
+          onHideAllColumns={handleHideAllColumns}
         />
 
         {/* Table Container */}
         <div className="overflow-auto" style={{ maxHeight }}>
           <table className="w-full min-w-[600px]">
-            <thead className="sticky top-0 bg-white dark:bg-neutral-800 z-10">
+            <thead className="sticky top-0 z-10 bg-background-secondary">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
                   className="border-b border-neutral-200 dark:border-neutral-700"
                 >
                   {bulkSelectionActive ? (
-                    <th className="w-12 px-4 py-3 bg-white dark:bg-neutral-800">
+                    <th className="w-12 px-4 py-3 bg-background-secondary">
                       <Checkbox
                         aria-label="Select all visible rows"
                         checked={allVisibleRowsSelected}
@@ -1707,7 +1850,7 @@ export default function DataTable<T = Record<string, any>>({
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-4 py-3 text-left text-sm font-semibold text-neutral-900 dark:text-white whitespace-nowrap bg-white dark:bg-neutral-800"
+                      className="bg-background-secondary px-4 py-3 text-left text-sm font-semibold text-neutral-900 dark:text-white whitespace-nowrap"
                     >
                       {header.isPlaceholder
                         ? null
@@ -1717,7 +1860,7 @@ export default function DataTable<T = Record<string, any>>({
                           )}
                     </th>
                   ))}
-                  <th className="w-12 bg-white dark:bg-neutral-800"></th>
+                  <th className="w-12 bg-background-secondary"></th>
                 </tr>
               ))}
             </thead>

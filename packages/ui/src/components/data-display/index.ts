@@ -3,6 +3,7 @@ export * from "./charts";
 export * from "./chip";
 export * from "./color-palette";
 export * from "./data-table";
+export * from "./progress-bar";
 export {
   Loading,
   Spinner,

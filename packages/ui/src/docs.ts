@@ -193,6 +193,13 @@ const componentDocSeeds = {
     aliases: ["tag", "badge"],
     related: ["alert", "color-palette", "stepper"],
   },
+  "progress-bar": {
+    exportName: "ProgressBar",
+    summary:
+      "Linear progress indicator for completion ratios, quotas, and compact operational status rows.",
+    aliases: ["progress", "meter", "completion bar"],
+    related: ["chip", "loading", "stepper"],
+  },
   calendar: {
     exportName: "Calendar",
     summary:
@@ -505,7 +512,14 @@ export const libraryInstallSteps = [
       {
         title: "Theme token usage",
         language: "tsx",
-        code: '<section className="bg-surface text-fg border border-border rounded-2xl p-6">\n  <button className="bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-press rounded-lg px-4 py-2">Save</button>\n</section>',
+        code: 'import { Button } from "erp-pro-ui";\n\n<section className="bg-surface text-fg border border-border rounded-2xl p-6">\n  <Button label="Save" primary />\n</section>',
+      },
+      {
+        title: "Chart token usage",
+        language: "tsx",
+        code: 'import { AreaChart, getChartColorVar } from "erp-pro-ui";\n\n<AreaChart\n  data={data}\n  categories={[\n    { key: "revenue", color: getChartColorVar(1) },\n    { key: "cost", color: "chart-6" },\n    { key: "forecast", color: "var(--color-chart-10)" },\n  ]}\n/>',
+        description:
+          "Chart components accept raw CSS colors, theme chart variables, or the built-in chart token helper. The shared token surface includes chart slots 1 through 15.",
       },
     ],
   },
@@ -601,6 +615,7 @@ export const libraryDocs = {
     "50+ reusable UI components for forms, data display, overlays, charts, and visual effects.",
     "Root and subpath imports so consumers can choose convenience or explicit package contracts.",
     "Shared Tailwind v4 stylesheet with packaged fonts, tokens, and theme foundations.",
+    "Dedicated chart color slots and helpers so consuming apps can pick theme-backed series colors directly.",
     "Portable docs metadata that can be consumed by other apps, CLIs, and MCP servers.",
   ],
   installSteps: libraryInstallSteps,

@@ -64,20 +64,20 @@ const variantStyles: Record<
   { base: string; focus: string; error: string }
 > = {
   outlined: {
-    base: "border border-neutral-300 dark:border-neutral-600 bg-transparent rounded-lg",
-    focus: "focus:border-accent focus:ring-2 focus:ring-focus",
-    error: "border-red-500 dark:border-red-500",
+    base: "border border-input bg-background-secondary rounded-lg shadow-input text-foreground",
+    focus: "focus:border-accent focus:ring-2 focus:ring-accent",
+    error: "border-destructive",
   },
   filled: {
-    base: "border border-transparent bg-neutral-100 dark:bg-neutral-800 rounded-lg",
+    base: "border border-transparent bg-accent-subtle rounded-lg text-foreground",
     focus:
-      "focus:border-accent focus:bg-transparent focus:ring-2 focus:ring-focus",
-    error: "bg-red-50 dark:bg-red-900/20 border-red-500",
+      "focus:border-accent focus:bg-background-secondary focus:ring-2 focus:ring-accent",
+    error: "bg-danger-subtle border-danger-border",
   },
   underlined: {
-    base: "border-b-2 border-neutral-300 dark:border-neutral-600 bg-transparent rounded-none",
+    base: "border-b-2 border-border-strong bg-transparent rounded-none text-foreground",
     focus: "focus:border-accent",
-    error: "border-red-500 dark:border-red-500",
+    error: "border-destructive",
   },
 };
 
@@ -288,17 +288,12 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
             aria-label={`${ariaLabel} digit ${i + 1}`}
             className={`
               text-center font-semibold outline-none transition-all
-              text-neutral-900 dark:text-white
-              placeholder:text-neutral-300 dark:placeholder:text-neutral-600
+              placeholder:text-muted-foreground
               ${sizeStyles[size]}
               ${variantStyles[variant].base}
               ${!error ? variantStyles[variant].focus : ""}
               ${error ? variantStyles[variant].error : ""}
-              ${
-                disabled
-                  ? "opacity-50 cursor-not-allowed bg-neutral-100 dark:bg-neutral-800"
-                  : ""
-              }
+              ${disabled ? "opacity-50 cursor-not-allowed bg-muted" : ""}
               ${inputClassName}
             `}
           />,
@@ -318,9 +313,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           {renderInputs()}
         </div>
         {error && errorMessage && (
-          <span className="text-sm text-red-500 dark:text-red-400">
-            {errorMessage}
-          </span>
+          <span className="text-sm text-destructive">{errorMessage}</span>
         )}
       </div>
     );

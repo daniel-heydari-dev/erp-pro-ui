@@ -44,6 +44,41 @@ void main() {
 
 const PX_RATIO = typeof window !== "undefined" ? window.devicePixelRatio : 1;
 
+const resolvedCanvasColorCache = new Map<string, string>();
+
+const getThemeSignature = () => {
+  if (typeof document === "undefined") return "";
+
+  const root = document.documentElement;
+  return [
+    root.getAttribute("data-brand") ?? "",
+    root.getAttribute("data-mode") ?? "",
+    root.getAttribute("data-theme") ?? "",
+  ].join("|");
+};
+
+const resolveCanvasColor = (value: string): string => {
+  if (typeof document === "undefined") return value;
+  if (!value.includes("var(") && !value.includes("color-mix(")) return value;
+
+  const cacheKey = `${getThemeSignature()}::${value}`;
+  const cachedValue = resolvedCanvasColorCache.get(cacheKey);
+  if (cachedValue) {
+    return cachedValue;
+  }
+
+  const probe = document.createElement("span");
+  probe.style.color = value;
+  probe.style.position = "fixed";
+  probe.style.pointerEvents = "none";
+  probe.style.opacity = "0";
+  document.body.appendChild(probe);
+  const resolvedValue = getComputedStyle(probe).color || value;
+  document.body.removeChild(probe);
+  resolvedCanvasColorCache.set(cacheKey, resolvedValue);
+  return resolvedValue;
+};
+
 interface AsciiFilterOptions {
   fontSize?: number;
   fontFamily?: string;
@@ -225,7 +260,7 @@ class CanvasTxt {
     {
       fontSize = 200,
       fontFamily = "Arial",
-      color = "#fdf9f3",
+      color = "var(--ds-color-fg)",
     }: CanvasTxtOptions = {},
   ) {
     this.canvas = document.createElement("canvas");
@@ -256,7 +291,7 @@ class CanvasTxt {
 
   render() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillStyle = this.color;
+    this.context.fillStyle = resolveCanvasColor(this.color);
     this.context.font = this.font;
 
     const metrics = this.context.measureText(this.txt);
@@ -506,7 +541,7 @@ export const ASCIIText: React.FC<ASCIITextProps> = ({
   text = "David!",
   asciiFontSize = 8,
   textFontSize = 200,
-  textColor = "#fdf9f3",
+  textColor = "var(--ds-color-fg)",
   planeBaseHeight = 8,
   enableWaves = true,
   className = "",
@@ -630,7 +665,7 @@ export const ASCIIText: React.FC<ASCIITextProps> = ({
           position: absolute;
           left: 0;
           top: 0;
-          background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+          background-image: radial-gradient(circle, var(--ds-color-accent) 0%, var(--ds-color-accent-hover) 50%, var(--ds-color-warning) 100%);
           background-attachment: fixed;
           -webkit-text-fill-color: transparent;
           -webkit-background-clip: text;

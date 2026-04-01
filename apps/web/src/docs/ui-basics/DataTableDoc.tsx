@@ -1,4 +1,4 @@
-import { DataTable, type FilterOption } from "erp-pro-ui";
+import { DataTable, ProgressBar, type FilterOption } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -83,6 +83,33 @@ const DataTableDoc = () => {
     },
   ];
 
+  const capacityRows = [
+    {
+      id: "zone-1",
+      zone: "North Rack A",
+      owner: "Alice Security",
+      status: "Stable",
+      usedUnits: 142,
+      capacityPercent: 71,
+    },
+    {
+      id: "zone-2",
+      zone: "Cold Storage B",
+      owner: "Fatima Supply",
+      status: "Watch",
+      usedUnits: 176,
+      capacityPercent: 88,
+    },
+    {
+      id: "zone-3",
+      zone: "Overflow C",
+      owner: "Charlie Operations",
+      status: "Healthy",
+      usedUnits: 96,
+      capacityPercent: 48,
+    },
+  ];
+
   const columns = [
     { id: "name", label: "Name", filterable: true, priority: 1 },
     { id: "email", label: "Email", filterable: true, priority: 1 },
@@ -132,6 +159,36 @@ const DataTableDoc = () => {
       id: "active",
       label: "Active Only",
       type: "switch",
+    },
+  ];
+
+  const capacityColumns = [
+    { id: "zone", label: "Zone", filterable: true, priority: 1 },
+    { id: "owner", label: "Owner", filterable: true, priority: 2 },
+    { id: "status", label: "Status", filterable: true, priority: 2 },
+    {
+      id: "capacityPercent",
+      label: "Utilization",
+      priority: 1,
+      renderCell: ({
+        value,
+        row,
+      }: {
+        value: unknown;
+        row: (typeof capacityRows)[number];
+      }) => (
+        <div className="min-w-55">
+          <ProgressBar
+            value={typeof value === "number" ? value : 0}
+            max={100}
+            label={`${row.usedUnits} units`}
+            size="sm"
+            tone={
+              typeof value === "number" && value >= 85 ? "warning" : "default"
+            }
+          />
+        </div>
+      ),
     },
   ];
 
@@ -212,6 +269,43 @@ const filterOptions: FilterOption[] = [
 // "switch" / "checkbox": Boolean toggles
 // "date-range": Start and end date picker
 // "number-range": Min and Max numeric inputs`}
+      />
+
+      <h2 className="docs-category-subtitle">Custom Progress Cells</h2>
+      <p className="docs-paragraph mb-4">
+        Use <span className="font-mono">columns[].renderCell</span> when a row
+        needs richer UI than a plain value, such as a utilization meter.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800">
+          <DataTable
+            data={capacityRows}
+            columns={capacityColumns}
+            pageSize={3}
+            searchPlaceholder="Search zones or owners..."
+          />
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`import { DataTable, ProgressBar } from 'erp-pro-ui';
+
+const columns = [
+  { id: 'zone', label: 'Zone' },
+  {
+    id: 'capacityPercent',
+    label: 'Utilization',
+    renderCell: ({ value, row }) => (
+      <ProgressBar
+        value={typeof value === 'number' ? value : 0}
+        max={100}
+        label={\`${"${row.usedUnits}"} units\`}
+        size="sm"
+      />
+    ),
+  },
+];`}
       />
 
       <h2 className="docs-category-subtitle">Compact Audit Queue</h2>

@@ -17,8 +17,8 @@ export function BorderBeam({
   duration = 15,
   anchor = 90,
   borderWidth = 0.5,
-  colorFrom = "#ffaa40",
-  colorTo = "#9c40ff",
+  colorFrom = "var(--ds-color-accent)",
+  colorTo = "var(--ds-color-accent-hover)",
   delay = 0,
 }: BorderBeamProps) {
   return (

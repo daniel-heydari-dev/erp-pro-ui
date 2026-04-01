@@ -1,5 +1,7 @@
 import type { SelectProps } from "./types";
 import { forwardRef, useState, useRef, useEffect } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+
 import { CheckIcon, ChevronDownIcon } from "../../icons";
 import { mergeClassNames } from "../../../utils";
 
@@ -7,6 +9,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   (
     {
       className = "",
+      containerClassName = "",
+      triggerClassName = "",
       label,
       error,
       helperText,
@@ -15,14 +19,18 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       onChange,
       placeholder = "Select...",
       disabled,
-      bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
+      bgClassName = "bg-background-secondary",
       ...props
     },
     ref,
   ) => {
     const [open, setOpen] = useState(false);
+    const [visible, setVisible] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const hiddenSelectRef = useRef<HTMLSelectElement>(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const radius = 100;
 
     // Combine refs
     useEffect(() => {
@@ -50,6 +58,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       return () => document.removeEventListener("mousedown", handleClick);
     }, [open]);
 
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+      const { left, top } = event.currentTarget.getBoundingClientRect();
+      mouseX.set(event.clientX - left);
+      mouseY.set(event.clientY - top);
+    };
+
     const selectedOption = options.find((opt) => opt.value === value);
 
     const handleSelect = (optValue: string) => {
@@ -65,9 +79,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     };
 
     return (
-      <div className="w-full min-w-48">
+      <div className={mergeClassNames("w-full min-w-48", containerClassName)}>
         {label && (
-          <label className="text-sm font-medium text-neutral-900 dark:text-white leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 block">
+          <label className="mb-2 block text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             {label}
           </label>
         )}
@@ -94,50 +108,98 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ref={containerRef}
           className={mergeClassNames("relative w-full", className)}
         >
-          <div
-            className={mergeClassNames(
-              "flex h-10 w-full cursor-pointer items-center justify-between rounded-md border px-3 py-2 text-sm text-neutral-900 dark:text-white transition shadow-sm",
-              error
-                ? "border-red-500 focus:ring-red-500"
-                : "border-neutral-300 dark:border-neutral-600",
-              disabled
-                ? "cursor-not-allowed opacity-50"
-                : `${bgClassName} hover:bg-white/60 dark:hover:bg-white/10`,
-            )}
-            onClick={() => {
-              if (!disabled) {
-                setOpen((o) => !o);
-              }
+          <motion.div
+            style={{
+              backgroundImage: disabled
+                ? "none"
+                : useMotionTemplate`
+                    radial-gradient(
+                      ${
+                        visible ? `${radius}px` : "0px"
+                      } circle at ${mouseX}px ${mouseY}px,
+                      var(--ds-color-accent),
+                      transparent 90%
+                    )
+                  `,
             }}
-          >
-            {selectedOption ? (
-              <span className="text-neutral-900 dark:text-white flex-1 truncate">
-                {selectedOption.label}
-              </span>
-            ) : (
-              <span className="text-neutral-500 dark:text-neutral-400 flex-1">
-                {placeholder}
-              </span>
+            onMouseMove={!disabled ? handleMouseMove : undefined}
+            onMouseEnter={!disabled ? () => setVisible(true) : undefined}
+            onMouseLeave={!disabled ? () => setVisible(false) : undefined}
+            className={mergeClassNames(
+              "group/select rounded-lg p-[2px] transition duration-300 hover:border-accent",
+              disabled
+                ? "bg-muted border-none"
+                : error
+                  ? "border-destructive"
+                  : "border-border",
             )}
-            <span
+          >
+            <div
               className={mergeClassNames(
-                "ml-2 transition-transform duration-300",
-                open ? "rotate-180" : "rotate-0",
+                "shadow-input flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm transition duration-400 ease-in-out group-hover/select:shadow-none",
+                bgClassName,
+                disabled ? "cursor-not-allowed opacity-50" : "text-foreground",
+                error &&
+                  "border-destructive text-destructive focus-visible:ring-destructive",
+                triggerClassName,
               )}
+              onClick={() => {
+                if (!disabled) {
+                  setOpen((o) => !o);
+                }
+              }}
+              onKeyDown={(event) => {
+                if (disabled) {
+                  return;
+                }
+
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setOpen((current) => !current);
+                }
+
+                if (event.key === "Escape") {
+                  setOpen(false);
+                }
+              }}
+              role="button"
+              tabIndex={disabled ? -1 : 0}
+              aria-haspopup="listbox"
+              aria-expanded={open}
             >
-              <ChevronDownIcon width={24} height={24} color="#a1a1a1" />
-            </span>
-          </div>
+              {selectedOption ? (
+                <span className="flex-1 truncate text-foreground">
+                  {selectedOption.label}
+                </span>
+              ) : (
+                <span className="flex-1 text-muted-foreground">
+                  {placeholder}
+                </span>
+              )}
+              <span
+                className={mergeClassNames(
+                  "ml-2 text-muted-foreground transition-transform duration-300",
+                  open ? "rotate-180" : "rotate-0",
+                )}
+              >
+                <ChevronDownIcon
+                  width={24}
+                  height={24}
+                  color="currentColor"
+                  className="h-5 w-5"
+                />
+              </span>
+            </div>
+          </motion.div>
 
           {open && !disabled && (
             <div
               className={mergeClassNames(
-                "absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-md border border-neutral-200 dark:border-neutral-600 shadow-xl transition overflow-auto",
-                bgClassName,
+                "absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col overflow-auto rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition",
               )}
             >
               {options.length === 0 && (
-                <div className="px-3 py-2 text-neutral-500 dark:text-neutral-400">
+                <div className="px-3 py-2 text-muted-foreground">
                   No options
                 </div>
               )}
@@ -145,7 +207,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 <div
                   key={opt.value}
                   className={mergeClassNames(
-                    "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-neutral-900 dark:text-white transition",
+                    "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground transition",
                     opt.value === value
                       ? "bg-accent-subtle text-accent font-semibold"
                       : "",
@@ -170,14 +232,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         </div>
 
         {error && (
-          <p className="text-sm font-medium text-red-500 dark:text-red-400 mt-1">
-            {error}
-          </p>
+          <p className="mt-1 text-sm font-medium text-destructive">{error}</p>
         )}
         {helperText && !error && (
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-            {helperText}
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
         )}
       </div>
     );

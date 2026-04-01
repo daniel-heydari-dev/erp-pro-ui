@@ -6,6 +6,8 @@ export {
   FilterProfile,
 } from "./DataTable";
 export type {
+  DataTableCellRenderContext,
+  DataTableColumn,
   DataTableProps,
   FilterOption,
   FilterValue,

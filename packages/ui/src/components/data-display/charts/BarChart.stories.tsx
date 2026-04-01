@@ -13,8 +13,8 @@ const monthlyData = [
 ];
 
 const monthlyCategories = [
-  { key: "fulfilled", color: "#00cfe8" },
-  { key: "delayed", color: "#ff9f43" },
+  { key: "fulfilled", color: "var(--ds-chart-2)" },
+  { key: "delayed", color: "var(--ds-chart-4)" },
 ];
 
 const rankingData = [
@@ -70,7 +70,7 @@ export const RankingLayout: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
       <BarChart
         data={rankingData}
-        categories={[{ key: "transfers", color: "#28c76f" }]}
+        categories={[{ key: "transfers", color: "var(--ds-chart-3)" }]}
         height={360}
         layout="vertical"
         className="ui:px-2"

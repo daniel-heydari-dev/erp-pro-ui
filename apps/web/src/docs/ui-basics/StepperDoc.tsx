@@ -101,18 +101,18 @@ const StepperDoc = () => {
         <div className="docs-control-group">
           <label className="docs-control-label">Orientation</label>
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setOrientation("horizontal")}
-              className={`docs-button ${orientation === "horizontal" ? "docs-button-primary" : "docs-button-secondary"}`}
+              primary={orientation === "horizontal"}
             >
               Horizontal
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setOrientation("vertical")}
-              className={`docs-button ${orientation === "vertical" ? "docs-button-primary" : "docs-button-secondary"}`}
+              primary={orientation === "vertical"}
             >
               Vertical
-            </button>
+            </Button>
           </div>
         </div>
         <div className="docs-control-group flex items-center gap-4">

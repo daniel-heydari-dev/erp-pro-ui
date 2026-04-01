@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "erp-pro-ui";
 import { useState } from "react";
 
 interface CodeBlockProps {
@@ -27,10 +28,14 @@ const CodeBlock = ({
   return (
     <div className="docs-code-block group relative my-6 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-[#111]">
       <div className="absolute top-3 right-3 z-10 opacity-0 transition-opacity group-hover:opacity-100">
-        <button
+        <Button
           onClick={handleCopy}
-          className="rounded-lg border border-neutral-200 bg-white p-1.5 text-neutral-500 transition-colors hover:text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:text-white"
           aria-label="Copy to clipboard"
+          className={`h-8 w-8 px-0 py-0 shadow-none ${
+            copied
+              ? "border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-50 hover:opacity-100 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-300 dark:hover:bg-emerald-500/10"
+              : "border-neutral-200 bg-white text-neutral-500 hover:bg-white hover:text-neutral-900 hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-white"
+          }`}
         >
           <AnimatePresence mode="wait">
             {copied ? (
@@ -71,7 +76,7 @@ const CodeBlock = ({
               </motion.svg>
             )}
           </AnimatePresence>
-        </button>
+        </Button>
       </div>
       <div className="custom-scrollbar overflow-x-auto p-4 font-mono text-sm leading-relaxed">
         <pre className="text-neutral-800 dark:text-neutral-200">

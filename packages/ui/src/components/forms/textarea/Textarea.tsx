@@ -1,56 +1,70 @@
 import type { TextareaProps } from "./types";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+
+import { mergeClassNames } from "../../../utils";
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className = "", label, error, helperText, ...props }, ref) => {
-    const textareaClasses = `
-      flex
-      min-h-[80px]
-      w-full
-      rounded-md
-      border
-      border-neutral-300
-      dark:border-neutral-600
-      bg-white
-      dark:bg-neutral-700
-      px-3
-      py-2
-      text-sm
-      text-neutral-900
-      dark:text-white
-      transition-all
-      duration-200
-      placeholder:text-neutral-500
-      dark:placeholder:text-neutral-400
-      focus-visible:outline-none
-      focus-visible:ring-2
-      focus-visible:ring-focus
-      disabled:cursor-not-allowed
-      disabled:opacity-50
-      resize-none
-      ${error ? "border-red-500 focus-visible:ring-red-500" : ""}
-      ${className}
-    `
-      .trim()
-      .replace(/\s+/g, " ");
+  ({ className = "", label, error, helperText, disabled, ...props }, ref) => {
+    const radius = 100;
+    const [visible, setVisible] = useState(false);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+      const { left, top } = event.currentTarget.getBoundingClientRect();
+      mouseX.set(event.clientX - left);
+      mouseY.set(event.clientY - top);
+    };
 
     return (
       <div className="w-full">
         {label && (
-          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-200 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 block">
+          <label className="mb-2 block text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             {label}
           </label>
         )}
-        <textarea ref={ref} className={textareaClasses} {...props} />
+
+        <motion.div
+          style={{
+            backgroundImage: disabled
+              ? "none"
+              : useMotionTemplate`
+                  radial-gradient(
+                    ${
+                      visible ? `${radius}px` : "0px"
+                    } circle at ${mouseX}px ${mouseY}px,
+                    var(--ds-color-accent),
+                    transparent 90%
+                  )
+                `,
+          }}
+          onMouseMove={!disabled ? handleMouseMove : undefined}
+          onMouseEnter={!disabled ? () => setVisible(true) : undefined}
+          onMouseLeave={!disabled ? () => setVisible(false) : undefined}
+          className={mergeClassNames(
+            "group/textarea rounded-lg p-[2px] transition duration-300 hover:border-accent",
+            error ? "border-destructive" : "border-border",
+          )}
+        >
+          <textarea
+            ref={ref}
+            disabled={disabled}
+            className={mergeClassNames(
+              "shadow-input flex min-h-[80px] w-full rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/textarea:shadow-none placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50 resize-none",
+              error &&
+                "border-destructive text-destructive placeholder:text-destructive focus-visible:ring-destructive",
+              className,
+            )}
+            {...props}
+          />
+        </motion.div>
+
         {error && (
-          <p className="text-sm font-medium text-red-500 dark:text-red-400 mt-1">
-            {error}
-          </p>
+          <p className="text-sm font-medium text-destructive mt-1">{error}</p>
         )}
         {helperText && !error && (
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-            {helperText}
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
         )}
       </div>
     );

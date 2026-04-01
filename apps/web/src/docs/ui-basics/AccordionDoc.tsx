@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Accordion } from "erp-pro-ui";
+import { Accordion, Button } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -135,18 +135,18 @@ const items = [
         <div className="docs-control-group">
           <label className="docs-control-label">Mode</label>
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setMode("single")}
-              className={`docs-button ${mode === "single" ? "docs-button-primary" : "docs-button-secondary"}`}
+              primary={mode === "single"}
             >
               Single
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setMode("multiple")}
-              className={`docs-button ${mode === "multiple" ? "docs-button-primary" : "docs-button-secondary"}`}
+              primary={mode === "multiple"}
             >
               Multiple
-            </button>
+            </Button>
           </div>
         </div>
       </div>

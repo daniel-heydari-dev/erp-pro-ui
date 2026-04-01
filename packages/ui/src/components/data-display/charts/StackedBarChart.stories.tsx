@@ -12,10 +12,10 @@ const staffingData = [
 ];
 
 const staffingCategories = [
-  { key: "picking", color: "#7367f0", label: "Picking" },
-  { key: "packing", color: "#00cfe8", label: "Packing" },
-  { key: "quality", color: "#ff9f43", label: "Quality" },
-  { key: "dispatch", color: "#28c76f", label: "Dispatch" },
+  { key: "picking", color: "var(--ds-chart-1)", label: "Picking" },
+  { key: "packing", color: "var(--ds-chart-2)", label: "Packing" },
+  { key: "quality", color: "var(--ds-chart-4)", label: "Quality" },
+  { key: "dispatch", color: "var(--ds-chart-3)", label: "Dispatch" },
 ];
 
 const meta: Meta<typeof StackedBarChart> = {

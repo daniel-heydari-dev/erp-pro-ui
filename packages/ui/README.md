@@ -172,7 +172,35 @@ You can also use the readable CSS variables in plain CSS, CSS Modules, or inline
 .dashboard-shell .status-info {
   color: var(--ds-color-info);
 }
+
+.dashboard-shell .chart-series {
+  stroke: var(--ds-chart-6);
+}
 ```
+
+### Chart color slots
+
+The library now ships fifteen dedicated chart slots in both token layers:
+
+- `--ds-chart-1` through `--ds-chart-15`
+- `--color-chart-1` through `--color-chart-15`
+
+When you pass chart colors from React, you can use any CSS color string, the CSS vars directly, or the built-in helper and shorthand token names:
+
+```tsx
+import { BarChart, getChartColorVar } from "erp-pro-ui";
+
+<BarChart
+  data={data}
+  categories={[
+    { key: "revenue", color: getChartColorVar(1) },
+    { key: "cost", color: "chart-6" },
+    { key: "profit", color: "var(--color-chart-10)" },
+  ]}
+/>;
+```
+
+`getChartColorVar(slot)` supports slots `1` through `15`. The chart components also normalize the shorthand `chart-6` form into the matching theme variable automatically.
 
 ### Theme variable groups
 

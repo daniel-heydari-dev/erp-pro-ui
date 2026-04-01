@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../button";
+import { Input } from "../input";
 import { StorySurface } from "../../shared/storybook";
 import { Textarea } from "./Textarea";
 
@@ -134,13 +136,7 @@ export const FormSegmentExample: Story = {
         <h3 className="ui:text-lg ui:font-medium text-foreground">
           Submit Feedback
         </h3>
-        <div className="ui:flex ui:flex-col ui:gap-1">
-          <label className="ui:text-sm ui:font-medium">Subject</label>
-          <input
-            className="ui:w-full ui:rounded-md ui:border ui:border-neutral-300 dark:ui:border-neutral-700 ui:bg-transparent ui:px-3 ui:py-2 ui:text-sm"
-            placeholder="Issue with login"
-          />
-        </div>
+        <Input label="Subject" placeholder="Issue with login" />
         <Textarea
           label="Detailed Description"
           placeholder="Please describe exactly what happened..."
@@ -148,12 +144,7 @@ export const FormSegmentExample: Story = {
           helperText="Include any error codes you saw."
         />
         <div className="ui:mt-2 ui:flex ui:justify-end">
-          <button
-            type="button"
-            className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-          >
-            Send Report
-          </button>
+          <Button label="Send Report" primary />
         </div>
       </div>
     </StorySurface>

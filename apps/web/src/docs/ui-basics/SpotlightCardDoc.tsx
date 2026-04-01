@@ -13,7 +13,7 @@ const SpotlightCardDoc = () => {
 
       {/* Basic Usage */}
       <h2 className="docs-category-subtitle">Basic Usage</h2>
-      <div className="docs-showcase-card h-[400px] flex items-center justify-center">
+      <div className="docs-showcase-card h-100 flex items-center justify-center">
         <SpotlightCard
           className="max-w-sm"
           spotlightColor="rgba(115, 103, 240, 0.2)"
@@ -64,7 +64,7 @@ const SpotlightCardDoc = () => {
       <p className="docs-paragraph">
         SpotlightCard supports different styles like glass, solid, and outlined.
       </p>
-      <div className="docs-showcase-card h-[400px] flex items-center justify-center overflow-x-auto">
+      <div className="docs-showcase-card h-100 flex items-center justify-center overflow-x-auto">
         <div className="flex gap-6 p-4">
           <SpotlightCard variant="glass" className="w-64">
             <h4 className="font-bold">Glass</h4>
@@ -91,7 +91,7 @@ const SpotlightCardDoc = () => {
       <p className="docs-paragraph">
         Adjust the spotlight color and size to match your theme.
       </p>
-      <div className="docs-showcase-card h-[400px] flex items-center justify-center">
+      <div className="docs-showcase-card h-100 flex items-center justify-center">
         <div className="grid grid-cols-2 gap-8">
           <SpotlightCard
             spotlightColor="rgba(255, 0, 150, 0.1)"
@@ -122,7 +122,7 @@ const SpotlightCardDoc = () => {
         Spotlight cards also work as a grouped feature section for product
         overviews or landing pages.
       </p>
-      <div className="docs-showcase-card h-[420px] flex items-center justify-center bg-neutral-950">
+      <div className="docs-showcase-card h-105 flex items-center justify-center bg-neutral-950">
         <div className="grid w-full max-w-5xl gap-4 md:grid-cols-3">
           {["Smart routing", "Live approvals", "Inventory insight"].map(
             (title) => (

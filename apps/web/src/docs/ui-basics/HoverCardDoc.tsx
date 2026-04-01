@@ -1,4 +1,4 @@
-import { HoverCard } from "erp-pro-ui";
+import { Button, HoverCard } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -12,7 +12,7 @@ const HoverCardDoc = () => {
       </p>
 
       <h2 className="docs-category-subtitle">Basic Usage</h2>
-      <div className="docs-showcase-card h-[250px] flex items-center justify-center">
+      <div className="docs-showcase-card h-62.5 flex items-center justify-center">
         <HoverCard
           content={
             <div className="flex gap-4">
@@ -67,7 +67,7 @@ const HoverCardDoc = () => {
         Hover cards are ideal for assignees, reviewers, or owners in tables and
         kanban views.
       </p>
-      <div className="docs-showcase-card h-[280px] flex items-center justify-center">
+      <div className="docs-showcase-card h-70 flex items-center justify-center">
         <HoverCard
           position="right"
           align="start"
@@ -106,19 +106,19 @@ const HoverCardDoc = () => {
             </div>
           }
         >
-          <button className="docs-button docs-button-secondary">
-            Hover Mina Chen
-          </button>
+          <Button label="Hover Mina Chen" />
         </HoverCard>
       </div>
 
       <CodeBlock
-        code={`<HoverCard
+        code={`import { Button, HoverCard } from 'erp-pro-ui';
+
+<HoverCard
   position="right"
   align="start"
   content={<ProfilePreview />}
 >
-  <button>Hover Mina Chen</button>
+  <Button label="Hover Mina Chen" />
 </HoverCard>`}
       />
 
@@ -126,40 +126,38 @@ const HoverCardDoc = () => {
       <p className="docs-paragraph">
         Supports all four cardinal directions and multiple alignments.
       </p>
-      <div className="docs-showcase-card h-[300px] flex items-center justify-center">
+      <div className="docs-showcase-card h-75 flex items-center justify-center">
         <div className="grid grid-cols-2 gap-8">
           <HoverCard
             position="top"
             content={<div className="text-sm">Hover Card on Top</div>}
           >
-            <button className="docs-button docs-button-secondary">Top</button>
+            <Button label="Top" />
           </HoverCard>
           <HoverCard
             position="bottom"
             content={<div className="text-sm">Hover Card on Bottom</div>}
           >
-            <button className="docs-button docs-button-secondary">
-              Bottom
-            </button>
+            <Button label="Bottom" />
           </HoverCard>
           <HoverCard
             position="left"
             content={<div className="text-sm">Hover Card on Left</div>}
           >
-            <button className="docs-button docs-button-secondary">Left</button>
+            <Button label="Left" />
           </HoverCard>
           <HoverCard
             position="right"
             content={<div className="text-sm">Hover Card on Right</div>}
           >
-            <button className="docs-button docs-button-secondary">Right</button>
+            <Button label="Right" />
           </HoverCard>
         </div>
       </div>
 
       <CodeBlock
         code={`<HoverCard position="right" align="center" content="...">
-  <button>Trigger</button>
+  <Button label="Trigger" />
 </HoverCard>`}
       />
 
@@ -192,9 +190,7 @@ const HoverCardDoc = () => {
             </div>
           }
         >
-          <button className="docs-button docs-button-secondary">
-            Hover Supplier #204
-          </button>
+          <Button label="Hover Supplier #204" />
         </HoverCard>
       </div>
 
@@ -207,7 +203,7 @@ const HoverCardDoc = () => {
   arrow={false}
   content={<SupplierSnapshot />}
 >
-  <button>Hover Supplier #204</button>
+  <Button label="Hover Supplier #204" />
 </HoverCard>`}
       />
 

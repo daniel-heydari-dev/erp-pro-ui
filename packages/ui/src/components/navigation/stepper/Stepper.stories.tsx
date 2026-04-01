@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Stepper } from "./Stepper";
 import { useState } from "react";
+
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
+import { Stepper } from "./Stepper";
 import type { StepperProps } from "./types";
 
 const meta: Meta<typeof Stepper> = {
@@ -76,20 +78,17 @@ function StepperDemo(props: Omit<StepperProps, "steps" | "currentStep">) {
           onStepClick={setCurrent}
         />
         <div className="ui:flex ui:justify-center ui:gap-4 ui:mt-12">
-          <button
+          <Button
+            label="Previous"
             disabled={current === 0}
             onClick={() => setCurrent((c) => c - 1)}
-            className="ui:px-4 ui:py-2 ui:border ui:border-border ui:rounded-md ui:bg-card disabled:ui:opacity-50"
-          >
-            Previous
-          </button>
-          <button
+          />
+          <Button
+            label="Next"
+            primary
             disabled={current === steps.length - 1}
             onClick={() => setCurrent((c) => c + 1)}
-            className="ui:rounded-md ui:bg-accent ui:px-4 ui:py-2 ui:text-on-accent disabled:ui:opacity-50"
-          >
-            Next
-          </button>
+          />
         </div>
       </div>
     </StorySurface>

@@ -4,28 +4,28 @@ import { StorySurface } from "../../shared/storybook";
 import { ThinBreakdownBar } from "./ThinBreakdownBar";
 
 const infrastructureSegments = [
-  { label: "Compute", value: 45, color: "#7367f0" },
-  { label: "Database", value: 25, color: "#00cfe8" },
-  { label: "Queues", value: 15, color: "#28c76f" },
-  { label: "Storage", value: 10, color: "#ff9f43" },
-  { label: "Other", value: 5, color: "#ff4c51" },
+  { label: "Compute", value: 45, color: "var(--ds-chart-1)" },
+  { label: "Database", value: 25, color: "var(--ds-chart-2)" },
+  { label: "Queues", value: 15, color: "var(--ds-chart-3)" },
+  { label: "Storage", value: 10, color: "var(--ds-chart-4)" },
+  { label: "Other", value: 5, color: "var(--ds-chart-5)" },
 ];
 
 const capacityRows = [
   {
     title: "Warehouse A",
     segments: [
-      { label: "Available", value: 58, color: "#28c76f" },
-      { label: "Reserved", value: 27, color: "#7367f0" },
-      { label: "Blocked", value: 15, color: "#ff9f43" },
+      { label: "Available", value: 58, color: "var(--ds-chart-3)" },
+      { label: "Reserved", value: 27, color: "var(--ds-chart-1)" },
+      { label: "Blocked", value: 15, color: "var(--ds-chart-4)" },
     ],
   },
   {
     title: "Warehouse B",
     segments: [
-      { label: "Available", value: 36, color: "#28c76f" },
-      { label: "Reserved", value: 44, color: "#7367f0" },
-      { label: "Blocked", value: 20, color: "#ff9f43" },
+      { label: "Available", value: 36, color: "var(--ds-chart-3)" },
+      { label: "Reserved", value: 44, color: "var(--ds-chart-1)" },
+      { label: "Blocked", value: 20, color: "var(--ds-chart-4)" },
     ],
   },
 ];

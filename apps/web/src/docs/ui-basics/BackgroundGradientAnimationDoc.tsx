@@ -1,4 +1,4 @@
-import { BackgroundGradientAnimation } from "erp-pro-ui";
+import { BackgroundGradientAnimation, Button, Input } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -17,7 +17,7 @@ const BackgroundGradientAnimationDoc = () => {
         This component is typically used as a heroic background for landing
         pages.
       </p>
-      <div className="docs-showcase-card h-[500px] overflow-hidden rounded-2xl border-none p-0 relative group">
+      <div className="docs-showcase-card h-125 overflow-hidden rounded-2xl border-none p-0 relative group">
         <BackgroundGradientAnimation
           containerClassName="w-full h-full absolute inset-0"
           className="z-10 flex flex-col items-center justify-center p-8 text-center"
@@ -30,9 +30,9 @@ const BackgroundGradientAnimationDoc = () => {
               Modern, interactive gradient animations for high-end landing
               pages. Move your mouse to interact with the center light.
             </p>
-            <button className="px-8 py-3 bg-white text-accent font-bold rounded-full shadow-2xl hover:scale-105 transition-transform">
+            <Button className="border-white bg-white px-8 py-3 font-bold text-accent shadow-2xl hover:bg-white/90 hover:opacity-100">
               Get Started
-            </button>
+            </Button>
           </div>
         </BackgroundGradientAnimation>
 
@@ -57,7 +57,7 @@ const BackgroundGradientAnimationDoc = () => {
       <p className="docs-paragraph">
         Control all 5 blob colors and the interactive pointer color.
       </p>
-      <div className="docs-showcase-card h-[400px] overflow-hidden rounded-2xl border-none p-0 relative">
+      <div className="docs-showcase-card h-100 overflow-hidden rounded-2xl border-none p-0 relative">
         <BackgroundGradientAnimation
           gradientBackgroundStart="rgb(30, 0, 50)"
           gradientBackgroundEnd="rgb(0, 0, 20)"
@@ -93,7 +93,7 @@ const BackgroundGradientAnimationDoc = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Ocean Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(0, 50, 100)"
               gradientBackgroundEnd="rgb(0, 20, 60)"
@@ -111,7 +111,7 @@ const BackgroundGradientAnimationDoc = () => {
 
         {/* Sunset Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(255, 100, 50)"
               gradientBackgroundEnd="rgb(150, 0, 100)"
@@ -129,7 +129,7 @@ const BackgroundGradientAnimationDoc = () => {
 
         {/* Aurora Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(0, 30, 50)"
               gradientBackgroundEnd="rgb(0, 10, 30)"
@@ -147,7 +147,7 @@ const BackgroundGradientAnimationDoc = () => {
 
         {/* Neon Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(20, 0, 40)"
               gradientBackgroundEnd="rgb(0, 0, 20)"
@@ -165,7 +165,7 @@ const BackgroundGradientAnimationDoc = () => {
 
         {/* Forest Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(20, 50, 30)"
               gradientBackgroundEnd="rgb(10, 30, 20)"
@@ -183,7 +183,7 @@ const BackgroundGradientAnimationDoc = () => {
 
         {/* Galaxy Theme */}
         <div className="flex flex-col gap-3">
-          <div className="docs-showcase-card h-[250px] overflow-hidden rounded-xl border-none p-0 relative">
+          <div className="docs-showcase-card h-62.5 overflow-hidden rounded-xl border-none p-0 relative">
             <BackgroundGradientAnimation
               gradientBackgroundStart="rgb(30, 0, 60)"
               gradientBackgroundEnd="rgb(0, 0, 30)"
@@ -218,13 +218,13 @@ const BackgroundGradientAnimationDoc = () => {
       </p>
 
       {/* Hero Section */}
-      <div className="docs-showcase-card h-[500px] overflow-hidden rounded-2xl border-none p-0 relative mb-6">
+      <div className="docs-showcase-card h-125 overflow-hidden rounded-2xl border-none p-0 relative mb-6">
         <BackgroundGradientAnimation
           containerClassName="w-full h-full absolute inset-0"
           className="z-10 flex flex-col items-center justify-center p-8 text-center"
         >
           <div className="flex flex-col items-center justify-center text-white text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white to-white/60">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent drop-shadow-2xl bg-linear-to-b from-white to-white/60">
               Build Something Amazing
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-2xl mb-8">
@@ -232,19 +232,19 @@ const BackgroundGradientAnimationDoc = () => {
               library.
             </p>
             <div className="flex gap-4">
-              <button className="px-8 py-3 bg-white text-indigo-900 font-semibold rounded-full hover:bg-white/90 transition-colors pointer-events-auto">
+              <Button className="pointer-events-auto border-white bg-white px-8 py-3 font-semibold text-indigo-900 hover:bg-white/90 hover:opacity-100">
                 Get Started
-              </button>
-              <button className="px-8 py-3 bg-white/20 text-white font-semibold rounded-full border border-white/30 hover:bg-white/30 transition-colors pointer-events-auto">
+              </Button>
+              <Button className="pointer-events-auto border-white/30 bg-white/20 px-8 py-3 font-semibold text-white hover:bg-white/30 hover:opacity-100">
                 Learn More
-              </button>
+              </Button>
             </div>
           </div>
         </BackgroundGradientAnimation>
       </div>
 
       {/* Login Page */}
-      <div className="docs-showcase-card h-[500px] overflow-hidden rounded-2xl border-none p-0 relative mb-6">
+      <div className="docs-showcase-card h-125 overflow-hidden rounded-2xl border-none p-0 relative mb-6">
         <BackgroundGradientAnimation
           gradientBackgroundStart="rgb(30, 40, 100)"
           gradientBackgroundEnd="rgb(10, 15, 50)"
@@ -259,19 +259,23 @@ const BackgroundGradientAnimationDoc = () => {
               Welcome Back
             </h2>
             <div className="space-y-4">
-              <input
+              <Input
                 type="email"
                 placeholder="Email"
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                extra="border-white/20 hover:border-white/40"
+                bgClassName="bg-white/10"
+                className="border-white/20 text-white placeholder:text-white/50 focus-visible:ring-white/30"
               />
-              <input
+              <Input
                 type="password"
                 placeholder="Password"
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                extra="border-white/20 hover:border-white/40"
+                bgClassName="bg-white/10"
+                className="border-white/20 text-white placeholder:text-white/50 focus-visible:ring-white/30"
               />
-              <button className="w-full py-3 bg-white text-indigo-900 font-semibold rounded-lg hover:bg-white/90 transition-colors">
+              <Button className="w-full border-white bg-white py-3 font-semibold text-indigo-900 shadow-none hover:bg-white/90 hover:opacity-100">
                 Sign In
-              </button>
+              </Button>
             </div>
             <p className="text-white/60 text-center mt-4 text-sm">
               Don&apos;t have an account?{" "}
@@ -284,7 +288,7 @@ const BackgroundGradientAnimationDoc = () => {
       </div>
 
       {/* Card Showcase */}
-      <div className="docs-showcase-card h-[500px] overflow-hidden rounded-2xl border-none p-0 relative mb-12">
+      <div className="docs-showcase-card h-125 overflow-hidden rounded-2xl border-none p-0 relative mb-12">
         <BackgroundGradientAnimation
           gradientBackgroundStart="rgb(20, 10, 50)"
           gradientBackgroundEnd="rgb(5, 5, 25)"
@@ -307,9 +311,9 @@ const BackgroundGradientAnimationDoc = () => {
                   <li>✓ Feature two</li>
                   <li>✓ Feature three</li>
                 </ul>
-                <button className="w-full py-2 bg-white/20 text-white font-medium rounded-lg hover:bg-white/30 transition-colors">
+                <Button className="w-full border-white/30 bg-white/20 py-2 font-medium text-white shadow-none hover:bg-white/30 hover:opacity-100">
                   Choose Plan
-                </button>
+                </Button>
               </div>
             ))}
           </div>

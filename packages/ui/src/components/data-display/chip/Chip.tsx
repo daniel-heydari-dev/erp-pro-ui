@@ -156,7 +156,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
     const isRemovable = onRemove !== undefined;
 
     const baseStyles = `
-      inline-flex items-center font-medium rounded-full transition-all duration-200
+      inline-flex items-center font-medium rounded-[4px] transition-all duration-200
       ${sizeStyles[size]}
       ${colorStyles[variant][color]}
       ${
@@ -210,22 +210,20 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
       >
         {dot && (
           <span
-            className={`rounded-full flex-shrink-0 animate-pulse ${
+            className={`rounded-full shrink-0 animate-pulse ${
               dotSizeStyles[size]
             } ${dotColor ? "" : dotColorStyles[color]}`}
             style={dotColor ? { backgroundColor: dotColor } : undefined}
           />
         )}
         {startIcon && (
-          <span className={`flex-shrink-0 ${iconSizeStyles[size]}`}>
+          <span className={`shrink-0 ${iconSizeStyles[size]}`}>
             {startIcon}
           </span>
         )}
         <span className="truncate font-semibold">{children}</span>
         {endIcon && !isRemovable && (
-          <span className={`flex-shrink-0 ${iconSizeStyles[size]}`}>
-            {endIcon}
-          </span>
+          <span className={`shrink-0 ${iconSizeStyles[size]}`}>{endIcon}</span>
         )}
         {isRemovable && (
           <button
@@ -233,7 +231,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
             onClick={handleRemove}
             disabled={disabled}
             className={`
-              flex-shrink-0 rounded-full p-0.5 ml-1 transition-all duration-200
+              shrink-0 rounded-full p-0.5 ml-1 transition-all duration-200
               hover:bg-black/20 dark:hover:bg-white/20 hover:scale-110
               focus:outline-none focus:ring-2 focus:ring-current focus:ring-offset-1
               ${disabled ? "cursor-not-allowed" : "cursor-pointer"}

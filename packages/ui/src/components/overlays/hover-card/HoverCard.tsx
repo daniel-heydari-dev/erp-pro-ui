@@ -141,13 +141,28 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
       return () => clearTimeouts();
     }, [clearTimeouts]);
 
+    const resolvedWidth = width
+      ? typeof width === "number"
+        ? `${width}px`
+        : width
+      : "max-content";
+
+    const resolvedMaxWidth =
+      typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth;
+
+    const cardContainerStyle: React.CSSProperties = {
+      width: resolvedWidth,
+      maxWidth: resolvedMaxWidth
+        ? `min(calc(100vw - 2rem), ${resolvedMaxWidth})`
+        : "calc(100vw - 2rem)",
+    };
+
     const cardStyle: React.CSSProperties = {
       width: width
         ? typeof width === "number"
           ? `${width}px`
           : width
-        : undefined,
-      maxWidth: typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth,
+        : "100%",
     };
 
     return (
@@ -165,6 +180,7 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
                 absolute z-50
                 ${positionStyles[position][align]}
               `}
+              style={cardContainerStyle}
               initial={motionVariants[position].initial}
               animate={motionVariants[position].animate}
               exit={motionVariants[position].exit}
@@ -172,6 +188,7 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
             >
               <div
                 className={`
+                  w-full
                   bg-white/70 dark:bg-neutral-900/70
                   backdrop-blur-xl
                   rounded-xl shadow-2xl dark:shadow-neutral-950/50

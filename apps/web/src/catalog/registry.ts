@@ -63,6 +63,7 @@ const uiDocsLoaders: Record<UiCatalogSlug, ComponentLoader> = {
   card: () => import("@/docs/ui-basics/CardDoc"),
   stepper: () => import("@/docs/ui-basics/StepperDoc"),
   chip: () => import("@/docs/ui-basics/ChipDoc"),
+  "progress-bar": () => import("@/docs/ui-basics/ProgressBarDoc"),
   calendar: () => import("@/docs/ui-basics/CalendarDoc"),
   datepicker: () => import("@/docs/ui-basics/DatePickerDoc"),
   "multiselect-combobox": () =>

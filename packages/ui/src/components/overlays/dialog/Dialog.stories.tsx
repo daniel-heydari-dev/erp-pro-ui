@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import { Dialog } from "./Dialog";
 import type { DialogProps } from "./types";
@@ -76,12 +77,9 @@ function DialogDemo(props: DialogStoryProps) {
   const [open, setOpen] = useState(false);
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <button
-        onClick={() => setOpen(true)}
-        className="ui:cursor-pointer ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-      >
+      <Button primary onClick={() => setOpen(true)}>
         Open {props.title || "Dialog"}
-      </button>
+      </Button>
       <Dialog open={open} onOpenChange={setOpen} {...props} />
     </StorySurface>
   );
@@ -166,12 +164,8 @@ export const CustomContent: Story = {
       widthClassName="ui:max-w-2xl"
       footer={
         <div className="ui:flex ui:justify-end ui:gap-3">
-          <button className="ui:rounded-md ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-            Cancel
-          </button>
-          <button className="ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:text-sm ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900">
-            Save policy
-          </button>
+          <Button label="Cancel" />
+          <Button label="Save policy" primary />
         </div>
       }
     >
@@ -208,12 +202,9 @@ export const AsyncConfirm: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
-        <button
-          onClick={() => setOpen(true)}
-          className="ui:cursor-pointer ui:rounded-md ui:bg-neutral-900 ui:px-4 ui:py-2 ui:font-medium ui:text-white dark:ui:bg-white dark:ui:text-neutral-900"
-        >
+        <Button primary onClick={() => setOpen(true)}>
           Open async confirm
-        </button>
+        </Button>
 
         <Dialog
           open={open}

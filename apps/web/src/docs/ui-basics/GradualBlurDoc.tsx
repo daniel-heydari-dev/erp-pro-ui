@@ -1,7 +1,7 @@
-import { GradualBlur } from "erp-pro-ui";
+import { useState } from "react";
+import { Button, GradualBlur } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
-import { useState } from "react";
 
 const GradualBlurDoc = () => {
   const [visible, setVisible] = useState(false);
@@ -19,8 +19,8 @@ const GradualBlurDoc = () => {
       <p className="docs-paragraph">
         By default, it triggers when the component enters the viewport.
       </p>
-      <div className="docs-showcase-card h-[400px] flex items-center justify-center bg-neutral-100 dark:bg-neutral-800/50 rounded-xl overflow-y-auto">
-        <div className="h-[800px] w-full flex flex-col items-center justify-center gap-20">
+      <div className="docs-showcase-card h-100 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800/50 rounded-xl overflow-y-auto">
+        <div className="h-200 w-full flex flex-col items-center justify-center gap-20">
           <div className="text-neutral-500 italic">
             Scroll down to see the effect
           </div>
@@ -51,7 +51,7 @@ const GradualBlurDoc = () => {
       <p className="docs-paragraph">
         Combine blur with directional movement for a more dynamic entrance.
       </p>
-      <div className="docs-showcase-card min-h-[400px] flex-row! flex-wrap! items-center! justify-center! gap-12 py-16">
+      <div className="docs-showcase-card min-h-100 flex-row! flex-wrap! items-center! justify-center! gap-12 py-16">
         <GradualBlur direction="top" distance={40} delay={0.1}>
           <div className="w-28 h-28 bg-blue-500/10 rounded-2xl flex flex-col items-center justify-center border border-blue-500/20 shadow-lg backdrop-blur-sm group hover:border-blue-500/50 transition-colors">
             <span className="text-2xl mb-1 group-hover:-translate-y-1 transition-transform">
@@ -101,13 +101,10 @@ const GradualBlurDoc = () => {
 
       {/* Manual Trigger */}
       <h2 className="docs-category-subtitle">Manual Trigger</h2>
-      <div className="docs-showcase-card h-[250px] flex flex-col items-center justify-center gap-6">
-        <button
-          onClick={() => setVisible(!visible)}
-          className="docs-button docs-button-primary"
-        >
+      <div className="docs-showcase-card h-62.5 flex flex-col items-center justify-center gap-6">
+        <Button onClick={() => setVisible(!visible)} primary>
           {visible ? "Hide" : "Show"} Component
-        </button>
+        </Button>
 
         <GradualBlur
           triggerOnView={false}

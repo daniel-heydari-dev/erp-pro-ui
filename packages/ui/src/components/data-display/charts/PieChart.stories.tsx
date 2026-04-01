@@ -52,7 +52,12 @@ export const DonutDistribution: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <PieChart
         data={productMixData}
-        colors={["#7367f0", "#00cfe8", "#28c76f", "#ff9f43"]}
+        colors={[
+          "var(--ds-chart-1)",
+          "var(--ds-chart-2)",
+          "var(--ds-chart-3)",
+          "var(--ds-chart-4)",
+        ]}
         variant="donut"
         height={320}
       />
@@ -65,7 +70,7 @@ export const CompactStatusSplit: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <PieChart
         data={resolutionData}
-        colors={["#28c76f", "#ff9f43", "#ff4c51"]}
+        colors={["var(--ds-chart-3)", "var(--ds-chart-4)", "var(--ds-chart-5)"]}
         variant="pie"
         height={320}
       />

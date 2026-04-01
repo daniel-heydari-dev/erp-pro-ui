@@ -10,6 +10,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { normalizeChartColors } from "./chartPalette";
+
 export interface PieChartData {
   name: string;
   value: number;
@@ -31,6 +33,10 @@ export const PieChart: React.FC<PieChartProps> = ({
   variant = "donut",
 }) => {
   const innerRadius = variant === "donut" ? "60%" : 0;
+  const normalizedColors = React.useMemo(
+    () => normalizeChartColors(colors),
+    [colors],
+  );
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
@@ -49,20 +55,21 @@ export const PieChart: React.FC<PieChartProps> = ({
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={colors[index % colors.length]}
+                fill={normalizedColors[index % normalizedColors.length]}
               />
             ))}
           </Pie>
 
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(10, 10, 10, 0.9)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor:
+                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
+              border: "1px solid var(--ds-color-border)",
               borderRadius: "8px",
               backdropFilter: "blur(8px)",
-              color: "#fff",
+              color: "var(--ds-color-fg)",
             }}
-            itemStyle={{ color: "#fff" }}
+            itemStyle={{ color: "var(--ds-color-fg)" }}
           />
 
           <Legend

@@ -135,8 +135,8 @@ export const BrandCustomization: Story = {
     <div className="ui:p-6">
       <CanvasFrame className="ui:bg-gradient-to-br ui:from-fuchsia-50 ui:via-white ui:to-sky-50 dark:ui:from-neutral-950 dark:ui:via-neutral-900 dark:ui:to-neutral-950">
         <SplashCursor
-          color="#ff0080"
-          secondaryColor="#7928ca"
+          color="var(--ds-color-accent)"
+          secondaryColor="var(--ds-color-accent-hover)"
           size="lg"
           particleCount={15}
           variant="trail"

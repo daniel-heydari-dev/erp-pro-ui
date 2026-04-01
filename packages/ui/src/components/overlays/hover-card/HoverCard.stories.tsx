@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Button } from "../../forms/button";
 import { StorySurface } from "../../shared/storybook";
 import { HoverCard } from "./HoverCard";
 
@@ -114,9 +115,7 @@ export const TeamMemberPreview: Story = {
           </div>
         }
       >
-        <button className="ui:rounded-full ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-          Hover Mina Chen
-        </button>
+        <Button label="Hover Mina Chen" className="ui:rounded-full" />
       </HoverCard>
     </StorySurface>
   ),
@@ -154,9 +153,7 @@ export const DelayAndWidth: Story = {
           </div>
         }
       >
-        <button className="ui:rounded-full ui:border ui:border-border ui:px-4 ui:py-2 ui:text-sm ui:font-medium">
-          Hover Supplier #204
-        </button>
+        <Button label="Hover Supplier #204" className="ui:rounded-full" />
       </HoverCard>
     </StorySurface>
   ),

@@ -46,8 +46,8 @@ const meta: Meta<typeof NeonLineChart> = {
   tags: ["autodocs"],
   argTypes: {
     height: { control: "number" },
-    lineColorStop1: { control: "color" },
-    lineColorStop2: { control: "color" },
+    lineColorStop1: { control: "text" },
+    lineColorStop2: { control: "text" },
     glowColor: { control: "text" },
     data: { control: false, description: "Single glowing series data." },
     className: {
@@ -119,9 +119,9 @@ export const CustomBrandGlow: Story = {
         <NeonLineChart
           data={throughputData}
           height={340}
-          lineColorStop1="#00cfe8"
-          lineColorStop2="#7367f0"
-          glowColor="rgba(115, 103, 240, 0.45)"
+          lineColorStop1="var(--ds-chart-2)"
+          lineColorStop2="var(--ds-chart-1)"
+          glowColor="var(--ds-chart-1)"
           className="ui:px-2"
         />
       </StoryStack>
@@ -162,9 +162,9 @@ export const CompactActivityWidget: Story = {
           <NeonLineChart
             data={retentionData}
             height={280}
-            lineColorStop1="#14b8a6"
-            lineColorStop2="#22c55e"
-            glowColor="rgba(20, 184, 166, 0.35)"
+            lineColorStop1="var(--ds-chart-2)"
+            lineColorStop2="var(--ds-chart-3)"
+            glowColor="var(--ds-chart-2)"
             className="ui:px-1"
           />
         </div>

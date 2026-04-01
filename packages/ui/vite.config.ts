@@ -73,6 +73,9 @@ const libraryEntries = {
   charts: resolveFromRoot("src/components/data-display/charts/index.ts"),
   checkbox: resolveFromRoot("src/components/forms/checkbox/index.ts"),
   chip: resolveFromRoot("src/components/data-display/chip/index.ts"),
+  "progress-bar": resolveFromRoot(
+    "src/components/data-display/progress-bar/index.ts",
+  ),
   "chroma-grid": resolveFromRoot("src/components/effects/chroma-grid/index.ts"),
   "color-palette": resolveFromRoot(
     "src/components/data-display/color-palette/index.ts",
