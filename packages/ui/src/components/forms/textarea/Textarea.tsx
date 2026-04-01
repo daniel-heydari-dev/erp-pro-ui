@@ -24,7 +24,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       dark:placeholder:text-neutral-400
       focus-visible:outline-none
       focus-visible:ring-2
-      focus-visible:ring-primary
+      focus-visible:ring-primary-500
       disabled:cursor-not-allowed
       disabled:opacity-50
       resize-none

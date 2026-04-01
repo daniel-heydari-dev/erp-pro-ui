@@ -39,33 +39,34 @@ const sizeConfig: Record<
 const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
   const baseStyles = {
     default: {
-      completed: "bg-primary text-white shadow-md shadow-primary/30",
+      completed: "bg-primary-500 text-white shadow-md shadow-primary-500/30",
       current:
-        "bg-primary text-white ring-4 ring-primary/30 shadow-lg shadow-primary/40",
+        "bg-primary-500 text-white ring-4 ring-primary-500/30 shadow-lg shadow-primary-500/40",
       upcoming:
         "bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400",
       error: "bg-red-500 text-white ring-4 ring-red-500/30",
     },
     glass: {
       completed:
-        "bg-primary/80 text-white backdrop-blur-xl border border-primary/30 shadow-lg shadow-primary/20",
+        "bg-primary-500/80 text-white backdrop-blur-xl border border-primary-500/30 shadow-lg shadow-primary-500/20",
       current:
-        "bg-primary/90 text-white backdrop-blur-xl border-2 border-primary ring-4 ring-primary/20 shadow-xl shadow-primary/30",
+        "bg-primary-500/90 text-white backdrop-blur-xl border-2 border-primary-500 ring-4 ring-primary-500/20 shadow-xl shadow-primary-500/30",
       upcoming:
         "bg-white/60 text-neutral-500 backdrop-blur-xl border border-white/40 dark:bg-neutral-800/60 dark:text-neutral-400 dark:border-white/10",
       error:
         "bg-red-500/80 text-white backdrop-blur-xl border border-red-400/30 ring-4 ring-red-500/20",
     },
     minimal: {
-      completed: "bg-primary/10 text-primary dark:bg-primary/20",
-      current: "bg-primary text-white shadow-sm",
+      completed: "bg-primary-100 text-primary-500 dark:bg-primary-900/20",
+      current: "bg-primary-500 text-white shadow-sm",
       upcoming:
         "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
       error: "bg-red-100 text-red-500 dark:bg-red-900/30",
     },
     outlined: {
-      completed: "bg-transparent text-primary border-2 border-primary",
-      current: "bg-primary text-white border-2 border-primary shadow-lg",
+      completed: "bg-transparent text-primary-500 border-2 border-primary-500",
+      current:
+        "bg-primary-500 text-white border-2 border-primary-500 shadow-lg",
       upcoming:
         "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
       error: "bg-transparent text-red-500 border-2 border-red-500",
@@ -244,7 +245,7 @@ export const Stepper = ({
               {/* Animated fill connector */}
               {animated ? (
                 <motion.div
-                  className="absolute top-0 left-0 bg-primary rounded-full"
+                  className="absolute top-0 left-0 bg-primary-500 rounded-full"
                   initial={{ [isVertical ? "height" : "width"]: 0 }}
                   animate={{
                     [isVertical ? "height" : "width"]:
@@ -258,7 +259,7 @@ export const Stepper = ({
                 />
               ) : (
                 <div
-                  className="absolute top-0 left-0 bg-primary rounded-full"
+                  className="absolute top-0 left-0 bg-primary-500 rounded-full"
                   style={{
                     ...(isVertical
                       ? {
@@ -364,7 +365,7 @@ export const Stepper = ({
                   "font-medium transition-colors duration-200",
                   config.text,
                   status === "current"
-                    ? "text-primary dark:text-primary-400"
+                    ? "text-primary-500 dark:text-primary-400"
                     : status === "completed"
                       ? "text-neutral-700 dark:text-neutral-200"
                       : status === "error"

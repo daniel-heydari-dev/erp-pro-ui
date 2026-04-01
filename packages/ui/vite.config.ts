@@ -36,6 +36,10 @@ function copyStylesheetAsset(): Plugin {
           resolveFromRoot("src/colors.css"),
           resolveFromRoot("dist/colors.css"),
         ),
+        cp(
+          resolveFromRoot("src/tokens.css"),
+          resolveFromRoot("dist/tokens.css"),
+        ),
         cp(resolveFromRoot("src/fonts.css"), resolveFromRoot("dist/fonts.css")),
       ]);
 

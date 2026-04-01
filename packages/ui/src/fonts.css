@@ -1,3 +1,8 @@
+/* =====================
+  Font Faces
+  Import `erp-pro-ui/styles.css` for the normal setup, or `erp-pro-ui/fonts.css`
+  if you only want the packaged Geist font files in another project.
+  ===================== */
 @font-face {
   font-family: "Geist";
   src: url("./fonts/geist/Geist[wght].woff2") format("woff2-variations");

@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "description": "Lightweight React UI component library for ERP and SaaS apps with tree-shakeable subpath exports.",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "style": "./dist/styles.css",
@@ -20,6 +22,9 @@
       "default": "./dist/index.mjs"
     },
     "./styles.css": "./dist/styles.css",
+    "./colors.css": "./dist/colors.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css",
     "./catalog": {
       "types": "./dist/catalog.d.ts",
       "import": "./dist/catalog.mjs",

@@ -1107,7 +1107,7 @@ function DataTableToolbar<T>({
                   <button
                     type="button"
                     onClick={onBulkDeleteSelected}
-                    className="inline-flex items-center gap-2 rounded-lg border border-primary-400/30 bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-lg shadow-primary-500/20 transition-colors hover:bg-primary-600"
+                    className="inline-flex items-center gap-2 rounded-lg border border-primary-400/30 bg-primary-500 px-3 py-2 text-sm font-medium text-primary-foreground shadow-lg shadow-primary-500/20 transition-colors hover:bg-primary-600"
                   >
                     <TrashIcon className="h-4 w-4" aria-hidden="true" />
                     Delete selected

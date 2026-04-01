@@ -1,24 +1,24 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-import process from 'node:process';
-import { fileURLToPath } from 'node:url';
-import ts from 'typescript';
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const packageDir = path.resolve(scriptDir, '..');
+const packageDir = path.resolve(scriptDir, "..");
 
-const packageJsonPath = path.join(packageDir, 'package.json');
-const catalogPath = path.join(packageDir, 'src', 'catalog.ts');
-const viteConfigPath = path.join(packageDir, 'vite.config.ts');
+const packageJsonPath = path.join(packageDir, "package.json");
+const catalogPath = path.join(packageDir, "src", "catalog.ts");
+const viteConfigPath = path.join(packageDir, "vite.config.ts");
 
 const baseEntryNames = [
-  'index',
-  'catalog',
-  'docs',
-  'theme',
-  'ascii-text',
-  'spinners',
-  'utils',
+  "index",
+  "catalog",
+  "docs",
+  "theme",
+  "ascii-text",
+  "spinners",
+  "utils",
 ];
 
 function unique(values) {
@@ -38,7 +38,7 @@ function findDuplicates(values) {
 }
 
 function formatList(values) {
-  return values.map((value) => `- ${value}`).join('\n');
+  return values.map((value) => `- ${value}`).join("\n");
 }
 
 function extractLibraryEntryNames(viteSource) {
@@ -50,7 +50,7 @@ function extractLibraryEntryNames(viteSource) {
 }
 
 async function loadCatalogItems() {
-  const source = await readFile(catalogPath, 'utf8');
+  const source = await readFile(catalogPath, "utf8");
   const compiled = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.ES2022,
@@ -59,7 +59,7 @@ async function loadCatalogItems() {
     fileName: catalogPath,
   });
 
-  const moduleUrl = `data:text/javascript;base64,${Buffer.from(compiled.outputText).toString('base64')}`;
+  const moduleUrl = `data:text/javascript;base64,${Buffer.from(compiled.outputText).toString("base64")}`;
   const catalogModule = await import(moduleUrl);
 
   return catalogModule.uiCatalogItems;
@@ -68,7 +68,7 @@ async function loadCatalogItems() {
 function validateExportShape(entryName, exportEntry, errors) {
   if (
     !exportEntry ||
-    typeof exportEntry !== 'object' ||
+    typeof exportEntry !== "object" ||
     Array.isArray(exportEntry)
   ) {
     errors.push(`Export ./${entryName} must be an object export map.`);
@@ -96,7 +96,7 @@ function validateExportShape(entryName, exportEntry, errors) {
     );
   }
 
-  if (typeof exportEntry.types !== 'string') {
+  if (typeof exportEntry.types !== "string") {
     errors.push(`Export ./${entryName} is missing a string types entry.`);
   }
 }
@@ -104,8 +104,8 @@ function validateExportShape(entryName, exportEntry, errors) {
 async function main() {
   const [packageJsonSource, viteConfigSource, catalogItems] = await Promise.all(
     [
-      readFile(packageJsonPath, 'utf8'),
-      readFile(viteConfigPath, 'utf8'),
+      readFile(packageJsonPath, "utf8"),
+      readFile(viteConfigPath, "utf8"),
       loadCatalogItems(),
     ],
   );
@@ -133,7 +133,7 @@ async function main() {
     );
   }
 
-  const allowedDuplicateExportPaths = new Set(['charts']);
+  const allowedDuplicateExportPaths = new Set(["charts"]);
   const unexpectedDuplicateExportPaths = duplicateExportPaths.filter(
     (entryName) => !allowedDuplicateExportPaths.has(entryName),
   );
@@ -168,10 +168,13 @@ async function main() {
 
   const exportsMap = packageJson.exports ?? {};
   const expectedExportKeys = [
-    '.',
-    './styles.css',
+    ".",
+    "./styles.css",
+    "./colors.css",
+    "./tokens.css",
+    "./fonts.css",
     ...expectedEntryNames
-      .filter((entryName) => entryName !== 'index')
+      .filter((entryName) => entryName !== "index")
       .map((entryName) => `./${entryName}`),
   ];
   const actualExportKeys = Object.keys(exportsMap);
@@ -195,50 +198,62 @@ async function main() {
     );
   }
 
-  if (exportsMap['./styles.css'] !== './dist/styles.css') {
-    errors.push('Export ./styles.css must point to ./dist/styles.css.');
+  if (exportsMap["./styles.css"] !== "./dist/styles.css") {
+    errors.push("Export ./styles.css must point to ./dist/styles.css.");
   }
 
-  const rootExport = exportsMap['.'];
+  if (exportsMap["./colors.css"] !== "./dist/colors.css") {
+    errors.push("Export ./colors.css must point to ./dist/colors.css.");
+  }
+
+  if (exportsMap["./tokens.css"] !== "./dist/tokens.css") {
+    errors.push("Export ./tokens.css must point to ./dist/tokens.css.");
+  }
+
+  if (exportsMap["./fonts.css"] !== "./dist/fonts.css") {
+    errors.push("Export ./fonts.css must point to ./dist/fonts.css.");
+  }
+
+  const rootExport = exportsMap["."];
 
   if (
     !rootExport ||
-    typeof rootExport !== 'object' ||
+    typeof rootExport !== "object" ||
     Array.isArray(rootExport)
   ) {
-    errors.push('Root export . must be an object export map.');
+    errors.push("Root export . must be an object export map.");
   } else {
-    if (rootExport.import !== './dist/index.mjs') {
-      errors.push('Root export . must import ./dist/index.mjs.');
+    if (rootExport.import !== "./dist/index.mjs") {
+      errors.push("Root export . must import ./dist/index.mjs.");
     }
 
-    if (rootExport.require !== './dist/index.cjs') {
-      errors.push('Root export . must require ./dist/index.cjs.');
+    if (rootExport.require !== "./dist/index.cjs") {
+      errors.push("Root export . must require ./dist/index.cjs.");
     }
 
-    if (rootExport.default !== './dist/index.mjs') {
-      errors.push('Root export . must default to ./dist/index.mjs.');
+    if (rootExport.default !== "./dist/index.mjs") {
+      errors.push("Root export . must default to ./dist/index.mjs.");
     }
 
-    if (rootExport.types !== './dist/index.d.ts') {
-      errors.push('Root export . must expose types ./dist/index.d.ts.');
+    if (rootExport.types !== "./dist/index.d.ts") {
+      errors.push("Root export . must expose types ./dist/index.d.ts.");
     }
   }
 
   for (const entryName of expectedEntryNames.filter(
-    (entryName) => entryName !== 'index',
+    (entryName) => entryName !== "index",
   )) {
     validateExportShape(entryName, exportsMap[`./${entryName}`], errors);
   }
 
   if (errors.length > 0) {
     process.stderr.write(
-      `UI package contract validation failed.\n\n${errors.map((error) => `• ${error}`).join('\n\n')}\n`,
+      `UI package contract validation failed.\n\n${errors.map((error) => `• ${error}`).join("\n\n")}\n`,
     );
     process.exit(1);
   }
 
-  process.stdout.write('UI package contract validation passed.\n');
+  process.stdout.write("UI package contract validation passed.\n");
 }
 
 await main();

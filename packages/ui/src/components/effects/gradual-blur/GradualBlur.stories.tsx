@@ -145,7 +145,7 @@ export const ManualTrigger: Story = {
           <button
             type="button"
             onClick={() => setVisible((current) => !current)}
-            className="ui:rounded-lg ui:bg-primary ui:px-4 ui:py-2 ui:text-sm ui:font-semibold ui:text-white"
+            className="ui:rounded-lg ui:bg-primary-500 ui:px-4 ui:py-2 ui:text-sm ui:font-semibold ui:text-white"
           >
             {visible ? "Hide" : "Show"} Component
           </button>

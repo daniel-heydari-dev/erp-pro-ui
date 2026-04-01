@@ -466,19 +466,19 @@ export const libraryInstallSteps = [
   {
     title: "Install peer dependencies",
     description:
-      "Install the peer packages used by motion, charts, tables, icons, and 3D visuals.",
+      "Install only the optional peer packages used by motion, tables, and 3D visuals you actually render.",
     examples: [
       {
         title: "Peers",
         language: "bash",
-        code: "pnpm add framer-motion three @react-three/fiber @react-three/drei @tanstack/react-table recharts lucide-react",
+        code: "pnpm add framer-motion three @tanstack/react-table",
       },
     ],
   },
   {
     title: "Import the shared styles",
     description:
-      "Import Tailwind first, then the library stylesheet once at the app entry to load tokens, fonts, and foundations.",
+      "Import Tailwind first, then the library stylesheet once at the app entry to load tokens, fonts, foundations, and semantic utilities with no extra Tailwind config.",
     examples: [
       {
         title: "Root stylesheet",
@@ -488,14 +488,41 @@ export const libraryInstallSteps = [
     ],
   },
   {
+    title: "Use colors and fonts directly",
+    description:
+      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from the shared semantic tokens.",
+    examples: [
+      {
+        title: "Raw token import",
+        language: "css",
+        code: '@import "erp-pro-ui/tokens.css";',
+      },
+      {
+        title: "Tailwind bridge import",
+        language: "css",
+        code: '@import "tailwindcss";\n@import "erp-pro-ui/colors.css";\n@import "erp-pro-ui/fonts.css";',
+      },
+      {
+        title: "Theme token usage",
+        language: "tsx",
+        code: '<section className="bg-surface text-fg border border-border rounded-2xl p-6">\n  <button className="bg-accent text-on-accent hover:bg-accent-hover active:bg-accent-press rounded-lg px-4 py-2">Save</button>\n</section>',
+      },
+    ],
+  },
+  {
     title: "Wrap your app with ThemeProvider",
     description:
-      "Use ThemeProvider at the root so shared theme context and mode switching are available to the component tree.",
+      "Use ThemeProvider at the root so shared brand and mode attributes are applied as data-brand and data-mode for the token system.",
     examples: [
       {
         title: "Root provider",
         language: "tsx",
         code: "import { ThemeProvider } from 'erp-pro-ui';\n\ncreateRoot(rootElement).render(\n  <ThemeProvider>\n    <App />\n  </ThemeProvider>,\n);",
+      },
+      {
+        title: "Manual attributes",
+        language: "tsx",
+        code: '<html data-brand="teal" data-mode="dark"></html>',
       },
     ],
   },

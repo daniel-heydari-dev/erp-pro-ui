@@ -22,7 +22,7 @@ export interface ColorPaletteProps {
 // ============================================================================
 const lightThemeGroups: ColorGroup[] = [
   {
-    name: "Primary",
+    name: "Theme Primary Scale",
     colors: [
       { name: "primary-50", value: "#f5f4fe", textColor: "dark" },
       { name: "primary-100", value: "#ebe9fd", textColor: "dark" },
@@ -38,7 +38,7 @@ const lightThemeGroups: ColorGroup[] = [
     ],
   },
   {
-    name: "Secondary",
+    name: "Neutral Scale",
     colors: [
       { name: "secondary-50", value: "#f8fafc", textColor: "dark" },
       { name: "secondary-100", value: "#f1f5f9", textColor: "dark" },
@@ -148,8 +148,8 @@ const lightThemeGroups: ColorGroup[] = [
   {
     name: "Text (Light Theme)",
     colors: [
-      { name: "text-primary", value: "#0f172a", textColor: "light" },
-      { name: "text-secondary", value: "#475569", textColor: "light" },
+      { name: "text-primary", value: "#1e293b", textColor: "light" },
+      { name: "text-secondary", value: "#475467", textColor: "light" },
       { name: "text-muted", value: "#64748b", textColor: "light" },
       { name: "text-disabled", value: "#94a3b8", textColor: "dark" },
       { name: "text-placeholder", value: "#a1a1aa", textColor: "dark" },
@@ -173,7 +173,7 @@ const lightThemeGroups: ColorGroup[] = [
 // ============================================================================
 const darkThemeGroups: ColorGroup[] = [
   {
-    name: "Primary (Dark)",
+    name: "Theme Primary Scale (Dark)",
     colors: [
       { name: "primary-50", value: "#201b54", textColor: "light" },
       { name: "primary-100", value: "#352d8e", textColor: "light" },
@@ -189,7 +189,7 @@ const darkThemeGroups: ColorGroup[] = [
     ],
   },
   {
-    name: "Secondary (Dark)",
+    name: "Neutral Scale (Dark)",
     colors: [
       { name: "secondary-50", value: "#020617", textColor: "light" },
       { name: "secondary-100", value: "#0f172a", textColor: "light" },
@@ -219,8 +219,8 @@ const darkThemeGroups: ColorGroup[] = [
   {
     name: "Text (Dark Theme)",
     colors: [
-      { name: "text-primary", value: "#fafafa", textColor: "dark" },
-      { name: "text-secondary", value: "#a1a1aa", textColor: "dark" },
+      { name: "text-primary", value: "#f1f5f9", textColor: "dark" },
+      { name: "text-secondary", value: "#f1f5f9", textColor: "dark" },
       { name: "text-muted", value: "#71717a", textColor: "light" },
       { name: "text-disabled", value: "#52525b", textColor: "light" },
       { name: "text-placeholder", value: "#71717a", textColor: "light" },
@@ -541,25 +541,24 @@ module.exports = {
           </h4>
           <pre className="text-xs font-mono text-neutral-600 dark:text-neutral-400 overflow-x-auto">
             {`:root {
-  --color-primary: #7367f0;
-  --color-secondary: #64748b;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
-  
-  /* Light theme */
-  --color-background: #ffffff;
-  --color-foreground: #0f172a;
-  --color-muted: #64748b;
-  --color-border: #e2e8f0;
+  --color-primary: #4318ff;
+  --color-secondary: #9333ea;
+  --color-purple: #9333ea;
+  --color-teal: #3f9cae;
+  --color-yellow: #ca8a04;
+  --color-green: #10b981;
+
+  --color-background-primary: #f4f7fe;
+  --color-background-secondary: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #475467;
+  --color-border-primary: #d1d5db;
 }
 
-.dark {
-  --color-background: #09090b;
-  --color-foreground: #fafafa;
-  --color-muted: #71717a;
-  --color-border: #27272a;
+[data-theme="purple-dark"] {
+  --color-background-primary: #070f2e;
+  --color-text-primary: #f1f5f9;
+  --color-border-primary: #374151;
 }`}
           </pre>
         </div>
@@ -605,7 +604,7 @@ export default function ColorPalette({
       <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
         Primary color:{" "}
         <code className="font-mono bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
-          #7367f0
+          #4318ff
         </code>{" "}
         • Click any swatch to copy the color value.
       </p>

@@ -91,7 +91,7 @@ function FooterActionsExample() {
             <button
               type="button"
               onClick={() => setDate(new Date())}
-              className="ui:text-xs ui:font-semibold ui:text-primary"
+              className="ui:text-xs ui:font-semibold ui:text-primary-500"
             >
               Today
             </button>

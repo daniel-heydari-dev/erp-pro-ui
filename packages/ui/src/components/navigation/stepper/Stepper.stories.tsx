@@ -86,7 +86,7 @@ function StepperDemo(props: Omit<StepperProps, "steps" | "currentStep">) {
           <button
             disabled={current === steps.length - 1}
             onClick={() => setCurrent((c) => c + 1)}
-            className="ui:px-4 ui:py-2 ui:bg-primary ui:text-white ui:rounded-md disabled:ui:opacity-50"
+            className="ui:px-4 ui:py-2 ui:bg-primary-500 ui:text-white ui:rounded-md disabled:ui:opacity-50"
           >
             Next
           </button>

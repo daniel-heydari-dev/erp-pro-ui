@@ -51,6 +51,22 @@ In your global stylesheet:
 @import "erp-pro-ui/styles.css";
 ```
 
+That single import already loads the packaged colors, fonts, foundations, and generated Tailwind v4 tokens. You do not need a local Tailwind theme extension just to use the library palette.
+
+If you only want the raw design tokens without the Tailwind bridge, import the internal token layer directly instead:
+
+```css
+@import "erp-pro-ui/tokens.css";
+```
+
+If you want just the token bridge and fonts without the rest of the library styles, import them directly instead:
+
+```css
+@import "tailwindcss";
+@import "erp-pro-ui/colors.css";
+@import "erp-pro-ui/fonts.css";
+```
+
 ### 2. Wrap the app with providers
 
 Use `ThemeProvider` if you want the built-in light/dark theme context. Use `ToastProvider` if you want to call `useToast()` anywhere in the app.
@@ -94,6 +110,85 @@ export function App() {
 ### Next.js note
 
 If you use Next.js, import `erp-pro-ui/styles.css` from your app-level global stylesheet and place `ThemeProvider` and `ToastProvider` in your shared app provider wrapper or root layout client boundary.
+
+## Colors And Fonts In Another Project
+
+The library now ships a two-layer theme contract so another project can use the same tokens without copying theme config:
+
+- `erp-pro-ui/tokens.css`: raw `--ds-*` tokens plus compatibility CSS variables
+- `erp-pro-ui/colors.css`: Tailwind v4 `@theme` bridge that generates semantic utilities
+- `erp-pro-ui/styles.css`: full package stylesheet, including fonts, tokens, bridge, foundations, and animations
+
+### Use the generated utility classes
+
+After importing `erp-pro-ui/styles.css` or `erp-pro-ui/colors.css`, you can use the semantic Tailwind v4 utilities directly:
+
+```tsx
+export function ThemePreview() {
+  return (
+    <section className="bg-surface text-fg border border-border rounded-2xl p-6 shadow-2 font-sans">
+      <h2 className="text-accent text-2xl font-semibold">
+        Semantic theme utilities
+      </h2>
+      <p className="text-fg-muted">
+        These classes come from erp-pro-ui. No local Tailwind theme extension is
+        required.
+      </p>
+      <div className="mt-4 flex gap-3">
+        <span className="bg-accent text-on-accent rounded-full px-3 py-1">
+          Accent
+        </span>
+        <span className="bg-accent-subtle text-accent rounded-full px-3 py-1">
+          Accent Subtle
+        </span>
+        <span className="bg-success-subtle text-success rounded-full px-3 py-1">
+          Success
+        </span>
+      </div>
+    </section>
+  );
+}
+```
+
+### Use the CSS variables directly
+
+You can also use the readable CSS variables in plain CSS, CSS Modules, or inline styles:
+
+```css
+.dashboard-shell {
+  background: var(--ds-color-bg-surface);
+  color: var(--ds-color-fg);
+  border: 1px solid var(--ds-color-border);
+  box-shadow: var(--ds-shadow-2);
+  font-family: var(--font-sans);
+}
+
+.dashboard-shell a {
+  color: var(--ds-color-accent);
+}
+
+.dashboard-shell .status-info {
+  color: var(--ds-color-info);
+}
+```
+
+### Theme variable groups
+
+The token system is split into stable layers:
+
+- Internal design-system tokens: `--ds-*`
+- Semantic utility aliases: `bg-surface`, `text-fg`, `border-border`, `bg-accent`, `text-on-accent`, `outline-focus`
+- Compatibility color variables: `--color-primary`, `--color-background-primary`, `--color-text-primary`, and the existing `primary-50` through `primary-900` theme scale
+
+### Theme switching
+
+If you use `ThemeProvider`, the library updates `data-brand` and `data-mode` for you. It still writes the old `data-theme` attribute for compatibility, but the new architecture treats brand and mode as separate axes.
+
+If you do not use `ThemeProvider`, you can still switch manually in your app shell:
+
+```html
+<html data-brand="teal" data-mode="dark"></html>
+```
 
 ## Import Patterns
 

@@ -7,6 +7,7 @@ export type ThemeColorType = "purple" | "teal" | "yellow" | "green";
 export interface UseThemeType {
   mode: ThemeModeType;
   theme: ThemeColorType;
+  brand: ThemeColorType;
   colorScheme: `${ThemeColorType}-${ThemeModeType}`;
   setMode: (mode: ThemeModeType) => void;
   toggleMode: () => void;
@@ -54,8 +55,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     const colorScheme = `${theme}-${mode}`;
 
-    document.documentElement.setAttribute("data-theme", colorScheme);
+    document.documentElement.setAttribute("data-brand", theme);
     document.documentElement.setAttribute("data-mode", mode);
+    document.documentElement.setAttribute("data-theme", colorScheme);
     document.documentElement.style.colorScheme = mode;
 
     localStorage.setItem(MODE_STORAGE_KEY, mode);
@@ -76,6 +78,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const value: UseThemeType = {
     mode,
     theme,
+    brand: theme,
     colorScheme: `${theme}-${mode}` as const,
     setMode,
     toggleMode,

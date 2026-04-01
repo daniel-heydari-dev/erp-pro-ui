@@ -358,7 +358,7 @@ export const Carousel = ({
       {/* Progress indicator */}
       {autoPlay > 0 && !isPaused && (
         <motion.div
-          className="ui:absolute ui:bottom-0 ui:left-0 ui:h-1 ui:bg-primary/80 ui:rounded-full"
+          className="ui:absolute ui:bottom-0 ui:left-0 ui:h-1 ui:bg-primary-500/80 ui:rounded-full"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ duration: autoPlay / 1000, ease: "linear" }}

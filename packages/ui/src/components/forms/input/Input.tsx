@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       icon,
       iconClassName,
       // bgClassName = "bg-zinc-950/40",
-      bgClassName = "bg-secondary",
+      bgClassName = "bg-background-secondary",
       // bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
       ...props
     },
