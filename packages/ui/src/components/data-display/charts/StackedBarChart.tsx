@@ -13,6 +13,14 @@ import {
 } from "recharts";
 
 import { normalizeChartColors } from "./chartPalette";
+import {
+  chartBandHoverCursorStyle,
+  chartLegendTextStyle,
+  chartTooltipContentStyle,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
+  chartTooltipWrapperStyle,
+} from "./chartStyles";
 
 export interface StackedBarData {
   name: string;
@@ -73,24 +81,17 @@ export const StackedBarChart: React.FC<StackedBarChartProps> = ({
             domain={yAxisDomain}
           />
           <Tooltip
-            cursor={{
-              fill: "color-mix(in srgb, var(--ds-color-accent) 10%, transparent)",
-            }}
-            contentStyle={{
-              backgroundColor:
-                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
-              border: "1px solid var(--ds-color-border)",
-              borderRadius: "8px",
-              backdropFilter: "blur(8px)",
-              color: "var(--ds-color-fg)",
-            }}
+            contentStyle={chartTooltipContentStyle}
+            cursor={chartBandHoverCursorStyle}
+            itemStyle={chartTooltipItemStyle}
+            labelStyle={chartTooltipLabelStyle}
+            wrapperStyle={chartTooltipWrapperStyle}
           />
           <Legend
             iconType="circle"
             wrapperStyle={{
+              ...chartLegendTextStyle,
               paddingTop: "20px",
-              fontSize: "12px",
-              color: "var(--color-neutral-300)",
             }}
           />
 

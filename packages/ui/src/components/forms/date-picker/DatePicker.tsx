@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { Calendar } from "../calendar";
@@ -19,6 +20,9 @@ const isRangeValue = (value: DatePickerValue): value is DateRangeValue =>
   "end" in value;
 
 const emptyRange: DateRangeValue = { start: null, end: null };
+
+const PANEL_GAP = 8;
+const VIEWPORT_MARGIN = 12;
 
 export const DatePicker = ({
   mode = "single",
@@ -68,28 +72,125 @@ export const DatePicker = ({
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const radius = 100;
+  const [panelPosition, setPanelPosition] = useState({
+    top: 0,
+    left: 0,
+    minWidth: 320,
+  });
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const isEventInside = (event: Event) => {
+      const eventPath =
+        typeof event.composedPath === "function" ? event.composedPath() : [];
+
+      return eventPath.some((target) => {
+        if (!(target instanceof Node)) {
+          return false;
+        }
+
+        return (
+          containerRef.current?.contains(target) ||
+          panelRef.current?.contains(target)
+        );
+      });
+    };
+
+    const handlePointerOutside = (event: PointerEvent) => {
+      const target = event.target;
+
       if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        (target instanceof Node &&
+          (containerRef.current?.contains(target) ||
+            panelRef.current?.contains(target))) ||
+        isEventInside(event)
       ) {
-        setOpen(false);
+        return;
       }
+
+      setOpen(false);
+    };
+
+    const handleFocusOutside = (event: FocusEvent) => {
+      const target = event.target;
+
+      if (
+        (target instanceof Node &&
+          (containerRef.current?.contains(target) ||
+            panelRef.current?.contains(target))) ||
+        isEventInside(event)
+      ) {
+        return;
+      }
+
+      setOpen(false);
     };
 
     if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("pointerdown", handlePointerOutside, true);
+      document.addEventListener("focusin", handleFocusOutside, true);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("pointerdown", handlePointerOutside, true);
+      document.removeEventListener("focusin", handleFocusOutside, true);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const updatePanelPosition = () => {
+      const triggerRect = triggerRef.current?.getBoundingClientRect();
+
+      if (!triggerRect) {
+        return;
+      }
+
+      const panelHeight = panelRef.current?.offsetHeight ?? 360;
+      const spaceBelow = window.innerHeight - triggerRect.bottom;
+      const shouldOpenAbove =
+        spaceBelow < panelHeight + PANEL_GAP &&
+        triggerRect.top > panelHeight + PANEL_GAP;
+
+      const unclampedLeft = triggerRect.left;
+      const maxLeft = Math.max(
+        VIEWPORT_MARGIN,
+        window.innerWidth - Math.max(triggerRect.width, 320) - VIEWPORT_MARGIN,
+      );
+      const left = Math.min(Math.max(unclampedLeft, VIEWPORT_MARGIN), maxLeft);
+
+      setPanelPosition({
+        top: shouldOpenAbove
+          ? Math.max(VIEWPORT_MARGIN, triggerRect.top - panelHeight - PANEL_GAP)
+          : Math.min(
+              triggerRect.bottom + PANEL_GAP,
+              window.innerHeight - panelHeight - VIEWPORT_MARGIN,
+            ),
+        left,
+        minWidth: Math.max(triggerRect.width, 320),
+      });
+    };
+
+    updatePanelPosition();
+
+    const frameId = window.requestAnimationFrame(updatePanelPosition);
+
+    window.addEventListener("resize", updatePanelPosition);
+    window.addEventListener("scroll", updatePanelPosition, true);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", updatePanelPosition);
+      window.removeEventListener("scroll", updatePanelPosition, true);
+    };
+  }, [open, presets]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = event.currentTarget.getBoundingClientRect();
@@ -131,11 +232,10 @@ export const DatePicker = ({
           }
         >
           <button
+            ref={triggerRef}
             type="button"
-            className={`shadow-input flex w-full items-center justify-between rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out ${
-              disabled
-                ? "cursor-not-allowed opacity-50"
-                : "group-hover/date-picker:shadow-none"
+            className={`flex w-full items-center justify-between rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out ${
+              disabled ? "cursor-not-allowed opacity-50" : ""
             }`}
             onClick={() => !disabled && setOpen((prev) => !prev)}
             aria-haspopup="dialog"
@@ -152,51 +252,71 @@ export const DatePicker = ({
             <span aria-hidden="true">📅</span>
           </button>
         </motion.div>
-        {open && !disabled && (
-          <div className="absolute left-0 top-12 z-40 dropdown-panel">
-            <Calendar
-              value={mode === "single" ? (singleValue ?? null) : undefined}
-              selectionMode={mode}
-              range={mode === "range" ? rangeValue : undefined}
-              onSelect={
-                mode === "single"
-                  ? (date) => {
-                      updateValue(date);
-                      setOpen(false);
-                    }
-                  : undefined
-              }
-              onRangeSelect={
-                mode === "range"
-                  ? (nextRange) => {
-                      updateValue(nextRange);
-                      if (nextRange.start && nextRange.end) {
-                        setOpen(false);
-                      }
-                    }
-                  : undefined
-              }
-            />
-            {presets?.length ? (
-              <div className="mt-3 flex flex-wrap gap-2">
-                {presets.map((preset) => (
-                  <button
-                    key={preset.label}
-                    type="button"
-                    className="rounded-full border border-input px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-accent hover:bg-accent-subtle hover:text-accent"
-                    onClick={() => handlePresetClick(preset.value)}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        )}
       </div>
       {helperText && (
         <p className="text-xs text-muted-foreground">{helperText}</p>
       )}
+      {open && !disabled && typeof document !== "undefined"
+        ? createPortal(
+            <div className="fixed inset-0 z-60">
+              <div
+                className="absolute inset-0"
+                aria-hidden="true"
+                onPointerDown={() => setOpen(false)}
+              />
+              <div
+                ref={panelRef}
+                className="dropdown-panel absolute z-10"
+                style={{
+                  top: panelPosition.top,
+                  left: panelPosition.left,
+                  minWidth: panelPosition.minWidth,
+                }}
+                role="dialog"
+                aria-modal="false"
+              >
+                <Calendar
+                  value={mode === "single" ? (singleValue ?? null) : undefined}
+                  selectionMode={mode}
+                  range={mode === "range" ? rangeValue : undefined}
+                  onSelect={
+                    mode === "single"
+                      ? (date) => {
+                          updateValue(date);
+                          setOpen(false);
+                        }
+                      : undefined
+                  }
+                  onRangeSelect={
+                    mode === "range"
+                      ? (nextRange) => {
+                          updateValue(nextRange);
+                          if (nextRange.start && nextRange.end) {
+                            setOpen(false);
+                          }
+                        }
+                      : undefined
+                  }
+                />
+                {presets?.length ? (
+                  <div className="mt-3 flex flex-wrap gap-2 rounded-lg border border-white/20 bg-white/70 p-3 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70">
+                    {presets.map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        className="rounded-full border border-input px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-accent hover:bg-accent-subtle hover:text-accent"
+                        onClick={() => handlePresetClick(preset.value)}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 };

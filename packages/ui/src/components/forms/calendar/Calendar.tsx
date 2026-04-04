@@ -1,8 +1,19 @@
 import { useMemo, useState } from "react";
 
+import { Select } from "../select";
+
 import type { CalendarProps } from "./types";
 
 const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const monthNames = Array.from({ length: 12 }, (_, monthIndex) =>
+  new Date(2026, monthIndex, 1).toLocaleString(undefined, {
+    month: "long",
+  }),
+);
+const monthOptions = monthNames.map((monthName, monthIndex) => ({
+  label: monthName,
+  value: String(monthIndex),
+}));
 
 const getDaysInMonth = (month: number, year: number) => {
   const firstDay = new Date(year, month, 1);
@@ -63,16 +74,32 @@ export const Calendar = ({
   const currentMonth = month ?? internalMonth;
   const currentYear = year ?? internalYear;
   const currentRange = range ? normalizeRange(range) : internalRange;
+  const yearOptions = useMemo(() => {
+    const startYear = 1980;
+    const endYear = Math.max(new Date().getFullYear() + 10, currentYear + 5);
+
+    return Array.from({ length: endYear - startYear + 1 }, (_, index) => ({
+      label: String(endYear - index),
+      value: String(endYear - index),
+    }));
+  }, [currentYear]);
+
+  const setDisplayedMonth = (nextMonth: number, nextYear: number) => {
+    if (month === undefined) {
+      setInternalMonth(nextMonth);
+    }
+
+    if (year === undefined) {
+      setInternalYear(nextYear);
+    }
+
+    onMonthChange?.(nextMonth, nextYear);
+  };
 
   const updateMonth = (offset: number) => {
     const nextDate = new Date(currentYear, currentMonth + offset, 1);
 
-    if (month === undefined) {
-      setInternalMonth(nextDate.getMonth());
-      setInternalYear(nextDate.getFullYear());
-    }
-
-    onMonthChange?.(nextDate.getMonth(), nextDate.getFullYear());
+    setDisplayedMonth(nextDate.getMonth(), nextDate.getFullYear());
   };
 
   const days = useMemo(
@@ -118,26 +145,57 @@ export const Calendar = ({
 
   return (
     <div
-      className={`w-[320px] rounded-lg border border-white/20 bg-white/70 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 ${className}`.trim()}
+      className={`w-[360px] max-w-[calc(100vw-1.5rem)] rounded-lg border border-white/20 bg-white/70 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 ${className}`.trim()}
     >
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center gap-2">
         <button
           type="button"
-          className="text-sm text-muted-foreground"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-input bg-background-secondary text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
           onClick={() => updateMonth(-1)}
           aria-label="Previous month"
         >
           ←
         </button>
-        <p className="text-sm font-medium text-heading">
-          {new Date(currentYear, currentMonth).toLocaleString(undefined, {
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
+
+        <div className="grid flex-1 grid-cols-[minmax(0,1fr)_7rem] gap-2">
+          <Select
+            name="calendar-month-select"
+            value={String(currentMonth)}
+            onChange={(event) => {
+              setDisplayedMonth(Number(event.target.value), currentYear);
+            }}
+            options={monthOptions}
+            containerClassName="min-w-0"
+            triggerClassName="font-medium"
+            dropdownClassName="left-0 right-auto min-w-full w-max"
+            optionClassName="justify-start"
+            placeholder="Month"
+            size="compact"
+            selectionIndicator="none"
+            aria-label="Select month"
+          />
+
+          <Select
+            name="calendar-year-select"
+            value={String(currentYear)}
+            onChange={(event) => {
+              setDisplayedMonth(currentMonth, Number(event.target.value));
+            }}
+            options={yearOptions}
+            containerClassName="min-w-0"
+            triggerClassName="font-medium"
+            dropdownClassName="left-auto right-0 min-w-full w-max"
+            optionClassName="justify-start"
+            placeholder="Year"
+            size="compact"
+            selectionIndicator="none"
+            aria-label="Select year"
+          />
+        </div>
+
         <button
           type="button"
-          className="text-sm text-muted-foreground"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-input bg-background-secondary text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
           onClick={() => updateMonth(1)}
           aria-label="Next month"
         >
@@ -175,11 +233,11 @@ export const Calendar = ({
               key={date.toISOString()}
               className={`rounded-md px-0 py-2 text-sm transition-colors ${
                 isSelected || isRangeStart || isRangeEnd
-                  ? "bg-ring text-white"
+                  ? "bg-accent text-on-accent"
                   : inRange
-                    ? "bg-ring/10 text-heading"
+                    ? "bg-accent-subtle text-accent"
                     : isToday
-                      ? "border border-ring text-heading"
+                      ? "border border-accent text-accent"
                       : "text-muted-foreground"
               }`}
               onClick={() => handleSelect(date)}

@@ -7,6 +7,8 @@ export { AreaChart } from "./AreaChart";
 export type { AreaChartData } from "./AreaChart";
 export { BarChart } from "./BarChart";
 export type { BarChartData } from "./BarChart";
+export { PositiveNegativeBarChart } from "./PositiveNegativeBarChart";
+export type { PositiveNegativeBarChartData } from "./PositiveNegativeBarChart";
 export { PieChart } from "./PieChart";
 export type { PieChartData } from "./PieChart";
 export {

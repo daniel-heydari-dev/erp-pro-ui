@@ -86,7 +86,7 @@ const Combobox: React.FC<ComboboxProps> = ({
       >
         <div
           className={mergeClassNames(
-            "shadow-input flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/combobox:shadow-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
+            "flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
             bgClassName,
           )}
           onClick={() => {

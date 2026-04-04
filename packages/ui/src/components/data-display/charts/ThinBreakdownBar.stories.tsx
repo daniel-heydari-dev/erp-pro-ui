@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from "../../shared/storybook";
+import { StoryIntro, StoryStack, StorySurface } from "../../shared/storybook";
 import { ThinBreakdownBar } from "./ThinBreakdownBar";
 
 const infrastructureSegments = [
@@ -30,6 +30,21 @@ const capacityRows = [
   },
 ];
 
+const weeklyTrafficMix = [
+  { label: "Desktop", value: 7324, color: "var(--ds-chart-1)" },
+  { label: "Mobile", value: 7250, color: "var(--ds-chart-2)" },
+  { label: "Tablet", value: 1180, color: "var(--ds-chart-4)" },
+  { label: "Other", value: 420, color: "var(--ds-chart-15)" },
+];
+
+const formatCompactValue = (value: number): string => {
+  if (value >= 1000) {
+    return `${(value / 1000).toFixed(1)}k`;
+  }
+
+  return new Intl.NumberFormat().format(value);
+};
+
 const meta: Meta<typeof ThinBreakdownBar> = {
   title: "Data Display/ThinBreakdownBar",
   component: ThinBreakdownBar,
@@ -45,6 +60,9 @@ const meta: Meta<typeof ThinBreakdownBar> = {
   tags: ["autodocs"],
   argTypes: {
     showLabels: { control: "boolean" },
+    showSummary: { control: "boolean" },
+    summaryLabel: { control: "text" },
+    valueFormatter: { control: false },
     data: {
       control: false,
       description: "Segments containing label, value, and color.",
@@ -62,18 +80,13 @@ type Story = StoryObj<typeof meta>;
 export const AllocationOverview: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:w-full ui:space-y-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
-        <div>
-          <p className="ui:text-sm ui:font-medium">
-            Infrastructure spend allocation
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
-            Segment widths are derived from their share of the full spend
-            profile.
-          </p>
-        </div>
+      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+        <StoryIntro
+          title="Infrastructure spend allocation"
+          description="Segment widths are derived from their share of the full spend profile."
+        />
         <ThinBreakdownBar data={infrastructureSegments} />
-      </div>
+      </StoryStack>
     </StorySurface>
   ),
 };
@@ -94,6 +107,25 @@ export const CompactCapacityRows: Story = {
           </div>
         ))}
       </div>
+    </StorySurface>
+  ),
+};
+
+export const InteractiveSummary: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
+      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+        <StoryIntro
+          title="Traffic mix with live summary"
+          description="The bar shows the total by default, then switches to segment-specific value and share when you hover a slice."
+        />
+        <ThinBreakdownBar
+          data={weeklyTrafficMix}
+          showSummary
+          summaryLabel="Weekly sessions"
+          valueFormatter={formatCompactValue}
+        />
+      </StoryStack>
     </StorySurface>
   ),
 };

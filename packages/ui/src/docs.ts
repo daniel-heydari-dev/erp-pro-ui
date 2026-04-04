@@ -364,6 +364,13 @@ const componentDocSeeds = {
     aliases: ["column chart"],
     related: ["area-chart", "stacked-bar-chart", "thin-breakdown-bar"],
   },
+  "positive-negative-bar-chart": {
+    exportName: "PositiveNegativeBarChart",
+    summary:
+      "Signed bar chart for profit-loss swings, variance reporting, and delta views that pivot around zero.",
+    aliases: ["variance chart", "profit loss chart"],
+    related: ["bar-chart", "stacked-bar-chart", "area-chart"],
+  },
   "pie-chart": {
     exportName: "PieChart",
     summary:

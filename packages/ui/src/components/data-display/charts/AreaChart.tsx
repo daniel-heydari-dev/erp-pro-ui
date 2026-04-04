@@ -12,6 +12,14 @@ import {
 } from "recharts";
 
 import { normalizeChartColors } from "./chartPalette";
+import {
+  chartLineHoverCursorStyle,
+  chartTooltipContentStyle,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
+  chartTooltipWrapperStyle,
+  getChartActiveDotStyle,
+} from "./chartStyles";
 
 export interface AreaChartData {
   name: string;
@@ -92,20 +100,17 @@ export const AreaChart: React.FC<AreaChartProps> = ({
           />
 
           <Tooltip
-            contentStyle={{
-              backgroundColor:
-                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
-              border: "1px solid var(--ds-color-border)",
-              borderRadius: "8px",
-              backdropFilter: "blur(8px)",
-              color: "var(--ds-color-fg)",
-            }}
-            itemStyle={{ color: "var(--ds-color-fg)" }}
+            contentStyle={chartTooltipContentStyle}
+            cursor={chartLineHoverCursorStyle}
+            itemStyle={chartTooltipItemStyle}
+            labelStyle={chartTooltipLabelStyle}
+            wrapperStyle={chartTooltipWrapperStyle}
           />
 
           {normalizedCategories.map((cat) => (
             <Area
               key={cat.key}
+              activeDot={getChartActiveDotStyle(cat.color)}
               type="monotone"
               dataKey={cat.key}
               stroke={cat.color}

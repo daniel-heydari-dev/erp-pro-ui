@@ -64,7 +64,7 @@ const variantStyles: Record<
   { base: string; focus: string; error: string }
 > = {
   outlined: {
-    base: "border border-input bg-background-secondary rounded-lg shadow-input text-foreground",
+    base: "border border-input bg-background-secondary rounded-lg text-foreground",
     focus: "focus:border-accent focus:ring-2 focus:ring-accent",
     error: "border-destructive",
   },

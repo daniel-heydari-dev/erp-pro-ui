@@ -30,6 +30,7 @@ export {
   ThinBreakdownBar,
   AreaChart,
   BarChart,
+  PositiveNegativeBarChart,
   PieChart,
   chartColorTokens,
   getChartColorVar,
@@ -40,6 +41,7 @@ export type {
   BreakdownSegment,
   AreaChartData,
   BarChartData,
+  PositiveNegativeBarChartData,
   PieChartData,
   ChartColorSlot,
   ChartColorToken,
@@ -183,9 +185,25 @@ export { Stepper } from "./components/navigation/stepper";
 export type {
   StepperProps,
   Step,
+  ResponsiveStepperOrientation,
   StepperOrientation,
   StepperVariant,
   StepperSize,
+} from "./components/navigation/stepper";
+export {
+  StepperSteps,
+  StepperStepsNavigation,
+  StepperWizard,
+  StepperWizardStep,
+} from "./components/navigation/stepper";
+export type {
+  StepperStepsItem,
+  StepperStepsProps,
+  StepperStepsState,
+  StepperWizardIndicatorRenderProps,
+  StepperWizardIndicatorStatus,
+  StepperWizardProps,
+  StepperWizardStepProps,
 } from "./components/navigation/stepper";
 
 export { SunToMoonButton } from "./components/effects/sun-to-moon-button";

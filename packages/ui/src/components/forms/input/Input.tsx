@@ -8,6 +8,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       className = "",
       label,
+      labelHint,
       error,
       helperText,
       id,
@@ -16,19 +17,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       state = InputState.DEFAULT,
       disabled,
       message,
+      leftIcon,
+      leftIconClassName,
+      rightIcon,
+      rightIconClassName,
       icon,
       iconClassName,
-      // bgClassName = "bg-zinc-950/40",
       bgClassName = "bg-background-secondary",
-      // bgClassName = "bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl",
       ...props
     },
     ref,
   ) => {
-    const radius = 100; // Radius for the hover effect
+    const radius = 100;
     const [visible, setVisible] = useState(false);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    const resolvedState = disabled
+      ? InputState.DISABLED
+      : error
+        ? InputState.ERROR
+        : state;
+    const isDisabled = resolvedState === InputState.DISABLED;
+    const trailingIcon = rightIcon ?? icon;
+    const trailingIconClassName = rightIcon
+      ? rightIconClassName
+      : (rightIconClassName ?? iconClassName);
 
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
       const { left, top } = event.currentTarget.getBoundingClientRect();
@@ -37,14 +50,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const wrapperStateStyles: Record<InputState, string> = {
-      [InputState.DISABLED]: "bg-muted border-none",
+      [InputState.DISABLED]: "border border-input bg-muted",
       [InputState.ERROR]: "border-destructive ",
       [InputState.SUCCESS]: "border-success-border ",
       [InputState.DEFAULT]: "border-border ",
     };
 
     const inputStateStyles: Record<InputState, string> = {
-      [InputState.DISABLED]: "placeholder:!text-muted-foreground",
+      [InputState.DISABLED]:
+        "border-transparent bg-transparent text-muted-foreground placeholder:!text-muted-foreground",
       [InputState.ERROR]: "text-destructive placeholder:text-destructive",
       [InputState.SUCCESS]: "text-success placeholder:text-success",
       [InputState.DEFAULT]: "text-foreground",
@@ -52,15 +66,32 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="w-full">
-        {label && (
-          <label className="text-sm font-medium text-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 block">
-            {label}
-          </label>
-        )}
+        {label || labelHint ? (
+          <div
+            className={mergeClassNames(
+              "mb-2 flex items-center gap-3",
+              label ? "justify-between" : "justify-end",
+            )}
+          >
+            {label ? (
+              <label
+                htmlFor={id}
+                className="block text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                {label}
+              </label>
+            ) : null}
+            {labelHint ? (
+              <div className="shrink-0 text-xs text-muted-foreground">
+                {labelHint}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
 
         <motion.div
           style={{
-            backgroundImage: disabled
+            backgroundImage: isDisabled
               ? "none"
               : useMotionTemplate`
                   radial-gradient(
@@ -72,35 +103,48 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                   )
                 `,
           }}
-          onMouseMove={!disabled ? handleMouseMove : undefined}
-          onMouseEnter={!disabled ? () => setVisible(true) : undefined}
-          onMouseLeave={!disabled ? () => setVisible(false) : undefined}
+          onMouseMove={!isDisabled ? handleMouseMove : undefined}
+          onMouseEnter={!isDisabled ? () => setVisible(true) : undefined}
+          onMouseLeave={!isDisabled ? () => setVisible(false) : undefined}
           className={mergeClassNames(
-            "group/input rounded-lg p-[2px] transition duration-300 hover:border-accent",
-            wrapperStateStyles[state],
+            "group/input rounded-lg transition duration-300",
+            isDisabled ? "p-px" : "p-[2px] hover:border-accent",
+            wrapperStateStyles[resolvedState],
             extra,
           )}
         >
-          <div className="relative flex items-center ">
-            {icon && (
+          <div className="relative flex items-center">
+            {leftIcon ? (
               <div
                 className={mergeClassNames(
-                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3",
-                  iconClassName,
+                  "pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground",
+                  leftIconClassName,
                 )}
               >
-                {icon}
+                {leftIcon}
               </div>
-            )}
+            ) : null}
+            {trailingIcon ? (
+              <div
+                className={mergeClassNames(
+                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground",
+                  trailingIconClassName,
+                )}
+              >
+                {trailingIcon}
+              </div>
+            ) : null}
             <input
               ref={ref}
               id={id}
               placeholder={placeholder}
-              disabled={disabled}
+              disabled={isDisabled}
               className={mergeClassNames(
-                "shadow-input flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/input:shadow-none file:border-0  file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                "flex h-10 w-full rounded-md border border-input py-2 text-sm text-foreground transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                leftIcon ? "pl-10" : "pl-3",
+                trailingIcon ? "pr-10" : "pr-3",
                 bgClassName,
-                inputStateStyles[state],
+                inputStateStyles[resolvedState],
                 className,
               )}
               {...props}

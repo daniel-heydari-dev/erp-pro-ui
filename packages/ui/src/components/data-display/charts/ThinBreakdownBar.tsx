@@ -3,6 +3,7 @@
 import React from "react";
 
 import { normalizeChartColors } from "./chartPalette";
+import { chartPillTooltipStyle } from "./chartStyles";
 
 export interface BreakdownSegment {
   id?: string;
@@ -15,12 +16,21 @@ interface ThinBreakdownBarProps {
   data: BreakdownSegment[];
   className?: string;
   showLabels?: boolean;
+  showSummary?: boolean;
+  summaryLabel?: string;
+  valueFormatter?: (value: number) => string;
 }
+
+const defaultValueFormatter = (value: number): string =>
+  new Intl.NumberFormat().format(value);
 
 export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
   data: segments,
   className = "",
   showLabels = true,
+  showSummary = false,
+  summaryLabel = "Total",
+  valueFormatter = defaultValueFormatter,
 }) => {
   const [activeSegmentKey, setActiveSegmentKey] = React.useState<string | null>(
     null,
@@ -62,14 +72,46 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
       null,
     [activeSegmentKey, segmentsWithMetrics],
   );
+  const totalValue = React.useMemo(
+    () => segments.reduce((sum, item) => sum + item.value, 0),
+    [segments],
+  );
+  const summaryTitle = activeSegment?.label ?? summaryLabel;
+  const summaryValue = activeSegment?.value ?? totalValue;
+  const summaryMeta = activeSegment
+    ? `${Math.round(activeSegment.widthPercent)}% of total`
+    : `${segments.length} segments`;
 
   return (
     <div className={`w-full flex flex-col gap-3 ${className}`}>
+      {showSummary && (activeSegment || totalValue > 0) ? (
+        <div className="flex items-start justify-between gap-4 rounded-xl border border-border/70 bg-background/70 px-4 py-3 backdrop-blur-md">
+          <div className="min-w-0">
+            <p
+              className="truncate text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase transition-colors duration-200"
+              style={activeSegment ? { color: activeSegment.color } : undefined}
+            >
+              {summaryTitle}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">{summaryMeta}</p>
+          </div>
+          <p
+            className="text-right text-lg font-semibold leading-none text-foreground transition-colors duration-200"
+            style={activeSegment ? { color: activeSegment.color } : undefined}
+          >
+            {valueFormatter(summaryValue)}
+          </p>
+        </div>
+      ) : null}
+
       <div className="relative">
-        {activeSegment && (
+        {activeSegment && !showSummary && (
           <div
-            className="pointer-events-none absolute -top-10 z-10 -translate-x-1/2 rounded-full border border-border/70 bg-background/95 px-2.5 py-1 text-[11px] font-medium text-foreground shadow-lg backdrop-blur-md"
-            style={{ left: `${activeSegment.centerPercent}%` }}
+            className="pointer-events-none absolute -top-10 z-10 -translate-x-1/2 rounded-full px-2.5 py-1 text-[11px] font-medium text-foreground"
+            style={{
+              ...chartPillTooltipStyle,
+              left: `${activeSegment.centerPercent}%`,
+            }}
           >
             <span>{activeSegment.label}</span>
             <span className="mx-1 text-muted-foreground">•</span>

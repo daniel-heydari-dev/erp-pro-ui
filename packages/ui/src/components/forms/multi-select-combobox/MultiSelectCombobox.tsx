@@ -99,7 +99,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
       >
         <div
           className={mergeClassNames(
-            "shadow-input flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/multi-combobox:shadow-none",
+            "flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/multi-combobox:shadow-none",
             bgClassName,
           )}
           onClick={() => {

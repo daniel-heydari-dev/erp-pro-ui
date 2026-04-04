@@ -263,6 +263,12 @@ export const uiCatalogItems = [
     storybookTitle: "Data Display/BarChart",
   },
   {
+    name: "Positive Negative Bar Chart",
+    slug: "positive-negative-bar-chart",
+    packageExportPath: "charts",
+    storybookTitle: "Data Display/PositiveNegativeBarChart",
+  },
+  {
     name: "Pie Chart",
     slug: "pie-chart",
     packageExportPath: "charts",

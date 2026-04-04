@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { StorySurface } from "../../shared/storybook";
+import {
+  StoryIntro,
+  StoryPanel,
+  StorySection,
+  StoryStack,
+  StorySurface,
+} from "../../shared/storybook";
 import { BarChart } from "./BarChart";
 
 const monthlyData = [
@@ -22,6 +28,54 @@ const rankingData = [
   { name: "Central Returns Team", transfers: 102 },
   { name: "West Picking Zone", transfers: 94 },
   { name: "Airport Forwarding Desk", transfers: 77 },
+];
+
+const weeklyTrafficData = [
+  { name: "Mon", desktop: 224, mobile: 198 },
+  { name: "Tue", desktop: 246, mobile: 214 },
+  { name: "Wed", desktop: 268, mobile: 229 },
+  { name: "Thu", desktop: 258, mobile: 241 },
+  { name: "Fri", desktop: 284, mobile: 256 },
+  { name: "Sat", desktop: 198, mobile: 188 },
+  { name: "Sun", desktop: 176, mobile: 169 },
+];
+
+const weeklyTrafficCategories = [
+  { key: "desktop", color: "var(--ds-chart-2)" },
+  { key: "mobile", color: "var(--ds-chart-1)" },
+];
+
+const monthlyEfficiencyData = [
+  { name: "Jan", actual: 82, target: 76 },
+  { name: "Feb", actual: 88, target: 79 },
+  { name: "Mar", actual: 91, target: 83 },
+  { name: "Apr", actual: 87, target: 84 },
+  { name: "May", actual: 94, target: 86 },
+  { name: "Jun", actual: 97, target: 89 },
+  { name: "Jul", actual: 96, target: 90 },
+  { name: "Aug", actual: 101, target: 92 },
+  { name: "Sep", actual: 98, target: 93 },
+  { name: "Oct", actual: 104, target: 95 },
+  { name: "Nov", actual: 109, target: 97 },
+  { name: "Dec", actual: 112, target: 100 },
+];
+
+const monthlyEfficiencyCategories = [
+  { key: "actual", color: "var(--ds-chart-3)" },
+  { key: "target", color: "var(--ds-chart-15)" },
+];
+
+const yearlyPortfolioData = [
+  { name: "2021", enterprise: 62, smb: 41 },
+  { name: "2022", enterprise: 71, smb: 48 },
+  { name: "2023", enterprise: 83, smb: 57 },
+  { name: "2024", enterprise: 94, smb: 64 },
+  { name: "2025", enterprise: 108, smb: 73 },
+];
+
+const yearlyPortfolioCategories = [
+  { key: "enterprise", color: "var(--ds-chart-2)" },
+  { key: "smb", color: "var(--ds-chart-4)" },
 ];
 
 const meta: Meta<typeof BarChart> = {
@@ -75,6 +129,103 @@ export const RankingLayout: Story = {
         layout="vertical"
         className="ui:px-2"
       />
+    </StorySurface>
+  ),
+};
+
+export const WeeklyDeviceComparison: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
+      <StoryStack className="ui:gap-5">
+        <StoryIntro
+          title="Weekly desktop vs mobile traffic"
+          description="A short time horizon works well for day-over-day comparison between two channels or teams."
+        />
+        <BarChart
+          data={weeklyTrafficData}
+          categories={weeklyTrafficCategories}
+          height={360}
+          className="ui:px-2"
+        />
+      </StoryStack>
+    </StorySurface>
+  ),
+};
+
+export const YearlyPortfolioComparison: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
+      <StoryStack className="ui:gap-5">
+        <StoryIntro
+          title="Yearly enterprise vs SMB rollup"
+          description="Longer time ranges read best when the bars compare two persistent segments with the same definition each year."
+        />
+        <BarChart
+          data={yearlyPortfolioData}
+          categories={yearlyPortfolioCategories}
+          height={360}
+          className="ui:px-2"
+        />
+      </StoryStack>
+    </StorySurface>
+  ),
+};
+
+export const ComparativeTimeRanges: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <StoryStack className="ui:gap-6">
+        <StoryIntro
+          title="Comparative patterns across week, month, and year"
+          description="Use the same chart primitive across different time scales by keeping the series meaning stable and only changing the bucket size."
+        />
+        <div className="ui:grid ui:gap-4 xl:ui:grid-cols-3">
+          <StoryPanel className="ui:p-4">
+            <StorySection>
+              <StoryIntro
+                title="Weekly"
+                description="Daily channel comparison for the current week."
+              />
+              <BarChart
+                data={weeklyTrafficData}
+                categories={weeklyTrafficCategories}
+                height={260}
+                className="ui:px-1"
+              />
+            </StorySection>
+          </StoryPanel>
+
+          <StoryPanel className="ui:p-4">
+            <StorySection>
+              <StoryIntro
+                title="Monthly"
+                description="Actual versus target over the full operating year."
+              />
+              <BarChart
+                data={monthlyEfficiencyData}
+                categories={monthlyEfficiencyCategories}
+                height={260}
+                className="ui:px-1"
+              />
+            </StorySection>
+          </StoryPanel>
+
+          <StoryPanel className="ui:p-4">
+            <StorySection>
+              <StoryIntro
+                title="Yearly"
+                description="Segment comparison across annual planning cycles."
+              />
+              <BarChart
+                data={yearlyPortfolioData}
+                categories={yearlyPortfolioCategories}
+                height={260}
+                className="ui:px-1"
+              />
+            </StorySection>
+          </StoryPanel>
+        </div>
+      </StoryStack>
     </StorySurface>
   ),
 };

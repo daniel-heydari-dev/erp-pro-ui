@@ -12,6 +12,13 @@ import {
 } from "recharts";
 
 import { normalizeChartColors } from "./chartPalette";
+import {
+  chartBandHoverCursorStyle,
+  chartTooltipContentStyle,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
+  chartTooltipWrapperStyle,
+} from "./chartStyles";
 
 export interface BarChartData {
   name: string;
@@ -24,6 +31,7 @@ interface BarChartProps {
   height?: number | string;
   className?: string;
   layout?: "horizontal" | "vertical";
+  maxBarSize?: number;
 }
 
 export const BarChart: React.FC<BarChartProps> = ({
@@ -32,7 +40,10 @@ export const BarChart: React.FC<BarChartProps> = ({
   height = 300,
   className = "",
   layout = "horizontal",
+  maxBarSize,
 }) => {
+  const resolvedMaxBarSize = maxBarSize ?? (layout === "horizontal" ? 40 : 22);
+
   const normalizedCategories = React.useMemo(() => {
     const normalizedColors = normalizeChartColors(
       categories.map((category) => category.color),
@@ -50,6 +61,7 @@ export const BarChart: React.FC<BarChartProps> = ({
         <RechartsBarChart
           data={data}
           layout={layout}
+          barCategoryGap={data.length <= 4 ? "28%" : "18%"}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid
@@ -109,17 +121,11 @@ export const BarChart: React.FC<BarChartProps> = ({
           )}
 
           <Tooltip
-            cursor={{
-              fill: "color-mix(in srgb, var(--ds-color-accent) 10%, transparent)",
-            }}
-            contentStyle={{
-              backgroundColor:
-                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
-              border: "1px solid var(--ds-color-border)",
-              borderRadius: "8px",
-              backdropFilter: "blur(8px)",
-              color: "var(--ds-color-fg)",
-            }}
+            contentStyle={chartTooltipContentStyle}
+            cursor={chartBandHoverCursorStyle}
+            itemStyle={chartTooltipItemStyle}
+            labelStyle={chartTooltipLabelStyle}
+            wrapperStyle={chartTooltipWrapperStyle}
           />
 
           {normalizedCategories.map((cat) => (
@@ -127,6 +133,7 @@ export const BarChart: React.FC<BarChartProps> = ({
               key={cat.key}
               dataKey={cat.key}
               fill={cat.color}
+              maxBarSize={resolvedMaxBarSize}
               radius={layout === "horizontal" ? [4, 4, 0, 0] : [0, 4, 4, 0]}
             />
           ))}

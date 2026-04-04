@@ -59,6 +59,11 @@
     --ds-color-bg-surface: var(--ds-surface-1);
     --ds-color-bg-elevated: var(--ds-surface-2);
     --ds-color-bg-muted: color-mix(in oklch, var(--ds-surface-1) 92%, black);
+    --ds-color-bg-surface-glass: color-mix(
+      in srgb,
+      var(--ds-color-accent) 3%,
+      transparent
+    );
 
     --ds-color-fg: var(--ds-text-1);
     --ds-color-fg-muted: var(--ds-text-2);
@@ -187,11 +192,12 @@
     --erp-color-background-primary: var(--ds-color-bg-canvas);
     --erp-color-background-secondary: var(--ds-color-bg-surface);
     --erp-color-background-tertiary: var(--ds-color-bg-elevated);
+    --erp-color-background-secondary-glass: var(--ds-color-bg-surface-glass);
     --erp-color-background-primary-light: #f4f7fe;
-    --erp-color-background-secondary-light: #ffffff;
+    --erp-color-background-secondary-light: #edf1ff;
     --erp-color-background-tertiary-light: #ffffff;
     --erp-color-background-primary-dark: #070f2e;
-    --erp-color-background-secondary-dark: #111c44;
+    --erp-color-background-secondary-dark: #040e4a;
     --erp-color-background-tertiary-dark: #111c44;
 
     --erp-color-text-primary: var(--ds-text-1);
@@ -261,6 +267,9 @@
     --color-background-primary: var(--erp-color-background-primary);
     --color-background-secondary: var(--erp-color-background-secondary);
     --color-background-tertiary: var(--erp-color-background-tertiary);
+    --color-background-secondary-glass: var(
+      --erp-color-background-secondary-glass
+    );
     --color-background-primary-light: var(--erp-color-background-primary-light);
     --color-background-secondary-light: var(
       --erp-color-background-secondary-light

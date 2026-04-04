@@ -51,7 +51,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             ref={ref}
             disabled={disabled}
             className={mergeClassNames(
-              "shadow-input flex min-h-[80px] w-full rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/textarea:shadow-none placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50 resize-none",
+              "flex min-h-[80px] w-full rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50 resize-none",
               error &&
                 "border-destructive text-destructive placeholder:text-destructive focus-visible:ring-destructive",
               className,

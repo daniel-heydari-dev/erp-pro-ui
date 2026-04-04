@@ -8,7 +8,7 @@ import {
   StoryStack,
   StorySurface,
 } from "../../shared/storybook";
-import { MailIcon, SearchIcon } from "../../icons";
+import { InfoCircleIcon, MailIcon, SearchIcon } from "../../icons";
 import { Input } from "./Input";
 import { InputState, type InputProps } from "./types";
 
@@ -47,6 +47,9 @@ const meta: Meta<typeof Input> = {
     message: { control: "text" },
     placeholder: { control: "text" },
     disabled: { control: "boolean" },
+    labelHint: { control: false },
+    leftIcon: { control: false },
+    rightIcon: { control: false },
     type: {
       control: "radio",
       options: ["text", "email", "password", "number"],
@@ -64,6 +67,127 @@ const meta: Meta<typeof Input> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+const hintMeta = (
+  <span className="ui:inline-flex ui:items-center ui:gap-1.5 ui:text-xs ui:text-muted-foreground">
+    <InfoCircleIcon width={14} height={14} color="currentColor" />
+    Hint
+  </span>
+);
+
+type ShowcaseVariant = {
+  title: string;
+  inputProps: Partial<InputProps>;
+};
+
+const showcaseVariants: ShowcaseVariant[] = [
+  {
+    title: "Text",
+    inputProps: {},
+  },
+  {
+    title: "Text + Left Icon",
+    inputProps: {
+      leftIcon: <SearchIcon width={18} height={18} color="currentColor" />,
+    },
+  },
+  {
+    title: "Text + Right Icon",
+    inputProps: {
+      rightIcon: <MailIcon width={16} height={16} color="currentColor" />,
+    },
+  },
+  {
+    title: "Text + Double Icons",
+    inputProps: {
+      leftIcon: <SearchIcon width={18} height={18} color="currentColor" />,
+      rightIcon: <MailIcon width={16} height={16} color="currentColor" />,
+    },
+  },
+];
+
+type ShowcaseRow = {
+  key: string;
+  withLabel?: boolean;
+  buildProps: (variant: ShowcaseVariant) => Partial<InputProps>;
+};
+
+const showcaseRows: ShowcaseRow[] = [
+  {
+    key: "placeholder",
+    buildProps: () => ({
+      placeholder: "Placeholder Text",
+    }),
+  },
+  {
+    key: "focused",
+    buildProps: () => ({
+      placeholder: "",
+      className: "ui:border-accent ui:ring-1 ui:ring-accent",
+    }),
+  },
+  {
+    key: "filled",
+    buildProps: () => ({
+      value: "User generated text",
+      readOnly: true,
+    }),
+  },
+  {
+    key: "disabled",
+    buildProps: () => ({
+      placeholder: "Placeholder Text",
+      disabled: true,
+      state: InputState.DISABLED,
+    }),
+  },
+  {
+    key: "error",
+    buildProps: () => ({
+      value: "User generated text",
+      readOnly: true,
+      state: InputState.ERROR,
+      error: "Error Message",
+    }),
+  },
+];
+
+function InputShowcaseGrid({ withLabel }: { withLabel: boolean }) {
+  const rows = showcaseRows.map((row) => ({
+    ...row,
+    withLabel,
+  }));
+
+  return (
+    <div className="ui:space-y-8">
+      <div className="ui:grid ui:gap-5 md:ui:grid-cols-2 xl:ui:grid-cols-4">
+        {showcaseVariants.map((variant) => (
+          <div key={variant.title} className="ui:space-y-4">
+            <p className="ui:text-sm ui:font-medium ui:text-accent">
+              {variant.title}
+            </p>
+            <div className="ui:space-y-4">
+              {rows.map((row) => {
+                const stateProps = row.buildProps(variant);
+
+                return (
+                  <Input
+                    key={`${variant.title}-${row.key}`}
+                    label={row.withLabel ? "Label" : undefined}
+                    labelHint={row.withLabel ? hintMeta : undefined}
+                    placeholder="Placeholder Text"
+                    {...variant.inputProps}
+                    {...stateProps}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function ControlledInput() {
   const [value, setValue] = useState("");
@@ -112,9 +236,37 @@ export const WithIcon: Story = {
     label: "Search tickets",
     placeholder: "Find by ticket ID, title, or owner",
     helperText: "Search runs client-side as you type.",
-    icon: <SearchIcon width={18} height={18} color="currentColor" />,
+    leftIcon: <SearchIcon width={18} height={18} color="currentColor" />,
     className: "ui:w-full",
   },
+};
+
+/**
+ * ## Input Matrix
+ * Mirrors the product-spec states for basic and labeled inputs, including left/right/double icon layouts.
+ */
+export const InputMatrix: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <StoryStack className="ui:w-full ui:gap-10">
+        <StorySection>
+          <StoryIntro
+            title="Basic Text"
+            description="Core text field states with left, right, and double-icon support."
+          />
+          <InputShowcaseGrid withLabel={false} />
+        </StorySection>
+
+        <StorySection>
+          <StoryIntro
+            title="Label Text"
+            description="The same field states with label and hint metadata on the header row."
+          />
+          <InputShowcaseGrid withLabel />
+        </StorySection>
+      </StoryStack>
+    </StorySurface>
+  ),
 };
 
 /**
@@ -167,13 +319,15 @@ export const CommonFieldPatterns: Story = {
           <Input
             label="Search"
             placeholder="Search projects"
-            icon={<SearchIcon width={18} height={18} color="currentColor" />}
+            leftIcon={
+              <SearchIcon width={18} height={18} color="currentColor" />
+            }
           />
           <Input
             label="Email"
             type="email"
             placeholder="Email address"
-            icon={
+            rightIcon={
               <MailIcon
                 width={16}
                 height={16}

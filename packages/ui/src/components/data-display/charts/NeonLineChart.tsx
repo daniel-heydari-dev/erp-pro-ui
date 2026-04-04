@@ -16,6 +16,14 @@ import {
   normalizeChartColorValue,
   normalizeChartColors,
 } from "./chartPalette";
+import {
+  chartLineHoverCursorStyle,
+  chartTooltipContentStyle,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
+  chartTooltipWrapperStyle,
+  getChartActiveDotStyle,
+} from "./chartStyles";
 
 interface DataPoint {
   name: string;
@@ -105,15 +113,11 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
           />
 
           <Tooltip
-            contentStyle={{
-              backgroundColor:
-                "color-mix(in srgb, var(--ds-color-surface) 92%, transparent)",
-              border: "1px solid var(--ds-color-border)",
-              borderRadius: "8px",
-              backdropFilter: "blur(8px)",
-              color: "var(--ds-color-fg)",
-            }}
-            itemStyle={{ color: "var(--ds-color-fg)" }}
+            contentStyle={chartTooltipContentStyle}
+            cursor={chartLineHoverCursorStyle}
+            itemStyle={chartTooltipItemStyle}
+            labelStyle={chartTooltipLabelStyle}
+            wrapperStyle={chartTooltipWrapperStyle}
           />
 
           {/* The Neon Line */}
@@ -123,12 +127,7 @@ export const NeonLineChart: React.FC<NeonLineChartProps> = ({
             stroke="url(#neonGradient)"
             strokeWidth={3}
             dot={false}
-            activeDot={{
-              r: 6,
-              fill: "var(--ds-color-surface)",
-              stroke: normalizedStop2,
-              strokeWidth: 2,
-            }}
+            activeDot={getChartActiveDotStyle(normalizedStop2)}
             filter="url(#neonGlow)"
           />
         </LineChart>

@@ -44,6 +44,9 @@
   --color-background-primary: var(--erp-color-background-primary);
   --color-background-secondary: var(--erp-color-background-secondary);
   --color-background-tertiary: var(--erp-color-background-tertiary);
+  --color-background-secondary-glass: var(
+    --erp-color-background-secondary-glass
+  );
   --color-background-primary-light: var(--erp-color-background-primary-light);
   --color-background-secondary-light: var(
     --erp-color-background-secondary-light
