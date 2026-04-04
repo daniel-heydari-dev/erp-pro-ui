@@ -1,9 +1,31 @@
 import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties } from "react";
+
+import { mergeClassNames } from "../../../utils";
 
 export type SkeletonVariant = "text" | "circular" | "rectangular" | "rounded";
 export type SkeletonAnimation = "pulse" | "wave" | "none";
+export type SkeletonTone =
+  | "default"
+  | "subtle"
+  | "accent"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
+export type SkeletonRadius = "none" | "sm" | "md" | "lg" | "xl" | "full";
+export type SkeletonSpeed = "slow" | "normal" | "fast";
 
-export interface SkeletonProps {
+type SkeletonCssVariables = CSSProperties &
+  Record<
+    "--ui-skeleton-base" | "--ui-skeleton-highlight" | "--ui-skeleton-duration",
+    string
+  >;
+
+export interface SkeletonProps extends Omit<
+  ComponentPropsWithoutRef<"div">,
+  "children"
+> {
   /** The variant shape of the skeleton */
   variant?: SkeletonVariant;
   /** The animation type */
@@ -12,10 +34,14 @@ export interface SkeletonProps {
   width?: number | string;
   /** Height of the skeleton */
   height?: number | string;
-  /** Border radius for rounded variant */
+  /** Border radius override */
   borderRadius?: number | string;
-  /** Custom className */
-  className?: string;
+  /** Semantic radius preset */
+  radius?: SkeletonRadius;
+  /** Semantic tone preset */
+  tone?: SkeletonTone;
+  /** Animation speed preset or custom duration */
+  speed?: SkeletonSpeed | number | string;
   /** Number of lines for text variant */
   lines?: number;
   /** Gap between lines */
@@ -52,20 +78,150 @@ export interface SkeletonCardProps {
   className?: string;
   /** Animation type */
   animation?: SkeletonAnimation;
+  /** Semantic tone preset */
+  tone?: SkeletonTone;
+}
+
+export interface SkeletonMetricCardProps {
+  /** Whether to show a compact trend badge */
+  showTrend?: boolean;
+  /** Whether to render spark bars */
+  showChart?: boolean;
+  /** Number of spark bars */
+  chartBars?: number;
+  /** Width for the value block */
+  valueWidth?: number | string;
+  /** Custom className */
+  className?: string;
+  /** Animation type */
+  animation?: SkeletonAnimation;
+  /** Semantic tone preset */
+  tone?: SkeletonTone;
 }
 
 const animationStyles: Record<SkeletonAnimation, string> = {
-  pulse: "animate-pulse",
-  wave: "animate-shimmer bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700 bg-[length:200%_100%]",
+  pulse: "ui-skeleton-pulse",
+  wave: "ui-skeleton-wave",
   none: "",
 };
 
-const variantStyles: Record<SkeletonVariant, string> = {
-  text: "rounded",
-  circular: "rounded-full",
-  rectangular: "rounded-none",
-  rounded: "rounded-lg",
+const radiusStyles: Record<SkeletonRadius, string> = {
+  none: "rounded-none",
+  sm: "rounded-sm",
+  md: "rounded-md",
+  lg: "rounded-lg",
+  xl: "rounded-xl",
+  full: "rounded-full",
 };
+
+const variantStyles: Record<SkeletonVariant, SkeletonRadius> = {
+  text: "sm",
+  circular: "full",
+  rectangular: "none",
+  rounded: "md",
+};
+
+const speedStyles: Record<SkeletonSpeed, string> = {
+  slow: "2.4s",
+  normal: "1.6s",
+  fast: "1.05s",
+};
+
+const toneStyles: Record<SkeletonTone, { base: string; highlight: string }> = {
+  default: {
+    base: "var(--color-muted)",
+    highlight:
+      "color-mix(in oklch, var(--color-muted) 54%, var(--color-background))",
+  },
+  subtle: {
+    base: "color-mix(in oklch, var(--color-muted) 72%, var(--color-background))",
+    highlight:
+      "color-mix(in oklch, var(--color-muted) 42%, var(--color-background))",
+  },
+  accent: {
+    base: "var(--color-accent-subtle)",
+    highlight:
+      "color-mix(in oklch, var(--color-accent-subtle) 48%, var(--color-background))",
+  },
+  success: {
+    base: "var(--color-success-subtle)",
+    highlight:
+      "color-mix(in oklch, var(--color-success-subtle) 48%, var(--color-background))",
+  },
+  warning: {
+    base: "var(--color-warning-subtle)",
+    highlight:
+      "color-mix(in oklch, var(--color-warning-subtle) 48%, var(--color-background))",
+  },
+  danger: {
+    base: "var(--color-danger-subtle)",
+    highlight:
+      "color-mix(in oklch, var(--color-danger-subtle) 48%, var(--color-background))",
+  },
+  info: {
+    base: "var(--color-info-subtle)",
+    highlight:
+      "color-mix(in oklch, var(--color-info-subtle) 48%, var(--color-background))",
+  },
+};
+
+function resolveDimension(value?: number | string): string | undefined {
+  if (typeof value === "number") {
+    return `${value}px`;
+  }
+
+  return value;
+}
+
+function resolveDuration(value: SkeletonProps["speed"]): string {
+  if (typeof value === "number") {
+    return `${value}ms`;
+  }
+
+  if (typeof value === "string" && value in speedStyles) {
+    return speedStyles[value as SkeletonSpeed];
+  }
+
+  return value ?? speedStyles.normal;
+}
+
+function getDimensionStyle({
+  variant,
+  width,
+  height,
+  borderRadius,
+}: {
+  variant: SkeletonVariant;
+  width?: number | string;
+  height?: number | string;
+  borderRadius?: number | string;
+}): CSSProperties {
+  const nextStyle: CSSProperties = {};
+  const resolvedWidth = resolveDimension(width);
+  const resolvedHeight = resolveDimension(height);
+  const resolvedBorderRadius = resolveDimension(borderRadius);
+
+  if (resolvedWidth) {
+    nextStyle.width = resolvedWidth;
+  } else if (variant === "text") {
+    nextStyle.width = "100%";
+  }
+
+  if (resolvedHeight) {
+    nextStyle.height = resolvedHeight;
+  } else if (variant === "text") {
+    nextStyle.height = "1em";
+  } else if (variant === "circular") {
+    nextStyle.width = nextStyle.width || "40px";
+    nextStyle.height = nextStyle.width;
+  }
+
+  if (resolvedBorderRadius) {
+    nextStyle.borderRadius = resolvedBorderRadius;
+  }
+
+  return nextStyle;
+}
 
 // Base Skeleton Component
 const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
@@ -76,63 +232,61 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       width,
       height,
       borderRadius,
-      className = "",
+      radius,
+      tone = "default",
+      speed = "normal",
+      className,
       lines = 1,
       lineGap = 8,
       lastLineWidth = "80%",
+      style,
+      ["aria-hidden"]: ariaHidden,
+      ...rest
     },
     ref,
   ) => {
-    const baseStyles = `
-      bg-neutral-200 dark:bg-neutral-700
-      ${animation !== "wave" ? animationStyles[animation] : ""}
-      ${animation === "wave" ? animationStyles.wave : ""}
-      ${variantStyles[variant]}
-    `;
-
-    const getSize = () => {
-      const style: React.CSSProperties = {};
-
-      if (width) {
-        style.width = typeof width === "number" ? `${width}px` : width;
-      } else if (variant === "text") {
-        style.width = "100%";
-      }
-
-      if (height) {
-        style.height = typeof height === "number" ? `${height}px` : height;
-      } else if (variant === "text") {
-        style.height = "1em";
-      } else if (variant === "circular") {
-        style.width = style.width || "40px";
-        style.height = style.width;
-      }
-
-      if (borderRadius) {
-        style.borderRadius =
-          typeof borderRadius === "number" ? `${borderRadius}px` : borderRadius;
-      }
-
-      return style;
+    const toneStyle = toneStyles[tone];
+    const sharedStyle: SkeletonCssVariables = {
+      "--ui-skeleton-base": toneStyle.base,
+      "--ui-skeleton-highlight": toneStyle.highlight,
+      "--ui-skeleton-duration": resolveDuration(speed),
+      ...style,
     };
+    const effectiveRadius = radius ?? variantStyles[variant];
+    const sharedClassName = mergeClassNames(
+      "relative overflow-hidden bg-[var(--ui-skeleton-base)] pointer-events-none select-none shrink-0",
+      radiusStyles[effectiveRadius],
+      animationStyles[animation],
+    );
 
-    // Render multiple lines for text variant
     if (variant === "text" && lines > 1) {
       return (
         <div
           ref={ref}
-          className={`flex flex-col ${className}`}
+          className={mergeClassNames("flex flex-col", className)}
           style={{
-            gap: typeof lineGap === "number" ? `${lineGap}px` : lineGap,
+            ...style,
+            gap: resolveDimension(lineGap),
+            width: resolveDimension(width) ?? style?.width,
           }}
+          aria-hidden={ariaHidden ?? true}
+          data-animation={animation}
+          data-tone={tone}
+          {...rest}
         >
           {Array.from({ length: lines }).map((_, index) => (
             <div
               key={index}
-              className={baseStyles}
+              className={sharedClassName}
               style={{
-                ...getSize(),
-                width: index === lines - 1 ? lastLineWidth : width || "100%",
+                ...sharedStyle,
+                ...getDimensionStyle({
+                  variant,
+                  width:
+                    index === lines - 1 ? lastLineWidth : (width ?? "100%"),
+                  height,
+                  borderRadius,
+                }),
               }}
             />
           ))}
@@ -143,8 +297,15 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     return (
       <div
         ref={ref}
-        className={`${baseStyles} ${className}`}
-        style={getSize()}
+        className={mergeClassNames(sharedClassName, className)}
+        style={{
+          ...sharedStyle,
+          ...getDimensionStyle({ variant, width, height, borderRadius }),
+        }}
+        aria-hidden={ariaHidden ?? true}
+        data-animation={animation}
+        data-tone={tone}
+        {...rest}
       />
     );
   },
@@ -248,40 +409,47 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
       lines = 3,
       showAvatar = false,
       showActions = false,
-      className = "",
+      className,
       animation = "pulse",
+      tone = "default",
     },
     ref,
   ) => {
     return (
       <div
         ref={ref}
-        className={`bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-sm border border-neutral-200 dark:border-neutral-700 ${className}`}
+        className={mergeClassNames(
+          "overflow-hidden rounded-md border border-border bg-card shadow-sm",
+          className,
+        )}
       >
         {showImage && (
           <SkeletonImage
             height={imageHeight}
             animation={animation}
             borderRadius={0}
+            tone={tone}
           />
         )}
 
         <div className="p-4 flex flex-col gap-4">
           {showAvatar && (
             <div className="flex items-center gap-3">
-              <SkeletonAvatar size={40} animation={animation} />
+              <SkeletonAvatar size={40} animation={animation} tone={tone} />
               <div className="flex-1">
                 <Skeleton
                   variant="text"
                   width="60%"
                   height={14}
                   animation={animation}
+                  tone={tone}
                 />
                 <Skeleton
                   variant="text"
                   width="40%"
                   height={12}
                   animation={animation}
+                  tone={tone}
                   className="mt-2"
                 />
               </div>
@@ -293,12 +461,13 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
             animation={animation}
             height={14}
             lineGap={10}
+            tone={tone}
           />
 
           {showActions && (
             <div className="flex gap-3 mt-2">
-              <SkeletonButton size="sm" animation={animation} />
-              <SkeletonButton size="sm" animation={animation} />
+              <SkeletonButton size="sm" animation={animation} tone={tone} />
+              <SkeletonButton size="sm" animation={animation} tone={tone} />
             </div>
           )}
         </div>
@@ -309,18 +478,102 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
 
 SkeletonCard.displayName = "SkeletonCard";
 
+// Skeleton Metric Card Component
+const SkeletonMetricCard = forwardRef<HTMLDivElement, SkeletonMetricCardProps>(
+  (
+    {
+      showTrend = true,
+      showChart = true,
+      chartBars = 7,
+      valueWidth = "52%",
+      className,
+      animation = "wave",
+      tone = "accent",
+    },
+    ref,
+  ) => {
+    const chartHeights = [36, 52, 46, 72, 64, 84, 68, 78];
+
+    return (
+      <div
+        ref={ref}
+        className={mergeClassNames(
+          "rounded-md border border-border bg-card p-4 shadow-sm",
+          className,
+        )}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1 space-y-3">
+            <Skeleton
+              width="34%"
+              height={11}
+              animation={animation}
+              tone="subtle"
+            />
+            <Skeleton
+              width={valueWidth}
+              height={28}
+              animation={animation}
+              tone={tone}
+              radius="md"
+            />
+            <Skeleton
+              width="44%"
+              height={12}
+              animation={animation}
+              tone="subtle"
+            />
+          </div>
+
+          {showTrend ? (
+            <div className="rounded-full border border-border bg-surface px-3 py-2">
+              <Skeleton
+                width={54}
+                height={12}
+                animation={animation}
+                tone="subtle"
+              />
+            </div>
+          ) : null}
+        </div>
+
+        {showChart ? (
+          <div className="mt-5 flex h-20 items-end gap-2">
+            {Array.from({ length: chartBars }).map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rounded"
+                width="100%"
+                height={`${chartHeights[index % chartHeights.length]}%`}
+                animation={animation}
+                tone={tone}
+                className="flex-1"
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    );
+  },
+);
+
+SkeletonMetricCard.displayName = "SkeletonMetricCard";
+
 // Skeleton Table Row Component
 const SkeletonTableRow = forwardRef<
   HTMLDivElement,
   { columns?: number; animation?: SkeletonAnimation; className?: string }
 >(({ columns = 4, animation = "pulse", className = "" }, ref) => {
+  const sharedWidth =
+    columns <= 1 ? "100%" : `${Math.floor(72 / (columns - 1))}%`;
+
   return (
     <div ref={ref} className={`flex items-center gap-4 py-3 ${className}`}>
       {Array.from({ length: columns }).map((_, index) => (
         <Skeleton
           key={index}
           variant="text"
-          width={index === 0 ? "20%" : `${Math.floor(80 / (columns - 1))}%`}
+          width={index === 0 ? "28%" : sharedWidth}
           height={16}
           animation={animation}
         />
@@ -388,6 +641,7 @@ export {
   SkeletonButton,
   SkeletonImage,
   SkeletonCard,
+  SkeletonMetricCard,
   SkeletonTableRow,
   SkeletonListItem,
 };

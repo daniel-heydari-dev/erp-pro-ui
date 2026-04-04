@@ -175,7 +175,29 @@ export { Radio } from "./components/forms/radio";
 
 export { Select } from "./components/forms/select";
 
-export { Skeleton as SkeletonComponent } from "./components/data-display/skeleton";
+export {
+  Skeleton as SkeletonComponent,
+  SkeletonAvatar,
+  SkeletonButton,
+  SkeletonCard,
+  SkeletonImage,
+  SkeletonListItem,
+  SkeletonMetricCard,
+  SkeletonTableRow,
+  SkeletonText,
+} from "./components/data-display/skeleton";
+export type {
+  SkeletonAnimation,
+  SkeletonAvatarProps,
+  SkeletonCardProps,
+  SkeletonMetricCardProps,
+  SkeletonProps as SkeletonComponentProps,
+  SkeletonRadius,
+  SkeletonSpeed,
+  SkeletonTextProps,
+  SkeletonTone,
+  SkeletonVariant,
+} from "./components/data-display/skeleton";
 
 export { SplashCursor } from "./components/effects/splash-cursor";
 

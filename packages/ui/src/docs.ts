@@ -343,12 +343,12 @@ const componentDocSeeds = {
   skeleton: {
     exportName: "SkeletonComponent",
     summary:
-      "Placeholder block for perceived-performance states while structured content is loading.",
+      "Theme-aware placeholder system with semantic tones, speed control, light/dark mode support, and ready-made metric, card, list, and table presets.",
     aliases: ["placeholder"],
     related: ["loading", "data-table", "card"],
     rootImport: "import { SkeletonComponent } from 'erp-pro-ui';",
     subpathImport:
-      "import { Skeleton as SkeletonComponent } from 'erp-pro-ui/skeleton';",
+      "import { Skeleton as SkeletonComponent, SkeletonMetricCard } from 'erp-pro-ui/skeleton';",
   },
   "area-chart": {
     exportName: "AreaChart",

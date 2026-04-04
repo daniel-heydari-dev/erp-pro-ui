@@ -1,6 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { StorySurface } from "../../shared/storybook";
-import { Skeleton, SkeletonCard, SkeletonListItem } from "./Skeleton";
+import {
+  StoryIntro,
+  StoryPanel,
+  StorySection,
+  StorySurface,
+} from "../../shared/storybook";
+import {
+  Skeleton,
+  SkeletonCard,
+  SkeletonListItem,
+  SkeletonMetricCard,
+  SkeletonTableRow,
+} from "./Skeleton";
 
 const meta: Meta<typeof Skeleton> = {
   title: "Data Display/Skeleton",
@@ -24,8 +35,34 @@ const meta: Meta<typeof Skeleton> = {
       control: "select",
       options: ["pulse", "wave", "none"],
     },
+    tone: {
+      control: "select",
+      options: [
+        "default",
+        "subtle",
+        "accent",
+        "success",
+        "warning",
+        "danger",
+        "info",
+      ],
+    },
+    radius: {
+      control: "select",
+      options: ["none", "sm", "md", "lg", "xl", "full"],
+    },
+    speed: {
+      control: "select",
+      options: ["slow", "normal", "fast"],
+    },
     width: { control: "number" },
     height: { control: "number" },
+  },
+  args: {
+    animation: "wave",
+    tone: "accent",
+    radius: "md",
+    lines: 3,
   },
 };
 
@@ -37,11 +74,23 @@ type Story = StoryObj<typeof meta>;
  * Build out your own loading layouts block by block.
  */
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:w-full ui:max-w-3xl ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
-        <Skeleton lines={4} height={14} lineGap={12} lastLineWidth="58%" />
-      </div>
+      <StorySection>
+        <StoryIntro
+          title="Theme-aware building block"
+          description="Tune the tone, radius, and speed to match the content surface instead of showing the same neutral block everywhere."
+        />
+        <StoryPanel className="ui:w-full ui:max-w-3xl">
+          <Skeleton
+            {...args}
+            width="100%"
+            height={14}
+            lineGap={12}
+            lastLineWidth="58%"
+          />
+        </StoryPanel>
+      </StorySection>
     </StorySurface>
   ),
 };
@@ -50,41 +99,106 @@ export const Default: Story = {
  * ## Prefabricated Card
  * Easily render skeleton cards while waiting for rich media.
  */
-export const CardSkeleton: Story = {
+export const ToneMatrix: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
-      <div className="ui:grid ui:w-full ui:gap-4 lg:ui:grid-cols-2">
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
-          <div className="ui:flex ui:items-start ui:gap-4">
-            <Skeleton variant="circular" width={56} height={56} />
-            <div className="ui:flex-1">
-              <Skeleton width="45%" height={16} />
-              <Skeleton width="68%" height={14} className="ui:mt-3" />
-              <Skeleton width="85%" height={14} className="ui:mt-3" />
+      <div className="ui:grid ui:w-full ui:gap-4 md:ui:grid-cols-2 xl:ui:grid-cols-4">
+        {[
+          {
+            label: "Default",
+            tone: "default" as const,
+            speed: "normal" as const,
+          },
+          { label: "Accent", tone: "accent" as const, speed: "fast" as const },
+          {
+            label: "Success",
+            tone: "success" as const,
+            speed: "normal" as const,
+          },
+          { label: "Info", tone: "info" as const, speed: "slow" as const },
+        ].map((item) => (
+          <StoryPanel key={item.label} className="ui:space-y-4 ui:rounded-md">
+            <StoryIntro
+              title={item.label}
+              description={`Wave animation with ${item.speed} timing.`}
+            />
+            <Skeleton
+              tone={item.tone}
+              animation="wave"
+              width="38%"
+              height={12}
+            />
+            <Skeleton
+              tone={item.tone}
+              animation="wave"
+              width="64%"
+              height={28}
+            />
+            <Skeleton
+              tone={item.tone}
+              animation="wave"
+              lines={3}
+              height={12}
+              lineGap={10}
+              speed={item.speed}
+              lastLineWidth="48%"
+            />
+          </StoryPanel>
+        ))}
+      </div>
+    </StorySurface>
+  ),
+};
+
+/**
+ * ## Light And Dark Modes
+ * Validate the same skeleton presets against both token modes without changing the component API.
+ */
+export const LightAndDarkModes: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
+      <div className="ui:grid ui:gap-4 lg:ui:grid-cols-2">
+        {(
+          [
+            { mode: "light", label: "Light mode" },
+            { mode: "dark", label: "Dark mode" },
+          ] as const
+        ).map((item) => (
+          <section
+            key={item.mode}
+            data-mode={item.mode}
+            className="ui:rounded-md ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+          >
+            <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
+              <StoryIntro
+                title={item.label}
+                description="Shared semantic tokens drive the skeleton fill and shimmer in both modes."
+              />
+              <span className="ui:rounded-full ui:bg-accent-subtle ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-accent">
+                {item.mode}
+              </span>
             </div>
-          </div>
-        </div>
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
-          <Skeleton
-            variant="rounded"
-            width="100%"
-            height={180}
-            animation="wave"
-          />
-          <Skeleton
-            width="40%"
-            height={16}
-            className="ui:mt-4"
-            animation="wave"
-          />
-          <Skeleton
-            lines={2}
-            height={14}
-            lineGap={10}
-            className="ui:mt-3"
-            animation="wave"
-          />
-        </div>
+
+            <div className="ui:space-y-4">
+              <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
+                <SkeletonMetricCard tone="accent" />
+                <SkeletonMetricCard tone="info" showTrend={false} />
+              </div>
+
+              <StoryPanel className="ui:rounded-md ui:space-y-4 ui:p-4">
+                <Skeleton
+                  lines={4}
+                  height={12}
+                  lineGap={10}
+                  lastLineWidth="56%"
+                  tone="subtle"
+                  animation="wave"
+                />
+                <SkeletonListItem animation="wave" showAction tone="accent" />
+              </StoryPanel>
+            </div>
+          </section>
+        ))}
       </div>
     </StorySurface>
   ),
@@ -94,48 +208,79 @@ export const CardSkeleton: Story = {
  * ## Prefabricated List
  * Easily render skeleton lists while waiting for arrays to fetch.
  */
-export const ListSkeleton: Story = {
+export const DashboardPreview: Story = {
   render: () => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:w-full ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card">
-        <div className="ui:grid ui:grid-cols-4 ui:gap-4 ui:border-b ui:border-border ui:px-6 ui:py-4">
-          <Skeleton width="60%" height={12} />
-          <Skeleton width="50%" height={12} />
-          <Skeleton width="55%" height={12} />
-          <Skeleton width="45%" height={12} />
-        </div>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="ui:grid ui:grid-cols-4 ui:gap-4 ui:border-b ui:border-border ui:px-6 ui:py-4 last:ui:border-b-0"
-          >
-            <Skeleton width="70%" height={14} />
-            <Skeleton width="65%" height={14} />
-            <Skeleton width="50%" height={14} />
-            <Skeleton width="40%" height={14} />
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <div className="ui:grid ui:w-full ui:gap-4 xl:ui:grid-cols-[1.35fr_0.95fr]">
+        <div className="ui:space-y-4">
+          <div className="ui:grid ui:gap-4 md:ui:grid-cols-3">
+            <SkeletonMetricCard />
+            <SkeletonMetricCard tone="success" />
+            <SkeletonMetricCard tone="info" showTrend={false} />
           </div>
-        ))}
+
+          <StoryPanel className="ui:rounded-md ui:p-4">
+            <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
+              <Skeleton width="26%" height={18} tone="subtle" />
+              <Skeleton width={120} height={36} radius="md" tone="accent" />
+            </div>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <SkeletonTableRow
+                key={index}
+                columns={5}
+                animation="wave"
+                className="ui:border-b ui:border-border last:ui:border-b-0"
+              />
+            ))}
+          </StoryPanel>
+        </div>
+
+        <div className="ui:space-y-4">
+          <SkeletonCard showAvatar showActions animation="wave" tone="accent" />
+          <StoryPanel className="ui:rounded-md ui:space-y-4 ui:p-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <SkeletonListItem
+                key={index}
+                animation="wave"
+                showAction
+                tone="subtle"
+              />
+            ))}
+          </StoryPanel>
+        </div>
       </div>
     </StorySurface>
   ),
 };
 
 /**
- * ## Prefabricated Components
- * Use the provided card and list item helpers for faster scaffolding.
+ * ## Content Presets
+ * Use the ready-made presets when you want modern loading states without rebuilding the layout each time.
  */
 export const PrefabricatedComponents: Story = {
   render: () => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:grid ui:gap-6 lg:ui:grid-cols-2">
-        <div className="ui:w-80">
-          <SkeletonCard showAvatar showActions animation="wave" />
-        </div>
-        <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-4 ui:space-y-4">
-          <SkeletonListItem animation="wave" />
-          <SkeletonListItem animation="wave" />
-          <SkeletonListItem animation="wave" showSecondaryText={false} />
-        </div>
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
+      <div className="ui:grid ui:gap-4 lg:ui:grid-cols-3">
+        <SkeletonMetricCard className="ui:h-full" />
+        <SkeletonCard
+          showAvatar
+          showActions
+          animation="wave"
+          tone="default"
+          className="ui:h-full"
+        />
+        <StoryPanel className="ui:rounded-md ui:p-4">
+          <div className="ui:space-y-4">
+            <SkeletonListItem animation="wave" tone="subtle" />
+            <SkeletonListItem animation="wave" tone="subtle" />
+            <SkeletonListItem
+              animation="wave"
+              showSecondaryText={false}
+              showAction
+              tone="accent"
+            />
+          </div>
+        </StoryPanel>
       </div>
     </StorySurface>
   ),

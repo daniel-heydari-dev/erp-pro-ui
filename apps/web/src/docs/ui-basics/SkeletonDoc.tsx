@@ -1,4 +1,10 @@
-import { SkeletonComponent as Skeleton } from "erp-pro-ui";
+import {
+  SkeletonCard,
+  SkeletonComponent as Skeleton,
+  SkeletonListItem,
+  SkeletonMetricCard,
+  SkeletonTableRow,
+} from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -14,13 +20,22 @@ const SkeletonDoc = () => {
 
       <h2 className="docs-category-subtitle">Text Blocks</h2>
       <p className="docs-paragraph mb-4">
-        The text variant can render multiple lines in one call, with a shorter
-        final line to mimic natural paragraph rhythm.
+        The text variant can render multiple lines in one call, and now supports
+        theme-aware tones, radius presets, and faster or slower motion so the
+        loading state matches the final surface.
       </p>
 
       <div className="docs-showcase-card">
-        <div className="w-full max-w-3xl rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-          <Skeleton lines={4} height={14} lineGap={12} lastLineWidth="58%" />
+        <div className="w-full max-w-3xl rounded-md border border-border bg-card p-6">
+          <Skeleton
+            lines={4}
+            height={14}
+            lineGap={12}
+            lastLineWidth="58%"
+            tone="accent"
+            animation="wave"
+            radius="md"
+          />
         </div>
       </div>
 
@@ -32,99 +47,156 @@ const SkeletonDoc = () => {
   height={14}
   lineGap={12}
   lastLineWidth="58%"
+  tone="accent"
+  animation="wave"
+  radius="md"
 />`}
       />
 
-      <h2 className="docs-category-subtitle">Profile And Media Layouts</h2>
+      <h2 className="docs-category-subtitle">Light And Dark Modes</h2>
       <p className="docs-paragraph mb-4">
-        Compose the base component to mirror the final content structure instead
-        of showing a single generic block everywhere.
+        Skeleton uses the shared semantic token system, so it adapts to both
+        light and dark mode automatically when your app is wrapped in
+        ThemeProvider or when a container sets data-mode.
       </p>
 
       <div className="docs-showcase-card">
         <div className="grid w-full gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-            <div className="flex items-start gap-4">
-              <Skeleton variant="circular" width={56} height={56} />
-              <div className="flex-1">
-                <Skeleton width="45%" height={16} />
-                <Skeleton width="68%" height={14} className="mt-3" />
-                <Skeleton width="85%" height={14} className="mt-3" />
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-            <Skeleton
-              variant="rounded"
-              width="100%"
-              height={180}
-              animation="wave"
-            />
-            <Skeleton
-              width="40%"
-              height={16}
-              className="mt-4"
-              animation="wave"
-            />
-            <Skeleton
-              lines={2}
-              height={14}
-              lineGap={10}
-              className="mt-3"
-              animation="wave"
-            />
-          </div>
-        </div>
-      </div>
-
-      <CodeBlock
-        code={`<div className="flex items-start gap-4">
-  <Skeleton variant="circular" width={56} height={56} />
-  <div className="flex-1">
-    <Skeleton width="45%" height={16} />
-    <Skeleton width="68%" height={14} className="mt-3" />
-    <Skeleton width="85%" height={14} className="mt-3" />
-  </div>
-</div>`}
-      />
-
-      <h2 className="docs-category-subtitle">Dense Table Placeholder</h2>
-      <p className="docs-paragraph mb-4">
-        For admin tables, repeat narrow text rows so the loading state reflects
-        the eventual density of the screen.
-      </p>
-
-      <div className="docs-showcase-card">
-        <div className="w-full max-w-4xl overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
-          <div className="grid grid-cols-4 gap-4 border-b border-neutral-200 px-6 py-4 dark:border-neutral-800">
-            <Skeleton width="60%" height={12} />
-            <Skeleton width="50%" height={12} />
-            <Skeleton width="55%" height={12} />
-            <Skeleton width="45%" height={12} />
-          </div>
-          {Array.from({ length: 4 }).map((_, index) => (
+          {(
+            [
+              { mode: "light", label: "Light" },
+              { mode: "dark", label: "Dark" },
+            ] as const
+          ).map((item) => (
             <div
-              key={index}
-              className="grid grid-cols-4 gap-4 border-b border-neutral-200 px-6 py-4 last:border-b-0 dark:border-neutral-800"
+              key={item.mode}
+              data-mode={item.mode}
+              className="rounded-md border border-border bg-canvas p-4 shadow-sm"
             >
-              <Skeleton width="70%" height={14} />
-              <Skeleton width="65%" height={14} />
-              <Skeleton width="50%" height={14} />
-              <Skeleton width="40%" height={14} />
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold text-fg">{item.label}</p>
+                  <p className="text-xs uppercase tracking-[0.16em] text-fg-muted">
+                    data-mode=&quot;{item.mode}&quot;
+                  </p>
+                </div>
+                <span className="rounded-full bg-accent-subtle px-3 py-1 text-xs font-medium text-accent">
+                  mode
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <SkeletonMetricCard tone="accent" />
+                <div className="rounded-md border border-border bg-card p-4">
+                  <Skeleton
+                    lines={3}
+                    height={12}
+                    lineGap={10}
+                    lastLineWidth="54%"
+                    tone="subtle"
+                    animation="wave"
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       <CodeBlock
-        code={`{Array.from({ length: 4 }).map((_, index) => (
-  <div key={index} className="grid grid-cols-4 gap-4 px-6 py-4">
-    <Skeleton width="70%" height={14} />
-    <Skeleton width="65%" height={14} />
-    <Skeleton width="50%" height={14} />
-    <Skeleton width="40%" height={14} />
-  </div>
+        code={`import { SkeletonComponent as Skeleton, ThemeProvider } from 'erp-pro-ui';
+
+<ThemeProvider>
+  <Skeleton tone="accent" animation="wave" lines={3} />
+</ThemeProvider>
+
+<section data-mode="dark">
+  <Skeleton tone="subtle" animation="wave" lines={3} />
+</section>`}
+      />
+
+      <h2 className="docs-category-subtitle">Modern Metric Cards</h2>
+      <p className="docs-paragraph mb-4">
+        The library now includes a metric-card preset for analytics dashboards,
+        with optional trend chips and spark bars.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="grid w-full gap-4 lg:grid-cols-3">
+          <SkeletonMetricCard />
+          <SkeletonMetricCard tone="success" />
+          <SkeletonMetricCard tone="info" showTrend={false} />
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`import { SkeletonMetricCard } from 'erp-pro-ui';
+
+<SkeletonMetricCard />
+<SkeletonMetricCard tone="success" />
+<SkeletonMetricCard tone="info" showTrend={false} />`}
+      />
+
+      <h2 className="docs-category-subtitle">Content Feed Presets</h2>
+      <p className="docs-paragraph mb-4">
+        Use the shipped card and list presets when you want richer shells with
+        minimal wiring.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="grid w-full gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <SkeletonCard showAvatar showActions animation="wave" tone="accent" />
+          <div className="rounded-md border border-border bg-card p-4">
+            <div className="space-y-4">
+              <SkeletonListItem animation="wave" showAction tone="subtle" />
+              <SkeletonListItem animation="wave" showAction tone="subtle" />
+              <SkeletonListItem
+                animation="wave"
+                showSecondaryText={false}
+                tone="accent"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`import { SkeletonCard, SkeletonListItem } from 'erp-pro-ui';
+
+<SkeletonCard showAvatar showActions animation="wave" tone="accent" />
+
+<SkeletonListItem animation="wave" showAction tone="subtle" />`}
+      />
+
+      <h2 className="docs-category-subtitle">Dense Table Placeholder</h2>
+      <p className="docs-paragraph mb-4">
+        For data-heavy views, the table-row preset keeps loading states aligned
+        with compact admin layouts.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-4xl overflow-hidden rounded-md border border-border bg-card px-4 py-2">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <SkeletonTableRow
+              key={index}
+              columns={5}
+              animation="wave"
+              className="border-b border-border last:border-b-0"
+            />
+          ))}
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`import { SkeletonTableRow } from 'erp-pro-ui';
+
+{Array.from({ length: 5 }).map((_, index) => (
+  <SkeletonTableRow
+    key={index}
+    columns={5}
+    animation="wave"
+    className="border-b border-border last:border-b-0"
+  />
 ))}`}
       />
 
@@ -161,6 +233,46 @@ const SkeletonDoc = () => {
               <td>
                 Controls whether the placeholder pulses, shimmers, or stays
                 static
+              </td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">tone</td>
+              <td>
+                <span className="docs-prop-type">
+                  'default' | 'subtle' | 'accent' | 'success' | 'warning' |
+                  'danger' | 'info'
+                </span>
+              </td>
+              <td>'default'</td>
+              <td>
+                Maps the placeholder to semantic theme surfaces instead of a
+                single hardcoded neutral fill
+              </td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">radius</td>
+              <td>
+                <span className="docs-prop-type">
+                  'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+                </span>
+              </td>
+              <td>variant based</td>
+              <td>
+                Applies semantic corner presets without hand-authoring a pixel
+                radius each time
+              </td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">speed</td>
+              <td>
+                <span className="docs-prop-type">
+                  'slow' | 'normal' | 'fast' | number | string
+                </span>
+              </td>
+              <td>'normal'</td>
+              <td>
+                Adjusts the pulse or shimmer timing for calmer or more active
+                loading motion
               </td>
             </tr>
             <tr>
