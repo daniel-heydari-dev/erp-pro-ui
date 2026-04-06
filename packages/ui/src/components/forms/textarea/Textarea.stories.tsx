@@ -47,6 +47,57 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const controlledTextareaSource = `import { useState } from 'react';
+import { Textarea } from 'erp-pro-ui';
+
+export function ControlledTextareaExample() {
+  const [value, setValue] = useState('');
+  const maxLength = 240;
+
+  return (
+    <Textarea
+      label="Bio"
+      placeholder="Tell us about yourself..."
+      value={value}
+      onChange={(event) => setValue(event.target.value.slice(0, maxLength))}
+      rows={4}
+    />
+  );
+}`;
+
+const formSegmentSource = `import { Button, Input, Textarea } from 'erp-pro-ui';
+
+export function FeedbackFormSegmentExample() {
+  return (
+    <div className="flex flex-col gap-4">
+      <h3 className="text-lg font-medium">Submit Feedback</h3>
+      <Input label="Subject" placeholder="Issue with login" />
+      <Textarea
+        label="Detailed Description"
+        placeholder="Please describe exactly what happened..."
+        rows={5}
+        helperText="Include any error codes you saw."
+      />
+      <div className="mt-2 flex justify-end">
+        <Button label="Send Report" primary />
+      </div>
+    </div>
+  );
+}`;
+
+const textareaValidationSource = `import { Textarea } from 'erp-pro-ui';
+
+export function RequiredTextareaExample() {
+  return (
+    <Textarea
+      label="Description"
+      placeholder="Enter description..."
+      error="Description is required."
+      rows={4}
+    />
+  );
+}`;
+
 // --- Helper Components for Stories ---
 
 function ControlledTextarea() {
@@ -80,6 +131,13 @@ function ControlledTextarea() {
  */
 export const Default: Story = {
   render: () => <ControlledTextarea />,
+  parameters: {
+    docs: {
+      source: {
+        code: controlledTextareaSource,
+      },
+    },
+  },
 };
 
 /**
@@ -107,6 +165,13 @@ export const ErrorState: Story = {
     error: "Description is required.",
     className: "ui:w-full",
     rows: 4,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: textareaValidationSource,
+      },
+    },
   },
 };
 
@@ -149,4 +214,11 @@ export const FormSegmentExample: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: formSegmentSource,
+      },
+    },
+  },
 };

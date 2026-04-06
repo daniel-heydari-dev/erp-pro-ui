@@ -38,6 +38,143 @@ const meta: Meta<typeof ToastProvider> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const operationalFeedbackSource = `import { Button, ToastProvider, useToast } from 'erp-pro-ui';
+
+function ToastActions() {
+  const { success, warning, toast } = useToast();
+
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Button
+        label="Save success"
+        primary
+        onClick={() =>
+          success({
+            title: 'Changes published',
+            description: 'The pricing update is live across all regions.',
+          })
+        }
+      />
+      <Button
+        label="Review warning"
+        onClick={() =>
+          warning({
+            title: 'Approval needed',
+            description: '2 discount requests are still pending manager review.',
+          })
+        }
+      />
+      <Button
+        label="Toast with action"
+        onClick={() =>
+          toast({
+            title: 'Plan updated',
+            description: 'Billing moved to annual renewal.',
+            action: { label: 'Undo', onClick: () => undefined },
+          })
+        }
+      />
+    </div>
+  );
+}
+
+export function OperationalFeedback() {
+  return (
+    <ToastProvider position="top-right" duration={4000} maxToasts={4}>
+      <ToastActions />
+    </ToastProvider>
+  );
+}`;
+
+const asyncPromiseSource = `import { Button, ToastProvider, useToast } from 'erp-pro-ui';
+
+function ImportButton() {
+  const { promise } = useToast();
+
+  return (
+    <Button
+      label="Import collection"
+      primary
+      onClick={() => {
+        const task = new Promise<{ imported: number }>((resolve) => {
+          window.setTimeout(() => resolve({ imported: 32 }), 1800);
+        });
+
+        void promise(task, {
+          loading: 'Importing catalog data...',
+          success: (data) => 'Imported ' + data.imported + ' products.',
+          error: 'Import failed.',
+        }).catch(() => undefined);
+      }}
+    />
+  );
+}
+
+export function AsyncPromiseFlow() {
+  return (
+    <ToastProvider position="bottom-right" duration={4000} maxToasts={4}>
+      <ImportButton />
+    </ToastProvider>
+  );
+}`;
+
+const positionControlSource = `import { useState } from 'react';
+import {
+  Button,
+  ToastProvider,
+  useToast,
+  type ToastPosition,
+} from 'erp-pro-ui';
+
+const positions: ToastPosition[] = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+];
+
+function PositionControls({
+  position,
+  onPositionChange,
+}: {
+  position: ToastPosition;
+  onPositionChange: (position: ToastPosition) => void;
+}) {
+  const { toast } = useToast();
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {positions.map((nextPosition) => (
+        <Button
+          key={nextPosition}
+          label={nextPosition}
+          onClick={() => {
+            onPositionChange(nextPosition);
+            window.setTimeout(() => {
+              toast({
+                title: 'Position updated',
+                description: 'New toasts now appear at ' + nextPosition + '.',
+              });
+            }, 0);
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function PositionControlMatrix() {
+  const [position, setPosition] = useState<ToastPosition>('top-right');
+
+  return (
+    <ToastProvider position={position}>
+      <PositionControls position={position} onPositionChange={setPosition} />
+    </ToastProvider>
+  );
+}`;
+
 function ToastWorkflowDemo() {
   const { toast, success, warning, info, loading, update, dismissAll } =
     useToast();
@@ -252,21 +389,45 @@ function ToastPositionDemo() {
 }
 
 export const WorkflowStates: Story = {
+  name: "Operational Feedback",
   render: () => (
     <ToastProvider position="top-right" duration={4000} maxToasts={4}>
       <ToastWorkflowDemo />
     </ToastProvider>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: operationalFeedbackSource,
+      },
+    },
+  },
 };
 
 export const PromiseHandling: Story = {
+  name: "Async Promise Flow",
   render: () => (
     <ToastProvider position="bottom-right" duration={4000} maxToasts={4}>
       <ToastPromiseDemo />
     </ToastProvider>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: asyncPromiseSource,
+      },
+    },
+  },
 };
 
 export const PositionSwitcher: Story = {
+  name: "Position Control Matrix",
   render: () => <ToastPositionDemo />,
+  parameters: {
+    docs: {
+      source: {
+        code: positionControlSource,
+      },
+    },
+  },
 };

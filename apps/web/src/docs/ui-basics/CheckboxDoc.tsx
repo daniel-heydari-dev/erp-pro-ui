@@ -35,15 +35,20 @@ const CheckboxDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Checkbox } from 'erp-pro-ui';
+        code={`import { useState } from 'react';
+import { Checkbox } from 'erp-pro-ui';
 
-const [acceptedTerms, setAcceptedTerms] = useState(false);
+export function TermsCheckboxExample() {
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-<Checkbox
-  label="Accept terms and conditions"
-  checked={acceptedTerms}
-  onChange={(event) => setAcceptedTerms(event.target.checked)}
-/>`}
+  return (
+    <Checkbox
+      label="Accept terms and conditions"
+      checked={acceptedTerms}
+      onChange={(event) => setAcceptedTerms(event.target.checked)}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Multi-Select Pattern</h2>
@@ -77,24 +82,49 @@ const [acceptedTerms, setAcceptedTerms] = useState(false);
       </div>
 
       <CodeBlock
-        code={`const [channels, setChannels] = useState<string[]>(['email']);
+        code={`import { useState } from 'react';
+import { Checkbox } from 'erp-pro-ui';
 
-<Checkbox
-  label="Email updates"
-  checked={channels.includes('email')}
-  onChange={(event) => {
-    const checked = event.target.checked;
-    setChannels((prev) =>
-      checked ? [...prev, 'email'] : prev.filter((value) => value !== 'email')
-    );
-  }}
-/>`}
+export function NotificationCheckboxesExample() {
+  const [channels, setChannels] = useState<string[]>(['email']);
+
+  const toggleChannel = (channel: string, nextChecked: boolean) => {
+    setChannels((previous) => {
+      if (nextChecked) {
+        return previous.includes(channel) ? previous : [...previous, channel];
+      }
+
+      return previous.filter((value) => value !== channel);
+    });
+  };
+
+  return (
+    <div className="space-y-2">
+      <Checkbox
+        label="Email updates"
+        checked={channels.includes('email')}
+        onChange={(event) => toggleChannel('email', event.target.checked)}
+      />
+      <Checkbox
+        label="SMS alerts"
+        checked={channels.includes('sms')}
+        onChange={(event) => toggleChannel('sms', event.target.checked)}
+      />
+      <Checkbox
+        label="Push notifications"
+        checked={channels.includes('push')}
+        onChange={(event) => toggleChannel('push', event.target.checked)}
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Colors and States</h2>
       <p className="docs-paragraph">
         Choose semantic color variants for intent, and use <code>error</code> or{" "}
-        <code>disabled</code> for user feedback.
+        <code>disabled</code> for user feedback. Required validation renders a
+        red outline and red helper copy beneath the control.
       </p>
 
       <div className="docs-showcase-grid">
@@ -123,11 +153,23 @@ const [acceptedTerms, setAcceptedTerms] = useState(false);
       </div>
 
       <CodeBlock
-        code={`<Checkbox color="primary" defaultChecked />
-<Checkbox color="green" defaultChecked />
-<Checkbox color="#7c3aed" defaultChecked />
-<Checkbox error="Permission required" color="red" />
-<Checkbox disabled />`}
+        code={`import { Checkbox } from 'erp-pro-ui';
+
+export function CheckboxValidationAndStatesExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <Checkbox label="Primary" color="primary" defaultChecked />
+      <Checkbox label="Success" color="green" defaultChecked />
+      <Checkbox label="Custom" color="#7c3aed" defaultChecked />
+      <Checkbox
+        label="I agree to the privacy policy"
+        error="You must agree before continuing."
+        color="red"
+      />
+      <Checkbox label="Disabled" disabled />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

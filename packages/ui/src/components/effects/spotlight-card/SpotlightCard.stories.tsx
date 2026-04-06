@@ -32,6 +32,48 @@ const meta: Meta<typeof SpotlightCard> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const spotlightDefaultSource = `import { SpotlightCard } from 'erp-pro-ui';
+
+export function DefaultSpotlightCardExample() {
+  return (
+    <SpotlightCard className="w-full">
+      <div className="flex h-[200px] flex-col items-center justify-center gap-4">
+        <h3 className="text-xl font-bold text-white">Lightning Fast</h3>
+        <p className="text-center text-sm text-neutral-400">
+          Optimized for performance with hardware accelerated animations.
+        </p>
+      </div>
+    </SpotlightCard>
+  );
+}`;
+
+const spotlightSolidSource = `import { SpotlightCard } from 'erp-pro-ui';
+
+export function SolidSpotlightCardExample() {
+  return (
+    <SpotlightCard variant="solid" spotlightColor="rgba(59, 130, 246, 0.15)">
+      Solid spotlight surface
+    </SpotlightCard>
+  );
+}`;
+
+const spotlightGridSource = `import { SpotlightCard } from 'erp-pro-ui';
+
+export function SpotlightFeatureGridExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      {['Smart routing', 'Live approvals', 'Inventory insight'].map((title) => (
+        <SpotlightCard key={title} className="w-full">
+          <div className="flex min-h-44 flex-col justify-between gap-3">
+            <p className="text-sm font-semibold text-white">{title}</p>
+            <p className="text-sm text-neutral-400">Designed for high-signal operational workflows with premium interaction feedback.</p>
+          </div>
+        </SpotlightCard>
+      ))}
+    </div>
+  );
+}`;
+
 /**
  * ## Basic Spotlight
  * A glassmorphic card that reveals a subtle, glowing radial gradient under the user's mouse cursor.
@@ -60,11 +102,13 @@ export const Default: Story = {
       </SpotlightCard>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: spotlightDefaultSource } } },
 };
 
 export const SolidVariant: Story = {
   args: { variant: "solid", spotlightColor: "rgba(59, 130, 246, 0.15)" },
   render: Default.render,
+  parameters: { docs: { source: { code: spotlightSolidSource } } },
 };
 
 /**
@@ -96,4 +140,5 @@ export const FeatureGrid: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: spotlightGridSource } } },
 };

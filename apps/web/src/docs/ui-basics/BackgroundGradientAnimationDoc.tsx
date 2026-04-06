@@ -43,13 +43,26 @@ const BackgroundGradientAnimationDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { BackgroundGradientAnimation } from 'erp-pro-ui';
+        code={`import { BackgroundGradientAnimation, Button } from 'erp-pro-ui';
 
-<BackgroundGradientAnimation>
-  <div className="z-10">
-    <h1 className="text-white">Your Title</h1>
-  </div>
-</BackgroundGradientAnimation>`}
+export function HeroBackgroundExample() {
+  return (
+    <BackgroundGradientAnimation
+      containerClassName="w-full h-full absolute inset-0"
+      className="z-10 flex flex-col items-center justify-center p-8 text-center"
+    >
+      <div className="max-w-lg rounded-3xl border border-white/10 bg-black/20 p-8 backdrop-blur-md">
+        <h1 className="text-white text-4xl font-bold">Ethereal Backgrounds</h1>
+        <p className="mt-4 text-lg text-white/80">
+          Modern, interactive gradient animations for high-end landing pages.
+        </p>
+        <Button className="mt-6 border-white bg-white px-8 py-3 font-bold text-accent">
+          Get Started
+        </Button>
+      </div>
+    </BackgroundGradientAnimation>
+  );
+}`}
       />
 
       {/* Custom Colors */}
@@ -76,12 +89,22 @@ const BackgroundGradientAnimationDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<BackgroundGradientAnimation
-  gradientBackgroundStart="rgb(30, 0, 50)"
-  firstColor="255, 0, 100"
-  secondColor="100, 0, 255"
-  pointerColor="255, 255, 255"
-/>`}
+        code={`import { BackgroundGradientAnimation } from 'erp-pro-ui';
+
+export function CustomBackgroundPaletteExample() {
+  return (
+    <BackgroundGradientAnimation
+      gradientBackgroundStart="rgb(30, 0, 50)"
+      gradientBackgroundEnd="rgb(0, 0, 20)"
+      firstColor="255, 0, 100"
+      secondColor="100, 0, 255"
+      thirdColor="0, 200, 255"
+      fourthColor="255, 200, 0"
+      fifthColor="255, 120, 170"
+      pointerColor="255, 255, 255"
+    />
+  );
+}`}
       />
 
       {/* Themes Section */}
@@ -201,14 +224,32 @@ const BackgroundGradientAnimationDoc = () => {
       </div>
 
       <CodeBlock
-        code={`{/* Neon Theme Example */}
-<BackgroundGradientAnimation
-  gradientBackgroundStart="rgb(20, 0, 40)"
-  firstColor="255, 0, 255"
-  secondColor="0, 255, 255"
-  thirdColor="255, 255, 0"
-  pointerColor="255, 100, 255"
-/>`}
+        code={`import { BackgroundGradientAnimation, Button, Input } from 'erp-pro-ui';
+
+export function LoginBackgroundExample() {
+  return (
+    <BackgroundGradientAnimation
+      gradientBackgroundStart="rgb(30, 40, 100)"
+      gradientBackgroundEnd="rgb(10, 15, 50)"
+      firstColor="80, 100, 200"
+      secondColor="100, 80, 180"
+      thirdColor="60, 120, 200"
+      containerClassName="w-full h-full absolute inset-0"
+      className="z-10 flex items-center justify-center p-4"
+    >
+      <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur-lg">
+        <h2 className="mb-6 text-center text-2xl font-bold text-white">Welcome Back</h2>
+        <div className="space-y-4">
+          <Input type="email" placeholder="Email" bgClassName="bg-white/10" className="border-white/20 text-white placeholder:text-white/50" />
+          <Input type="password" placeholder="Password" bgClassName="bg-white/10" className="border-white/20 text-white placeholder:text-white/50" />
+          <Button className="w-full border-white bg-white py-3 font-semibold text-indigo-900">
+            Sign In
+          </Button>
+        </div>
+      </div>
+    </BackgroundGradientAnimation>
+  );
+}`}
       />
 
       {/* Practical Examples */}

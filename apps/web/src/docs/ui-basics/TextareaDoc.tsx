@@ -39,14 +39,21 @@ const TextareaDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Textarea } from 'erp-pro-ui';
+        code={`import { useState } from 'react';
+import { Textarea } from 'erp-pro-ui';
 
-<Textarea
-  label="Internal note"
-  placeholder="Add context for the next teammate..."
-  value={bio}
-  onChange={(event) => setBio(event.target.value)}
-/>`}
+export function InternalNoteTextarea() {
+  const [bio, setBio] = useState('');
+
+  return (
+    <Textarea
+      label="Internal note"
+      placeholder="Add context for the next teammate..."
+      value={bio}
+      onChange={(event) => setBio(event.target.value)}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">
@@ -73,15 +80,23 @@ const TextareaDoc = () => {
       </div>
 
       <CodeBlock
-        code={`const limit = 180;
-const tooShort = message.trim().length > 0 && message.trim().length < 20;
+        code={`import { useState } from 'react';
+import { Textarea } from 'erp-pro-ui';
 
-<Textarea
-  value={message}
-  onChange={(event) => setMessage(event.target.value.slice(0, limit))}
-  error={tooShort ? 'Please add at least 20 characters.' : undefined}
-  helperText={\`${"${message.length}"}/${"${limit}"} characters\`}
-/>`}
+export function SupportRequestTextarea() {
+  const [message, setMessage] = useState('');
+  const limit = 180;
+  const tooShort = message.trim().length > 0 && message.trim().length < 20;
+
+  return (
+    <Textarea
+      value={message}
+      onChange={(event) => setMessage(event.target.value.slice(0, limit))}
+      error={tooShort ? 'Please add at least 20 characters.' : undefined}
+      helperText={String(message.length) + '/' + String(limit) + ' characters'}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Common States</h2>
@@ -117,9 +132,17 @@ const tooShort = message.trim().length > 0 && message.trim().length < 20;
       </div>
 
       <CodeBlock
-        code={`<Textarea error="This field is required" />
-<Textarea disabled />
-<Textarea helperText="Markdown is supported" />`}
+        code={`import { Textarea } from 'erp-pro-ui';
+
+export function TextareaStates() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Textarea label="Error State" error="This field is required" />
+      <Textarea label="Disabled" disabled value="Locked note" onChange={() => undefined} />
+      <Textarea label="Helper Text" helperText="Markdown is supported" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

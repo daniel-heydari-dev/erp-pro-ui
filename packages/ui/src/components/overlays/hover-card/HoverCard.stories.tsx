@@ -48,6 +48,73 @@ const meta: Meta<typeof HoverCard> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const basicHoverCardSource = `import { HoverCard } from 'erp-pro-ui';
+
+export function BasicHoverCardExample() {
+  return (
+    <HoverCard
+      content={
+        <div className="w-64">
+          <h4 className="text-lg font-bold">Next.js</h4>
+          <p className="mt-1 text-sm text-muted-foreground">
+            The React framework for the web. Created by Vercel.
+          </p>
+        </div>
+      }
+    >
+      <span className="cursor-pointer font-medium underline text-blue-500">@nextjs</span>
+    </HoverCard>
+  );
+}`;
+
+const teamMemberHoverCardSource = `import { Button, HoverCard } from 'erp-pro-ui';
+
+export function TeamMemberHoverCardExample() {
+  return (
+    <HoverCard
+      position="right"
+      align="start"
+      content={
+        <div className="w-72 space-y-3">
+          <div>
+            <h4 className="text-base font-semibold">Mina Chen</h4>
+            <p className="text-sm text-muted-foreground">Inventory Operations Lead</p>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Owns receiving audits, transfer approvals, and supplier escalation.
+          </p>
+        </div>
+      }
+    >
+      <Button label="Hover Mina Chen" className="rounded-full" />
+    </HoverCard>
+  );
+}`;
+
+const hoverCardDelaySource = `import { Button, HoverCard } from 'erp-pro-ui';
+
+export function HoverCardDelayExample() {
+  return (
+    <HoverCard
+      openDelay={350}
+      closeDelay={100}
+      arrow={false}
+      width="300px"
+      maxWidth="360px"
+      content={
+        <div className="space-y-2">
+          <h4 className="text-base font-semibold">Supplier Snapshot</h4>
+          <p className="text-sm text-muted-foreground">
+            Last shipment arrived 2 days ago. 97% on-time delivery this quarter.
+          </p>
+        </div>
+      }
+    >
+      <Button label="Hover Supplier #204" className="rounded-full" />
+    </HoverCard>
+  );
+}`;
+
 /**
  * ## Default
  * Hover cards are large dynamic tooltips containing HTML elements. Commonly used to preview profiles or rich metadata.
@@ -75,6 +142,13 @@ export const Default: Story = {
       </HoverCard>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: basicHoverCardSource,
+      },
+    },
+  },
 };
 
 /**
@@ -119,6 +193,13 @@ export const TeamMemberPreview: Story = {
       </HoverCard>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: teamMemberHoverCardSource,
+      },
+    },
+  },
 };
 
 /**
@@ -157,4 +238,11 @@ export const DelayAndWidth: Story = {
       </HoverCard>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: hoverCardDelaySource,
+      },
+    },
+  },
 };

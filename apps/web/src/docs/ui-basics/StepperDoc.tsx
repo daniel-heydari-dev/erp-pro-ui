@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stepper, Button, Select } from "erp-pro-ui";
+import { Stepper, Button, Select, type Step } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -20,6 +20,58 @@ const stepperSizeOptions: Array<{ label: string; value: "sm" | "md" | "lg" }> =
     { label: "Large", value: "lg" },
   ];
 
+const onboardingSteps: Step[] = [
+  {
+    id: "account",
+    title: "Account",
+    description: "Create your account",
+  },
+  {
+    id: "profile",
+    title: "Profile",
+    description: "Set up your profile",
+  },
+  {
+    id: "review",
+    title: "Review",
+    description: "Review your details",
+  },
+  {
+    id: "complete",
+    title: "Complete",
+    description: "You are done!",
+  },
+];
+
+const iconDemoSteps: Step[] = [
+  { id: "user", title: "User", icon: "👤" },
+  { id: "plan", title: "Plan", icon: "💳" },
+  { id: "done", title: "Done", icon: "🚀" },
+];
+
+const approvalSteps: Step[] = [
+  {
+    id: "request",
+    title: "Request",
+    description: "Submit purchase request",
+  },
+  {
+    id: "manager",
+    title: "Manager",
+    description: "Manager approval",
+  },
+  {
+    id: "finance",
+    title: "Finance",
+    description: "Budget verification",
+  },
+  {
+    id: "done",
+    title: "Released",
+    description: "Order released to vendor",
+  },
+];
+
 const StepperDoc = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
@@ -30,62 +82,13 @@ const StepperDoc = () => {
   >("glass");
   const [size, setSize] = useState<"sm" | "md" | "lg">("md");
 
-  const steps = [
-    {
-      id: "step-1",
-      title: "Account",
-      description: "Create your account",
-      content: (
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 p-4 rounded-lg mt-2">
-          <p className="text-sm">Account details form would go here.</p>
-        </div>
-      ),
-    },
-    {
-      id: "step-2",
-      title: "Profile",
-      description: "Set up your profile",
-      content: (
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 p-4 rounded-lg mt-2">
-          <p className="text-sm">Profile settings form would go here.</p>
-        </div>
-      ),
-    },
-    {
-      id: "step-3",
-      title: "Preview",
-      description: "Review your details",
-      content: (
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 p-4 rounded-lg mt-2">
-          <p className="text-sm">Summary of your information.</p>
-        </div>
-      ),
-    },
-    {
-      id: "step-4",
-      title: "Complete",
-      description: "You are done!",
-      content: (
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 p-4 rounded-lg mt-2">
-          <p className="text-sm">Success message and next steps.</p>
-        </div>
-      ),
-    },
-  ];
-
   const handleNext = () => {
-    setActiveStep((prev) => Math.min(prev + 1, steps.length - 1));
+    setActiveStep((prev) => Math.min(prev + 1, onboardingSteps.length - 1));
   };
 
   const handlePrev = () => {
     setActiveStep((prev) => Math.max(prev - 1, 0));
   };
-
-  const iconSteps = [
-    { id: "step-1", title: "User", icon: "👤" },
-    { id: "step-2", title: "Plan", icon: "💳" },
-    { id: "step-3", title: "Done", icon: "🚀" },
-  ];
 
   return (
     <section className="docs-section">
@@ -95,7 +98,7 @@ const StepperDoc = () => {
         setup flows.
       </p>
 
-      <h2 className="docs-category-subtitle">Interactive Playground</h2>
+      <h2 className="docs-category-subtitle">Onboarding Playground</h2>
 
       <div className="docs-controls">
         <div className="docs-control-group">
@@ -144,7 +147,7 @@ const StepperDoc = () => {
       <div className="docs-showcase-card flex-col items-center gap-8">
         <div className="w-full max-w-3xl">
           <Stepper
-            steps={steps}
+            steps={onboardingSteps}
             currentStep={activeStep}
             onStepClick={setActiveStep}
             orientation={orientation}
@@ -165,36 +168,48 @@ const StepperDoc = () => {
             label="Next"
             primary={true}
             onClick={handleNext}
-            disabled={activeStep === steps.length - 1}
+            disabled={activeStep === onboardingSteps.length - 1}
             className="px-4 py-2"
           />
         </div>
       </div>
 
       <CodeBlock
-        code={`import { Stepper } from 'erp-pro-ui';
+        code={`import { useState } from 'react';
+      import { Stepper, type Step } from 'erp-pro-ui';
 
-// ... steps definition
+      const onboardingSteps: Step[] = [
+  { id: 'account', title: 'Account', description: 'Create your account' },
+  { id: 'profile', title: 'Profile', description: 'Set up your profile' },
+  { id: 'review', title: 'Review', description: 'Review your details' },
+  { id: 'complete', title: 'Complete', description: 'You are done!' },
+];
 
-<Stepper
-  steps={steps}
-  currentStep={activeStep}
-  onStepClick={setActiveStep}
-  orientation="${orientation}"
-  variant="${variant}"
-  size="${size}"
-/>`}
+export function OnboardingStepperExample() {
+  const [activeStep, setActiveStep] = useState(1);
+
+  return (
+    <Stepper
+      steps={onboardingSteps}
+      currentStep={activeStep}
+      onStepClick={setActiveStep}
+      orientation="${orientation}"
+      variant="${variant}"
+      size="${size}"
+    />
+  );
+}`}
       />
 
       {/* Vertical Orientation */}
-      <h2 className="docs-category-subtitle">Vertical Stepper</h2>
+      <h2 className="docs-category-subtitle">Vertical Settings Flow</h2>
       <p className="docs-paragraph">
         Ideal for sidebars or long forms where vertical space is available.
       </p>
       <div className="docs-showcase-card">
         <div className="max-w-md w-full">
           <Stepper
-            steps={steps}
+            steps={onboardingSteps}
             currentStep={activeStep}
             orientation="vertical"
             variant="glass"
@@ -203,15 +218,29 @@ const StepperDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Stepper 
-  steps={steps} 
-  currentStep={activeStep} 
-  orientation="vertical" 
-/>`}
+        code={`import { Stepper, type Step } from 'erp-pro-ui';
+
+      const settingsSteps: Step[] = [
+  { id: 'account', title: 'Account', description: 'Create your account' },
+  { id: 'profile', title: 'Profile', description: 'Set up your profile' },
+  { id: 'review', title: 'Review', description: 'Review your details' },
+  { id: 'complete', title: 'Complete', description: 'You are done!' },
+];
+
+export function VerticalSettingsStepperExample() {
+  return (
+    <Stepper
+      steps={settingsSteps}
+      currentStep={1}
+      orientation="vertical"
+      variant="glass"
+    />
+  );
+}`}
       />
 
       {/* Custom Icons & Errors */}
-      <h2 className="docs-category-subtitle">Icons & Error States</h2>
+      <h2 className="docs-category-subtitle">Validation Recovery Flow</h2>
       <p className="docs-paragraph">
         Enhance steps with custom icons and highlight validation errors using{" "}
         <code>showErrors</code>.
@@ -219,7 +248,7 @@ const StepperDoc = () => {
       <div className="docs-showcase-card flex-col gap-8">
         <div className="w-full max-w-2xl">
           <Stepper
-            steps={iconSteps}
+            steps={iconDemoSteps}
             currentStep={1}
             showErrors={true}
             errorSteps={[1]}
@@ -229,18 +258,28 @@ const StepperDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Stepper
-  steps={[
-    { id: "1", title: "User", icon: "👤" },
-    { id: "2", title: "Plan", icon: "💳" },
-  ]}
-  currentStep={1}
-  showErrors={true}
-  errorSteps={[1]}
-/>`}
+        code={`import { Stepper, type Step } from 'erp-pro-ui';
+
+      const validationSteps: Step[] = [
+  { id: 'user', title: 'User', icon: '👤' },
+  { id: 'plan', title: 'Plan', icon: '💳' },
+  { id: 'done', title: 'Done', icon: '🚀' },
+];
+
+export function ValidationRecoveryStepperExample() {
+  return (
+    <Stepper
+      steps={validationSteps}
+      currentStep={1}
+      showErrors
+      errorSteps={[1]}
+      variant="outlined"
+    />
+  );
+}`}
       />
 
-      <h2 className="docs-category-subtitle">Approval Workflow</h2>
+      <h2 className="docs-category-subtitle">Approval Review Flow</h2>
       <p className="docs-paragraph">
         Combine <code>completedSteps</code> with <code>clickable</code> to
         support non-linear review flows.
@@ -248,28 +287,7 @@ const StepperDoc = () => {
       <div className="docs-showcase-card">
         <div className="w-full max-w-3xl">
           <Stepper
-            steps={[
-              {
-                id: "request",
-                title: "Request",
-                description: "Submit purchase request",
-              },
-              {
-                id: "manager",
-                title: "Manager",
-                description: "Manager approval",
-              },
-              {
-                id: "finance",
-                title: "Finance",
-                description: "Budget verification",
-              },
-              {
-                id: "done",
-                title: "Released",
-                description: "Order released to vendor",
-              },
-            ]}
+            steps={approvalSteps}
             currentStep={2}
             completedSteps={[0, 1]}
             clickable
@@ -279,12 +297,25 @@ const StepperDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Stepper
-  steps={approvalSteps}
-  currentStep={2}
-  completedSteps={[0, 1]}
-  clickable
-/>`}
+        code={`import { Stepper, type Step } from 'erp-pro-ui';
+
+      const approvalSteps: Step[] = [
+  { id: 'request', title: 'Request', description: 'Submit purchase request' },
+  { id: 'manager', title: 'Manager', description: 'Manager approval' },
+  { id: 'finance', title: 'Finance', description: 'Budget verification' },
+  { id: 'done', title: 'Released', description: 'Order released to vendor' },
+];
+
+export function ApprovalReviewStepperExample() {
+  return (
+    <Stepper
+      steps={approvalSteps}
+      currentStep={2}
+      completedSteps={[0, 1]}
+      clickable
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

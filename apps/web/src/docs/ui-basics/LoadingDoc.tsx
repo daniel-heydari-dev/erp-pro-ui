@@ -66,11 +66,31 @@ const LoadingDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Loading } from 'erp-pro-ui';
+        code={`import {
+  Bars,
+  Bounce,
+  Dots,
+  Loading,
+  Pulse,
+  Ring,
+  Spinner,
+  Wave,
+} from 'erp-pro-ui';
 
-<Loading variant="ring" size="lg" text="Syncing inventory" />
-<Loading variant="wave" size="sm" color="#00cfe8" />
-<Loading variant="skeleton" skeletonWidth="160px" skeletonHeight="16px" />`}
+export function LoadingVariantsExample() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <Spinner size="lg" />
+      <Dots size="lg" />
+      <Pulse size="lg" />
+      <Bars size="lg" />
+      <Ring size="lg" />
+      <Bounce size="lg" />
+      <Wave size="lg" />
+      <Loading variant="skeleton" skeletonWidth="5rem" skeletonHeight="1rem" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Inline Status Messaging</h2>
@@ -103,14 +123,22 @@ const LoadingDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Loading variant="spinner" text="Saving supplier profile" />
+        code={`import { Loading } from 'erp-pro-ui';
 
-<Loading
-  variant="ring"
-  size="lg"
-  text="Generating weekly summary"
-  textPosition="bottom"
-/>`}
+export function LoadingStatusMessagingExample() {
+  return (
+    <div className="grid gap-4 lg:grid-cols-3">
+      <Loading variant="spinner" text="Saving supplier profile" />
+      <Loading
+        variant="ring"
+        size="lg"
+        text="Generating weekly summary"
+        textPosition="bottom"
+      />
+      <Loading variant="wave" color="#00cfe8" text="Publishing branch updates" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Contained Overlay</h2>
@@ -158,10 +186,20 @@ const LoadingDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<div className="relative rounded-2xl border">
-  <DashboardCardContent />
-  <Loading overlay variant="dots" size="lg" text="Refreshing operations queue" />
-</div>`}
+        code={`import { Loading } from 'erp-pro-ui';
+
+export function LoadingOverlayExample() {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border">
+      <div className="grid gap-3 p-6 md:grid-cols-3">
+        <div className="rounded-xl border p-4">Pending approvals</div>
+        <div className="rounded-xl border p-4">Transfers queued</div>
+        <div className="rounded-xl border p-4">Branch sync</div>
+      </div>
+      <Loading overlay variant="dots" size="lg" text="Refreshing operations queue" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Skeleton Placeholder Mode</h2>
@@ -196,9 +234,18 @@ const LoadingDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Loading variant="skeleton" skeletonWidth="45%" skeletonHeight="18px" />
-<Loading variant="skeleton" skeletonWidth="100%" skeletonHeight="14px" />
-<Loading variant="skeleton" skeletonWidth="76%" skeletonHeight="14px" />`}
+        code={`import { Loading } from 'erp-pro-ui';
+
+export function LoadingSkeletonExample() {
+  return (
+    <div className="space-y-3">
+      <Loading variant="skeleton" skeletonWidth="45%" skeletonHeight="18px" />
+      <Loading variant="skeleton" skeletonWidth="100%" skeletonHeight="14px" />
+      <Loading variant="skeleton" skeletonWidth="92%" skeletonHeight="14px" />
+      <Loading variant="skeleton" skeletonWidth="76%" skeletonHeight="14px" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

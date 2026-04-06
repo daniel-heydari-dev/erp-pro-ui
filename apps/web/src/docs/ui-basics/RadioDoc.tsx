@@ -42,22 +42,35 @@ const RadioDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Radio } from 'erp-pro-ui';
+        code={`import { useState } from 'react';
+import { Radio } from 'erp-pro-ui';
 
-const [selectedPlan, setSelectedPlan] = useState('pro');
+export function PlanRadiosExample() {
+  const [selectedPlan, setSelectedPlan] = useState('pro');
 
-<Radio
-  name="plan"
-  label="Basic Plan"
-  checked={selectedPlan === 'basic'}
-  onChange={() => setSelectedPlan('basic')}
-/>
-<Radio
-  name="plan"
-  label="Pro Plan"
-  checked={selectedPlan === 'pro'}
-  onChange={() => setSelectedPlan('pro')}
-/>`}
+  return (
+    <div className="flex flex-col gap-3">
+      <Radio
+        name="plan"
+        label="Basic Plan"
+        checked={selectedPlan === 'basic'}
+        onChange={() => setSelectedPlan('basic')}
+      />
+      <Radio
+        name="plan"
+        label="Pro Plan"
+        checked={selectedPlan === 'pro'}
+        onChange={() => setSelectedPlan('pro')}
+      />
+      <Radio
+        name="plan"
+        label="Enterprise Plan"
+        checked={selectedPlan === 'enterprise'}
+        onChange={() => setSelectedPlan('enterprise')}
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Color Variants</h2>
@@ -88,15 +101,24 @@ const [selectedPlan, setSelectedPlan] = useState('pro');
       </div>
 
       <CodeBlock
-        code={`<Radio color="blue" defaultChecked />
-<Radio color="red" defaultChecked />
-<Radio color="green" defaultChecked />`}
+        code={`import { Radio } from 'erp-pro-ui';
+
+export function RadioColorVariantsExample() {
+  return (
+    <div className="grid gap-3 md:grid-cols-3">
+      <Radio label="Blue" color="blue" defaultChecked readOnly />
+      <Radio label="Red" color="red" defaultChecked readOnly />
+      <Radio label="Green" color="green" defaultChecked readOnly />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">States</h2>
       <p className="docs-paragraph">
         Disabled and error states help prevent invalid submissions and guide
-        users toward a valid selection.
+        users toward a valid selection. The error example below shows the red
+        validation treatment and bottom helper copy used for required fields.
       </p>
 
       <div className="docs-showcase-grid">
@@ -112,9 +134,21 @@ const [selectedPlan, setSelectedPlan] = useState('pro');
       </div>
 
       <CodeBlock
-        code={`<Radio disabled />
-<Radio disabled defaultChecked />
-<Radio error="Invalid selection" color="red" />`}
+        code={`import { Radio } from 'erp-pro-ui';
+
+export function RadioValidationStatesExample() {
+  return (
+    <div className="grid gap-3 md:grid-cols-3">
+      <Radio label="Disabled" disabled />
+      <Radio label="Disabled Checked" disabled defaultChecked />
+      <Radio
+        label="Priority support"
+        error="Select a support tier before continuing."
+        color="red"
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

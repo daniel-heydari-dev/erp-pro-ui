@@ -108,6 +108,43 @@ const meta: Meta<typeof ChromaGrid> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const chromaFeatureHighlightsSource = `import { ChromaGrid } from 'erp-pro-ui';
+
+const launchItems = [
+  { id: 'design-system', title: 'Design', description: 'A polished surface for launch campaigns and product reveals.', icon: '🎨' },
+  { id: 'speed', title: 'Performance', description: 'Fast transitions with minimal layout overhead.', icon: '⚡' },
+  { id: 'security', title: 'Security', description: 'A larger focal card for trust or compliance.', icon: '🔒', size: 2 as const },
+];
+
+export function FeatureHighlightsGridExample() {
+  return <ChromaGrid items={launchItems} columns={3} variant="gradient" animation="wave" hoverEffect="lift" spotlight minHeight={170} gap={18} />;
+}`;
+
+const chromaGlassSource = `import { ChromaGrid } from 'erp-pro-ui';
+
+const operationsItems = [
+  { id: 'fulfillment', title: 'Fulfillment', description: '98.4% same-day dispatch', icon: '📦' },
+  { id: 'returns', title: 'Returns', description: '7 queues cleared before noon', icon: '↩️' },
+  { id: 'revenue', title: 'Revenue Ops', description: 'Forecast adjusted across 3 regions', icon: '💹', size: 2 as const },
+];
+
+export function GlassOperationsGridExample() {
+  return <ChromaGrid items={operationsItems} columns={3} variant="glass" animation="fadeIn" hoverEffect="tilt" spotlight minHeight={160} gap={20} />;
+}`;
+
+const chromaPulseSource = `import { ChromaGrid } from 'erp-pro-ui';
+
+const pulseItems = [
+  { id: 'north', title: 'North', description: '12 campaigns live', icon: '🧭' },
+  { id: 'south', title: 'South', description: '8 regional promos', icon: '📣' },
+  { id: 'east', title: 'East', description: '3 launches queued', icon: '🚀' },
+  { id: 'west', title: 'West', description: '9 enterprise demos', icon: '🛰️' },
+];
+
+export function PulseStatusWallExample() {
+  return <ChromaGrid items={pulseItems} columns={4} variant="solid" animation="pulse" hoverEffect="glow" spotlight={false} minHeight={150} gap={16} borderRadius="2xl" />;
+}`;
+
 export const FeatureHighlights: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -129,6 +166,7 @@ export const FeatureHighlights: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: chromaFeatureHighlightsSource } } },
 };
 
 export const GlassOperationsBoard: Story = {
@@ -157,6 +195,7 @@ export const GlassOperationsBoard: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: chromaGlassSource } } },
 };
 
 export const PulseStatusWall: Story = {
@@ -181,4 +220,5 @@ export const PulseStatusWall: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: chromaPulseSource } } },
 };

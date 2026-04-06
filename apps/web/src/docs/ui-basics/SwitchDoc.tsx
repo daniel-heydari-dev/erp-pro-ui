@@ -36,15 +36,20 @@ const SwitchDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Switch } from 'erp-pro-ui';
+        code={`import { useState } from 'react';
+import { Switch } from 'erp-pro-ui';
 
-const [alertsEnabled, setAlertsEnabled] = useState(true);
+export function AlertsSwitchExample() {
+  const [alertsEnabled, setAlertsEnabled] = useState(true);
 
-<Switch
-  label="Incident alerts"
-  checked={alertsEnabled}
-  onChange={(event) => setAlertsEnabled(event.target.checked)}
-/>`}
+  return (
+    <Switch
+      label="Incident alerts"
+      checked={alertsEnabled}
+      onChange={(event) => setAlertsEnabled(event.target.checked)}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Preference Form Pattern</h2>
@@ -67,18 +72,29 @@ const [alertsEnabled, setAlertsEnabled] = useState(true);
       </div>
 
       <CodeBlock
-        code={`const [publicApiEnabled, setPublicApiEnabled] = useState(false);
+        code={`import { useState } from 'react';
+import { Button, Switch } from 'erp-pro-ui';
 
-<Switch
-  label="Public API access"
-  checked={publicApiEnabled}
-  onChange={(event) => setPublicApiEnabled(event.target.checked)}
-/>`}
+export function PreferenceToggleCardExample() {
+  const [publicApiEnabled, setPublicApiEnabled] = useState(false);
+
+  return (
+    <div className="space-y-4 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+      <Switch
+        label="Public API access"
+        checked={publicApiEnabled}
+        onChange={(event) => setPublicApiEnabled(event.target.checked)}
+      />
+      <Button primary>Save changes</Button>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">States</h2>
       <p className="docs-paragraph">
         Use disabled and error messaging for loading and validation scenarios.
+        Required validation shows the red status copy directly below the toggle.
       </p>
 
       <div className="docs-showcase-grid">
@@ -100,10 +116,21 @@ const [alertsEnabled, setAlertsEnabled] = useState(true);
       </div>
 
       <CodeBlock
-        code={`<Switch label="Off" />
-<Switch label="On" defaultChecked />
-<Switch label="Disabled" disabled />
-<Switch label="Error" error="Error message" />`}
+        code={`import { Switch } from 'erp-pro-ui';
+
+export function SwitchStatesExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <Switch label="Off" />
+      <Switch label="On" defaultChecked />
+      <Switch label="Disabled" disabled />
+      <Switch
+        label="Confirm maintenance window"
+        error="You must confirm before scheduling downtime."
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

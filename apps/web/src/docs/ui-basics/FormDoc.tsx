@@ -73,12 +73,12 @@ const FormDoc = () => {
 
       <CodeBlock
         code={`import { Form, Input, Button } from 'erp-pro-ui';
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 
 const Example = () => {
   const [submitted, setSubmitted] = useState<Record<string, string> | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
     setSubmitted(payload as Record<string, string>);
@@ -140,16 +140,22 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Form
-  title="Profile settings"
-  description="Update account identity and contact preferences."
-  onSubmit={(event) => event.preventDefault()}
->
-  <Input label="First name" name="firstName" required />
-  <Input label="Last name" name="lastName" required />
-  <Input label="Work email" name="workEmail" type="email" required />
-  <Button type="submit" label="Save profile" primary />
-</Form>`}
+        code={`import { Button, Form, Input } from 'erp-pro-ui';
+
+export function ProfileSettingsForm() {
+  return (
+    <Form
+      title="Profile settings"
+      description="Update account identity and contact preferences."
+      onSubmit={(event) => event.preventDefault()}
+    >
+      <Input label="First name" name="firstName" required />
+      <Input label="Last name" name="lastName" required />
+      <Input label="Work email" name="workEmail" type="email" required />
+      <Button type="submit" label="Save profile" primary />
+    </Form>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

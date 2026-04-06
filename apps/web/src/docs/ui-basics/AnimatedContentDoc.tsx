@@ -83,15 +83,23 @@ const AnimatedContentDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { AnimatedContent } from 'erp-pro-ui';
+        code={`import { AnimatedContent, Button } from 'erp-pro-ui';
 
-<AnimatedContent preset="fade">
-  <div>Content to animate</div>
-</AnimatedContent>
-
-<AnimatedContent preset="bounce" delay={0.5} duration={1}>
-  <div>Bouncy content</div>
-</AnimatedContent>`}
+export function AnimatedPresetsExample() {
+  return (
+    <div className="flex flex-col items-center gap-12">
+      <Button>Replay Animations</Button>
+      <div className="grid w-full max-w-2xl grid-cols-2 gap-8 md:grid-cols-3">
+        <AnimatedContent preset="fade" duration={0.8}><div>Fade</div></AnimatedContent>
+        <AnimatedContent preset="scale" duration={0.8} delay={0.2}><div>Scale</div></AnimatedContent>
+        <AnimatedContent preset="slideUp" duration={0.8} delay={0.4}><div>Slide Up</div></AnimatedContent>
+        <AnimatedContent preset="bounce" duration={1} delay={0.6}><div>Bounce</div></AnimatedContent>
+        <AnimatedContent preset="flip" duration={0.8} delay={0.8}><div>Flip</div></AnimatedContent>
+        <AnimatedContent preset="zoom" duration={0.8} delay={1}><div>Zoom</div></AnimatedContent>
+      </div>
+    </div>
+  );
+}`}
       />
 
       {/* Easing Options */}
@@ -120,7 +128,20 @@ const AnimatedContentDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<AnimatedContent preset="slideRight" ease="backOut">...</AnimatedContent>`}
+        code={`import { AnimatedContent } from 'erp-pro-ui';
+
+export function AnimatedEasingExample() {
+  return (
+    <div className="flex gap-8">
+      <AnimatedContent preset="slideRight" ease="backOut" duration={1}>
+        <div>Back Out</div>
+      </AnimatedContent>
+      <AnimatedContent preset="slideRight" ease="anticipate" duration={1} delay={0.3}>
+        <div>Anticipate</div>
+      </AnimatedContent>
+    </div>
+  );
+}`}
       />
 
       {/* Props Reference */}

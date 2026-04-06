@@ -106,6 +106,118 @@ const meta: Meta<typeof BarChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const monthlyBarSource = `import { BarChart, type BarChartData } from 'erp-pro-ui';
+
+const data: BarChartData[] = [
+  { name: 'Jan', fulfilled: 420, delayed: 38 },
+  { name: 'Feb', fulfilled: 465, delayed: 29 },
+  { name: 'Mar', fulfilled: 510, delayed: 34 },
+];
+
+export function MonthlyBarChartExample() {
+  return (
+    <BarChart
+      data={data}
+      categories={[
+        { key: 'fulfilled', color: 'var(--ds-chart-2)' },
+        { key: 'delayed', color: 'var(--ds-chart-4)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const rankingBarSource = `import { BarChart, type BarChartData } from 'erp-pro-ui';
+
+const data: BarChartData[] = [
+  { name: 'North Distribution Hub', transfers: 128 },
+  { name: 'Central Returns Team', transfers: 102 },
+  { name: 'West Picking Zone', transfers: 94 },
+];
+
+export function RankingBarChartExample() {
+  return (
+    <BarChart
+      data={data}
+      categories={[{ key: 'transfers', color: 'var(--ds-chart-3)' }]}
+      height={360}
+      layout="vertical"
+    />
+  );
+}`;
+
+const weeklyDeviceSource = `import { BarChart, type BarChartData } from 'erp-pro-ui';
+
+const data: BarChartData[] = [
+  { name: 'Mon', desktop: 224, mobile: 198 },
+  { name: 'Tue', desktop: 246, mobile: 214 },
+  { name: 'Wed', desktop: 268, mobile: 229 },
+];
+
+export function WeeklyDeviceBarChartExample() {
+  return (
+    <BarChart
+      data={data}
+      categories={[
+        { key: 'desktop', color: 'var(--ds-chart-2)' },
+        { key: 'mobile', color: 'var(--ds-chart-1)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const yearlyPortfolioSource = `import { BarChart, type BarChartData } from 'erp-pro-ui';
+
+const data: BarChartData[] = [
+  { name: '2023', enterprise: 83, smb: 57 },
+  { name: '2024', enterprise: 94, smb: 64 },
+  { name: '2025', enterprise: 108, smb: 73 },
+];
+
+export function YearlyPortfolioBarChartExample() {
+  return (
+    <BarChart
+      data={data}
+      categories={[
+        { key: 'enterprise', color: 'var(--ds-chart-2)' },
+        { key: 'smb', color: 'var(--ds-chart-4)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const comparativeBarSource = `import { BarChart, type BarChartData } from 'erp-pro-ui';
+
+const weeklyData: BarChartData[] = [
+  { name: 'Mon', desktop: 224, mobile: 198 },
+  { name: 'Tue', desktop: 246, mobile: 214 },
+  { name: 'Wed', desktop: 268, mobile: 229 },
+];
+
+const monthlyData: BarChartData[] = [
+  { name: 'Jan', actual: 82, target: 76 },
+  { name: 'Feb', actual: 88, target: 79 },
+  { name: 'Mar', actual: 91, target: 83 },
+];
+
+const yearlyData: BarChartData[] = [
+  { name: '2023', enterprise: 83, smb: 57 },
+  { name: '2024', enterprise: 94, smb: 64 },
+  { name: '2025', enterprise: 108, smb: 73 },
+];
+
+export function ComparativeBarChartsExample() {
+  return (
+    <div className="grid gap-4 xl:grid-cols-3">
+      <BarChart data={weeklyData} categories={[{ key: 'desktop', color: 'var(--ds-chart-2)' }, { key: 'mobile', color: 'var(--ds-chart-1)' }]} height={260} />
+      <BarChart data={monthlyData} categories={[{ key: 'actual', color: 'var(--ds-chart-3)' }, { key: 'target', color: 'var(--ds-chart-15)' }]} height={260} />
+      <BarChart data={yearlyData} categories={[{ key: 'enterprise', color: 'var(--ds-chart-2)' }, { key: 'smb', color: 'var(--ds-chart-4)' }]} height={260} />
+    </div>
+  );
+}`;
+
 export const MonthlyComparison: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -117,6 +229,13 @@ export const MonthlyComparison: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: monthlyBarSource,
+      },
+    },
+  },
 };
 
 export const RankingLayout: Story = {
@@ -131,6 +250,13 @@ export const RankingLayout: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: rankingBarSource,
+      },
+    },
+  },
 };
 
 export const WeeklyDeviceComparison: Story = {
@@ -150,6 +276,13 @@ export const WeeklyDeviceComparison: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: weeklyDeviceSource,
+      },
+    },
+  },
 };
 
 export const YearlyPortfolioComparison: Story = {
@@ -169,6 +302,13 @@ export const YearlyPortfolioComparison: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: yearlyPortfolioSource,
+      },
+    },
+  },
 };
 
 export const ComparativeTimeRanges: Story = {
@@ -228,4 +368,11 @@ export const ComparativeTimeRanges: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: comparativeBarSource,
+      },
+    },
+  },
 };

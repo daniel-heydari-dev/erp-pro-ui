@@ -49,19 +49,31 @@ const SelectDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Select } from 'erp-pro-ui';
+        code={`import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+import { Select } from 'erp-pro-ui';
 
-const options = [
+const frameworkOptions = [
   { value: 'react', label: 'React' },
   { value: 'vue', label: 'Vue' },
 ];
 
-<Select
-  label="Framework"
-  options={options}
-  value={framework}
-  onChange={(event) => setFramework(event.target.value)}
-/>`}
+export function FrameworkSelect() {
+  const [framework, setFramework] = useState('');
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setFramework(event.target.value);
+  };
+
+  return (
+    <Select
+      label="Framework"
+      options={frameworkOptions}
+      value={framework}
+      onChange={handleChange}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Controlled Form Pattern</h2>
@@ -85,15 +97,28 @@ const options = [
       </div>
 
       <CodeBlock
-        code={`const [environment, setEnvironment] = useState('');
+        code={`import { useState } from 'react';
+import { Select } from 'erp-pro-ui';
 
-<Select
-  label="Deployment environment"
-  options={environmentOptions}
-  value={environment}
-  onChange={(event) => setEnvironment(event.target.value)}
-  error={environment ? undefined : 'Environment is required'}
-/>`}
+const environmentOptions = [
+  { value: 'development', label: 'Development' },
+  { value: 'staging', label: 'Staging' },
+  { value: 'production', label: 'Production' },
+];
+
+export function ControlledEnvironmentSelect() {
+  const [environment, setEnvironment] = useState('');
+
+  return (
+    <Select
+      label="Deployment environment"
+      options={environmentOptions}
+      value={environment}
+      onChange={(event) => setEnvironment(event.target.value)}
+      error={environment ? undefined : 'Environment is required'}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Common States</h2>
@@ -132,9 +157,23 @@ const options = [
       </div>
 
       <CodeBlock
-        code={`<Select error="Owner is required" options={options} />
-<Select disabled value="react" options={options} />
-<Select bgClassName="bg-neutral-900/70" options={options} />`}
+        code={`import { Select } from 'erp-pro-ui';
+
+const options = [
+  { value: 'react', label: 'React' },
+  { value: 'vue', label: 'Vue' },
+  { value: 'angular', label: 'Angular' },
+];
+
+export function SelectCommonStates() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Select label="Validation" error="Owner is required" options={options} />
+      <Select label="Disabled" disabled value="react" options={options} />
+      <Select label="Custom Surface" bgClassName="bg-neutral-900/70" options={options} />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

@@ -78,7 +78,7 @@ const TypographyDoc = () => {
 
       {/* Section 1: Specimen Hero */}
       <div className="docs-showcase-card p-0 overflow-hidden mb-16 border-none bg-neutral-950">
-        <div className="relative h-[480px] flex items-center justify-center bg-[radial-gradient(circle_at_center,var(--tw-gradient-from)_0%,transparent_70%)] from-purple-500/10">
+        <div className="relative h-120 flex items-center justify-center bg-[radial-gradient(circle_at_center,var(--tw-gradient-from)_0%,transparent_70%)] from-purple-500/10">
           <div
             className="absolute inset-0 opacity-20"
             style={{
@@ -400,7 +400,7 @@ const TypographyDoc = () => {
 
       <DocsButtonBar
         prev={{ label: "Icons", route: "/ui-basics/icons" }}
-        next={{ label: "Search", route: "/ui-basics/search" }}
+        next={{ label: "Truncated Text", route: "/ui-basics/truncated-text" }}
       />
     </section>
   );

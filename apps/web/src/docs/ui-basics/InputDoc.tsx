@@ -39,15 +39,27 @@ const InputDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Input } from 'erp-pro-ui';
+        code={`import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+import { Input } from 'erp-pro-ui';
 
-<Input
-  label="Search tickets"
-  placeholder="Find by ticket ID, title, or owner"
-  value={query}
-  onChange={(event) => setQuery(event.target.value)}
-  helperText="Search runs client-side as you type."
-/>`}
+export function SearchInputExample() {
+  const [query, setQuery] = useState('');
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  return (
+    <Input
+      label="Search tickets"
+      placeholder="Find by ticket ID, title, or owner"
+      value={query}
+      onChange={handleChange}
+      helperText="Search runs client-side as you type."
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Validation States</h2>
@@ -92,9 +104,27 @@ const InputDoc = () => {
       <CodeBlock
         code={`import { Input, InputState } from 'erp-pro-ui';
 
-<Input state={InputState.ERROR} error="Use a valid company email address." />
-<Input state={InputState.SUCCESS} message="Environment is available." />
-<Input disabled helperText="Slug updates are restricted." />`}
+export function InputValidationStates() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Input
+        label="Work email"
+        state={InputState.ERROR}
+        error="Use a valid company email address."
+      />
+      <Input
+        label="Environment name"
+        state={InputState.SUCCESS}
+        message="Environment is available."
+      />
+      <Input
+        label="Workspace slug"
+        disabled
+        helperText="Slug updates are restricted."
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Common Field Patterns</h2>
@@ -131,9 +161,31 @@ const InputDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Input icon={<FiSearch size={18} />} placeholder="Search projects" />
-<Input type="email" icon={<FiMail size={18} />} placeholder="Email address" />
-<Input type="password" icon={<FiLock size={18} />} bgClassName="bg-neutral-100 dark:bg-neutral-800" />`}
+        code={`import { Input } from 'erp-pro-ui';
+
+export function CommonInputPatterns() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Input
+        label="Search"
+        placeholder="Search projects"
+        icon={<span aria-hidden>...</span>}
+      />
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Email address"
+        icon={<span aria-hidden>@</span>}
+      />
+      <Input
+        label="Password"
+        type="password"
+        placeholder="Password"
+        bgClassName="bg-neutral-100 dark:bg-neutral-800"
+      />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

@@ -23,6 +23,77 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const frameworkSelectorSource = `import { useState } from 'react';
+import { Combobox, type ComboboxOption } from 'erp-pro-ui';
+
+const frameworks: ComboboxOption[] = [
+  { value: 'react', label: 'React' },
+  { value: 'vue', label: 'Vue' },
+  { value: 'next.js', label: 'Next.js' },
+];
+
+export function FrameworkSelector() {
+  const [value, setValue] = useState('next.js');
+
+  return (
+    <Combobox
+      options={frameworks}
+      value={value}
+      onChange={setValue}
+      placeholder="Select a framework..."
+    />
+  );
+}`;
+
+const teamProvisioningSource = `import { useState } from 'react';
+import { Combobox, type ComboboxOption } from 'erp-pro-ui';
+
+const teams: ComboboxOption[] = [
+  { value: 'fulfillment', label: 'Fulfillment Operations' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'product', label: 'Product' },
+];
+
+export function TeamProvisioningFlow() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Combobox
+      options={teams}
+      value={value}
+      onChange={setValue}
+      placeholder="Search a team..."
+      createOptionLabel="Request a new team"
+      onCreateOption={() => {
+        window.alert('Create flow requested for ' + (value || 'a new team') + '.');
+      }}
+    />
+  );
+}`;
+
+const toolbarFilterSource = `import { useState } from 'react';
+import { Combobox, type ComboboxOption } from 'erp-pro-ui';
+
+const filters: ComboboxOption[] = [
+  { value: 'open', label: 'Open Orders' },
+  { value: 'at-risk', label: 'At-Risk Shipments' },
+  { value: 'exceptions', label: 'Exceptions Queue' },
+];
+
+export function QueueToolbarFilter() {
+  const [value, setValue] = useState('exceptions');
+
+  return (
+    <Combobox
+      options={filters}
+      value={value}
+      onChange={setValue}
+      placeholder="Filter operational queue..."
+      bgClassName="bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl"
+    />
+  );
+}`;
+
 const frameworks = [
   { value: "react", label: "React" },
   { value: "vue", label: "Vue" },
@@ -52,7 +123,7 @@ const filters = [
   { value: "returns", label: "Returns" },
 ];
 
-function SearchableSelectionDemo() {
+function FrameworkSelectorPreview() {
   const [value, setValue] = useState("next.js");
 
   const selected = frameworks.find((option) => option.value === value);
@@ -98,7 +169,7 @@ function SearchableSelectionDemo() {
   );
 }
 
-function CreateOptionDemo() {
+function TeamProvisioningPreview() {
   const [value, setValue] = useState("");
   const [requests, setRequests] = useState<string[]>([]);
 
@@ -155,7 +226,7 @@ function CreateOptionDemo() {
   );
 }
 
-function ToolbarFilterDemo() {
+function QueueToolbarFilterPreview() {
   const [value, setValue] = useState("exceptions");
 
   return (
@@ -207,13 +278,37 @@ function ToolbarFilterDemo() {
 }
 
 export const SearchableSelection: Story = {
-  render: () => <SearchableSelectionDemo />,
+  name: "Framework Selector",
+  render: () => <FrameworkSelectorPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: frameworkSelectorSource,
+      },
+    },
+  },
 };
 
 export const CreateOptionWorkflow: Story = {
-  render: () => <CreateOptionDemo />,
+  name: "Team Provisioning Flow",
+  render: () => <TeamProvisioningPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: teamProvisioningSource,
+      },
+    },
+  },
 };
 
 export const ToolbarFilter: Story = {
-  render: () => <ToolbarFilterDemo />,
+  name: "Queue Toolbar Filter",
+  render: () => <QueueToolbarFilterPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: toolbarFilterSource,
+      },
+    },
+  },
 };

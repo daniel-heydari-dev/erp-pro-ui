@@ -28,10 +28,14 @@ const AlertDoc = () => {
       <CodeBlock
         code={`import { Alert } from 'erp-pro-ui';
 
-<Alert
-  title="Heads up"
-  description="Branch synchronization will pause during the migration window."
-/>`}
+export function MaintenanceNoticeAlert() {
+  return (
+    <Alert
+      title="Heads up"
+      description="Branch synchronization will pause during the migration window."
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Variants</h2>
@@ -63,10 +67,18 @@ const AlertDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Alert variant="info" title="Info" ... />
-<Alert variant="success" title="Success" ... />
-<Alert variant="warning" title="Warning" ... />
-<Alert variant="destructive" title="Error" ... />`}
+        code={`import { Alert } from 'erp-pro-ui';
+
+export function AlertVariantsExample() {
+  return (
+    <div className="flex flex-col gap-4">
+      <Alert variant="info" title="Info" description="A new software update is available." />
+      <Alert variant="success" title="Success" description="Your changes have been saved successfully." />
+      <Alert variant="warning" title="Warning" description="Your account is about to expire." />
+      <Alert variant="destructive" title="Error" description="Failed to connect to the server." />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Actionable Content</h2>
@@ -91,16 +103,22 @@ const AlertDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Alert
-  variant="warning"
-  title="Reconciliation mismatch detected"
-  description="Three warehouse transfers are missing receiving confirmations."
->
-  <div className="mt-3 flex gap-2">
-    <Button label="Review queue" size="small" primary />
-    <Button label="Dismiss" size="small" />
-  </div>
-</Alert>`}
+        code={`import { Alert, Button } from 'erp-pro-ui';
+
+export function ActionableAlertExample() {
+  return (
+    <Alert
+      variant="warning"
+      title="Reconciliation mismatch detected"
+      description="Three warehouse transfers are missing receiving confirmations."
+    >
+      <div className="mt-3 flex gap-2">
+        <Button label="Review queue" size="small" primary />
+        <Button label="Dismiss" size="small" />
+      </div>
+    </Alert>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Dismissible Pattern</h2>
@@ -134,14 +152,33 @@ const AlertDoc = () => {
       </div>
 
       <CodeBlock
-        code={`const [show, setShow] = useState(true);
+        code={`import { useState } from 'react';
+import { Alert, Button, CloseIcon } from 'erp-pro-ui';
 
-{show && (
-  <div className="relative max-w-3xl">
-    <Alert title="New receiving flow available" description="..." />
-    <Button aria-label="Dismiss alert" onClick={() => setShow(false)}>Close</Button>
-  </div>
-)}`}
+export function DismissibleAlertExample() {
+  const [show, setShow] = useState(true);
+
+  if (!show) {
+    return <Button label="Show Alert Again" onClick={() => setShow(true)} />;
+  }
+
+  return (
+    <div className="relative max-w-3xl">
+      <Alert
+        variant="info"
+        title="New receiving flow available"
+        description="You can now bulk-confirm ASN receipts directly from the inbound table."
+      />
+      <Button
+        aria-label="Dismiss alert"
+        onClick={() => setShow(false)}
+        className="absolute top-4 right-4 h-8 w-8 border-none bg-transparent px-0 py-0 shadow-none"
+      >
+        <CloseIcon className="h-4 w-4" aria-hidden="true" />
+      </Button>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

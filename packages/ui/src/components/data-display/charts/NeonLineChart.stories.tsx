@@ -60,6 +60,65 @@ const meta: Meta<typeof NeonLineChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const defaultNeonSource = `import { NeonLineChart } from 'erp-pro-ui';
+
+const latencyData = [
+  { name: 'Mon', value: 42 },
+  { name: 'Tue', value: 38 },
+  { name: 'Wed', value: 45 },
+  { name: 'Thu', value: 34 },
+  { name: 'Fri', value: 31 },
+];
+
+export function DefaultNeonLineChartExample() {
+  return <NeonLineChart data={latencyData} height={340} />;
+}`;
+
+const brandedNeonSource = `import { NeonLineChart } from 'erp-pro-ui';
+
+const throughputData = [
+  { name: '00:00', value: 18 },
+  { name: '04:00', value: 24 },
+  { name: '08:00', value: 42 },
+  { name: '12:00', value: 58 },
+  { name: '16:00', value: 51 },
+];
+
+export function BrandedNeonLineChartExample() {
+  return (
+    <NeonLineChart
+      data={throughputData}
+      height={340}
+      lineColorStop1="var(--ds-chart-2)"
+      lineColorStop2="var(--ds-chart-1)"
+      glowColor="var(--ds-chart-1)"
+    />
+  );
+}`;
+
+const compactNeonSource = `import { NeonLineChart } from 'erp-pro-ui';
+
+const retentionData = [
+  { name: 'Week 1', value: 76 },
+  { name: 'Week 2', value: 72 },
+  { name: 'Week 3', value: 69 },
+  { name: 'Week 4', value: 65 },
+  { name: 'Week 5', value: 67 },
+  { name: 'Week 6', value: 70 },
+];
+
+export function CompactNeonWidgetExample() {
+  return (
+    <NeonLineChart
+      data={retentionData}
+      height={280}
+      lineColorStop1="var(--ds-chart-2)"
+      lineColorStop2="var(--ds-chart-3)"
+      glowColor="var(--ds-chart-2)"
+    />
+  );
+}`;
+
 export const DefaultNeonStyling: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -98,6 +157,7 @@ export const DefaultNeonStyling: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: defaultNeonSource } } },
 };
 
 export const CustomBrandGlow: Story = {
@@ -127,6 +187,7 @@ export const CustomBrandGlow: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: brandedNeonSource } } },
 };
 
 export const CompactActivityWidget: Story = {
@@ -171,4 +232,5 @@ export const CompactActivityWidget: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: compactNeonSource } } },
 };

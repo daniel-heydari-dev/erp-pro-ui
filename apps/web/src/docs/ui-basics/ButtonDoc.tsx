@@ -36,8 +36,14 @@ const ButtonDoc = () => {
       <CodeBlock
         code={`import { Button } from 'erp-pro-ui';
 
-<Button label="Save changes" primary />
-<Button label="Cancel" />`}
+export function BasicButtons() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button label="Save changes" primary />
+      <Button label="Cancel" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Variants</h2>
@@ -62,8 +68,16 @@ const ButtonDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Button label="Publish" primary />
-<Button label="Preview" />`}
+        code={`import { Button } from 'erp-pro-ui';
+
+export function ButtonVariants() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button label="Publish" primary />
+      <Button label="Preview" />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Sizes</h2>
@@ -79,9 +93,17 @@ const ButtonDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Button label="Small" size="small" primary />
-<Button label="Medium" size="medium" primary />
-<Button label="Large" size="large" primary />`}
+        code={`import { Button } from 'erp-pro-ui';
+
+export function ButtonSizes() {
+  return (
+    <div className="flex flex-wrap items-end gap-3">
+      <Button label="Small" size="small" primary />
+      <Button label="Medium" size="medium" primary />
+      <Button label="Large" size="large" primary />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Disabled and Icon-like Content</h2>
@@ -99,12 +121,19 @@ const ButtonDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Button disabled>
-  <span aria-hidden>+</span>
-  <span>Create report</span>
-</Button>
+        code={`import { Button } from 'erp-pro-ui';
 
-<Button label="Saving disabled" primary disabled />`}
+export function DisabledButtons() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button disabled>
+        <span aria-hidden>+</span>
+        <span>Create report</span>
+      </Button>
+      <Button label="Saving disabled" primary disabled />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Async Submit Pattern</h2>
@@ -126,14 +155,28 @@ const ButtonDoc = () => {
       </div>
 
       <CodeBlock
-        code={`const [isSubmitting, setIsSubmitting] = useState(false);
+        code={`import { useState } from 'react';
+import { Button } from 'erp-pro-ui';
 
-<Button
-  label={isSubmitting ? 'Saving...' : 'Save profile'}
-  primary
-  disabled={isSubmitting}
-  onClick={handleAsyncSave}
-/>`}
+export function AsyncSaveButton() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAsyncSave = () => {
+    setIsSubmitting(true);
+    window.setTimeout(() => {
+      setIsSubmitting(false);
+    }, 1500);
+  };
+
+  return (
+    <Button
+      label={isSubmitting ? 'Saving...' : 'Save profile'}
+      primary
+      disabled={isSubmitting}
+      onClick={handleAsyncSave}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

@@ -128,7 +128,20 @@ export { Dialog } from "./components/overlays/dialog";
 
 export { Drawer } from "./components/overlays/drawer";
 
-export { Form } from "./components/forms/form";
+export {
+  Form,
+  FormActions,
+  FormField,
+  FormSection,
+  InputGroup,
+} from "./components/forms/form";
+export type {
+  FormActionsProps,
+  FormFieldProps,
+  FormProps,
+  FormSectionProps,
+  InputGroupProps,
+} from "./components/forms/form";
 
 export { GradualBlur } from "./components/effects/gradual-blur";
 
@@ -253,6 +266,7 @@ export type {
   TooltipTrigger,
 } from "./components/overlays/tooltip";
 export { Typography } from "./components/typography";
+export { TruncatedText } from "./components/typography/truncated-text";
 export type {
   TypographyProps,
   TypographyVariant,
@@ -261,6 +275,7 @@ export type {
   TypographyTracking,
   TypographyGradient,
 } from "./components/typography";
+export type { TruncatedTextProps } from "./components/typography/truncated-text";
 export type { AlertProps, AlertVariant } from "./components/feedback/alert";
 export type {
   DialogProps,

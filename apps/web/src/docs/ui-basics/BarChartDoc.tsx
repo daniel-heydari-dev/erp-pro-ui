@@ -63,7 +63,9 @@ const categories = [
   { key: 'delayed', color: '#ff9f43' },
 ];
 
-<BarChart data={data} categories={categories} height={360} />`}
+export function MonthlyBarChartExample() {
+  return <BarChart data={data} categories={categories} height={360} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Ranking Layout</h2>
@@ -85,12 +87,24 @@ const categories = [
       </div>
 
       <CodeBlock
-        code={`<BarChart
-  data={rankingData}
-  categories={[{ key: 'transfers', color: '#28c76f' }]}
-  height={360}
-  layout="vertical"
-/>`}
+        code={`import { BarChart, BarChartData } from 'erp-pro-ui';
+
+const rankingData: BarChartData[] = [
+  { name: 'North Distribution Hub', transfers: 128 },
+  { name: 'Central Returns Team', transfers: 102 },
+  { name: 'West Picking Zone', transfers: 94 },
+];
+
+export function RankingBarChartExample() {
+  return (
+    <BarChart
+      data={rankingData}
+      categories={[{ key: 'transfers', color: '#28c76f' }]}
+      height={360}
+      layout="vertical"
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>
@@ -163,7 +177,10 @@ const categories = [
 
       <DocsButtonBar
         prev={{ label: "Area Chart", route: "/ui-basics/area-chart" }}
-        next={{ label: "Pie Chart", route: "/ui-basics/pie-chart" }}
+        next={{
+          label: "Positive Negative Bar Chart",
+          route: "/ui-basics/positive-negative-bar-chart",
+        }}
       />
     </section>
   );

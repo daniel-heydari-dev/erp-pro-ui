@@ -156,7 +156,9 @@ export function SearchTrigger() {
 // - Choosing a result navigates directly to the target docs route`}
       />
 
-      <DocsButtonBar prev={{ label: "Icons", route: "/ui-basics/icons" }} />
+      <DocsButtonBar
+        prev={{ label: "Truncated Text", route: "/ui-basics/truncated-text" }}
+      />
     </section>
   );
 };

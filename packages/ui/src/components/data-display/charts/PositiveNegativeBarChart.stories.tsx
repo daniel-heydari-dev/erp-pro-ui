@@ -84,6 +84,94 @@ const meta: Meta<typeof PositiveNegativeBarChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const monthlyProfitLossSource = `import { PositiveNegativeBarChart, type PositiveNegativeBarChartData } from 'erp-pro-ui';
+
+const data: PositiveNegativeBarChartData[] = [
+  { name: 'Jan', value: 14800 },
+  { name: 'Feb', value: 9600 },
+  { name: 'Mar', value: -4200 },
+  { name: 'Apr', value: 12500 },
+  { name: 'May', value: -2600 },
+];
+
+const formatCurrencyDelta = (value: number) => {
+  const absValue = Math.abs(value);
+  const compact = absValue >= 1000 ? String((absValue / 1000).toFixed(1)) + 'k' : String(absValue);
+  return \`\${value >= 0 ? '+' : '-'}$\${compact}\`;
+};
+
+export function MonthlyProfitLossExample() {
+  return (
+    <PositiveNegativeBarChart
+      data={data}
+      height={360}
+      valueFormatter={formatCurrencyDelta}
+      tickFormatter={formatCurrencyDelta}
+      seriesLabel="Net contribution"
+    />
+  );
+}`;
+
+const verticalVarianceSource = `import { PositiveNegativeBarChart, type PositiveNegativeBarChartData } from 'erp-pro-ui';
+
+const data: PositiveNegativeBarChartData[] = [
+  { name: 'Support', value: 8 },
+  { name: 'Growth', value: -3 },
+  { name: 'Finance', value: 5 },
+  { name: 'Ops', value: -7 },
+  { name: 'Platform', value: 11 },
+];
+
+const formatPercentDelta = (value: number) => \`\${value >= 0 ? '+' : ''}\${value}%\`;
+
+export function VerticalVarianceExample() {
+  return (
+    <PositiveNegativeBarChart
+      data={data}
+      height={330}
+      layout="vertical"
+      valueFormatter={formatPercentDelta}
+      tickFormatter={formatPercentDelta}
+      seriesLabel="Target variance"
+      positiveColor="var(--ds-chart-2)"
+      negativeColor="var(--ds-chart-5)"
+    />
+  );
+}`;
+
+const releaseImpactSource = `import { PositiveNegativeBarChart, type PositiveNegativeBarChartData } from 'erp-pro-ui';
+
+const data: PositiveNegativeBarChartData[] = [
+  { name: 'Search', value: 3200 },
+  { name: 'Checkout', value: -1800 },
+  { name: 'Billing', value: 2400 },
+  { name: 'Inventory', value: -2600 },
+  { name: 'Reports', value: 1400 },
+  { name: 'Audit', value: 0 },
+];
+
+const formatCurrencyDelta = (value: number) => {
+  const absValue = Math.abs(value);
+  const compact = absValue >= 1000 ? String((absValue / 1000).toFixed(1)) + 'k' : String(absValue);
+  return \`\${value >= 0 ? '+' : '-'}$\${compact}\`;
+};
+
+export function CompactReleaseImpactExample() {
+  return (
+    <PositiveNegativeBarChart
+      data={data}
+      height={290}
+      showGrid={false}
+      valueFormatter={formatCurrencyDelta}
+      tickFormatter={formatCurrencyDelta}
+      seriesLabel="Release delta"
+      positiveColor="var(--ds-chart-3)"
+      negativeColor="var(--ds-chart-4)"
+      neutralColor="var(--ds-chart-15)"
+    />
+  );
+}`;
+
 export const MonthlyProfitLoss: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -103,6 +191,7 @@ export const MonthlyProfitLoss: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: monthlyProfitLossSource } } },
 };
 
 export const VerticalVarianceRanking: Story = {
@@ -127,6 +216,7 @@ export const VerticalVarianceRanking: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: verticalVarianceSource } } },
 };
 
 export const CompactReleaseImpact: Story = {
@@ -177,4 +267,5 @@ export const CompactReleaseImpact: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: releaseImpactSource } } },
 };

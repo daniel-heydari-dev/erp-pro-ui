@@ -22,11 +22,15 @@ const TooltipDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Tooltip, Button } from 'erp-pro-ui';
+        code={`import { Button, Tooltip } from 'erp-pro-ui';
 
-<Tooltip content="This is a helpful tip!">
-  <Button label="Hover Me" />
-</Tooltip>`}
+export function BasicTooltipExample() {
+  return (
+    <Tooltip content="This is a helpful tip!">
+      <Button label="Hover Me" />
+    </Tooltip>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Positions</h2>
@@ -55,9 +59,26 @@ const TooltipDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Tooltip position="top" content="...">
-  <Button label="Top" />
-</Tooltip>`}
+        code={`import { Button, Tooltip } from 'erp-pro-ui';
+
+export function TooltipPositionsExample() {
+  return (
+    <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+      <Tooltip content="Tooltip on Top" position="top">
+        <Button label="Top" size="small" />
+      </Tooltip>
+      <Tooltip content="Tooltip on Bottom" position="bottom">
+        <Button label="Bottom" size="small" />
+      </Tooltip>
+      <Tooltip content="Tooltip on Left" position="left">
+        <Button label="Left" size="small" />
+      </Tooltip>
+      <Tooltip content="Tooltip on Right" position="right">
+        <Button label="Right" size="small" />
+      </Tooltip>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Triggers</h2>
@@ -84,9 +105,25 @@ const TooltipDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Tooltip trigger="click" content="...">
-  <Button label="Click Me" />
-</Tooltip>`}
+        code={`import { Button, Input, Tooltip } from 'erp-pro-ui';
+
+export function TooltipTriggerExample() {
+  return (
+    <div className="flex flex-wrap gap-8">
+      <Tooltip content="Triggered by Hover" trigger="hover">
+        <Button label="Hover" />
+      </Tooltip>
+      <Tooltip content="Triggered by Click" trigger="click">
+        <Button label="Click" />
+      </Tooltip>
+      <Tooltip content="Triggered by Focus" trigger="focus">
+        <div className="w-56">
+          <Input placeholder="Focus me" />
+        </div>
+      </Tooltip>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Form Hint</h2>
@@ -117,12 +154,23 @@ const TooltipDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<div className="flex items-center gap-2">
-  <span>Reorder threshold</span>
-  <Tooltip content="When stock drops below this number, the SKU appears in the replenishment queue.">
-    <Button aria-label="Threshold help">?</Button>
-  </Tooltip>
-</div>`}
+        code={`import { Button, Tooltip } from 'erp-pro-ui';
+
+export function TooltipFormHintExample() {
+  return (
+    <div className="w-full max-w-lg space-y-3">
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-medium">Reorder threshold</span>
+        <Tooltip content="When stock drops below this number, the SKU appears in the replenishment queue.">
+          <Button aria-label="Threshold help" className="h-6 w-6 rounded-full px-0 py-0 text-xs font-semibold">
+            ?
+          </Button>
+        </Tooltip>
+      </div>
+      <div className="rounded-md border px-3 py-2 text-sm text-muted-foreground">24 units</div>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Controlled Visibility</h2>
@@ -150,16 +198,30 @@ const TooltipDoc = () => {
       </div>
 
       <CodeBlock
-        code={`const [open, setOpen] = useState(false);
+        code={`import { useState } from 'react';
+import { Button, Tooltip } from 'erp-pro-ui';
 
-<Tooltip
-  content="Controlled tooltip"
-  open={open}
-  onOpenChange={setOpen}
-  trigger="click"
->
-  <Button label="Target" />
-</Tooltip>`}
+export function ControlledTooltipExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Button
+        label={open ? 'Hide Tooltip' : 'Show Tooltip'}
+        onClick={() => setOpen((previous) => !previous)}
+      />
+      <Tooltip
+        content="Controlled tooltips are useful when visibility depends on parent-level workflow state."
+        open={open}
+        onOpenChange={setOpen}
+        trigger="click"
+        position="right"
+      >
+        <Button label="Controlled Target" />
+      </Tooltip>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

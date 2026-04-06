@@ -41,7 +41,164 @@ type DrawerStoryProps = Omit<DrawerProps, "open" | "onOpenChange"> & {
   triggerLabel?: string;
 };
 
-function DrawerDemo({ triggerLabel, ...props }: DrawerStoryProps) {
+const rightSettingsSource = `import { useState } from 'react';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const position: DrawerPosition = 'right';
+
+export function RightSettingsPanel() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open settings" primary onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position={position}
+        title="Workspace settings"
+        description="Adjust notifications, approval behavior, and visibility from one side panel."
+      >
+        <p>Drawer content goes here.</p>
+      </Drawer>
+    </>
+  );
+}`;
+
+const leftNavigationSource = `import { useState } from 'react';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const position: DrawerPosition = 'left';
+
+export function LeftNavigationDrawer() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open navigation" onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position={position}
+        title="Navigation"
+        description="Use a left drawer for nested app navigation on smaller screens."
+      >
+        <p>Navigation items go here.</p>
+      </Drawer>
+    </>
+  );
+}`;
+
+const bottomSheetSource = `import { useState } from 'react';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const position: DrawerPosition = 'bottom';
+
+export function MobileActionSheet() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open actions" onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position={position}
+        title="Quick actions"
+        description="Bottom drawers work well for mobile-first action sheets."
+      >
+        <p>Action content goes here.</p>
+      </Drawer>
+    </>
+  );
+}`;
+
+const announcementTraySource = `import { useState } from 'react';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const position: DrawerPosition = 'top';
+
+export function AnnouncementTray() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open announcement" onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position={position}
+        title="Release notes"
+        description="Use a top drawer for release notes and global alerts."
+      >
+        <p>Announcement content goes here.</p>
+      </Drawer>
+    </>
+  );
+}`;
+
+const settingsPanelSource = `import { useState } from 'react';
+import { Button, Drawer } from 'erp-pro-ui';
+
+export function WorkspaceSettingsPanel() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open settings" primary onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position="right"
+        title="Workspace settings"
+        description="Adjust notifications, approval behavior, and visibility from one side panel."
+        footer={
+          <div className="flex justify-end gap-3">
+            <Button label="Cancel" onClick={() => setOpen(false)} />
+            <Button label="Save changes" primary onClick={() => setOpen(false)} />
+          </div>
+        }
+      >
+        <div className="space-y-4">
+          <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4">
+            <p className="text-sm font-medium text-neutral-900">Approval threshold</p>
+            <p className="mt-1 text-sm text-neutral-500">Require a second approver for transfers above $5,000.</p>
+          </div>
+        </div>
+      </Drawer>
+    </>
+  );
+}`;
+
+const controlledWorkflowSource = `import { useState } from 'react';
+import { Button, Drawer } from 'erp-pro-ui';
+
+export function ControlledApprovalDrawer() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open approval panel" primary onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position="right"
+        title="Transfer approval"
+        description="Review details and confirm before the transfer is queued."
+        footer={
+          <div className="flex justify-end gap-3">
+            <Button label="Cancel" onClick={() => setOpen(false)} />
+            <Button label="Queue transfer" primary onClick={() => setOpen(false)} />
+          </div>
+        }
+      >
+        <p>Approval details go here.</p>
+      </Drawer>
+    </>
+  );
+}`;
+
+function DrawerPreview({ triggerLabel, ...props }: DrawerStoryProps) {
   const [open, setOpen] = useState(false);
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -69,26 +226,64 @@ function DrawerDemo({ triggerLabel, ...props }: DrawerStoryProps) {
  * ## Right Sidebar
  * Commonly used for settings panels and configurations.
  */
-export const Right: Story = { render: () => <DrawerDemo position="right" /> };
+export const Right: Story = {
+  name: "Right Settings Panel",
+  render: () => <DrawerPreview position="right" />,
+  parameters: {
+    docs: {
+      source: {
+        code: rightSettingsSource,
+      },
+    },
+  },
+};
 
 /**
  * ## Left Sidebar
  * Commonly used for application navigation menus.
  */
-export const Left: Story = { render: () => <DrawerDemo position="left" /> };
+export const Left: Story = {
+  name: "Left Navigation Drawer",
+  render: () => <DrawerPreview position="left" />,
+  parameters: {
+    docs: {
+      source: {
+        code: leftNavigationSource,
+      },
+    },
+  },
+};
 
 /**
  * ## Bottom Sheet
  * Very useful for mobile-first views and context menus.
  */
-export const Bottom: Story = { render: () => <DrawerDemo position="bottom" /> };
+export const Bottom: Story = {
+  name: "Mobile Action Sheet",
+  render: () => <DrawerPreview position="bottom" />,
+  parameters: {
+    docs: {
+      source: {
+        code: bottomSheetSource,
+      },
+    },
+  },
+};
 
 /**
  * ## Top Announcement Tray
  * Useful for release notes and global alerts that should not obscure the entire app.
  */
 export const Top: Story = {
-  render: () => <DrawerDemo position="top" triggerLabel="Open top tray" />,
+  name: "Announcement Tray",
+  render: () => <DrawerPreview position="top" triggerLabel="Open top tray" />,
+  parameters: {
+    docs: {
+      source: {
+        code: announcementTraySource,
+      },
+    },
+  },
 };
 
 /**
@@ -96,8 +291,9 @@ export const Top: Story = {
  * A more complete example showing custom content and footer actions.
  */
 export const SettingsPanel: Story = {
+  name: "Workspace Settings Panel",
   render: () => (
-    <DrawerDemo
+    <DrawerPreview
       position="right"
       triggerLabel="Open settings"
       title="Workspace settings"
@@ -127,8 +323,15 @@ export const SettingsPanel: Story = {
           </p>
         </div>
       </div>
-    </DrawerDemo>
+    </DrawerPreview>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: settingsPanelSource,
+      },
+    },
+  },
 };
 
 /**
@@ -136,6 +339,7 @@ export const SettingsPanel: Story = {
  * Parent-level state controls opening and close behavior from multiple actions.
  */
 export const ControlledWorkflow: Story = {
+  name: "Controlled Approval Drawer",
   render: () => {
     const [open, setOpen] = useState(false);
 
@@ -183,5 +387,12 @@ export const ControlledWorkflow: Story = {
         </Drawer>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: controlledWorkflowSource,
+      },
+    },
   },
 };

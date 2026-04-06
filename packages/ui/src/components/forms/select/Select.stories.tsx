@@ -43,6 +43,111 @@ const meta: Meta<typeof Select> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const defaultSelectSource = `import { useState } from 'react';
+import { Select } from 'erp-pro-ui';
+
+const options = [
+  { label: 'United States', value: 'us' },
+  { label: 'Canada', value: 'ca' },
+  { label: 'United Kingdom', value: 'uk' },
+  { label: 'Australia', value: 'au' },
+];
+
+export function CountrySelect() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Select
+      label="Country"
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+      options={options}
+    />
+  );
+}`;
+
+const controlledPatternSource = `import { useState } from 'react';
+import { Select } from 'erp-pro-ui';
+
+const environmentOptions = [
+  { label: 'Development', value: 'development' },
+  { label: 'Staging', value: 'staging' },
+  { label: 'Production', value: 'production' },
+];
+
+export function ControlledEnvironmentSelect() {
+  const [environment, setEnvironment] = useState('');
+
+  return (
+    <Select
+      label="Deployment environment"
+      placeholder="Choose environment"
+      options={environmentOptions}
+      value={environment}
+      onChange={(event) => setEnvironment(event.target.value)}
+      error={environment ? undefined : 'Environment is required'}
+      helperText="Choose where this release should be promoted."
+    />
+  );
+}`;
+
+const approvalSegmentSource = `import { useState } from 'react';
+import { Select } from 'erp-pro-ui';
+
+const departmentOptions = [
+  { label: 'Operations', value: 'operations' },
+  { label: 'Finance', value: 'finance' },
+  { label: 'Procurement', value: 'procurement' },
+];
+
+export function ApprovalFormSegmentExample() {
+  const [department, setDepartment] = useState('operations');
+
+  return (
+    <Select
+      label="Review Department"
+      value={department}
+      onChange={(event) => setDepartment(event.target.value)}
+      options={departmentOptions}
+    />
+  );
+}`;
+
+const commonStatesSource = `import { Select } from 'erp-pro-ui';
+
+const options = [
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Angular', value: 'angular' },
+];
+
+export function SelectCommonStatesExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Select label="Validation" placeholder="Select owner" options={options} error="Owner is required" />
+      <Select label="Disabled" placeholder="Cannot change" options={options} disabled value="react" />
+      <Select label="Custom Surface" placeholder="Select option" options={options} helperText="Styled with a darker glass background." bgClassName="bg-neutral-900/70 text-white backdrop-blur-xl" />
+    </div>
+  );
+}`;
+
+const selectValidationSource = `import { Select } from 'erp-pro-ui';
+
+const options = [
+  { label: 'Red', value: 'red' },
+  { label: 'Blue', value: 'blue' },
+];
+
+export function RequiredSelectExample() {
+  return (
+    <Select
+      label="Favorite Color"
+      error="Please select a color to continue."
+      options={options}
+    />
+  );
+}`;
+
 // --- Helper Components ---
 
 function ControlledSelect() {
@@ -75,6 +180,13 @@ function ControlledSelect() {
  */
 export const Default: Story = {
   render: () => <ControlledSelect />,
+  parameters: {
+    docs: {
+      source: {
+        code: defaultSelectSource,
+      },
+    },
+  },
 };
 
 export const ControlledFormPattern: Story = {
@@ -100,6 +212,13 @@ export const ControlledFormPattern: Story = {
         </div>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: controlledPatternSource,
+      },
+    },
   },
 };
 
@@ -127,6 +246,13 @@ export const WithError: Story = {
       </StorySurface>
     ),
   ],
+  parameters: {
+    docs: {
+      source: {
+        code: selectValidationSource,
+      },
+    },
+  },
 };
 
 /**
@@ -184,6 +310,13 @@ export const ApprovalFormSegment: Story = {
       </StorySurface>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: approvalSegmentSource,
+      },
+    },
+  },
 };
 
 export const CommonStates: Story = {
@@ -231,4 +364,11 @@ export const CommonStates: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: commonStatesSource,
+      },
+    },
+  },
 };

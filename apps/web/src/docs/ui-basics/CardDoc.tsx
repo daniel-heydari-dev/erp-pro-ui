@@ -22,10 +22,10 @@ const CardDoc = () => {
       <CodeBlock
         code={`import { Card } from 'erp-pro-ui';
 
-<Card 
-  title="Project Update" 
-  description="The new UI component package has been deployed to the staging environment." 
-/>`}
+          <Card 
+            title="Project Update" 
+            description="The new UI component package has been deployed to the staging environment." 
+          />`}
       />
 
       <h2 className="docs-category-subtitle">Dashboard Summaries</h2>

@@ -54,12 +54,16 @@ const data: PieChartData[] = [
   { name: 'Cloud', value: 160 },
 ];
 
-<PieChart
-  data={data}
-  colors={['#7367f0', '#00cfe8', '#28c76f', '#ff9f43']}
-  variant="donut"
-  height={320}
-/>`}
+export function DonutPieChartExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['#7367f0', '#00cfe8', '#28c76f', '#ff9f43']}
+      variant="donut"
+      height={320}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Compact Status Split</h2>
@@ -80,12 +84,24 @@ const data: PieChartData[] = [
       </div>
 
       <CodeBlock
-        code={`<PieChart
-  data={resolutionData}
-  colors={['#28c76f', '#ff9f43', '#ff4c51']}
-  variant="pie"
-  height={320}
-/>`}
+        code={`import { PieChart, PieChartData } from 'erp-pro-ui';
+
+const resolutionData: PieChartData[] = [
+  { name: 'Resolved', value: 68 },
+  { name: 'Escalated', value: 18 },
+  { name: 'Pending', value: 14 },
+];
+
+export function CompactPieChartExample() {
+  return (
+    <PieChart
+      data={resolutionData}
+      colors={['#28c76f', '#ff9f43', '#ff4c51']}
+      variant="pie"
+      height={320}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>
@@ -149,7 +165,10 @@ const data: PieChartData[] = [
       </div>
 
       <DocsButtonBar
-        prev={{ label: "Bar Chart", route: "/ui-basics/bar-chart" }}
+        prev={{
+          label: "Positive Negative Bar Chart",
+          route: "/ui-basics/positive-negative-bar-chart",
+        }}
         next={{ label: "Neon Line Chart", route: "/ui-basics/neon-line-chart" }}
       />
     </section>

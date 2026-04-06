@@ -50,16 +50,27 @@ const HoverCardDoc = () => {
       <CodeBlock
         code={`import { HoverCard } from 'erp-pro-ui';
 
-<HoverCard
-  content={
-    <div className="p-2">
-      <h4 className="font-bold">Title</h4>
-      <p className="text-sm">Description goes here.</p>
-    </div>
-  }
->
-  <span>Hover me</span>
-</HoverCard>`}
+export function BasicHoverCardExample() {
+  return (
+    <HoverCard
+      content={
+        <div className="flex gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/20 bg-accent-subtle font-bold text-accent">
+            EP
+          </div>
+          <div>
+            <h4 className="text-sm font-bold">ERP PRO</h4>
+            <p className="mt-1 text-xs text-muted-foreground">
+              The ultimate SaaS component library for building professional tools.
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <span className="cursor-pointer font-bold underline underline-offset-4">erp pro</span>
+    </HoverCard>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Team Member Preview</h2>
@@ -113,13 +124,27 @@ const HoverCardDoc = () => {
       <CodeBlock
         code={`import { Button, HoverCard } from 'erp-pro-ui';
 
-<HoverCard
-  position="right"
-  align="start"
-  content={<ProfilePreview />}
->
-  <Button label="Hover Mina Chen" />
-</HoverCard>`}
+export function TeamMemberHoverCardExample() {
+  return (
+    <HoverCard
+      position="right"
+      align="start"
+      content={
+        <div className="w-72 space-y-3">
+          <div>
+            <h4 className="text-sm font-bold">Mina Chen</h4>
+            <p className="mt-1 text-xs text-muted-foreground">Inventory Operations Lead</p>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Owns receiving audits, transfer approvals, and supplier escalation.
+          </p>
+        </div>
+      }
+    >
+      <Button label="Hover Mina Chen" />
+    </HoverCard>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Positions</h2>
@@ -156,9 +181,26 @@ const HoverCardDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<HoverCard position="right" align="center" content="...">
-  <Button label="Trigger" />
-</HoverCard>`}
+        code={`import { Button, HoverCard } from 'erp-pro-ui';
+
+export function HoverCardPositionsExample() {
+  return (
+    <div className="grid grid-cols-2 gap-8">
+      <HoverCard position="top" content={<div className="text-sm">Hover Card on Top</div>}>
+        <Button label="Top" />
+      </HoverCard>
+      <HoverCard position="bottom" content={<div className="text-sm">Hover Card on Bottom</div>}>
+        <Button label="Bottom" />
+      </HoverCard>
+      <HoverCard position="left" content={<div className="text-sm">Hover Card on Left</div>}>
+        <Button label="Left" />
+      </HoverCard>
+      <HoverCard position="right" content={<div className="text-sm">Hover Card on Right</div>}>
+        <Button label="Right" />
+      </HoverCard>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Delay & Width Control</h2>
@@ -195,16 +237,31 @@ const HoverCardDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<HoverCard
-  openDelay={350}
-  closeDelay={100}
-  width={300}
-  maxWidth={360}
-  arrow={false}
-  content={<SupplierSnapshot />}
->
-  <Button label="Hover Supplier #204" />
-</HoverCard>`}
+        code={`import { Button, HoverCard } from 'erp-pro-ui';
+
+export function HoverCardDelayExample() {
+  return (
+    <HoverCard
+      position="bottom"
+      align="start"
+      openDelay={350}
+      closeDelay={100}
+      width={300}
+      maxWidth={360}
+      arrow={false}
+      content={
+        <div className="space-y-2">
+          <h4 className="text-sm font-semibold">Supplier Snapshot</h4>
+          <p className="text-xs text-muted-foreground">
+            Last shipment arrived 2 days ago. 97% on-time delivery this quarter.
+          </p>
+        </div>
+      }
+    >
+      <Button label="Hover Supplier #204" />
+    </HoverCard>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

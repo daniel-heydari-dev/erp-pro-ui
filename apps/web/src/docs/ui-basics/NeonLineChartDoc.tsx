@@ -51,7 +51,9 @@ const data = [
   { name: 'Wed', value: 45 },
 ];
 
-<NeonLineChart data={data} height={340} />`}
+export function DefaultNeonLineChartExample() {
+  return <NeonLineChart data={data} height={340} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Custom Brand Glow</h2>
@@ -74,13 +76,26 @@ const data = [
       </div>
 
       <CodeBlock
-        code={`<NeonLineChart
-  data={throughputData}
-  height={340}
-  lineColorStop1="#00cfe8"
-  lineColorStop2="#7367f0"
-  glowColor="rgba(115, 103, 240, 0.45)"
-/>`}
+        code={`import { NeonLineChart } from 'erp-pro-ui';
+
+const throughputData = [
+  { name: '00:00', value: 18 },
+  { name: '04:00', value: 24 },
+  { name: '08:00', value: 42 },
+  { name: '12:00', value: 58 },
+];
+
+export function BrandedNeonLineChartExample() {
+  return (
+    <NeonLineChart
+      data={throughputData}
+      height={340}
+      lineColorStop1="#00cfe8"
+      lineColorStop2="#7367f0"
+      glowColor="rgba(115, 103, 240, 0.45)"
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

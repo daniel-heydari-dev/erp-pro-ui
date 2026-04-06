@@ -58,12 +58,16 @@ const categories = [
   { key: 'dispatch', color: '#28c76f', label: 'Dispatch' },
 ];
 
-<StackedBarChart
-  data={data}
-  categories={categories}
-  height={360}
-  yAxisDomain={[0, 90]}
-/>`}
+export function DailyTeamMixChartExample() {
+  return (
+    <StackedBarChart
+      data={data}
+      categories={categories}
+      height={360}
+      yAxisDomain={[0, 90]}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">
@@ -101,16 +105,34 @@ const categories = [
       </div>
 
       <CodeBlock
-        code={`<StackedBarChart
-  data={staffingData}
-  categories={staffingCategories}
-  yAxisDomain={[0, 90]}
-/>
+        code={`import { StackedBarChart, StackedBarData } from 'erp-pro-ui';
 
-<StackedBarChart
-  data={staffingData}
-  categories={staffingCategories}
-/>`}
+const staffingData: StackedBarData[] = [
+  { name: 'Mon', picking: 28, packing: 18, quality: 9, dispatch: 12 },
+  { name: 'Tue', picking: 32, packing: 20, quality: 8, dispatch: 10 },
+  { name: 'Wed', picking: 35, packing: 24, quality: 10, dispatch: 11 },
+];
+
+const staffingCategories = [
+  { key: 'picking', color: '#7367f0', label: 'Picking' },
+  { key: 'packing', color: '#00cfe8', label: 'Packing' },
+  { key: 'quality', color: '#ff9f43', label: 'Quality' },
+  { key: 'dispatch', color: '#28c76f', label: 'Dispatch' },
+];
+
+export function FixedDomainStackedBarChartExample() {
+  return (
+    <StackedBarChart
+      data={staffingData}
+      categories={staffingCategories}
+      yAxisDomain={[0, 90]}
+    />
+  );
+}
+
+export function AutoDomainStackedBarChartExample() {
+  return <StackedBarChart data={staffingData} categories={staffingCategories} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

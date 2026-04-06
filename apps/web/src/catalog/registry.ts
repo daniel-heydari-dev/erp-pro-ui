@@ -92,12 +92,15 @@ const uiDocsLoaders: Record<UiCatalogSlug, ComponentLoader> = {
   skeleton: () => import("@/docs/ui-basics/SkeletonDoc"),
   "area-chart": () => import("@/docs/ui-basics/AreaChartDoc"),
   "bar-chart": () => import("@/docs/ui-basics/BarChartDoc"),
+  "positive-negative-bar-chart": () =>
+    import("@/docs/ui-basics/PositiveNegativeBarChartDoc"),
   "pie-chart": () => import("@/docs/ui-basics/PieChartDoc"),
   "neon-line-chart": () => import("@/docs/ui-basics/NeonLineChartDoc"),
   "stacked-bar-chart": () => import("@/docs/ui-basics/StackedBarChartDoc"),
   "thin-breakdown-bar": () => import("@/docs/ui-basics/ThinBreakdownBarDoc"),
   icons: () => import("@/docs/ui-basics/IconsDoc"),
   typography: () => import("@/docs/ui-basics/TypographyDoc"),
+  "truncated-text": () => import("@/docs/ui-basics/TruncatedTextDoc"),
 };
 
 type SharedUiCatalogItem = (typeof uiCatalogItems)[number];

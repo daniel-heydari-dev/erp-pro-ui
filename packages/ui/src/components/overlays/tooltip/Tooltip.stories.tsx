@@ -50,6 +50,83 @@ const meta: Meta<typeof Tooltip> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const basicTooltipSource = `import { Button, Tooltip } from 'erp-pro-ui';
+
+export function BasicTooltipExample() {
+  return (
+    <Tooltip content="Tooltip helper text">
+      <Button label="Hover over me" />
+    </Tooltip>
+  );
+}`;
+
+const tooltipPositionsSource = `import { Button, Tooltip } from 'erp-pro-ui';
+
+export function TooltipPositionsExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-8">
+      <Tooltip content="Tooltip on top" position="top"><Button label="Top" /></Tooltip>
+      <Tooltip content="Tooltip on right" position="right"><Button label="Right" /></Tooltip>
+      <Tooltip content="Tooltip on bottom" position="bottom"><Button label="Bottom" /></Tooltip>
+      <Tooltip content="Tooltip on left" position="left"><Button label="Left" /></Tooltip>
+    </div>
+  );
+}`;
+
+const clickTriggerSource = `import { Button, Tooltip } from 'erp-pro-ui';
+
+export function ClickTooltipExample() {
+  return (
+    <Tooltip
+      content="The approval policy blocks shipment until both finance and operations approve the order."
+      trigger="click"
+      position="bottom"
+    >
+      <Button label="Why is this locked?" />
+    </Tooltip>
+  );
+}`;
+
+const formHintSource = `import { Button, Tooltip } from 'erp-pro-ui';
+
+export function TooltipFormHintExample() {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-medium">Reorder threshold</span>
+        <Tooltip content="When stock drops below this count, the SKU appears in the replenishment queue.">
+          <Button aria-label="Threshold help" className="h-6 w-6 rounded-full px-0 py-0 text-xs font-semibold">?</Button>
+        </Tooltip>
+      </div>
+      <div className="rounded-md border px-3 py-2 text-sm text-muted-foreground">24 units</div>
+    </div>
+  );
+}`;
+
+const controlledTooltipSource = `import { useState } from 'react';
+import { Button, Tooltip } from 'erp-pro-ui';
+
+export function ControlledTooltipExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex items-center gap-3">
+      <Button onClick={() => setOpen((previous) => !previous)} primary>
+        {open ? 'Hide tooltip' : 'Show tooltip'}
+      </Button>
+      <Tooltip
+        content="Controlled tooltips are helpful when visibility follows external workflow state."
+        open={open}
+        onOpenChange={setOpen}
+        trigger="click"
+        position="right"
+      >
+        <Button label="Controlled target" />
+      </Tooltip>
+    </div>
+  );
+}`;
+
 /**
  * ## Default
  * Useful for conveying small supplementary descriptions.
@@ -65,6 +142,13 @@ export const Default: Story = {
       </Tooltip>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: basicTooltipSource,
+      },
+    },
+  },
 };
 
 /**
@@ -93,6 +177,13 @@ export const Positions: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: tooltipPositionsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -114,6 +205,13 @@ export const ClickTrigger: Story = {
       </Tooltip>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: clickTriggerSource,
+      },
+    },
+  },
 };
 
 /**
@@ -141,6 +239,13 @@ export const FormHint: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: formHintSource,
+      },
+    },
+  },
 };
 
 /**
@@ -173,5 +278,12 @@ export const ControlledVisibility: Story = {
         </div>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: controlledTooltipSource,
+      },
+    },
   },
 };

@@ -106,6 +106,145 @@ const meta: Meta<typeof PieChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const donutDistributionSource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const data: PieChartData[] = [
+  { name: 'Software', value: 420 },
+  { name: 'Hardware', value: 260 },
+  { name: 'Services', value: 210 },
+  { name: 'Cloud', value: 160 },
+];
+
+export function DonutDistributionExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['var(--ds-chart-1)', 'var(--ds-chart-2)', 'var(--ds-chart-3)', 'var(--ds-chart-4)']}
+      variant="donut"
+      height={320}
+      centerLabel="Visitors"
+    />
+  );
+}`;
+
+const compactStatusSplitSource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const data: PieChartData[] = [
+  { name: 'Resolved', value: 68 },
+  { name: 'Escalated', value: 18 },
+  { name: 'Pending', value: 14 },
+];
+
+export function CompactStatusSplitExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['var(--ds-chart-3)', 'var(--ds-chart-4)', 'var(--ds-chart-5)']}
+      variant="pie"
+      height={320}
+    />
+  );
+}`;
+
+const weeklyChannelDistributionSource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const data: PieChartData[] = [
+  { name: 'Desktop', value: 312 },
+  { name: 'Mobile', value: 284 },
+  { name: 'Tablet', value: 61 },
+  { name: 'Partner', value: 47 },
+];
+
+export function WeeklyChannelDistributionExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['var(--ds-chart-1)', 'var(--ds-chart-2)', 'var(--ds-chart-3)', 'var(--ds-chart-4)']}
+      variant="donut"
+      height={320}
+      centerLabel="Sessions"
+    />
+  );
+}`;
+
+const comparativePieSource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const weeklyData: PieChartData[] = [
+  { name: 'Desktop', value: 312 },
+  { name: 'Mobile', value: 284 },
+  { name: 'Tablet', value: 61 },
+];
+
+const monthlyData: PieChartData[] = [
+  { name: 'Retail', value: 428 },
+  { name: 'Marketplace', value: 316 },
+  { name: 'Wholesale', value: 218 },
+];
+
+const yearlyData: PieChartData[] = [
+  { name: 'Subscriptions', value: 52 },
+  { name: 'Services', value: 21 },
+  { name: 'Support', value: 15 },
+];
+
+export function ComparativePieChartsExample() {
+  return (
+    <div className="grid gap-4 xl:grid-cols-3">
+      <PieChart data={weeklyData} colors={['var(--ds-chart-1)', 'var(--ds-chart-2)', 'var(--ds-chart-4)']} variant="donut" height={250} centerLabel="Weekly" />
+      <PieChart data={monthlyData} colors={['var(--ds-chart-2)', 'var(--ds-chart-4)', 'var(--ds-chart-1)']} variant="donut" height={250} centerLabel="Monthly" />
+      <PieChart data={yearlyData} colors={['var(--ds-chart-3)', 'var(--ds-chart-2)', 'var(--ds-chart-4)']} variant="pie" height={250} />
+    </div>
+  );
+}`;
+
+const centerSummarySource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const data: PieChartData[] = [
+  { name: 'Retail', value: 428 },
+  { name: 'Marketplace', value: 316 },
+  { name: 'Wholesale', value: 218 },
+  { name: 'Direct', value: 164 },
+];
+
+export function PieChartCenterSummaryExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['var(--ds-chart-2)', 'var(--ds-chart-4)', 'var(--ds-chart-1)', 'var(--ds-chart-15)']}
+      variant="donut"
+      height={340}
+      centerLabel="Demand"
+    />
+  );
+}`;
+
+const customCenterSource = `import { PieChart, type PieChartData } from 'erp-pro-ui';
+
+const data: PieChartData[] = [
+  { name: 'Software', value: 420 },
+  { name: 'Hardware', value: 260 },
+  { name: 'Services', value: 210 },
+  { name: 'Cloud', value: 160 },
+];
+
+export function CustomPieChartCenterExample() {
+  return (
+    <PieChart
+      data={data}
+      colors={['var(--ds-chart-1)', 'var(--ds-chart-2)', 'var(--ds-chart-3)', 'var(--ds-chart-4)']}
+      variant="donut"
+      height={340}
+      centerLabel="Mix"
+      renderCenterContent={({ displayLabel, displayValue, valueFormatter }) => (
+        <div className="flex min-w-32 flex-col items-center rounded-2xl border px-4 py-3 text-center backdrop-blur-md">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">{displayLabel}</p>
+          <p className="mt-1 text-2xl font-semibold">{valueFormatter(displayValue)}</p>
+        </div>
+      )}
+    />
+  );
+}`;
+
 export const DonutDistribution: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
@@ -124,6 +263,7 @@ export const DonutDistribution: Story = {
       />
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: donutDistributionSource } } },
 };
 
 export const CompactStatusSplit: Story = {
@@ -137,6 +277,7 @@ export const CompactStatusSplit: Story = {
       />
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: compactStatusSplitSource } } },
 };
 
 export const WeeklyChannelDistribution: Story = {
@@ -158,6 +299,7 @@ export const WeeklyChannelDistribution: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: weeklyChannelDistributionSource } } },
 };
 
 export const ComparativeTimeRanges: Story = {
@@ -221,6 +363,7 @@ export const ComparativeTimeRanges: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: comparativePieSource } } },
 };
 
 export const CenterInsightSummary: Story = {
@@ -242,6 +385,7 @@ export const CenterInsightSummary: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: centerSummarySource } } },
 };
 
 export const CustomCenterContent: Story = {
@@ -300,4 +444,5 @@ export const CustomCenterContent: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: customCenterSource } } },
 };

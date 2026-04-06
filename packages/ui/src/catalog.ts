@@ -304,6 +304,12 @@ export const uiCatalogItems = [
     packageExportPath: "typography",
     storybookTitle: "Foundations/Typography",
   },
+  {
+    name: "Truncated Text",
+    slug: "truncated-text",
+    packageExportPath: "truncated-text",
+    storybookTitle: "Foundations/TruncatedText",
+  },
 ] as const satisfies readonly UiCatalogItem[];
 
 export type UiCatalogSlug = (typeof uiCatalogItems)[number]["slug"];

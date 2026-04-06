@@ -71,6 +71,9 @@ const componentDocSeeds = {
       "Searchable single-select control for long option lists and command-style pickers.",
     aliases: ["autocomplete", "search select"],
     related: ["select", "multiselect-combobox", "input"],
+    rootImport: "import { Combobox, type ComboboxOption } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Combobox, type ComboboxOption } from 'erp-pro-ui/combobox';",
   },
   button: {
     exportName: "Button",
@@ -133,6 +136,10 @@ const componentDocSeeds = {
       "Modal overlay for confirmations, destructive flows, and custom embedded forms.",
     aliases: ["modal"],
     related: ["drawer", "button", "toast"],
+    rootImport:
+      "import { Dialog, type DialogAnimation, type DialogVariant } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Dialog, type DialogAnimation, type DialogVariant } from 'erp-pro-ui/dialog';",
   },
   drawer: {
     exportName: "Drawer",
@@ -140,6 +147,9 @@ const componentDocSeeds = {
       "Slide-in panel for secondary workflows, detail panes, and mobile task flows.",
     aliases: ["sheet", "side panel"],
     related: ["dialog", "card", "tooltip"],
+    rootImport: "import { Drawer, type DrawerPosition } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Drawer, type DrawerPosition } from 'erp-pro-ui/drawer';",
   },
   alert: {
     exportName: "Alert",
@@ -147,6 +157,9 @@ const componentDocSeeds = {
       "Inline status banner with semantic variants for success, warning, info, and destructive states.",
     aliases: ["message banner"],
     related: ["toast", "loading", "skeleton"],
+    rootImport: "import { Alert, type AlertVariant } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Alert, type AlertVariant } from 'erp-pro-ui/alert';",
   },
   toast: {
     exportName: "ToastProvider",
@@ -154,9 +167,10 @@ const componentDocSeeds = {
       "Transient notification system exposed through ToastProvider and useToast for async feedback.",
     aliases: ["notification"],
     related: ["alert", "dialog", "loading"],
-    rootImport: "import { ToastProvider, useToast } from 'erp-pro-ui';",
+    rootImport:
+      "import { ToastProvider, useToast, type ToastPosition } from 'erp-pro-ui';",
     subpathImport:
-      "import { ToastProvider, useToast } from 'erp-pro-ui/toast';",
+      "import { ToastProvider, useToast, type ToastPosition } from 'erp-pro-ui/toast';",
   },
   tooltip: {
     exportName: "Tooltip",
@@ -164,6 +178,10 @@ const componentDocSeeds = {
       "Hover and focus overlay for concise contextual help without leaving the current view.",
     aliases: ["hint"],
     related: ["hover-card", "dialog", "drawer"],
+    rootImport:
+      "import { Tooltip, type TooltipPosition, type TooltipTrigger } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Tooltip, type TooltipPosition, type TooltipTrigger } from 'erp-pro-ui/tooltip';",
   },
   accordion: {
     exportName: "Accordion",
@@ -185,6 +203,10 @@ const componentDocSeeds = {
       "Visual progress indicator for guided workflows, checkouts, and multi-step forms.",
     aliases: ["wizard steps"],
     related: ["form", "chip", "loading"],
+    rootImport:
+      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperStepsItem } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperStepsItem } from 'erp-pro-ui/stepper';",
   },
   chip: {
     exportName: "Chip",
@@ -325,6 +347,10 @@ const componentDocSeeds = {
       "Form composition surface for validation-driven layouts and grouped input sections.",
     aliases: ["form wrapper"],
     related: ["input", "button", "stepper"],
+    rootImport:
+      "import { Form, FormActions, FormField, FormSection, InputGroup } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Form, FormActions, FormField, FormSection, InputGroup } from 'erp-pro-ui/form';",
   },
   "data-table": {
     exportName: "DataTable",
@@ -339,6 +365,10 @@ const componentDocSeeds = {
       "Unified loading surface exposing spinner, dots, pulse, bars, ring, bounce, wave, and skeleton variants.",
     aliases: ["loader", "progress indicator"],
     related: ["skeleton", "alert", "data-table"],
+    rootImport:
+      "import { Loading, Spinner, Dots, Pulse, Bars, Ring, Bounce, Wave, type LoadingSize, type LoadingVariant } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Loading, Spinner, Dots, Pulse, Bars, Ring, Bounce, Wave, type LoadingSize, type LoadingVariant } from 'erp-pro-ui/loading';",
   },
   skeleton: {
     exportName: "SkeletonComponent",
@@ -356,6 +386,9 @@ const componentDocSeeds = {
       "Gradient-filled area chart for trend storytelling and cumulative time-series views.",
     aliases: ["trend chart"],
     related: ["bar-chart", "neon-line-chart", "stacked-bar-chart"],
+    rootImport: "import { AreaChart, type AreaChartData } from 'erp-pro-ui';",
+    subpathImport:
+      "import { AreaChart, type AreaChartData } from 'erp-pro-ui/area-chart';",
   },
   "bar-chart": {
     exportName: "BarChart",
@@ -363,6 +396,9 @@ const componentDocSeeds = {
       "Bar chart for comparisons across categories, teams, or time buckets.",
     aliases: ["column chart"],
     related: ["area-chart", "stacked-bar-chart", "thin-breakdown-bar"],
+    rootImport: "import { BarChart, type BarChartData } from 'erp-pro-ui';",
+    subpathImport:
+      "import { BarChart, type BarChartData } from 'erp-pro-ui/bar-chart';",
   },
   "positive-negative-bar-chart": {
     exportName: "PositiveNegativeBarChart",
@@ -370,6 +406,10 @@ const componentDocSeeds = {
       "Signed bar chart for profit-loss swings, variance reporting, and delta views that pivot around zero.",
     aliases: ["variance chart", "profit loss chart"],
     related: ["bar-chart", "stacked-bar-chart", "area-chart"],
+    rootImport:
+      "import { PositiveNegativeBarChart, type PositiveNegativeBarChartData } from 'erp-pro-ui';",
+    subpathImport:
+      "import { PositiveNegativeBarChart, type PositiveNegativeBarChartData } from 'erp-pro-ui/positive-negative-bar-chart';",
   },
   "pie-chart": {
     exportName: "PieChart",
@@ -377,6 +417,9 @@ const componentDocSeeds = {
       "Pie and donut chart visualizations for part-to-whole comparisons with small category sets.",
     aliases: ["donut chart"],
     related: ["bar-chart", "thin-breakdown-bar", "color-palette"],
+    rootImport: "import { PieChart, type PieChartData } from 'erp-pro-ui';",
+    subpathImport:
+      "import { PieChart, type PieChartData } from 'erp-pro-ui/pie-chart';",
   },
   "neon-line-chart": {
     exportName: "NeonLineChart",
@@ -391,6 +434,10 @@ const componentDocSeeds = {
       "Stacked categorical chart for comparing totals and composition inside each bar.",
     aliases: ["stacked chart"],
     related: ["bar-chart", "thin-breakdown-bar", "area-chart"],
+    rootImport:
+      "import { StackedBarChart, type StackedBarData } from 'erp-pro-ui';",
+    subpathImport:
+      "import { StackedBarChart, type StackedBarData } from 'erp-pro-ui/stacked-bar-chart';",
   },
   "thin-breakdown-bar": {
     exportName: "ThinBreakdownBar",
@@ -398,6 +445,10 @@ const componentDocSeeds = {
       "Compact horizontal breakdown bar for inline composition summaries and KPI cards.",
     aliases: ["breakdown bar"],
     related: ["stacked-bar-chart", "pie-chart", "chip"],
+    rootImport:
+      "import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui';",
+    subpathImport:
+      "import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui/thin-breakdown-bar';",
   },
   icons: {
     summary:
@@ -415,6 +466,17 @@ const componentDocSeeds = {
       "Semantic text component with heading, body, caption, alignment, weight, and gradient options.",
     aliases: ["text"],
     related: ["color-palette", "icons", "button"],
+  },
+  "truncated-text": {
+    exportName: "TruncatedText",
+    summary:
+      "Reusable text primitive for single-line and multi-line ellipsis with width constraints and optional hover title support.",
+    aliases: ["line clamp", "ellipsis", "truncate"],
+    related: ["typography", "chip", "input"],
+    rootImport:
+      "import { TruncatedText, type TruncatedTextProps } from 'erp-pro-ui';",
+    subpathImport:
+      "import { TruncatedText, type TruncatedTextProps } from 'erp-pro-ui/truncated-text';",
   },
 } as const satisfies Record<UiCatalogSlug, ComponentDocSeed>;
 

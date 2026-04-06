@@ -71,7 +71,9 @@ const categories = [
   { key: 'expenses', color: '#ff4c51' },
 ];
 
-<AreaChart data={data} categories={categories} height={360} />`}
+export function RevenueAreaChartExample() {
+  return <AreaChart data={data} categories={categories} height={360} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Multi-Series Demand Tracking</h2>
@@ -92,15 +94,27 @@ const categories = [
       </div>
 
       <CodeBlock
-        code={`<AreaChart
-  data={demandData}
-  categories={[
-    { key: 'inbound', color: '#00cfe8' },
-    { key: 'outbound', color: '#28c76f' },
-    { key: 'returns', color: '#ff9f43' },
-  ]}
-  height={360}
-/>`}
+        code={`import { AreaChart, AreaChartData } from 'erp-pro-ui';
+
+const demandData: AreaChartData[] = [
+  { name: 'Week 1', inbound: 120, outbound: 90, returns: 22 },
+  { name: 'Week 2', inbound: 148, outbound: 106, returns: 26 },
+  { name: 'Week 3', inbound: 166, outbound: 124, returns: 20 },
+];
+
+export function DemandTrackingAreaChartExample() {
+  return (
+    <AreaChart
+      data={demandData}
+      categories={[
+        { key: 'inbound', color: '#00cfe8' },
+        { key: 'outbound', color: '#28c76f' },
+        { key: 'returns', color: '#ff9f43' },
+      ]}
+      height={360}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Minimal Presentation</h2>
@@ -122,12 +136,24 @@ const categories = [
       </div>
 
       <CodeBlock
-        code={`<AreaChart
-  data={financeData}
-  categories={[{ key: 'revenue', color: '#7367f0' }]}
-  height={320}
-  showGrid={false}
-/>`}
+        code={`import { AreaChart, AreaChartData } from 'erp-pro-ui';
+
+const financeData: AreaChartData[] = [
+  { name: 'Jan', revenue: 4200 },
+  { name: 'Feb', revenue: 3950 },
+  { name: 'Mar', revenue: 4600 },
+];
+
+export function MinimalAreaChartExample() {
+  return (
+    <AreaChart
+      data={financeData}
+      categories={[{ key: 'revenue', color: '#7367f0' }]}
+      height={320}
+      showGrid={false}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

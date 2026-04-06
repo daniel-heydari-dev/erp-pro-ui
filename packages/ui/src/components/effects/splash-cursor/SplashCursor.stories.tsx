@@ -45,6 +45,61 @@ function CanvasFrame({
   );
 }
 
+const splashHeroSource = `import { SplashCursor } from 'erp-pro-ui';
+
+export function HeroSplashCursorExample() {
+  return (
+    <SplashCursor
+      variant="splash"
+      particleCount={20}
+      duration={1000}
+      className="h-full w-full overflow-hidden rounded-[22px] border border-white/10"
+    >
+      <div className="pointer-events-none flex h-full flex-col items-center justify-center px-6 text-center">
+        <h2 className="text-4xl font-semibold text-white md:text-6xl">
+          Move across the surface and click to burst particles.
+        </h2>
+      </div>
+    </SplashCursor>
+  );
+}`;
+
+const splashVariantGallerySource = `import { SplashCursor } from 'erp-pro-ui';
+
+export function SplashCursorVariantGalleryExample() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <SplashCursor variant="trail" particleCount={20} className="flex h-[220px] items-center justify-center rounded-[20px] border">Trail</SplashCursor>
+      <SplashCursor variant="ripple" size="lg" className="flex h-[220px] items-center justify-center rounded-[20px] border">Ripple</SplashCursor>
+      <SplashCursor variant="glow" blur={20} className="flex h-[220px] items-center justify-center rounded-[20px] border">Glow</SplashCursor>
+      <SplashCursor variant="splash" particleCount={30} duration={1200} className="flex h-[220px] items-center justify-center rounded-[20px] border">Splash</SplashCursor>
+    </div>
+  );
+}`;
+
+const splashBrandSource = `import { Button, SplashCursor } from 'erp-pro-ui';
+
+export function BrandedSplashCursorExample() {
+  return (
+    <SplashCursor
+      color="var(--ds-color-accent)"
+      secondaryColor="var(--ds-color-accent-hover)"
+      size="lg"
+      particleCount={15}
+      variant="trail"
+      blur={6}
+      className="flex h-full w-full items-center justify-center rounded-[22px] border border-border"
+    >
+      <div className="pointer-events-none flex flex-col items-center gap-4 text-center">
+        <div className="rounded-full bg-background px-6 py-3 shadow-md">
+          <span className="font-semibold text-foreground">Branded particle styling</span>
+        </div>
+        <Button label="Primary Action" primary className="pointer-events-auto" />
+      </div>
+    </SplashCursor>
+  );
+}`;
+
 export const HeroInteraction: Story = {
   args: { variant: "splash" },
   render: (args) => (
@@ -73,6 +128,7 @@ export const HeroInteraction: Story = {
       </CanvasFrame>
     </div>
   ),
+  parameters: { docs: { source: { code: splashHeroSource } } },
 };
 
 export const VariantGallery: Story = {
@@ -128,6 +184,7 @@ export const VariantGallery: Story = {
       ))}
     </div>
   ),
+  parameters: { docs: { source: { code: splashVariantGallerySource } } },
 };
 
 export const BrandCustomization: Story = {
@@ -159,4 +216,5 @@ export const BrandCustomization: Story = {
       </CanvasFrame>
     </div>
   ),
+  parameters: { docs: { source: { code: splashBrandSource } } },
 };

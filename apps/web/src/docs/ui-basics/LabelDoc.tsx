@@ -51,13 +51,25 @@ const LabelDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<Label htmlFor="projectName" required>Project name</Label>
-<Input id="projectName" />
+        code={`import { Checkbox, Input, Label } from 'erp-pro-ui';
 
-<div className="flex items-center space-x-2">
-  <Checkbox id="terms" />
-  <Label htmlFor="terms">Accept terms</Label>
-</div>`}
+export function LabelPatterns() {
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-1.5">
+        <Label htmlFor="projectName" required>
+          Project name
+        </Label>
+        <Input id="projectName" />
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Checkbox id="terms" />
+        <Label htmlFor="terms">Accept terms</Label>
+      </div>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

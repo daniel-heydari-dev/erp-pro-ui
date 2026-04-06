@@ -77,6 +77,63 @@ const meta: Meta<typeof ThinBreakdownBar> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const allocationOverviewSource = `import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui';
+
+const data: BreakdownSegment[] = [
+  { label: 'Compute', value: 45, color: 'var(--ds-chart-1)' },
+  { label: 'Database', value: 25, color: 'var(--ds-chart-2)' },
+  { label: 'Queues', value: 15, color: 'var(--ds-chart-3)' },
+  { label: 'Storage', value: 10, color: 'var(--ds-chart-4)' },
+  { label: 'Other', value: 5, color: 'var(--ds-chart-5)' },
+];
+
+export function AllocationOverviewExample() {
+  return <ThinBreakdownBar data={data} />;
+}`;
+
+const compactCapacitySource = `import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui';
+
+const warehouseA: BreakdownSegment[] = [
+  { label: 'Available', value: 58, color: 'var(--ds-chart-3)' },
+  { label: 'Reserved', value: 27, color: 'var(--ds-chart-1)' },
+  { label: 'Blocked', value: 15, color: 'var(--ds-chart-4)' },
+];
+
+const warehouseB: BreakdownSegment[] = [
+  { label: 'Available', value: 36, color: 'var(--ds-chart-3)' },
+  { label: 'Reserved', value: 44, color: 'var(--ds-chart-1)' },
+  { label: 'Blocked', value: 20, color: 'var(--ds-chart-4)' },
+];
+
+export function CapacityRowsExample() {
+  return (
+    <div className="space-y-4">
+      <ThinBreakdownBar data={warehouseA} showLabels={false} />
+      <ThinBreakdownBar data={warehouseB} showLabels={false} />
+    </div>
+  );
+}`;
+
+const interactiveSummarySource = `import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui';
+
+const trafficMix: BreakdownSegment[] = [
+  { label: 'Desktop', value: 7324, color: 'var(--ds-chart-1)' },
+  { label: 'Mobile', value: 7250, color: 'var(--ds-chart-2)' },
+  { label: 'Tablet', value: 1180, color: 'var(--ds-chart-4)' },
+  { label: 'Other', value: 420, color: 'var(--ds-chart-15)' },
+];
+
+export function InteractiveBreakdownSummaryExample() {
+  return (
+    <ThinBreakdownBar
+      data={trafficMix}
+      showSummary
+      summaryLabel="Weekly sessions"
+      valueFormatter={(value) => (value >= 1000 ? String((value / 1000).toFixed(1)) + 'k' : String(value))}
+    />
+  );
+}`;
+
 export const AllocationOverview: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
@@ -89,6 +146,7 @@ export const AllocationOverview: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: allocationOverviewSource } } },
 };
 
 export const CompactCapacityRows: Story = {
@@ -109,6 +167,7 @@ export const CompactCapacityRows: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: compactCapacitySource } } },
 };
 
 export const InteractiveSummary: Story = {
@@ -128,4 +187,5 @@ export const InteractiveSummary: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: interactiveSummarySource } } },
 };

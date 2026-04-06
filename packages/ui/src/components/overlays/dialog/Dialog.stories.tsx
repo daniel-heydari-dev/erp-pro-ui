@@ -73,7 +73,184 @@ type Story = StoryObj<typeof meta>;
 
 type DialogStoryProps = Omit<DialogProps, "open" | "onOpenChange">;
 
-function DialogDemo(props: DialogStoryProps) {
+const confirmationFlowSource = `import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
+
+export function ConfirmationFlow() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open confirmation" primary onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Edit profile"
+        description="Make changes to your profile here. Click save when you're done."
+        preset="confirm"
+      />
+    </>
+  );
+}`;
+
+const destructiveReviewSource = `import { useState } from 'react';
+import { Button, Dialog, type DialogVariant } from 'erp-pro-ui';
+
+const variant: DialogVariant = 'destructive';
+
+export function DestructiveReviewFlow() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Delete account" onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Delete account"
+        description="This action cannot be undone."
+        preset="confirm"
+        variant={variant}
+        confirmLabel="Delete forever"
+      />
+    </>
+  );
+}`;
+
+const motionPresetsSource = `import { useState } from 'react';
+import {
+  Button,
+  Dialog,
+  type DialogAnimation,
+} from 'erp-pro-ui';
+
+const animations: DialogAnimation[] = ['scale', 'bounce', 'flip'];
+
+export function MotionPresets() {
+  const [openAnimation, setOpenAnimation] = useState<DialogAnimation | null>(null);
+
+  return (
+    <>
+      <div className="flex flex-wrap gap-3">
+        {animations.map((animation) => (
+          <Button
+            key={animation}
+            label={animation}
+            onClick={() => setOpenAnimation(animation)}
+          />
+        ))}
+      </div>
+
+      <Dialog
+        open={openAnimation !== null}
+        onOpenChange={(nextOpen) => {
+          if (!nextOpen) {
+            setOpenAnimation(null);
+          }
+        }}
+        title="Motion preset"
+        description="Preview the selected dialog entrance animation."
+        preset="alert"
+        animation={openAnimation ?? 'scale'}
+      />
+    </>
+  );
+}`;
+
+const alertNoticeSource = `import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
+
+export function AlertNoticeFlow() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open alert" onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Inventory sync complete"
+        description="All branch counts have been reconciled and the queue is ready for the next import."
+        preset="alert"
+        variant="success"
+        confirmLabel="Continue"
+      />
+    </>
+  );
+}`;
+
+const customPolicySource = `import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
+
+export function CustomPolicyDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Create approval policy" primary onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Create approval policy"
+        description="Define who needs to sign off before a transfer is released."
+        preset="custom"
+        widthClassName="max-w-2xl"
+        footer={
+          <div className="flex justify-end gap-3">
+            <Button label="Cancel" onClick={() => setOpen(false)} />
+            <Button label="Save policy" primary onClick={() => setOpen(false)} />
+          </div>
+        }
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4">
+            <p className="text-sm font-medium text-neutral-900">Trigger</p>
+            <p className="mt-1 text-sm text-neutral-500">Transfer amount exceeds $5,000.</p>
+          </div>
+          <div className="rounded-lg border border-neutral-200 bg-neutral-100 p-4">
+            <p className="text-sm font-medium text-neutral-900">Approvers</p>
+            <p className="mt-1 text-sm text-neutral-500">Operations lead, finance controller.</p>
+          </div>
+        </div>
+      </Dialog>
+    </>
+  );
+}`;
+
+const asyncConfirmSource = `import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
+
+export function AsyncConfirmFlow() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <>
+      <Button label="Open async confirm" primary onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Confirm transfer"
+        description="Approve this transfer to release inventory from reserve stock."
+        preset="confirm"
+        variant="warning"
+        confirmLabel="Approve transfer"
+        loading={loading}
+        closeOnOverlay={!loading}
+        showClose={!loading}
+        onConfirm={() => {
+          setLoading(true);
+          window.setTimeout(() => {
+            setLoading(false);
+            setOpen(false);
+          }, 1200);
+        }}
+      />
+    </>
+  );
+}`;
+
+function DialogPreview(props: DialogStoryProps) {
   const [open, setOpen] = useState(false);
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
@@ -90,13 +267,21 @@ function DialogDemo(props: DialogStoryProps) {
  * Useful for asking user permission before continuing an action.
  */
 export const Default: Story = {
+  name: "Confirmation Flow",
   render: () => (
-    <DialogDemo
+    <DialogPreview
       title="Edit Profile"
       description="Make changes to your profile here. Click save when you're done."
       preset="confirm"
     />
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: confirmationFlowSource,
+      },
+    },
+  },
 };
 
 /**
@@ -104,8 +289,9 @@ export const Default: Story = {
  * Warn the user before they do something irreversible.
  */
 export const Destructive: Story = {
+  name: "Destructive Review Flow",
   render: () => (
-    <DialogDemo
+    <DialogPreview
       title="Delete Account"
       description="Are you absolutely sure you want to delete your account? This action cannot be undone."
       preset="confirm"
@@ -113,6 +299,13 @@ export const Destructive: Story = {
       confirmLabel="Delete forever"
     />
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: destructiveReviewSource,
+      },
+    },
+  },
 };
 
 /**
@@ -120,19 +313,31 @@ export const Destructive: Story = {
  * The Dialog supports numerous robust Framer Motion animations.
  */
 export const Animations: Story = {
+  name: "Motion Presets",
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-3xl">
       <div className="ui:flex ui:flex-wrap ui:gap-4">
-        <DialogDemo title="Scale Animation" animation="scale" preset="alert" />
-        <DialogDemo
+        <DialogPreview
+          title="Scale Animation"
+          animation="scale"
+          preset="alert"
+        />
+        <DialogPreview
           title="Bounce Animation"
           animation="bounce"
           preset="alert"
         />
-        <DialogDemo title="Flip Animation" animation="flip" preset="alert" />
+        <DialogPreview title="Flip Animation" animation="flip" preset="alert" />
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: motionPresetsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -140,8 +345,9 @@ export const Animations: Story = {
  * Good for informational dialogs that only need a single acknowledgement action.
  */
 export const AlertNotice: Story = {
+  name: "Alert Notice",
   render: () => (
-    <DialogDemo
+    <DialogPreview
       title="Inventory sync complete"
       description="All branch counts have been reconciled and the queue is ready for the next import."
       preset="alert"
@@ -149,6 +355,13 @@ export const AlertNotice: Story = {
       confirmLabel="Continue"
     />
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: alertNoticeSource,
+      },
+    },
+  },
 };
 
 /**
@@ -156,8 +369,9 @@ export const AlertNotice: Story = {
  * Demonstrates a richer body and custom footer for embedded form flows.
  */
 export const CustomContent: Story = {
+  name: "Custom Policy Dialog",
   render: () => (
-    <DialogDemo
+    <DialogPreview
       title="Create approval policy"
       description="Define who needs to sign off before a transfer is released."
       preset="custom"
@@ -187,8 +401,15 @@ export const CustomContent: Story = {
           </p>
         </div>
       </div>
-    </DialogDemo>
+    </DialogPreview>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: customPolicySource,
+      },
+    },
+  },
 };
 
 /**
@@ -196,6 +417,7 @@ export const CustomContent: Story = {
  * Simulates a confirm action that briefly enters a loading state.
  */
 export const AsyncConfirm: Story = {
+  name: "Async Confirm Flow",
   render: () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -227,5 +449,12 @@ export const AsyncConfirm: Story = {
         />
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: asyncConfirmSource,
+      },
+    },
   },
 };

@@ -56,16 +56,16 @@ const ChromaGridDoc = () => {
         code={`import { ChromaGrid } from 'erp-pro-ui';
 
 const items = [
-  { id: '1', title: 'Design', icon: '🎨' },
-  { id: '2', title: 'Performance', icon: '⚡' },
-  // ...
+  { id: '1', title: 'Design', description: 'Clean and modern UI', icon: '🎨' },
+  { id: '2', title: 'Performance', description: 'Blazing fast speed', icon: '⚡' },
+  { id: '3', title: 'Security', description: 'Enterprise protection', icon: '🔒', size: 2 as const },
 ];
 
-<ChromaGrid
-  items={items}
-  columns={3}
-  animation="wave"
-/>`}
+export function BasicChromaGridExample() {
+  return (
+    <ChromaGrid items={items} columns={3} variant="gradient" animation="wave" />
+  );
+}`}
       />
 
       {/* Variants & Layout */}
@@ -85,12 +85,27 @@ const items = [
       </div>
 
       <CodeBlock
-        code={`<ChromaGrid
-  items={items}
-  variant="glass"
-  hoverEffect="tilt"
-  gap={20}
-/>`}
+        code={`import { ChromaGrid } from 'erp-pro-ui';
+
+const items = [
+  { id: '1', title: 'Design', description: 'Clean and modern UI', icon: '🎨' },
+  { id: '2', title: 'Performance', description: 'Blazing fast speed', icon: '⚡' },
+  { id: '3', title: 'Quality', description: 'Best-in-class code', icon: '🏆' },
+  { id: '4', title: 'Security', description: 'Enterprise protection', icon: '🔒', size: 2 as const },
+];
+
+export function GlassChromaGridExample() {
+  return (
+    <ChromaGrid
+      items={items}
+      columns={3}
+      gap={20}
+      variant="glass"
+      hoverEffect="tilt"
+      spotlight
+    />
+  );
+}`}
       />
 
       {/* Animations */}
@@ -108,7 +123,28 @@ const items = [
         />
       </div>
 
-      <CodeBlock code={`<ChromaGrid animation="pulse" staggerDelay={150} />`} />
+      <CodeBlock
+        code={`import { ChromaGrid } from 'erp-pro-ui';
+
+const pulseItems = [
+  { id: 'north', title: 'North', description: '12 campaigns live', icon: '🧭' },
+  { id: 'south', title: 'South', description: '8 regional promos', icon: '📣' },
+  { id: 'east', title: 'East', description: '3 launches queued', icon: '🚀' },
+  { id: 'west', title: 'West', description: '9 enterprise demos', icon: '🛰️' },
+];
+
+export function PulseChromaGridExample() {
+  return (
+    <ChromaGrid
+      items={pulseItems}
+      columns={4}
+      animation="pulse"
+      staggerDelay={150}
+      minHeight={150}
+    />
+  );
+}`}
+      />
 
       {/* Props Reference */}
       <h2 className="docs-category-subtitle">Props</h2>

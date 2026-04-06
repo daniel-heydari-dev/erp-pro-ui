@@ -28,9 +28,13 @@ const SplashCursorDoc = () => {
       <CodeBlock
         code={`import { SplashCursor } from 'erp-pro-ui';
 
-<SplashCursor className="h-100">
-  <div>Content inside the interactive area</div>
-</SplashCursor>`}
+export function BasicSplashCursorExample() {
+  return (
+    <SplashCursor className="flex h-100 w-full items-center justify-center rounded-xl border border-dashed">
+      <div>Content inside the interactive area</div>
+    </SplashCursor>
+  );
+}`}
       />
 
       {/* Variants */}
@@ -90,9 +94,18 @@ const SplashCursorDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<SplashCursor variant="trail" />
-<SplashCursor variant="ripple" />
-<SplashCursor variant="glow" blur={20} />`}
+        code={`import { SplashCursor } from 'erp-pro-ui';
+
+export function SplashCursorVariantsExample() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <SplashCursor variant="trail" className="h-50 rounded-xl border">Trail</SplashCursor>
+      <SplashCursor variant="ripple" className="h-50 rounded-xl border">Ripple</SplashCursor>
+      <SplashCursor variant="glow" blur={20} className="h-50 rounded-xl border">Glow</SplashCursor>
+      <SplashCursor variant="splash" particleCount={30} duration={1200} className="h-50 rounded-xl border">Splash</SplashCursor>
+    </div>
+  );
+}`}
       />
 
       {/* Custom Colors */}
@@ -115,12 +128,23 @@ const SplashCursorDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<SplashCursor
-  color="#ff0080"
-  secondaryColor="#7928ca"
-  size="lg"
-  particleCount={15}
-/>`}
+        code={`import { SplashCursor } from 'erp-pro-ui';
+
+export function CustomSplashCursorExample() {
+  return (
+    <SplashCursor
+      color="#ff0080"
+      secondaryColor="#7928ca"
+      size="lg"
+      particleCount={15}
+      className="flex h-75 w-full items-center justify-center"
+    >
+      <div className="rounded-full bg-white px-6 py-3 font-bold text-accent shadow-lg">
+        Custom Style
+      </div>
+    </SplashCursor>
+  );
+}`}
       />
 
       {/* Props Reference */}

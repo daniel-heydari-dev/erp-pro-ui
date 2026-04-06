@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { StorySurface } from "../../shared/storybook";
 import { Accordion } from "./Accordion";
+import type { AccordionItemConfig } from "./types";
 
 const meta: Meta<typeof Accordion> = {
   title: "Layout/Accordion",
@@ -38,7 +39,7 @@ const meta: Meta<typeof Accordion> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const sampleItems = [
+const sampleItems: AccordionItemConfig[] = [
   {
     id: "1",
     title: "What is this framework?",
@@ -60,6 +61,100 @@ const sampleItems = [
   },
 ];
 
+const defaultAccordionSource = `import { Accordion, type AccordionItemConfig } from "erp-pro-ui";
+
+const items: AccordionItemConfig[] = [
+  {
+    id: "1",
+    title: "What is this framework?",
+    description: "A fast overview of our ecosystem.",
+    content:
+      "This is a custom accordion built with React and styled with Tailwind CSS and Framer Motion transitions.",
+  },
+  {
+    id: "2",
+    title: "Can I use it for commercial projects?",
+    content:
+      "Yes, the entire UI kit is MIT licensed and can be used in commercial products.",
+  },
+  {
+    id: "3",
+    title: "Is this item disabled?",
+    disabled: true,
+    content: "This section is intentionally disabled.",
+  },
+];
+
+export function DefaultAccordionExample() {
+  return <Accordion items={items} />;
+}`;
+
+const separatedAccordionSource = `import { Accordion, type AccordionItemConfig } from "erp-pro-ui";
+
+const items: AccordionItemConfig[] = [
+  {
+    id: "1",
+    title: "What is this framework?",
+    description: "A fast overview of our ecosystem.",
+    content:
+      "This is a custom accordion built with React and styled with Tailwind CSS and Framer Motion transitions.",
+  },
+  {
+    id: "2",
+    title: "Can I use it for commercial projects?",
+    content:
+      "Yes, the entire UI kit is MIT licensed and can be used in commercial products.",
+  },
+  {
+    id: "3",
+    title: "Is this item disabled?",
+    disabled: true,
+    content: "This section is intentionally disabled.",
+  },
+];
+
+export function SeparatedAccordionExample() {
+  return <Accordion items={items} separated />;
+}`;
+
+const controlledAccordionSource = `import { useState } from "react";
+import { Accordion, type AccordionItemConfig } from "erp-pro-ui";
+
+const items: AccordionItemConfig[] = [
+  {
+    id: "1",
+    title: "What is this framework?",
+    description: "A fast overview of our ecosystem.",
+    content:
+      "This is a custom accordion built with React and styled with Tailwind CSS and Framer Motion transitions.",
+  },
+  {
+    id: "2",
+    title: "Can I use it for commercial projects?",
+    content:
+      "Yes, the entire UI kit is MIT licensed and can be used in commercial products.",
+  },
+  {
+    id: "3",
+    title: "Is this item disabled?",
+    disabled: true,
+    content: "This section is intentionally disabled.",
+  },
+];
+
+export function ControlledMultiOpenExample() {
+  const [openIds, setOpenIds] = useState<string[]>(["1"]);
+
+  return (
+    <Accordion
+      items={items}
+      type="multiple"
+      value={openIds}
+      onValueChange={setOpenIds}
+    />
+  );
+}`;
+
 /**
  * ## Default Accordion
  * Displays an interactive list of items. By default, it operates in 'single' mode (only one section open at a time).
@@ -68,13 +163,12 @@ export const Default: Story = {
   args: {
     items: sampleItems,
   },
-  decorators: [
-    (StoryFn) => (
-      <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-        <StoryFn />
-      </StorySurface>
-    ),
-  ],
+  render: (args) => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-lg">
+      <Accordion items={args.items} />
+    </StorySurface>
+  ),
+  parameters: { docs: { source: { code: defaultAccordionSource } } },
 };
 
 /**
@@ -86,13 +180,12 @@ export const SeparatedStyles: Story = {
     items: sampleItems,
     separated: true,
   },
-  decorators: [
-    (StoryFn) => (
-      <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-        <StoryFn />
-      </StorySurface>
-    ),
-  ],
+  render: (args) => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-lg">
+      <Accordion items={args.items} separated={args.separated} />
+    </StorySurface>
+  ),
+  parameters: { docs: { source: { code: separatedAccordionSource } } },
 };
 
 /**
@@ -114,4 +207,5 @@ export const ControlledMultiOpen: Story = {
       </StorySurface>
     );
   },
+  parameters: { docs: { source: { code: controlledAccordionSource } } },
 };

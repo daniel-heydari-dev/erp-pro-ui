@@ -33,6 +33,62 @@ const meta: Meta<typeof Loading> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const defaultLoadingSource = `import { Loading } from 'erp-pro-ui';
+
+export function DefaultLoadingExample() {
+  return <Loading variant="spinner" size="md" color="#3b82f6" />;
+}`;
+
+const loadingVariationsSource = `import { Loading } from 'erp-pro-ui';
+
+export function LoadingVariationsExample() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <Loading variant="spinner" size="lg" />
+      <Loading variant="dots" size="lg" />
+      <Loading variant="pulse" size="lg" />
+      <Loading variant="bars" size="lg" />
+      <Loading variant="ring" size="lg" />
+      <Loading variant="bounce" size="lg" />
+      <Loading variant="wave" size="lg" />
+      <Loading variant="skeleton" skeletonWidth="5rem" skeletonHeight="1rem" />
+    </div>
+  );
+}`;
+
+const loadingWithTextSource = `import { Loading } from 'erp-pro-ui';
+
+export function LoadingWithTextExample() {
+  return <Loading variant="dots" text="Syncing your workspace..." color="#000000" />;
+}`;
+
+const inlineStatusSource = `import { Loading } from 'erp-pro-ui';
+
+export function LoadingStatusGridExample() {
+  return (
+    <div className="grid gap-4 lg:grid-cols-3">
+      <Loading variant="spinner" text="Saving supplier profile" />
+      <Loading variant="ring" size="lg" text="Generating weekly summary" textPosition="bottom" />
+      <Loading variant="wave" color="#00cfe8" text="Publishing branch updates" />
+    </div>
+  );
+}`;
+
+const loadingOverlaySource = `import { Loading } from 'erp-pro-ui';
+
+export function LoadingOverlayExample() {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border bg-card">
+      <div className="grid gap-3 p-6 md:grid-cols-3">
+        <div className="rounded-xl border p-4">Pending approvals</div>
+        <div className="rounded-xl border p-4">Transfers queued</div>
+        <div className="rounded-xl border p-4">Branch sync</div>
+      </div>
+      <Loading overlay variant="dots" size="lg" text="Refreshing operations queue" />
+    </div>
+  );
+}`;
+
 /**
  * ## Default
  * An essential loading spinner for generic asynchronous actions.
@@ -50,6 +106,13 @@ export const Default: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: defaultLoadingSource,
+      },
+    },
+  },
 };
 
 /**
@@ -97,6 +160,13 @@ export const Variations: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: loadingVariationsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -116,6 +186,13 @@ export const WithText: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: loadingWithTextSource,
+      },
+    },
+  },
 };
 
 /**
@@ -147,6 +224,13 @@ export const InlineStatusMessaging: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: inlineStatusSource,
+      },
+    },
+  },
 };
 
 /**
@@ -180,4 +264,11 @@ export const ContainedOverlay: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: loadingOverlaySource,
+      },
+    },
+  },
 };

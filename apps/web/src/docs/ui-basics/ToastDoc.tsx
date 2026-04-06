@@ -57,7 +57,7 @@ const ToastDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { useToast } from 'erp-pro-ui';
+        code={`import { Button, useToast } from 'erp-pro-ui';
 
 const Component = () => {
   const { toast } = useToast();
@@ -126,10 +126,20 @@ export function AppRoot() {
       </div>
 
       <CodeBlock
-        code={`const { success, error, warning, info } = useToast();
+        code={`import { Button, useToast } from 'erp-pro-ui';
 
-<Button onClick={() => success({ title: 'Success', description: '...' })} />
-<Button onClick={() => error({ title: 'Error', description: '...' })} />`}
+export function ToastVariants() {
+  const { success, error, warning, info } = useToast();
+
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Button label="Success" onClick={() => success({ title: 'Success', description: 'Operation completed successfully.' })} />
+      <Button label="Error" onClick={() => error({ title: 'Error', description: 'Something went wrong.' })} />
+      <Button label="Warning" onClick={() => warning({ title: 'Warning', description: 'Please review your input.' })} />
+      <Button label="Info" onClick={() => info({ title: 'Info', description: 'New updates available.' })} />
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Promise Handling</h2>
@@ -142,13 +152,29 @@ export function AppRoot() {
       </div>
 
       <CodeBlock
-        code={`const { promise } = useToast();
+        code={`import { Button, useToast } from 'erp-pro-ui';
 
-promise(myPromise, {
-  loading: 'Loading data...',
-  success: (data) => \`Loaded \${data.name}\`,
-  error: 'Error loading data',
-});`}
+export function PromiseToastDemo() {
+  const { promise } = useToast();
+
+  return (
+    <Button
+      label="Trigger async action"
+      primary
+      onClick={() => {
+        const task = new Promise<{ name: string }>((resolve) => {
+          window.setTimeout(() => resolve({ name: 'Success Data' }), 2000);
+        });
+
+        void promise(task, {
+          loading: 'Loading data...',
+          success: (data) => 'Loaded ' + data.name,
+          error: 'Error loading data',
+        }).catch(() => undefined);
+      }}
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Positions</h2>
@@ -185,10 +211,17 @@ promise(myPromise, {
       </div>
 
       <CodeBlock
-        code={`// In App.tsx
-<ToastProvider position="top-right">
-  <App />
-</ToastProvider>`}
+        code={`import { ToastProvider, type ToastPosition } from 'erp-pro-ui';
+
+const position: ToastPosition = 'top-right';
+
+export function AppRoot() {
+  return (
+    <ToastProvider position={position}>
+      <App />
+    </ToastProvider>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

@@ -120,6 +120,121 @@ const meta: Meta<typeof AreaChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const revenueVsExpensesSource = `import { AreaChart, type AreaChartData } from 'erp-pro-ui';
+
+const data: AreaChartData[] = [
+  { name: 'Jan', revenue: 4200, expenses: 2500 },
+  { name: 'Feb', revenue: 3950, expenses: 2200 },
+  { name: 'Mar', revenue: 4600, expenses: 2800 },
+];
+
+export function RevenueVsExpensesExample() {
+  return (
+    <AreaChart
+      data={data}
+      categories={[
+        { key: 'revenue', color: 'var(--ds-chart-1)' },
+        { key: 'expenses', color: 'var(--ds-chart-5)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const multiSeriesAreaSource = `import { AreaChart, type AreaChartData } from 'erp-pro-ui';
+
+const data: AreaChartData[] = [
+  { name: 'Week 1', inbound: 120, outbound: 90, returns: 22 },
+  { name: 'Week 2', inbound: 148, outbound: 106, returns: 26 },
+  { name: 'Week 3', inbound: 166, outbound: 124, returns: 20 },
+];
+
+export function MultiSeriesAreaChartExample() {
+  return (
+    <AreaChart
+      data={data}
+      categories={[
+        { key: 'inbound', color: 'var(--ds-chart-2)' },
+        { key: 'outbound', color: 'var(--ds-chart-3)' },
+        { key: 'returns', color: 'var(--ds-chart-4)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const minimalAreaSource = `import { AreaChart, type AreaChartData } from 'erp-pro-ui';
+
+const data: AreaChartData[] = [
+  { name: 'Jan', revenue: 4200 },
+  { name: 'Feb', revenue: 3950 },
+  { name: 'Mar', revenue: 4600 },
+];
+
+export function MinimalAreaChartExample() {
+  return (
+    <AreaChart
+      data={data}
+      categories={[{ key: 'revenue', color: 'var(--ds-chart-1)' }]}
+      height={320}
+      showGrid={false}
+    />
+  );
+}`;
+
+const weeklyFlowSource = `import { AreaChart, type AreaChartData } from 'erp-pro-ui';
+
+const data: AreaChartData[] = [
+  { name: 'Mon', orders: 128, shipped: 110 },
+  { name: 'Tue', orders: 144, shipped: 119 },
+  { name: 'Wed', orders: 162, shipped: 141 },
+  { name: 'Thu', orders: 158, shipped: 148 },
+  { name: 'Fri', orders: 176, shipped: 163 },
+];
+
+export function WeeklyFlowAreaChartExample() {
+  return (
+    <AreaChart
+      data={data}
+      categories={[
+        { key: 'orders', color: 'var(--ds-chart-2)' },
+        { key: 'shipped', color: 'var(--ds-chart-3)' },
+      ]}
+      height={360}
+    />
+  );
+}`;
+
+const comparativeAreaSource = `import { AreaChart, type AreaChartData } from 'erp-pro-ui';
+
+const weeklyData: AreaChartData[] = [
+  { name: 'Mon', orders: 128, shipped: 110 },
+  { name: 'Tue', orders: 144, shipped: 119 },
+  { name: 'Wed', orders: 162, shipped: 141 },
+];
+
+const monthlyData: AreaChartData[] = [
+  { name: 'Jan', planned: 4200, actual: 3980 },
+  { name: 'Feb', planned: 4350, actual: 4260 },
+  { name: 'Mar', planned: 4520, actual: 4460 },
+];
+
+const yearlyData: AreaChartData[] = [
+  { name: '2023', recurring: 4.3, services: 1.8 },
+  { name: '2024', recurring: 5.1, services: 2.0 },
+  { name: '2025', recurring: 6.0, services: 2.3 },
+];
+
+export function ComparativeAreaChartsExample() {
+  return (
+    <div className="grid gap-4 xl:grid-cols-3">
+      <AreaChart data={weeklyData} categories={[{ key: 'orders', color: 'var(--ds-chart-2)' }, { key: 'shipped', color: 'var(--ds-chart-3)' }]} height={250} />
+      <AreaChart data={monthlyData} categories={[{ key: 'planned', color: 'var(--ds-chart-15)' }, { key: 'actual', color: 'var(--ds-chart-1)' }]} height={250} />
+      <AreaChart data={yearlyData} categories={[{ key: 'recurring', color: 'var(--ds-chart-2)' }, { key: 'services', color: 'var(--ds-chart-4)' }]} height={250} />
+    </div>
+  );
+}`;
+
 export const RevenueVsExpenses: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -131,6 +246,13 @@ export const RevenueVsExpenses: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: revenueVsExpensesSource,
+      },
+    },
+  },
 };
 
 export const MultiSeriesDemandTracking: Story = {
@@ -144,6 +266,13 @@ export const MultiSeriesDemandTracking: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: multiSeriesAreaSource,
+      },
+    },
+  },
 };
 
 export const MinimalPresentation: Story = {
@@ -158,6 +287,13 @@ export const MinimalPresentation: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: minimalAreaSource,
+      },
+    },
+  },
 };
 
 export const WeeklyFlowComparison: Story = {
@@ -177,6 +313,13 @@ export const WeeklyFlowComparison: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: weeklyFlowSource,
+      },
+    },
+  },
 };
 
 export const ComparativeTimeRanges: Story = {
@@ -236,4 +379,11 @@ export const ComparativeTimeRanges: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: comparativeAreaSource,
+      },
+    },
+  },
 };

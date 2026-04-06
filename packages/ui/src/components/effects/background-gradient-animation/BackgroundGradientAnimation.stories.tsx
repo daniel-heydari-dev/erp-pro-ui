@@ -37,6 +37,95 @@ function GradientFrame({
   );
 }
 
+const heroBannerSource = `import { BackgroundGradientAnimation, Button } from 'erp-pro-ui';
+
+export function HeroBannerExample() {
+  return (
+    <BackgroundGradientAnimation
+      containerClassName="h-full w-full"
+      className="relative z-10 flex h-full items-center justify-center p-8"
+      interactive
+    >
+      <div className="max-w-3xl rounded-[32px] border border-white/15 bg-black/25 p-8 text-center backdrop-blur-xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/65">Ambient Motion Surface</p>
+        <h2 className="mt-4 text-4xl font-semibold text-white md:text-6xl">Build launch moments that feel alive.</h2>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Button label="Start Building" primary />
+          <Button label="View Patterns" className="bg-white/10 text-white backdrop-blur-sm" />
+        </div>
+      </div>
+    </BackgroundGradientAnimation>
+  );
+}`;
+
+const customPaletteSource = `import { BackgroundGradientAnimation } from 'erp-pro-ui';
+
+export function CustomPaletteBackgroundExample() {
+  return (
+    <BackgroundGradientAnimation
+      gradientBackgroundStart="rgb(30, 0, 50)"
+      gradientBackgroundEnd="rgb(0, 0, 20)"
+      firstColor="255, 0, 100"
+      secondColor="100, 0, 255"
+      thirdColor="0, 200, 255"
+      fourthColor="255, 200, 0"
+      fifthColor="255, 120, 170"
+      pointerColor="255, 255, 255"
+      containerClassName="h-full w-full"
+      className="relative z-10 flex h-full items-end p-8"
+    >
+      <div className="max-w-md rounded-3xl border border-white/15 bg-black/30 p-6 backdrop-blur-lg">
+        <p className="text-2xl font-semibold text-white">Tune each blob independently.</p>
+      </div>
+    </BackgroundGradientAnimation>
+  );
+}`;
+
+const themeGallerySource = `import { BackgroundGradientAnimation } from 'erp-pro-ui';
+
+const themes = [
+  { name: 'Ocean', props: { gradientBackgroundStart: 'rgb(0, 50, 100)', gradientBackgroundEnd: 'rgb(0, 20, 60)', firstColor: '0, 150, 200', secondColor: '0, 200, 180', thirdColor: '50, 100, 200', fourthColor: '0, 80, 150', fifthColor: '100, 200, 220', pointerColor: '0, 255, 200' } },
+  { name: 'Sunset', props: { gradientBackgroundStart: 'rgb(255, 100, 50)', gradientBackgroundEnd: 'rgb(150, 0, 100)', firstColor: '255, 150, 50', secondColor: '255, 80, 100', thirdColor: '255, 200, 100', fourthColor: '200, 50, 100', fifthColor: '255, 100, 150', pointerColor: '255, 200, 100' } },
+];
+
+export function BackgroundThemeGalleryExample() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      {themes.map((theme) => (
+        <BackgroundGradientAnimation key={theme.name} {...theme.props} containerClassName="h-full w-full" className="relative z-10 flex h-full items-end p-5">
+          <div className="rounded-2xl border border-white/15 bg-black/25 px-4 py-3 backdrop-blur-md">
+            <p className="text-lg font-semibold text-white">{theme.name}</p>
+          </div>
+        </BackgroundGradientAnimation>
+      ))}
+    </div>
+  );
+}`;
+
+const productShowcaseSource = `import { BackgroundGradientAnimation, Button } from 'erp-pro-ui';
+
+const tiers = [
+  { plan: 'Starter', price: '$29', features: ['1 workspace', 'Email support', 'Basic analytics'] },
+  { plan: 'Growth', price: '$79', features: ['5 workspaces', 'Priority routing', 'Advanced dashboards'] },
+  { plan: 'Enterprise', price: '$149', features: ['Unlimited teams', 'Custom roles', 'Dedicated success lead'] },
+];
+
+export function ProductShowcaseBackgroundExample() {
+  return (
+    <BackgroundGradientAnimation gradientBackgroundStart="rgb(18, 12, 42)" gradientBackgroundEnd="rgb(5, 5, 24)" containerClassName="h-full w-full" className="relative z-10 flex h-full items-center justify-center p-8">
+      <div className="grid w-full max-w-5xl gap-4 md:grid-cols-3">
+        {tiers.map((tier, index) => (
+          <div key={tier.plan} className="rounded-[28px] border border-white/15 bg-white/10 p-6 backdrop-blur-xl">
+            <p className="text-sm font-medium text-white/70">{tier.plan}</p>
+            <p className="mt-3 text-4xl font-semibold text-white">{tier.price}</p>
+            <Button label={index === 1 ? 'Start Trial' : 'Choose Plan'} primary={index === 1} className={index === 1 ? '' : 'bg-white/10 text-white'} />
+          </div>
+        ))}
+      </div>
+    </BackgroundGradientAnimation>
+  );
+}`;
+
 export const HeroBanner: Story = {
   render: () => (
     <div className="ui:p-6">
@@ -70,6 +159,7 @@ export const HeroBanner: Story = {
       </GradientFrame>
     </div>
   ),
+  parameters: { docs: { source: { code: heroBannerSource } } },
 };
 
 export const CustomPalette: Story = {
@@ -104,6 +194,7 @@ export const CustomPalette: Story = {
       </GradientFrame>
     </div>
   ),
+  parameters: { docs: { source: { code: customPaletteSource } } },
 };
 
 export const ThemeGallery: Story = {
@@ -182,6 +273,7 @@ export const ThemeGallery: Story = {
       ))}
     </div>
   ),
+  parameters: { docs: { source: { code: themeGallerySource } } },
 };
 
 export const ProductShowcase: Story = {
@@ -254,4 +346,5 @@ export const ProductShowcase: Story = {
       </GradientFrame>
     </div>
   ),
+  parameters: { docs: { source: { code: productShowcaseSource } } },
 };

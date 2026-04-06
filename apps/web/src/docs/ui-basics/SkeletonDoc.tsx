@@ -148,13 +148,9 @@ const SkeletonDoc = () => {
           <SkeletonCard showAvatar showActions animation="wave" tone="accent" />
           <div className="rounded-md border border-border bg-card p-4">
             <div className="space-y-4">
-              <SkeletonListItem animation="wave" showAction tone="subtle" />
-              <SkeletonListItem animation="wave" showAction tone="subtle" />
-              <SkeletonListItem
-                animation="wave"
-                showSecondaryText={false}
-                tone="accent"
-              />
+              <SkeletonListItem animation="wave" showAction />
+              <SkeletonListItem animation="wave" showAction />
+              <SkeletonListItem animation="wave" showSecondaryText={false} />
             </div>
           </div>
         </div>
@@ -165,7 +161,7 @@ const SkeletonDoc = () => {
 
 <SkeletonCard showAvatar showActions animation="wave" tone="accent" />
 
-<SkeletonListItem animation="wave" showAction tone="subtle" />`}
+    <SkeletonListItem animation="wave" showAction />`}
       />
 
       <h2 className="docs-category-subtitle">Dense Table Placeholder</h2>

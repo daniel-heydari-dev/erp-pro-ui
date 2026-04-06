@@ -123,6 +123,9 @@ const libraryEntries = {
   toast: resolveFromRoot("src/components/overlays/toast/index.ts"),
   tooltip: resolveFromRoot("src/components/overlays/tooltip/index.ts"),
   typography: resolveFromRoot("src/components/typography/index.ts"),
+  "truncated-text": resolveFromRoot(
+    "src/components/typography/truncated-text/index.ts",
+  ),
   "ascii-text": resolveFromRoot("src/components/effects/ascii-text/index.ts"),
   icons: resolveFromRoot("src/components/icons/index.ts"),
   spinners: resolveFromRoot("src/components/spinners/index.ts"),

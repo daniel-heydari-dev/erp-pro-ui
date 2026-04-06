@@ -68,6 +68,116 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const controlledInputSource = `import { useState } from 'react';
+import { Input } from 'erp-pro-ui';
+
+export function ControlledInputExample() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Input
+      label="Email Address"
+      placeholder="hello@example.com"
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+    />
+  );
+}`;
+
+const validationStatesSource = `import { Input, InputState } from 'erp-pro-ui';
+
+export function ValidationStatesExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Input
+        label="Work email"
+        placeholder="name@company.com"
+        state={InputState.ERROR}
+        error="Use a valid company email address."
+      />
+      <Input
+        label="Environment name"
+        placeholder="production"
+        state={InputState.SUCCESS}
+        message="Environment is available."
+      />
+      <Input
+        label="Workspace slug"
+        placeholder="locked-workspace"
+        state={InputState.DISABLED}
+        disabled
+        helperText="Slug updates are restricted after first deployment."
+      />
+    </div>
+  );
+}`;
+
+const commonFieldPatternsSource = `import { Input } from 'erp-pro-ui';
+
+export function CommonFieldPatternsExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Input
+        label="Search"
+        placeholder="Search projects"
+        leftIcon={<span aria-hidden>...</span>}
+      />
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Email address"
+        rightIcon={<span aria-hidden>@</span>}
+      />
+      <Input
+        label="Password"
+        type="password"
+        placeholder="Password"
+        bgClassName="bg-neutral-100 dark:bg-neutral-800"
+      />
+    </div>
+  );
+}`;
+
+const loginFormSource = `import { Button, Input } from 'erp-pro-ui';
+
+export function LoginFormExample() {
+  return (
+    <form className="flex flex-col gap-4">
+      <h3 className="text-xl font-semibold">Sign In</h3>
+      <Input label="Email" type="email" placeholder="you@example.com" />
+      <Input label="Password" type="password" placeholder="••••••••" />
+      <Button primary>Submit</Button>
+    </form>
+  );
+}`;
+
+const feedbackFlowSource = `import { useState } from 'react';
+import { Input, InputState } from 'erp-pro-ui';
+
+export function ValidationFeedbackFlowExample() {
+  const [value, setValue] = useState('');
+  const isValid = value.length >= 6;
+  const hasValue = value.length > 0;
+
+  return (
+    <Input
+      label="Branch code"
+      placeholder="Enter at least 6 characters"
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+      state={
+        hasValue
+          ? isValid
+            ? InputState.SUCCESS
+            : InputState.ERROR
+          : InputState.DEFAULT
+      }
+      message={isValid ? 'Code format looks valid.' : undefined}
+      error={hasValue && !isValid ? 'Code must be at least 6 characters.' : undefined}
+    />
+  );
+}`;
+
 const hintMeta = (
   <span className="ui:inline-flex ui:items-center ui:gap-1.5 ui:text-xs ui:text-muted-foreground">
     <InfoCircleIcon width={14} height={14} color="currentColor" />
@@ -212,6 +322,13 @@ function ControlledInput() {
  */
 export const Default: Story = {
   render: () => <ControlledInput />,
+  parameters: {
+    docs: {
+      source: {
+        code: controlledInputSource,
+      },
+    },
+  },
 };
 
 /**
@@ -305,6 +422,13 @@ export const States: Story = {
       </StoryStack>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: validationStatesSource,
+      },
+    },
+  },
 };
 
 export const CommonFieldPatterns: Story = {
@@ -345,6 +469,13 @@ export const CommonFieldPatterns: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: commonFieldPatternsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -366,6 +497,13 @@ export const LoginFormExample: Story = {
       </form>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: loginFormSource,
+      },
+    },
+  },
 };
 
 /**
@@ -401,5 +539,12 @@ export const ValidationFeedbackFlow: Story = {
         />
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: feedbackFlowSource,
+      },
+    },
   },
 };

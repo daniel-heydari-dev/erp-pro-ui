@@ -63,6 +63,106 @@ const meta: Meta<typeof AnimatedContent> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const animatedDefaultSource = `import { AnimatedContent } from 'erp-pro-ui';
+
+export function DefaultAnimatedContentExample() {
+  return (
+    <AnimatedContent preset="slideUp" duration={0.5}>
+      <div className="rounded-2xl border bg-background p-5 shadow-lg">
+        <h3 className="mb-2 text-lg font-semibold">Animated Block</h3>
+        <p className="text-neutral-500">I reveal myself gracefully.</p>
+      </div>
+    </AnimatedContent>
+  );
+}`;
+
+const animatedStaggeredSource = `import { AnimatedContent } from 'erp-pro-ui';
+
+export function StaggeredAnimatedBlocksExample() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      {[1, 2, 3].map((index) => (
+        <AnimatedContent key={index} preset="bounce" delay={index * 0.15}>
+          <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-accent text-2xl font-bold text-on-accent shadow-lg">
+            {index}
+          </div>
+        </AnimatedContent>
+      ))}
+    </div>
+  );
+}`;
+
+const animatedPresetGallerySource = `import { useState } from 'react';
+import { AnimatedContent, Button } from 'erp-pro-ui';
+
+const presets = [
+  { preset: 'fade', label: 'Fade' },
+  { preset: 'scale', label: 'Scale' },
+  { preset: 'slideUp', label: 'Slide Up' },
+  { preset: 'bounce', label: 'Bounce' },
+  { preset: 'flip', label: 'Flip' },
+  { preset: 'zoom', label: 'Zoom' },
+] as const;
+
+export function AnimatedPresetGalleryExample() {
+  const [instanceKey, setInstanceKey] = useState(0);
+
+  return (
+    <div className="space-y-5">
+      <Button label="Replay Animations" onClick={() => setInstanceKey((current) => current + 1)} />
+      <div key={instanceKey} className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {presets.map((item, index) => (
+          <AnimatedContent key={item.label} preset={item.preset} delay={index * 0.12} duration={0.8}>
+            <div className="flex min-h-32 flex-col items-center justify-center rounded-2xl border bg-background p-5 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-accent-subtle text-sm font-bold text-accent">{item.label}</div>
+            </div>
+          </AnimatedContent>
+        ))}
+      </div>
+    </div>
+  );
+}`;
+
+const animatedEasingSource = `import { useState } from 'react';
+import { AnimatedContent, Button } from 'erp-pro-ui';
+
+export function AnimatedEasingExample() {
+  const [instanceKey, setInstanceKey] = useState(0);
+
+  return (
+    <div className="space-y-5">
+      <Button label="Replay Curves" onClick={() => setInstanceKey((current) => current + 1)} />
+      <div key={instanceKey} className="flex flex-wrap gap-6">
+        <AnimatedContent preset="slideRight" ease="backOut" duration={1}><div className="rounded-2xl border px-6 py-4 font-semibold">Back Out</div></AnimatedContent>
+        <AnimatedContent preset="slideRight" ease="anticipate" duration={1} delay={0.2}><div className="rounded-2xl border px-6 py-4 font-semibold">Anticipate</div></AnimatedContent>
+      </div>
+    </div>
+  );
+}`;
+
+const animatedBoardSource = `import { AnimatedContent } from 'erp-pro-ui';
+
+const metrics = [
+  { label: 'New leads', value: '184' },
+  { label: 'Qualified', value: '72' },
+  { label: 'Closed', value: '29' },
+];
+
+export function AnimatedMetricsBoardExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      {metrics.map((card, index) => (
+        <AnimatedContent key={card.label} preset="slideUp" delay={index * 0.14}>
+          <div className="rounded-2xl border p-5">
+            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{card.label}</p>
+            <p className="mt-3 text-3xl font-semibold text-foreground">{card.value}</p>
+          </div>
+        </AnimatedContent>
+      ))}
+    </div>
+  );
+}`;
+
 export const Default: Story = {
   args: {
     preset: "slideUp",
@@ -80,6 +180,7 @@ export const Default: Story = {
       </AnimatedContent>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: animatedDefaultSource } } },
 };
 
 export const Staggered: Story = {
@@ -96,6 +197,7 @@ export const Staggered: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: animatedStaggeredSource } } },
 };
 
 export const PresetGallery: Story = {
@@ -141,6 +243,7 @@ export const PresetGallery: Story = {
       </StorySurface>
     );
   },
+  parameters: { docs: { source: { code: animatedPresetGallerySource } } },
 };
 
 export const EasingCurves: Story = {
@@ -181,6 +284,7 @@ export const EasingCurves: Story = {
       </StorySurface>
     );
   },
+  parameters: { docs: { source: { code: animatedEasingSource } } },
 };
 
 export const StaggeredBoard: Story = {
@@ -206,4 +310,5 @@ export const StaggeredBoard: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: animatedBoardSource } } },
 };

@@ -34,6 +34,99 @@ const meta: Meta<typeof Radio> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const radioDefaultSource = `import { useState } from 'react';
+import { Radio } from 'erp-pro-ui';
+
+export function DefaultRadioExample() {
+  const [selected, setSelected] = useState('option-1');
+
+  return (
+    <Radio
+      name="group1"
+      label="Option 1"
+      checked={selected === 'option-1'}
+      onChange={() => setSelected('option-1')}
+    />
+  );
+}`;
+
+const radioGroupSource = `import { useState } from 'react';
+import { Radio } from 'erp-pro-ui';
+
+export function PricingRadioGroupExample() {
+  const [plan, setPlan] = useState('basic');
+
+  return (
+    <div className="flex flex-col gap-3">
+      <Radio
+        name="plan"
+        label="Basic Plan ($10/mo)"
+        checked={plan === 'basic'}
+        onChange={() => setPlan('basic')}
+      />
+      <Radio
+        name="plan"
+        label="Pro Plan ($20/mo)"
+        checked={plan === 'pro'}
+        onChange={() => setPlan('pro')}
+      />
+      <Radio
+        name="plan"
+        label="Enterprise Plan (Contact Us)"
+        checked={plan === 'enterprise'}
+        onChange={() => setPlan('enterprise')}
+      />
+    </div>
+  );
+}`;
+
+const shippingSelectorSource = `import { useState } from 'react';
+import { Radio } from 'erp-pro-ui';
+
+export function ShippingSpeedSelectorExample() {
+  const [speed, setSpeed] = useState('standard');
+
+  return (
+    <div className="space-y-3">
+      <Radio
+        name="shipping"
+        label="Standard (3-5 days)"
+        checked={speed === 'standard'}
+        onChange={() => setSpeed('standard')}
+      />
+      <Radio
+        name="shipping"
+        label="Priority (1-2 days)"
+        checked={speed === 'priority'}
+        onChange={() => setSpeed('priority')}
+      />
+      <Radio
+        name="shipping"
+        label="Same day"
+        checked={speed === 'sameday'}
+        onChange={() => setSpeed('sameday')}
+      />
+    </div>
+  );
+}`;
+
+const radioValidationSource = `import { Radio } from 'erp-pro-ui';
+
+export function RequiredRadioExample() {
+  return (
+    <div className="flex flex-col gap-3">
+      <Radio
+        name="support-tier"
+        label="Priority support"
+        error="Select a support tier before continuing."
+        color="red"
+      />
+      <Radio name="support-tier" label="Dedicated success manager" />
+      <Radio name="support-tier" label="Custom SLA" />
+    </div>
+  );
+}`;
+
 /**
  * ## Default
  * Basic unchecked radio input.
@@ -52,6 +145,13 @@ export const Default: Story = {
         />
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: radioDefaultSource,
+      },
+    },
   },
 };
 
@@ -90,6 +190,46 @@ export const RadioGroup: Story = {
         </div>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: radioGroupSource,
+      },
+    },
+  },
+};
+
+/**
+ * ## Required Validation
+ * Shows the red validation state and helper text used for required radio groups.
+ */
+export const RequiredValidation: Story = {
+  decorators: [
+    (StoryFn) => (
+      <StorySurface widthClassName="ui:w-full ui:max-w-md">
+        <StoryFn />
+      </StorySurface>
+    ),
+  ],
+  render: () => (
+    <div className="ui:flex ui:flex-col ui:gap-3">
+      <Radio
+        name="support-tier"
+        label="Priority support"
+        error="Select a support tier before continuing."
+        color="red"
+      />
+      <Radio name="support-tier" label="Dedicated success manager" />
+      <Radio name="support-tier" label="Custom SLA" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: radioValidationSource,
+      },
+    },
   },
 };
 
@@ -146,5 +286,12 @@ export const ShippingSpeedSelector: Story = {
         </div>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: shippingSelectorSource,
+      },
+    },
   },
 };

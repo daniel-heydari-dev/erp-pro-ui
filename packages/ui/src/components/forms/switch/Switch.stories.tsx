@@ -29,6 +29,70 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const defaultSwitchSource = `import { useState } from 'react';
+import { Switch } from 'erp-pro-ui';
+
+export function DefaultSwitchExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Switch
+      checked={checked}
+      onChange={(event) => setChecked(event.target.checked)}
+    />
+  );
+}`;
+
+const labeledSwitchSource = `import { useState } from 'react';
+import { Switch } from 'erp-pro-ui';
+
+export function LabeledSwitchExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Switch
+      label="Enable notifications"
+      checked={checked}
+      onChange={(event) => setChecked(event.target.checked)}
+    />
+  );
+}`;
+
+const settingsGroupSource = `import { useState } from 'react';
+import { Switch } from 'erp-pro-ui';
+
+export function SettingsGroupExample() {
+  const [emailDigest, setEmailDigest] = useState(true);
+  const [smsAlerts, setSmsAlerts] = useState(false);
+
+  return (
+    <div className="space-y-4">
+      <Switch
+        label="Daily email digest"
+        checked={emailDigest}
+        onChange={(event) => setEmailDigest(event.target.checked)}
+      />
+      <Switch
+        label="SMS critical alerts"
+        checked={smsAlerts}
+        onChange={(event) => setSmsAlerts(event.target.checked)}
+      />
+      <Switch label="Audit lock" checked disabled />
+    </div>
+  );
+}`;
+
+const switchValidationSource = `import { Switch } from 'erp-pro-ui';
+
+export function RequiredSwitchExample() {
+  return (
+    <Switch
+      label="Confirm maintenance window"
+      error="You must confirm before scheduling downtime."
+    />
+  );
+}`;
+
 /**
  * ## Default Switch
  * A simple controlled toggle.
@@ -44,6 +108,13 @@ export const Default: Story = {
         />
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: defaultSwitchSource,
+      },
+    },
   },
 };
 
@@ -64,6 +135,13 @@ export const WithLabel: Story = {
       </StorySurface>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: labeledSwitchSource,
+      },
+    },
+  },
 };
 
 /**
@@ -82,6 +160,31 @@ export const Checked: Story = {
         />
       </StorySurface>
     );
+  },
+};
+
+/**
+ * ## Required Validation
+ * Shows the validation state used when a confirmation toggle is required.
+ */
+export const RequiredValidation: Story = {
+  args: {
+    label: "Confirm maintenance window",
+    error: "You must confirm before scheduling downtime.",
+  },
+  decorators: [
+    (StoryFn) => (
+      <StorySurface widthClassName="ui:w-full ui:max-w-md">
+        <StoryFn />
+      </StorySurface>
+    ),
+  ],
+  parameters: {
+    docs: {
+      source: {
+        code: switchValidationSource,
+      },
+    },
   },
 };
 
@@ -129,5 +232,12 @@ export const SettingsGroup: Story = {
         </StorySection>
       </StorySurface>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: settingsGroupSource,
+      },
+    },
   },
 };

@@ -40,10 +40,14 @@ const GradualBlurDoc = () => {
       <CodeBlock
         code={`import { GradualBlur } from 'erp-pro-ui';
 
-<GradualBlur blur={12} duration={1}>
-  <h3>Revealed Content</h3>
-  <p>I appeared smoothly...</p>
-</GradualBlur>`}
+export function ScrollRevealBlurExample() {
+  return (
+    <GradualBlur blur={12} duration={1}>
+      <h3>Revealed Content</h3>
+      <p>I appeared smoothly from a blur as you scrolled into view.</p>
+    </GradualBlur>
+  );
+}`}
       />
 
       {/* Directional Animations */}
@@ -95,8 +99,18 @@ const GradualBlurDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<GradualBlur direction="top" distance={40} delay={0.1}>...</GradualBlur>
-<GradualBlur direction="bottom" distance={40} delay={0.2}>...</GradualBlur>`}
+        code={`import { GradualBlur } from 'erp-pro-ui';
+
+export function DirectionalBlurExample() {
+  return (
+    <div className="flex flex-wrap gap-12">
+      <GradualBlur direction="top" distance={40} delay={0.1}>Top</GradualBlur>
+      <GradualBlur direction="bottom" distance={40} delay={0.2}>Bottom</GradualBlur>
+      <GradualBlur direction="left" distance={40} delay={0.3}>Left</GradualBlur>
+      <GradualBlur direction="right" distance={40} delay={0.4}>Right</GradualBlur>
+    </div>
+  );
+}`}
       />
 
       {/* Manual Trigger */}
@@ -119,13 +133,23 @@ const GradualBlurDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<GradualBlur
-  triggerOnView={false}
-  visible={isVisible}
-  blur={20}
->
-  ...
-</GradualBlur>`}
+        code={`import { useState } from 'react';
+import { Button, GradualBlur } from 'erp-pro-ui';
+
+export function ControlledBlurExample() {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <Button onClick={() => setVisible((current) => !current)} primary>
+        {visible ? 'Hide' : 'Show'} Component
+      </Button>
+      <GradualBlur triggerOnView={false} visible={visible} blur={20} duration={0.8}>
+        <div>Manually Triggered</div>
+      </GradualBlur>
+    </div>
+  );
+}`}
       />
 
       {/* Props Reference */}

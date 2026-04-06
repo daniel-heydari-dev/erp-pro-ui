@@ -32,7 +32,134 @@ const meta: Meta<typeof Form> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function SignInFormDemo() {
+const signInSubmissionSource = `import { useState, type FormEvent } from 'react';
+import { Button, Form, Input } from 'erp-pro-ui';
+
+export function SignInSubmission() {
+  const [submitted, setSubmitted] = useState<Record<string, string> | null>(null);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const payload = Object.fromEntries(
+      new FormData(event.currentTarget).entries(),
+    ) as Record<string, string>;
+    setSubmitted(payload);
+  };
+
+  return (
+    <Form
+      title="Sign in"
+      description="Use your workspace credentials to continue."
+      onSubmit={handleSubmit}
+      className="space-y-4"
+    >
+      <Input label="Email address" name="email" type="email" required />
+      <Input label="Password" name="password" type="password" required />
+      <Button label="Sign In" primary type="submit" />
+    </Form>
+  );
+}`;
+
+const profileSettingsSource = `import {
+  Button,
+  Checkbox,
+  Form,
+  FormActions,
+  FormField,
+  FormSection,
+  Input,
+  InputGroup,
+  Textarea,
+} from 'erp-pro-ui';
+
+export function ProfileSettingsForm() {
+  return (
+    <Form
+      title="Profile settings"
+      description="Update account identity, notifications, and workspace defaults."
+    >
+      <FormSection
+        title="Identity"
+        description="These details appear across customer-facing records and internal reviews."
+      >
+        <InputGroup columns={2}>
+          <FormField label="First name" required htmlFor="profile-first-name">
+            <Input id="profile-first-name" name="firstName" placeholder="Avery" />
+          </FormField>
+          <FormField label="Last name" required htmlFor="profile-last-name">
+            <Input id="profile-last-name" name="lastName" placeholder="Johnson" />
+          </FormField>
+        </InputGroup>
+      </FormSection>
+
+      <FormSection
+        title="Preferences"
+        description="Fine-tune communication defaults and operational context."
+      >
+        <FormField label="Internal bio" htmlFor="profile-bio">
+          <Textarea id="profile-bio" name="bio" rows={4} />
+        </FormField>
+        <InputGroup columns={2}>
+          <FormField label="Weekly summary">
+            <Checkbox id="profile-summary" label="Email a Friday performance digest" />
+          </FormField>
+          <FormField label="Critical alerts">
+            <Checkbox id="profile-alerts" label="Notify me when SLAs are at risk" />
+          </FormField>
+        </InputGroup>
+      </FormSection>
+
+      <FormActions align="end">
+        <Button label="Cancel" />
+        <Button label="Save profile" primary />
+      </FormActions>
+    </Form>
+  );
+}`;
+
+const inlineBillingSource = `import {
+  Button,
+  Form,
+  FormActions,
+  FormField,
+  Input,
+  Textarea,
+} from 'erp-pro-ui';
+
+export function InlineBillingFields() {
+  return (
+    <Form
+      title="Payment details"
+      description="Inline field layouts help with dense administrative workflows."
+      gap="md"
+    >
+      <FormField
+        label="Billing contact"
+        htmlFor="billing-contact"
+        description="The main point of contact for invoices and disputes."
+        layout="inline"
+      >
+        <Input id="billing-contact" name="billingContact" placeholder="Morgan Lee" />
+      </FormField>
+
+      <FormField
+        label="Renewal note"
+        htmlFor="renewal-note"
+        description="Visible to internal account managers during contract reviews."
+        layout="inline"
+      >
+        <Textarea id="renewal-note" name="renewalNote" rows={3} />
+      </FormField>
+
+      <FormActions align="between">
+        <Button label="Archive draft" />
+        <Button label="Save payment profile" primary />
+      </FormActions>
+    </Form>
+  );
+}`;
+
+function SignInSubmissionPreview() {
   const [submitted, setSubmitted] = useState<Record<string, string> | null>(
     null,
   );
@@ -94,7 +221,7 @@ function SignInFormDemo() {
   );
 }
 
-function ProfileSettingsDemo() {
+function ProfileSettingsPreview() {
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <Form
@@ -186,7 +313,7 @@ function ProfileSettingsDemo() {
   );
 }
 
-function InlineFieldDemo() {
+function InlineBillingPreview() {
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <Form
@@ -247,13 +374,37 @@ function InlineFieldDemo() {
 }
 
 export const SignInCapture: Story = {
-  render: () => <SignInFormDemo />,
+  name: "Sign-In Submission",
+  render: () => <SignInSubmissionPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: signInSubmissionSource,
+      },
+    },
+  },
 };
 
 export const ProfileSettings: Story = {
-  render: () => <ProfileSettingsDemo />,
+  name: "Profile Settings Form",
+  render: () => <ProfileSettingsPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: profileSettingsSource,
+      },
+    },
+  },
 };
 
 export const InlineFieldLayout: Story = {
-  render: () => <InlineFieldDemo />,
+  name: "Inline Billing Fields",
+  render: () => <InlineBillingPreview />,
+  parameters: {
+    docs: {
+      source: {
+        code: inlineBillingSource,
+      },
+    },
+  },
 };

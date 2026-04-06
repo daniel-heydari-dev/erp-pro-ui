@@ -295,6 +295,12 @@
       "require": "./dist/typography.cjs",
       "default": "./dist/typography.mjs"
     },
+    "./truncated-text": {
+      "types": "./dist/components/typography/truncated-text/index.d.ts",
+      "import": "./dist/truncated-text.mjs",
+      "require": "./dist/truncated-text.cjs",
+      "default": "./dist/truncated-text.mjs"
+    },
     "./ascii-text": {
       "types": "./dist/components/effects/ascii-text/index.d.ts",
       "import": "./dist/ascii-text.mjs",
@@ -368,7 +374,7 @@
     "storybook": "^10.3.4",
     "terser": "^5.46.1",
     "typescript": "^6.0.2",
-    "vite": "^8.0.3",
+    "vite": "^8.0.5",
     "vite-plugin-dts": "^4.5.4"
   }
 }

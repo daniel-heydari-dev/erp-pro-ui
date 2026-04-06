@@ -50,13 +50,19 @@ const SpotlightCardDoc = () => {
       <CodeBlock
         code={`import { SpotlightCard } from 'erp-pro-ui';
 
-<SpotlightCard
-  spotlightColor="rgba(115, 103, 240, 0.2)"
-  className="max-w-sm"
->
-  <h3>Spotlight Effect</h3>
-  <p>Move your mouse over this card...</p>
-</SpotlightCard>`}
+export function BasicSpotlightCardExample() {
+  return (
+    <SpotlightCard
+      spotlightColor="rgba(115, 103, 240, 0.2)"
+      className="max-w-sm"
+    >
+      <h3 className="text-xl font-bold">Spotlight Effect</h3>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Move your mouse over this card to see the dynamic spotlight effect.
+      </p>
+    </SpotlightCard>
+  );
+}`}
       />
 
       {/* Variants */}
@@ -82,8 +88,17 @@ const SpotlightCardDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<SpotlightCard variant="solid" />
-<SpotlightCard variant="outlined" />`}
+        code={`import { SpotlightCard } from 'erp-pro-ui';
+
+export function SpotlightCardVariantsExample() {
+  return (
+    <div className="flex gap-6">
+      <SpotlightCard variant="glass" className="w-64">Glass</SpotlightCard>
+      <SpotlightCard variant="solid" className="w-64">Solid</SpotlightCard>
+      <SpotlightCard variant="outlined" className="w-64">Outlined</SpotlightCard>
+    </div>
+  );
+}`}
       />
 
       {/* Colors & Sizes */}
@@ -109,12 +124,20 @@ const SpotlightCardDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<SpotlightCard
-  spotlightColor="rgba(255, 0, 150, 0.1)"
-  spotlightSize={200}
->
-  ...
-</SpotlightCard>`}
+        code={`import { SpotlightCard } from 'erp-pro-ui';
+
+export function SpotlightCardCustomizationExample() {
+  return (
+    <div className="grid grid-cols-2 gap-8">
+      <SpotlightCard spotlightColor="rgba(255, 0, 150, 0.1)" spotlightSize={200}>
+        Pink Spotlight
+      </SpotlightCard>
+      <SpotlightCard spotlightColor="rgba(0, 255, 150, 0.1)" spotlightSize={500}>
+        Green Wide
+      </SpotlightCard>
+    </div>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Feature Grid</h2>
@@ -143,11 +166,24 @@ const SpotlightCardDoc = () => {
       </div>
 
       <CodeBlock
-        code={`<div className="grid md:grid-cols-3 gap-4">
-  <SpotlightCard>...</SpotlightCard>
-  <SpotlightCard>...</SpotlightCard>
-  <SpotlightCard>...</SpotlightCard>
-</div>`}
+        code={`import { SpotlightCard } from 'erp-pro-ui';
+
+export function SpotlightFeatureGridExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      {['Smart routing', 'Live approvals', 'Inventory insight'].map((title) => (
+        <SpotlightCard key={title} className="w-full min-h-44">
+          <div className="flex h-full flex-col justify-between gap-3">
+            <p className="text-sm font-semibold">{title}</p>
+            <p className="text-sm text-muted-foreground">
+              Designed for high-signal operational workflows with premium interaction feedback.
+            </p>
+          </div>
+        </SpotlightCard>
+      ))}
+    </div>
+  );
+}`}
       />
 
       {/* Props Reference */}

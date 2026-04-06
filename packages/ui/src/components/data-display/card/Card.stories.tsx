@@ -31,6 +31,17 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const defaultCardSource = `import { Card } from "erp-pro-ui";
+
+export function DefaultCardExample() {
+  return (
+    <Card
+      description="The new UI components have been successfully deployed."
+      title="Project Update"
+    />
+  );
+}`;
+
 /**
  * ## Default
  * Basic card layout with glassmorphism effects built-in.
@@ -42,9 +53,16 @@ export const Default: Story = {
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-      <Card {...args} />
+      <Card description={args.description} title={args.title} />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: defaultCardSource,
+      },
+    },
+  },
 };
 
 /**

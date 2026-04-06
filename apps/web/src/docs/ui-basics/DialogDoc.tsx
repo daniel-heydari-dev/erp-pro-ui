@@ -136,15 +136,26 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Dialog
-  open={open}
-  onOpenChange={setOpen}
-  variant="destructive"
-  preset="confirm"
-  title="Delete Account?"
-  description="This action cannot be undone."
-  onConfirm={handleDelete}
-/>`}
+        code={`import { useState } from 'react';
+import { Dialog, type DialogVariant } from 'erp-pro-ui';
+
+const variant: DialogVariant = 'destructive';
+
+export function DeleteAccountDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+      variant={variant}
+      preset="confirm"
+      title="Delete Account?"
+      description="This action cannot be undone."
+      onConfirm={() => setOpen(false)}
+    />
+  );
+}`}
       />
 
       {/* Preset & Loading Section */}
@@ -179,15 +190,34 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Dialog
-  open={open}
-  onOpenChange={setOpen}
-  preset="confirm"
-  loading={isLoading}
-  onConfirm={handleAsyncAction}
-  title="Confirm"
-  description="Please confirm your action."
-/>`}
+        code={`import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
+
+export function AsyncConfirmDialog() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <>
+      <Button label="Open confirm dialog" onClick={() => setOpen(true)} />
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        preset="confirm"
+        loading={loading}
+        onConfirm={() => {
+          setLoading(true);
+          window.setTimeout(() => {
+            setLoading(false);
+            setOpen(false);
+          }, 1200);
+        }}
+        title="Confirm"
+        description="Please confirm your action."
+      />
+    </>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Alert & Custom Layouts</h2>
@@ -256,23 +286,39 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Dialog
-  open={open}
-  onOpenChange={setOpen}
-  preset="alert"
-  variant="success"
-  title="Inventory sync complete"
-  description="All branch counts have been reconciled and the queue is ready for the next import."
-/>
+        code={`import { useState } from 'react';
+import { Button, Dialog } from 'erp-pro-ui';
 
-<Dialog
-  open={open}
-  onOpenChange={setOpen}
-  preset="custom"
-  footer={<DialogActions />}
->
-  <PolicyEditor />
-</Dialog>`}
+export function AlertAndCustomDialogs() {
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [customOpen, setCustomOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open alert" onClick={() => setAlertOpen(true)} />
+      <Button label="Open custom dialog" primary onClick={() => setCustomOpen(true)} />
+
+      <Dialog
+        open={alertOpen}
+        onOpenChange={setAlertOpen}
+        preset="alert"
+        variant="success"
+        title="Inventory sync complete"
+        description="All branch counts have been reconciled and the queue is ready for the next import."
+      />
+
+      <Dialog
+        open={customOpen}
+        onOpenChange={setCustomOpen}
+        preset="custom"
+        title="Create approval policy"
+        footer={<div>Custom actions</div>}
+      >
+        <div>Policy editor content</div>
+      </Dialog>
+    </>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Animations</h2>
@@ -319,12 +365,23 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Dialog
-  open={open}
-  animation="elastic"
-  title="Bouncy Dialog"
-  // ...
-/>`}
+        code={`import { useState } from 'react';
+import { Dialog, type DialogAnimation } from 'erp-pro-ui';
+
+const animation: DialogAnimation = 'elastic';
+
+export function ElasticDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+      animation={animation}
+      title="Bouncy Dialog"
+    />
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

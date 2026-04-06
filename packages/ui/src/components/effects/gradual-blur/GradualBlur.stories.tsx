@@ -29,6 +29,50 @@ const meta: Meta<typeof GradualBlur> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const scrollRevealSource = `import { GradualBlur } from 'erp-pro-ui';
+
+export function ScrollRevealBlurExample() {
+  return (
+    <GradualBlur blur={12} duration={1} className="max-w-sm rounded-2xl border bg-background p-8 text-center shadow-xl">
+      <h3 className="text-2xl font-bold text-foreground">Revealed Content</h3>
+      <p className="mt-2 text-sm text-muted-foreground">This card clears from blur as it enters view.</p>
+    </GradualBlur>
+  );
+}`;
+
+const directionalBlurSource = `import { GradualBlur } from 'erp-pro-ui';
+
+export function DirectionalBlurGalleryExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <GradualBlur direction="top" distance={40} delay={0.1}><div className="rounded-2xl border p-6">Up</div></GradualBlur>
+      <GradualBlur direction="bottom" distance={40} delay={0.2}><div className="rounded-2xl border p-6">Down</div></GradualBlur>
+      <GradualBlur direction="left" distance={40} delay={0.3}><div className="rounded-2xl border p-6">Left</div></GradualBlur>
+      <GradualBlur direction="right" distance={40} delay={0.4}><div className="rounded-2xl border p-6">Right</div></GradualBlur>
+    </div>
+  );
+}`;
+
+const manualBlurSource = `import { useState } from 'react';
+import { Button, GradualBlur } from 'erp-pro-ui';
+
+export function ManualBlurTriggerExample() {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="flex min-h-[260px] flex-col items-center justify-center gap-6">
+      <Button primary onClick={() => setVisible((current) => !current)}>
+        {visible ? 'Hide' : 'Show'} Component
+      </Button>
+      <GradualBlur triggerOnView={false} visible={visible} blur={20} duration={0.8}>
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-6 py-5 text-center text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+          Manually Triggered
+        </div>
+      </GradualBlur>
+    </div>
+  );
+}`;
+
 export const ScrollReveal: Story = {
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
@@ -66,6 +110,7 @@ export const ScrollReveal: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: scrollRevealSource } } },
 };
 
 export const DirectionalGallery: Story = {
@@ -134,6 +179,7 @@ export const DirectionalGallery: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: directionalBlurSource } } },
 };
 
 export const ManualTrigger: Story = {
@@ -161,4 +207,5 @@ export const ManualTrigger: Story = {
       </StorySurface>
     );
   },
+  parameters: { docs: { source: { code: manualBlurSource } } },
 };

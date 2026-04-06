@@ -52,6 +52,49 @@ const meta: Meta<typeof StackedBarChart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const dailyTeamMixSource = `import { StackedBarChart, type StackedBarData } from 'erp-pro-ui';
+
+const data: StackedBarData[] = [
+  { name: 'Mon', picking: 28, packing: 18, quality: 9, dispatch: 12 },
+  { name: 'Tue', picking: 32, packing: 20, quality: 8, dispatch: 10 },
+  { name: 'Wed', picking: 35, packing: 24, quality: 10, dispatch: 11 },
+];
+
+const categories = [
+  { key: 'picking', color: 'var(--ds-chart-1)', label: 'Picking' },
+  { key: 'packing', color: 'var(--ds-chart-2)', label: 'Packing' },
+  { key: 'quality', color: 'var(--ds-chart-4)', label: 'Quality' },
+  { key: 'dispatch', color: 'var(--ds-chart-3)', label: 'Dispatch' },
+];
+
+export function DailyTeamMixExample() {
+  return <StackedBarChart data={data} categories={categories} height={360} yAxisDomain={[0, 90]} />;
+}`;
+
+const fixedScaleSource = `import { StackedBarChart, type StackedBarData } from 'erp-pro-ui';
+
+const data: StackedBarData[] = [
+  { name: 'Mon', picking: 28, packing: 18, quality: 9, dispatch: 12 },
+  { name: 'Tue', picking: 32, packing: 20, quality: 8, dispatch: 10 },
+  { name: 'Wed', picking: 35, packing: 24, quality: 10, dispatch: 11 },
+];
+
+const categories = [
+  { key: 'picking', color: 'var(--ds-chart-1)', label: 'Picking' },
+  { key: 'packing', color: 'var(--ds-chart-2)', label: 'Packing' },
+  { key: 'quality', color: 'var(--ds-chart-4)', label: 'Quality' },
+  { key: 'dispatch', color: 'var(--ds-chart-3)', label: 'Dispatch' },
+];
+
+export function FixedScaleStackedBarComparisonExample() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <StackedBarChart data={data} categories={categories} height={280} yAxisDomain={[0, 90]} />
+      <StackedBarChart data={data} categories={categories} height={280} />
+    </div>
+  );
+}`;
+
 export const DailyTeamMix: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
@@ -64,6 +107,7 @@ export const DailyTeamMix: Story = {
       />
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: dailyTeamMixSource } } },
 };
 
 export const ConsistentScaleAcrossReports: Story = {
@@ -90,4 +134,5 @@ export const ConsistentScaleAcrossReports: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: { docs: { source: { code: fixedScaleSource } } },
 };

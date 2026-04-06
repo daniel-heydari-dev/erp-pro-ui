@@ -70,7 +70,9 @@ const segments: BreakdownSegment[] = [
   { label: 'Other', value: 5, color: '#ff4c51' },
 ];
 
-<ThinBreakdownBar data={segments} />`}
+export function AllocationBreakdownBarExample() {
+  return <ThinBreakdownBar data={segments} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Compact Capacity Rows</h2>
@@ -98,7 +100,17 @@ const segments: BreakdownSegment[] = [
       </div>
 
       <CodeBlock
-        code={`<ThinBreakdownBar data={segments} showLabels={false} />`}
+        code={`import { ThinBreakdownBar, type BreakdownSegment } from 'erp-pro-ui';
+
+const capacitySegments: BreakdownSegment[] = [
+  { label: 'Available', value: 58, color: '#28c76f' },
+  { label: 'Reserved', value: 27, color: '#7367f0' },
+  { label: 'Blocked', value: 15, color: '#ff9f43' },
+];
+
+export function CompactBreakdownBarExample() {
+  return <ThinBreakdownBar data={capacitySegments} showLabels={false} />;
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

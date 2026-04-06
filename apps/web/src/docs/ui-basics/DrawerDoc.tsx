@@ -59,7 +59,9 @@ const DrawerDoc = () => {
 
       <CodeBlock
         code={`import { useState } from 'react';
-import { Drawer, Button } from 'erp-pro-ui';
+import { Button, Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const position: DrawerPosition = 'right';
 
 const Example = () => {
   const [open, setOpen] = useState(false);
@@ -71,7 +73,7 @@ const Example = () => {
         open={open} 
         onOpenChange={setOpen}
         title="Drawer Title"
-        position="right"
+        position={position}
       >
         <p>Content goes here...</p>
       </Drawer>
@@ -100,10 +102,13 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Drawer position="left" ... />
-<Drawer position="right" ... />
-<Drawer position="top" ... />
-<Drawer position="bottom" ... />`}
+        code={`import { Drawer, type DrawerPosition } from 'erp-pro-ui';
+
+const drawerPositions: DrawerPosition[] = ['left', 'right', 'top', 'bottom'];
+
+drawerPositions.map((position) => (
+  <Drawer key={position} position={position} />
+));`}
       />
 
       <h2 className="docs-category-subtitle">Settings Panel</h2>
@@ -159,20 +164,32 @@ const Example = () => {
       </div>
 
       <CodeBlock
-        code={`<Drawer
-  open={open}
-  onOpenChange={setOpen}
-  title="Workspace settings"
-  description="Adjust notifications, approval behavior, and transfer visibility from one panel."
-  footer={
-    <div className="flex justify-end gap-2">
-      <Button label="Cancel" onClick={() => setOpen(false)} />
-      <Button label="Save changes" primary onClick={() => setOpen(false)} />
-    </div>
-  }
->
-  <div className="space-y-4">...</div>
-</Drawer>`}
+        code={`import { useState } from 'react';
+import { Button, Drawer } from 'erp-pro-ui';
+
+export function WorkspaceSettingsDrawer() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button label="Open settings" primary onClick={() => setOpen(true)} />
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        title="Workspace settings"
+        description="Adjust notifications, approval behavior, and transfer visibility from one panel."
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button label="Cancel" onClick={() => setOpen(false)} />
+            <Button label="Save changes" primary onClick={() => setOpen(false)} />
+          </div>
+        }
+      >
+        <div className="space-y-4">...</div>
+      </Drawer>
+    </>
+  );
+}`}
       />
 
       <h2 className="docs-category-subtitle">Core Props</h2>

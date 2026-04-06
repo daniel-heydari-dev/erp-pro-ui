@@ -30,6 +30,38 @@ const meta: Meta<typeof Label> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const labelInputPairSource = `import { Input, Label } from 'erp-pro-ui';
+
+export function LabelInputPairExample() {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="contact-email" required>
+        Contact email
+      </Label>
+      <Input id="contact-email" type="email" placeholder="ops@company.com" />
+    </div>
+  );
+}`;
+
+const labelPatternsSource = `import { Checkbox, Input, Label } from 'erp-pro-ui';
+
+export function LabelPatternsExample() {
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-1.5">
+        <Label htmlFor="req-field" required>
+          Required Field
+        </Label>
+        <Input id="req-field" placeholder="Project name" />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox id="terms" />
+        <Label htmlFor="terms">Accept terms and conditions</Label>
+      </div>
+    </div>
+  );
+}`;
+
 /**
  * ## Default
  * A standard label styling, often coupled with inputs.
@@ -80,6 +112,13 @@ export const LabelInputPair: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: labelInputPairSource,
+      },
+    },
+  },
 };
 
 /**
@@ -103,4 +142,11 @@ export const CommonPatterns: Story = {
       </div>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: labelPatternsSource,
+      },
+    },
+  },
 };

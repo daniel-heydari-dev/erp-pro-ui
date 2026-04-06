@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Combobox } from "erp-pro-ui";
+import { Combobox, type ComboboxOption } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -7,7 +7,7 @@ const ComboboxDoc = () => {
   const [value, setValue] = useState("");
   const [createValue, setCreateValue] = useState("");
 
-  const options = [
+  const options: ComboboxOption[] = [
     { label: "React", value: "react" },
     { label: "Vue", value: "vue" },
     { label: "Angular", value: "angular" },
@@ -41,23 +41,27 @@ const ComboboxDoc = () => {
       </div>
 
       <CodeBlock
-        code={`import { Combobox } from 'erp-pro-ui';
-import { useState } from 'react';
+        code={`import { useState } from 'react';
+import { Combobox, type ComboboxOption } from 'erp-pro-ui';
 
-const options = [
+const options: ComboboxOption[] = [
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   // ...
 ];
 
-const [value, setValue] = useState('');
+export function FrameworkCombobox() {
+  const [value, setValue] = useState('');
 
-<Combobox
-  options={options}
-  value={value}
-  onChange={setValue}
-  placeholder="Select a framework..."
-/>`}
+  return (
+    <Combobox
+      options={options}
+      value={value}
+      onChange={setValue}
+      placeholder="Select a framework..."
+    />
+  );
+}`}
       />
 
       {/* Create Option */}
@@ -79,13 +83,27 @@ const [value, setValue] = useState('');
       </div>
 
       <CodeBlock
-        code={`<Combobox
-  options={options}
-  value={value}
-  onChange={setValue}
-  createOptionLabel="Add new framework"
-  onCreateOption={() => handleCreate()}
-/>`}
+        code={`import { useState } from 'react';
+import { Combobox, type ComboboxOption } from 'erp-pro-ui';
+
+const options: ComboboxOption[] = [
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+];
+
+export function CreateOptionCombobox() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Combobox
+      options={options}
+      value={value}
+      onChange={setValue}
+      createOptionLabel="Add new framework"
+      onCreateOption={() => window.alert('Create option clicked!')}
+    />
+  );
+}`}
       />
 
       {/* Props Reference */}

@@ -100,7 +100,307 @@ const releaseChecklistSteps = [
   { label: "Go live" },
 ] satisfies StepperStepsProps["steps"];
 
-function StepperDemo(props: Omit<StepperProps, "steps" | "currentStep">) {
+const checkoutProgressSource = `import { useState } from "react";
+import { Button, Stepper, type Step } from "erp-pro-ui";
+
+const checkoutSteps: Step[] = [
+  { id: "cart", title: "Cart", description: "Review your items" },
+  { id: "shipping", title: "Shipping", description: "Choose shipping method" },
+  {
+    id: "payment",
+    title: "Payment",
+    description: "Enter payment details",
+    optional: true,
+  },
+  { id: "confirmation", title: "Confirmation", description: "Order complete!" },
+];
+
+export function CheckoutProgressExample() {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  return (
+    <div>
+      <Stepper
+        steps={checkoutSteps}
+        currentStep={currentStep}
+        onStepClick={setCurrentStep}
+        orientation="horizontal"
+        variant="glass"
+      />
+
+      <div className="mt-6 flex gap-3">
+        <Button
+          label="Previous"
+          disabled={currentStep === 0}
+          onClick={() => setCurrentStep((step) => step - 1)}
+        />
+        <Button
+          label="Next"
+          primary
+          disabled={currentStep === checkoutSteps.length - 1}
+          onClick={() => setCurrentStep((step) => step + 1)}
+        />
+      </div>
+    </div>
+  );
+}`;
+
+const verticalSettingsSource = `import { Stepper, type Step } from "erp-pro-ui";
+
+const settingsSteps: Step[] = [
+  { id: "cart", title: "Cart", description: "Review your items" },
+  { id: "shipping", title: "Shipping", description: "Choose shipping method" },
+  {
+    id: "payment",
+    title: "Payment",
+    description: "Enter payment details",
+    optional: true,
+  },
+  { id: "confirmation", title: "Confirmation", description: "Order complete!" },
+];
+
+export function VerticalSettingsExample() {
+  return (
+    <Stepper
+      steps={settingsSteps}
+      currentStep={1}
+      orientation="vertical"
+      variant="outlined"
+    />
+  );
+}`;
+
+const validationSource = `import { Stepper, type Step } from "erp-pro-ui";
+
+const approvalSteps: Step[] = [
+  { id: "req", title: "Request", description: "Submit requisition" },
+  { id: "mgr", title: "Manager", description: "Manager decision" },
+  { id: "fin", title: "Finance", description: "Budget check" },
+  { id: "rel", title: "Release", description: "Vendor release" },
+];
+
+export function ErrorValidationExample() {
+  return (
+    <Stepper
+      steps={approvalSteps}
+      currentStep={2}
+      showErrors
+      errorSteps={[1]}
+      variant="outlined"
+    />
+  );
+}`;
+
+const approvalReviewSource = `import { Stepper, type Step } from "erp-pro-ui";
+
+const approvalSteps: Step[] = [
+  { id: "draft", title: "Draft" },
+  { id: "review", title: "Review" },
+  { id: "legal", title: "Legal" },
+  { id: "approved", title: "Approved" },
+];
+
+export function ApprovalReviewExample() {
+  return (
+    <Stepper
+      steps={approvalSteps}
+      currentStep={2}
+      completedSteps={[0, 1]}
+      clickable
+      variant="default"
+    />
+  );
+}`;
+
+const connectedSettingsSource = `import { useState } from "react";
+import {
+  Button,
+  StepperSteps,
+  type StepperStepsItem,
+} from "erp-pro-ui";
+import {
+  BriefcaseBusinessIcon,
+  PackageIcon,
+  SettingsIcon,
+  UserIcon,
+} from "erp-pro-ui";
+
+const connectedSteps: StepperStepsItem[] = [
+  { label: "Profile", icon: <UserIcon className="h-4 w-4" /> },
+  { label: "Billing", icon: <BriefcaseBusinessIcon className="h-4 w-4" /> },
+  { label: "Security", icon: <SettingsIcon className="h-4 w-4" /> },
+  { label: "Launch", icon: <PackageIcon className="h-4 w-4" /> },
+];
+
+export function ConnectedSettingsExample() {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  return (
+    <div>
+      <StepperSteps
+        steps={connectedSteps}
+        currentStep={currentStep}
+        onStepClick={setCurrentStep}
+        stepStates={["valid", "valid", "invalid", "untouched"]}
+      />
+
+      <div className="mt-6 flex gap-3">
+        <Button
+          label="Previous"
+          disabled={currentStep === 0}
+          onClick={() => setCurrentStep((step) => step - 1)}
+        />
+        <Button
+          label="Next"
+          primary
+          disabled={currentStep === connectedSteps.length - 1}
+          onClick={() => setCurrentStep((step) => step + 1)}
+        />
+      </div>
+    </div>
+  );
+}`;
+
+const connectedLayoutsSource = `import {
+  BriefcaseBusinessIcon,
+  PackageIcon,
+  SettingsIcon,
+  StepperSteps,
+  UserIcon,
+  type StepperStepsItem,
+} from "erp-pro-ui";
+
+const desktopSteps: StepperStepsItem[] = [
+  { label: "Profile", icon: <UserIcon className="h-4 w-4" /> },
+  { label: "Billing", icon: <BriefcaseBusinessIcon className="h-4 w-4" /> },
+  { label: "Security", icon: <SettingsIcon className="h-4 w-4" /> },
+  { label: "Launch", icon: <PackageIcon className="h-4 w-4" /> },
+];
+
+const releaseChecklistSteps: StepperStepsItem[] = [
+  { label: "Draft docs" },
+  { label: "Legal signoff" },
+  { label: "Ops handoff" },
+  { label: "Go live" },
+];
+
+export function ConnectedStepperLayoutsExample() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <StepperSteps
+        steps={desktopSteps}
+        currentStep={2}
+        stepStates={["valid", "valid", "invalid", "untouched"]}
+      />
+
+      <StepperSteps
+        steps={releaseChecklistSteps}
+        currentStep={2}
+        orientation="vertical"
+        stepStates={["valid", "valid", "untouched", "untouched"]}
+      />
+    </div>
+  );
+}`;
+
+const comparisonSource = `import {
+  BriefcaseBusinessIcon,
+  PackageIcon,
+  SettingsIcon,
+  Stepper,
+  StepperSteps,
+  StepperWizard,
+  StepperWizardStep,
+  UserIcon,
+  type Step,
+  type StepperStepsItem,
+} from "erp-pro-ui";
+
+const checkoutSteps: Step[] = [
+  { id: "cart", title: "Cart", description: "Review your items" },
+  { id: "shipping", title: "Shipping", description: "Choose shipping method" },
+  { id: "payment", title: "Payment", description: "Enter payment details" },
+  { id: "confirmation", title: "Confirmation", description: "Order complete!" },
+];
+
+const connectedSteps: StepperStepsItem[] = [
+  { label: "Profile", icon: <UserIcon className="h-4 w-4" /> },
+  { label: "Billing", icon: <BriefcaseBusinessIcon className="h-4 w-4" /> },
+  { label: "Security", icon: <SettingsIcon className="h-4 w-4" /> },
+  { label: "Launch", icon: <PackageIcon className="h-4 w-4" /> },
+];
+
+export function StepperComparisonExample() {
+  return (
+    <div className="grid gap-6 lg:grid-cols-3">
+      <Stepper
+        steps={checkoutSteps}
+        currentStep={1}
+        completedSteps={[0]}
+        variant="glass"
+      />
+
+      <StepperSteps
+        steps={connectedSteps}
+        currentStep={2}
+        stepStates={["valid", "valid", "invalid", "untouched"]}
+        orientation="vertical"
+      />
+
+      <StepperWizard initialStep={0} nextButtonText="Next" completeButtonText="Finish">
+        <StepperWizardStep>Workspace details</StepperWizardStep>
+        <StepperWizardStep>Invites</StepperWizardStep>
+        <StepperWizardStep>Automation review</StepperWizardStep>
+      </StepperWizard>
+    </div>
+  );
+}`;
+
+const workspaceWizardSource = `import { useState } from "react";
+import { StepperWizard, StepperWizardStep } from "erp-pro-ui";
+
+export function WorkspaceSetupWizardExample() {
+  const [completed, setCompleted] = useState(false);
+
+  if (completed) {
+    return <p>Workspace setup is complete.</p>;
+  }
+
+  return (
+    <StepperWizard onFinalStepCompleted={() => setCompleted(true)}>
+      <StepperWizardStep>Create workspace details</StepperWizardStep>
+      <StepperWizardStep>Invite operators</StepperWizardStep>
+      <StepperWizardStep>Review automation rules</StepperWizardStep>
+    </StepperWizard>
+  );
+}`;
+
+const procurementWizardSource = `import { useState } from "react";
+import { StepperWizard, StepperWizardStep } from "erp-pro-ui";
+
+export function ProcurementApprovalWizardExample() {
+  const [completed, setCompleted] = useState(false);
+
+  if (completed) {
+    return <p>Procurement review published.</p>;
+  }
+
+  return (
+    <StepperWizard
+      nextButtonText="Continue Review"
+      completeButtonText="Publish Decision"
+      onFinalStepCompleted={() => setCompleted(true)}
+    >
+      <StepperWizardStep>Scope requisition</StepperWizardStep>
+      <StepperWizardStep>Risk and vendor checks</StepperWizardStep>
+      <StepperWizardStep>Finalize release</StepperWizardStep>
+    </StepperWizard>
+  );
+}`;
+
+function CheckoutProgressStepperExample(
+  props: Omit<StepperProps, "steps" | "currentStep">,
+) {
   const [current, setCurrent] = useState(1);
 
   return (
@@ -135,7 +435,17 @@ function StepperDemo(props: Omit<StepperProps, "steps" | "currentStep">) {
  * Commonly used at the top of multi-part forms.
  */
 export const Horizontal: Story = {
-  render: () => <StepperDemo orientation="horizontal" variant="glass" />,
+  name: "Checkout Progress",
+  render: () => (
+    <CheckoutProgressStepperExample orientation="horizontal" variant="glass" />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: checkoutProgressSource,
+      },
+    },
+  },
 };
 
 /**
@@ -143,7 +453,17 @@ export const Horizontal: Story = {
  * Commonly used alongside deeper settings sections to outline major changes.
  */
 export const Vertical: Story = {
-  render: () => <StepperDemo orientation="vertical" variant="outlined" />,
+  name: "Vertical Settings Flow",
+  render: () => (
+    <CheckoutProgressStepperExample orientation="vertical" variant="outlined" />
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: verticalSettingsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -151,6 +471,7 @@ export const Vertical: Story = {
  * Marks invalid steps while preserving progress context.
  */
 export const ErrorValidationPath: Story = {
+  name: "Validation Recovery Flow",
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <Stepper
@@ -167,6 +488,13 @@ export const ErrorValidationPath: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: validationSource,
+      },
+    },
+  },
 };
 
 /**
@@ -174,6 +502,7 @@ export const ErrorValidationPath: Story = {
  * Demonstrates non-linear review flows where completion is tracked manually.
  */
 export const ControlledCompletedSteps: Story = {
+  name: "Approval Review Flow",
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <Stepper
@@ -190,9 +519,16 @@ export const ControlledCompletedSteps: Story = {
       />
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: approvalReviewSource,
+      },
+    },
+  },
 };
 
-function StepperStepsDemo() {
+function ConnectedSettingsStepperExample() {
   const [currentStep, setCurrentStep] = useState(1);
 
   return (
@@ -231,7 +567,15 @@ function StepperStepsDemo() {
  * A simple example for the compact stepper variant.
  */
 export const ConnectedStepButtons: Story = {
-  render: () => <StepperStepsDemo />,
+  name: "Connected Settings Flow",
+  render: () => <ConnectedSettingsStepperExample />,
+  parameters: {
+    docs: {
+      source: {
+        code: connectedSettingsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -239,6 +583,7 @@ export const ConnectedStepButtons: Story = {
  * Compare the compact stepper across desktop onboarding and narrow checklist layouts.
  */
 export const ConnectedStepperScenarios: Story = {
+  name: "Connected Stepper Layouts",
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl" className="ui:block">
       <StorySection>
@@ -274,6 +619,13 @@ export const ConnectedStepperScenarios: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: connectedLayoutsSource,
+      },
+    },
+  },
 };
 
 /**
@@ -340,6 +692,13 @@ export const StepperComparison: Story = {
       </StorySection>
     </StorySurface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: comparisonSource,
+      },
+    },
+  },
 };
 
 function WizardMetric({ label, value }: { label: string; value: string }) {
@@ -355,7 +714,7 @@ function WizardMetric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function StepperWizardDemo() {
+function WorkspaceSetupWizardExample() {
   const [completed, setCompleted] = useState(false);
 
   return (
@@ -435,7 +794,7 @@ function StepperWizardDemo() {
   );
 }
 
-function ProcurementWizardDemo() {
+function ProcurementApprovalWizardExample() {
   const [completed, setCompleted] = useState(false);
 
   return (
@@ -524,7 +883,15 @@ function ProcurementWizardDemo() {
  * A simple example of the animated wizard stepper for setup flows.
  */
 export const WizardFlowVariant: Story = {
-  render: () => <StepperWizardDemo />,
+  name: "Workspace Setup Wizard",
+  render: () => <WorkspaceSetupWizardExample />,
+  parameters: {
+    docs: {
+      source: {
+        code: workspaceWizardSource,
+      },
+    },
+  },
 };
 
 /**
@@ -532,5 +899,13 @@ export const WizardFlowVariant: Story = {
  * Shows the same wizard API adapted to procurement review and release workflows.
  */
 export const WizardApprovalScenario: Story = {
-  render: () => <ProcurementWizardDemo />,
+  name: "Procurement Approval Wizard",
+  render: () => <ProcurementApprovalWizardExample />,
+  parameters: {
+    docs: {
+      source: {
+        code: procurementWizardSource,
+      },
+    },
+  },
 };
