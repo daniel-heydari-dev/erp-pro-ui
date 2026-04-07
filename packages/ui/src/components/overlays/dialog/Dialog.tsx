@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactElement } from "react";
+import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
@@ -159,6 +160,8 @@ const Spinner = () => (
   <LoaderIcon className="animate-spin w-4 h-4" aria-hidden="true" />
 );
 
+const DIALOG_ROOT_Z_INDEX = 2147483000;
+
 export const Dialog = ({
   open,
   onOpenChange,
@@ -261,11 +264,12 @@ export const Dialog = ({
     );
   };
 
-  return (
+  const dialogNode = (
     <AnimatePresence>
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center px-4 overlay-backdrop"
+          className="fixed inset-0 flex items-center justify-center px-4 overlay-backdrop"
+          style={{ zIndex: DIALOG_ROOT_Z_INDEX }}
           role="presentation"
         >
           {/* Backdrop with blur */}
@@ -355,4 +359,10 @@ export const Dialog = ({
       )}
     </AnimatePresence>
   );
+
+  if (typeof document === "undefined") {
+    return dialogNode;
+  }
+
+  return createPortal(dialogNode, document.body);
 };

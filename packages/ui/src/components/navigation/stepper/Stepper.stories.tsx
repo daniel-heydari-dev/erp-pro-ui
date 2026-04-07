@@ -38,6 +38,7 @@ const meta: Meta<typeof Stepper> = {
   tags: ["autodocs"],
   argTypes: {
     orientation: { control: "radio", options: ["horizontal", "vertical"] },
+    labelPosition: { control: "radio", options: ["bottom", "right"] },
     size: { control: "select", options: ["sm", "md", "lg"] },
     variant: {
       control: "select",
@@ -208,6 +209,26 @@ export function ApprovalReviewExample() {
       completedSteps={[0, 1]}
       clickable
       variant="default"
+    />
+  );
+}`;
+
+const inlineLabelsSource = `import { Stepper, type Step } from "erp-pro-ui";
+
+const onboardingSteps: Step[] = [
+  { id: "general", title: "General Information", description: "Workspace basics" },
+  { id: "billing", title: "Billing Setup", description: "Payment and invoicing" },
+  { id: "team", title: "Team Access", description: "Invite collaborators" },
+  { id: "review", title: "Review", description: "Confirm and launch" },
+];
+
+export function InlineStepperLabelsExample() {
+  return (
+    <Stepper
+      steps={onboardingSteps}
+      currentStep={0}
+      labelPosition="right"
+      variant="glass"
     />
   );
 }`;
@@ -523,6 +544,52 @@ export const ControlledCompletedSteps: Story = {
     docs: {
       source: {
         code: approvalReviewSource,
+      },
+    },
+  },
+};
+
+/**
+ * ## Inline Labels
+ * Keeps the indicator and label beside each other for denser headers and setup bars.
+ */
+export const InlineLabels: Story = {
+  name: "Inline Labels",
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
+      <Stepper
+        steps={[
+          {
+            id: "general",
+            title: "General Information",
+            description: "Workspace basics",
+          },
+          {
+            id: "billing",
+            title: "Billing Setup",
+            description: "Payment and invoicing",
+          },
+          {
+            id: "team",
+            title: "Team Access",
+            description: "Invite collaborators",
+          },
+          {
+            id: "review",
+            title: "Review",
+            description: "Confirm and launch",
+          },
+        ]}
+        currentStep={0}
+        labelPosition="right"
+        variant="glass"
+      />
+    </StorySurface>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: inlineLabelsSource,
       },
     },
   },

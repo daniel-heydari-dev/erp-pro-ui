@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stepper, Button, Select, type Step } from "erp-pro-ui";
+import { Button, Select, Stepper, type Step } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -20,70 +20,118 @@ const stepperSizeOptions: Array<{ label: string; value: "sm" | "md" | "lg" }> =
     { label: "Large", value: "lg" },
   ];
 
-const onboardingSteps: Step[] = [
+const stepperLabelPositionOptions: Array<{
+  label: string;
+  value: "bottom" | "right";
+}> = [
+  { label: "Bottom", value: "bottom" },
+  { label: "Inline Right", value: "right" },
+];
+
+const checkoutSteps: Step[] = [
   {
-    id: "account",
-    title: "Account",
-    description: "Create your account",
+    id: "cart",
+    title: "Cart",
+    description: "Review your items",
   },
   {
-    id: "profile",
-    title: "Profile",
-    description: "Set up your profile",
+    id: "shipping",
+    title: "Shipping",
+    description: "Choose shipping method",
+  },
+  {
+    id: "payment",
+    title: "Payment",
+    description: "Enter payment details",
+    optional: true,
+  },
+  {
+    id: "confirmation",
+    title: "Confirmation",
+    description: "Order complete!",
+  },
+];
+
+const inlineSteps: Step[] = [
+  {
+    id: "general",
+    title: "General Information",
+    description: "Workspace basics",
+  },
+  {
+    id: "billing",
+    title: "Billing Setup",
+    description: "Payment and invoicing",
+  },
+  {
+    id: "team",
+    title: "Team Access",
+    description: "Invite collaborators",
   },
   {
     id: "review",
     title: "Review",
-    description: "Review your details",
+    description: "Confirm and launch",
   },
-  {
-    id: "complete",
-    title: "Complete",
-    description: "You are done!",
-  },
-];
-
-const iconDemoSteps: Step[] = [
-  { id: "user", title: "User", icon: "👤" },
-  { id: "plan", title: "Plan", icon: "💳" },
-  { id: "done", title: "Done", icon: "🚀" },
 ];
 
 const approvalSteps: Step[] = [
   {
-    id: "request",
+    id: "req",
     title: "Request",
-    description: "Submit purchase request",
+    description: "Submit requisition",
   },
   {
-    id: "manager",
+    id: "mgr",
     title: "Manager",
-    description: "Manager approval",
+    description: "Manager decision",
   },
   {
-    id: "finance",
+    id: "fin",
     title: "Finance",
-    description: "Budget verification",
+    description: "Budget check",
   },
   {
-    id: "done",
-    title: "Released",
-    description: "Order released to vendor",
+    id: "rel",
+    title: "Release",
+    description: "Vendor release",
+  },
+];
+
+const reviewSteps: Step[] = [
+  { id: "draft", title: "Draft" },
+  { id: "review", title: "Review" },
+  { id: "legal", title: "Legal" },
+  { id: "approved", title: "Approved" },
+];
+
+const exportGuides = [
+  {
+    title: "Stepper",
+    body: "Use the core Stepper for checkout, approvals, and guided progress navigation.",
+  },
+  {
+    title: "StepperSteps",
+    body: "Use StepperSteps for denser settings flows where validation state stays visible in each step button.",
+  },
+  {
+    title: "StepperWizard",
+    body: "Use StepperWizard when each step owns a content pane and the component should handle next and back actions.",
   },
 ];
 
 const StepperDoc = () => {
   const [activeStep, setActiveStep] = useState(1);
-  const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
-    "horizontal",
-  );
   const [variant, setVariant] = useState<
     "default" | "glass" | "minimal" | "outlined"
   >("glass");
   const [size, setSize] = useState<"sm" | "md" | "lg">("md");
+  const [labelPosition, setLabelPosition] = useState<"bottom" | "right">(
+    "bottom",
+  );
 
   const handleNext = () => {
-    setActiveStep((prev) => Math.min(prev + 1, onboardingSteps.length - 1));
+    setActiveStep((prev) => Math.min(prev + 1, checkoutSteps.length - 1));
   };
 
   const handlePrev = () => {
@@ -94,37 +142,33 @@ const StepperDoc = () => {
     <section className="docs-section">
       <h1 className="docs-category-title">Stepper</h1>
       <p className="docs-paragraph">
-        Step-by-step progress indicator for onboarding, checkout, and guided
-        setup flows.
+        The Stepper family covers three patterns: the core progress stepper,
+        denser connected step buttons, and full-pane wizard flows. The core
+        Stepper now keeps labels centered under each circle by default and can
+        place labels inline with <code>labelPosition="right"</code> when you
+        need a tighter layout.
       </p>
 
-      <h2 className="docs-category-subtitle">Onboarding Playground</h2>
+      <h2 className="docs-category-subtitle">Checkout Progress Playground</h2>
+
+      <p className="docs-paragraph mb-4">
+        This matches the main Storybook checkout example: centered labels,
+        connectors that start at the first circle and end at the last circle,
+        and an optional inline label mode for tighter headers.
+      </p>
 
       <div className="docs-controls">
-        <div className="docs-control-group">
-          <label className="docs-control-label">Orientation</label>
-          <div className="flex gap-2">
-            <Button
-              onClick={() => setOrientation("horizontal")}
-              primary={orientation === "horizontal"}
-            >
-              Horizontal
-            </Button>
-            <Button
-              onClick={() => setOrientation("vertical")}
-              primary={orientation === "vertical"}
-            >
-              Vertical
-            </Button>
-          </div>
-        </div>
         <div className="docs-control-group flex items-center gap-4">
           <label className="docs-control-label w-20">Variant</label>
           <Select
             value={variant}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            onChange={(event) =>
               setVariant(
-                e.target.value as "default" | "glass" | "minimal" | "outlined",
+                event.target.value as
+                  | "default"
+                  | "glass"
+                  | "minimal"
+                  | "outlined",
               )
             }
             className="w-48"
@@ -135,24 +179,36 @@ const StepperDoc = () => {
           <label className="docs-control-label w-20">Size</label>
           <Select
             value={size}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setSize(e.target.value as "sm" | "md" | "lg")
+            onChange={(event) =>
+              setSize(event.target.value as "sm" | "md" | "lg")
             }
             className="w-48"
             options={stepperSizeOptions}
           />
         </div>
+        <div className="docs-control-group flex items-center gap-4">
+          <label className="docs-control-label w-20">Labels</label>
+          <Select
+            value={labelPosition}
+            onChange={(event) =>
+              setLabelPosition(event.target.value as "bottom" | "right")
+            }
+            className="w-48"
+            options={stepperLabelPositionOptions}
+          />
+        </div>
       </div>
 
       <div className="docs-showcase-card flex-col items-center gap-8">
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-6xl">
           <Stepper
-            steps={onboardingSteps}
+            steps={checkoutSteps}
             currentStep={activeStep}
             onStepClick={setActiveStep}
-            orientation={orientation}
+            orientation="horizontal"
             variant={variant}
             size={size}
+            labelPosition={labelPosition}
           />
         </div>
 
@@ -168,7 +224,7 @@ const StepperDoc = () => {
             label="Next"
             primary={true}
             onClick={handleNext}
-            disabled={activeStep === onboardingSteps.length - 1}
+            disabled={activeStep === checkoutSteps.length - 1}
             className="px-4 py-2"
           />
         </div>
@@ -176,43 +232,43 @@ const StepperDoc = () => {
 
       <CodeBlock
         code={`import { useState } from 'react';
-      import { Stepper, type Step } from 'erp-pro-ui';
+import { Stepper, type Step } from 'erp-pro-ui';
 
-      const onboardingSteps: Step[] = [
-  { id: 'account', title: 'Account', description: 'Create your account' },
-  { id: 'profile', title: 'Profile', description: 'Set up your profile' },
-  { id: 'review', title: 'Review', description: 'Review your details' },
-  { id: 'complete', title: 'Complete', description: 'You are done!' },
+const checkoutSteps: Step[] = [
+  { id: 'cart', title: 'Cart', description: 'Review your items' },
+  { id: 'shipping', title: 'Shipping', description: 'Choose shipping method' },
+  { id: 'payment', title: 'Payment', description: 'Enter payment details', optional: true },
+  { id: 'confirmation', title: 'Confirmation', description: 'Order complete!' },
 ];
 
-export function OnboardingStepperExample() {
-  const [activeStep, setActiveStep] = useState(1);
+export function CheckoutProgressExample() {
+  const [currentStep, setCurrentStep] = useState(1);
 
   return (
     <Stepper
-      steps={onboardingSteps}
-      currentStep={activeStep}
-      onStepClick={setActiveStep}
-      orientation="${orientation}"
-      variant="${variant}"
-      size="${size}"
+      steps={checkoutSteps}
+      currentStep={currentStep}
+      onStepClick={setCurrentStep}
+      orientation="horizontal"
+      variant="glass"
+      labelPosition="bottom"
     />
   );
 }`}
       />
 
-      {/* Vertical Orientation */}
       <h2 className="docs-category-subtitle">Vertical Settings Flow</h2>
       <p className="docs-paragraph">
-        Ideal for sidebars or long forms where vertical space is available.
+        Use the vertical layout when you have more height than width, such as
+        side panels, settings pages, or operational drawers.
       </p>
       <div className="docs-showcase-card">
         <div className="max-w-md w-full">
           <Stepper
-            steps={onboardingSteps}
-            currentStep={activeStep}
+            steps={checkoutSteps}
+            currentStep={1}
             orientation="vertical"
-            variant="glass"
+            variant="outlined"
           />
         </div>
       </div>
@@ -220,11 +276,11 @@ export function OnboardingStepperExample() {
       <CodeBlock
         code={`import { Stepper, type Step } from 'erp-pro-ui';
 
-      const settingsSteps: Step[] = [
-  { id: 'account', title: 'Account', description: 'Create your account' },
-  { id: 'profile', title: 'Profile', description: 'Set up your profile' },
-  { id: 'review', title: 'Review', description: 'Review your details' },
-  { id: 'complete', title: 'Complete', description: 'You are done!' },
+const settingsSteps: Step[] = [
+  { id: 'cart', title: 'Cart', description: 'Review your items' },
+  { id: 'shipping', title: 'Shipping', description: 'Choose shipping method' },
+  { id: 'payment', title: 'Payment', description: 'Enter payment details', optional: true },
+  { id: 'confirmation', title: 'Confirmation', description: 'Order complete!' },
 ];
 
 export function VerticalSettingsStepperExample() {
@@ -233,24 +289,23 @@ export function VerticalSettingsStepperExample() {
       steps={settingsSteps}
       currentStep={1}
       orientation="vertical"
-      variant="glass"
+      variant="outlined"
     />
   );
 }`}
       />
 
-      {/* Custom Icons & Errors */}
       <h2 className="docs-category-subtitle">Validation Recovery Flow</h2>
       <p className="docs-paragraph">
-        Enhance steps with custom icons and highlight validation errors using{" "}
-        <code>showErrors</code>.
+        Highlight a broken stage without losing progress context. This matches
+        the Storybook validation example and keeps the rest of the path visible.
       </p>
       <div className="docs-showcase-card flex-col gap-8">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-4xl">
           <Stepper
-            steps={iconDemoSteps}
-            currentStep={1}
-            showErrors={true}
+            steps={approvalSteps}
+            currentStep={2}
+            showErrors
             errorSteps={[1]}
             variant="outlined"
           />
@@ -260,17 +315,18 @@ export function VerticalSettingsStepperExample() {
       <CodeBlock
         code={`import { Stepper, type Step } from 'erp-pro-ui';
 
-      const validationSteps: Step[] = [
-  { id: 'user', title: 'User', icon: '👤' },
-  { id: 'plan', title: 'Plan', icon: '💳' },
-  { id: 'done', title: 'Done', icon: '🚀' },
+const approvalSteps: Step[] = [
+  { id: 'req', title: 'Request', description: 'Submit requisition' },
+  { id: 'mgr', title: 'Manager', description: 'Manager decision' },
+  { id: 'fin', title: 'Finance', description: 'Budget check' },
+  { id: 'rel', title: 'Release', description: 'Vendor release' },
 ];
 
 export function ValidationRecoveryStepperExample() {
   return (
     <Stepper
-      steps={validationSteps}
-      currentStep={1}
+      steps={approvalSteps}
+      currentStep={2}
       showErrors
       errorSteps={[1]}
       variant="outlined"
@@ -287,7 +343,7 @@ export function ValidationRecoveryStepperExample() {
       <div className="docs-showcase-card">
         <div className="w-full max-w-3xl">
           <Stepper
-            steps={approvalSteps}
+            steps={reviewSteps}
             currentStep={2}
             completedSteps={[0, 1]}
             clickable
@@ -299,11 +355,11 @@ export function ValidationRecoveryStepperExample() {
       <CodeBlock
         code={`import { Stepper, type Step } from 'erp-pro-ui';
 
-      const approvalSteps: Step[] = [
-  { id: 'request', title: 'Request', description: 'Submit purchase request' },
-  { id: 'manager', title: 'Manager', description: 'Manager approval' },
-  { id: 'finance', title: 'Finance', description: 'Budget verification' },
-  { id: 'done', title: 'Released', description: 'Order released to vendor' },
+const approvalSteps: Step[] = [
+  { id: 'draft', title: 'Draft' },
+  { id: 'review', title: 'Review' },
+  { id: 'legal', title: 'Legal' },
+  { id: 'approved', title: 'Approved' },
 ];
 
 export function ApprovalReviewStepperExample() {
@@ -313,10 +369,74 @@ export function ApprovalReviewStepperExample() {
       currentStep={2}
       completedSteps={[0, 1]}
       clickable
+      variant="default"
     />
   );
 }`}
       />
+
+      <h2 className="docs-category-subtitle">Inline Labels</h2>
+      <p className="docs-paragraph">
+        Set <code>labelPosition</code> to <code>right</code> when the text
+        should sit beside the circle instead of below it.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="w-full max-w-6xl">
+          <Stepper
+            steps={inlineSteps}
+            currentStep={0}
+            labelPosition="right"
+            variant="glass"
+          />
+        </div>
+      </div>
+
+      <CodeBlock
+        code={`import { Stepper, type Step } from 'erp-pro-ui';
+
+const onboardingSteps: Step[] = [
+  { id: 'general', title: 'General Information', description: 'Workspace basics' },
+  { id: 'billing', title: 'Billing Setup', description: 'Payment and invoicing' },
+  { id: 'team', title: 'Team Access', description: 'Invite collaborators' },
+  { id: 'review', title: 'Review', description: 'Confirm and launch' },
+];
+
+export function InlineStepperLabelsExample() {
+  return (
+    <Stepper
+      steps={onboardingSteps}
+      currentStep={0}
+      labelPosition="right"
+      variant="glass"
+    />
+  );
+}`}
+      />
+
+      <h2 className="docs-category-subtitle">Stepper Family</h2>
+      <p className="docs-paragraph mb-4">
+        Storybook groups three related exports under the Stepper docs. Use the
+        variant that matches the density and interaction model of your screen.
+      </p>
+
+      <div className="docs-showcase-card">
+        <div className="grid w-full gap-4 md:grid-cols-3">
+          {exportGuides.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900"
+            >
+              <h3 className="text-base font-semibold text-neutral-900 dark:text-white">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+                {item.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <h2 className="docs-category-subtitle">Core Props</h2>
       <div className="overflow-x-auto">
@@ -358,6 +478,17 @@ export function ApprovalReviewStepperExample() {
               </td>
               <td>'horizontal'</td>
               <td>Layout direction for the stepper.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">labelPosition</td>
+              <td>
+                <span className="docs-prop-type">'bottom' | 'right'</span>
+              </td>
+              <td>'bottom'</td>
+              <td>
+                Controls whether the label sits below the circle or inline to
+                its right. Vertical steppers always render inline labels.
+              </td>
             </tr>
             <tr>
               <td className="docs-prop-name">variant</td>
@@ -410,6 +541,17 @@ export function ApprovalReviewStepperExample() {
               </td>
               <td>true</td>
               <td>Toggles the line between steps.</td>
+            </tr>
+            <tr>
+              <td className="docs-prop-name">colors</td>
+              <td>
+                <span className="docs-prop-type">object</span>
+              </td>
+              <td>-</td>
+              <td>
+                Optional overrides for completed, current, error, upcoming, and
+                connector colors.
+              </td>
             </tr>
             <tr>
               <td className="docs-prop-name">showErrors</td>

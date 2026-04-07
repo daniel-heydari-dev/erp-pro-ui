@@ -133,7 +133,7 @@ const componentDocSeeds = {
   dialog: {
     exportName: "Dialog",
     summary:
-      "Modal overlay for confirmations, destructive flows, and custom embedded forms.",
+      "Portal-backed modal overlay for confirmations, destructive flows, and custom embedded forms that must sit above the full application shell.",
     aliases: ["modal"],
     related: ["drawer", "button", "toast"],
     rootImport:
@@ -200,13 +200,13 @@ const componentDocSeeds = {
   stepper: {
     exportName: "Stepper",
     summary:
-      "Visual progress indicator for guided workflows, checkouts, and multi-step forms.",
-    aliases: ["wizard steps"],
+      "Centered workflow progress indicator with stacked or inline labels, plus related connected-step and wizard exports for denser or pane-based flows.",
+    aliases: ["wizard steps", "workflow progress", "inline stepper"],
     related: ["form", "chip", "loading"],
     rootImport:
-      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperStepsItem } from 'erp-pro-ui';",
+      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperLabelPosition, type StepperStepsItem, type StepperStepsState } from 'erp-pro-ui';",
     subpathImport:
-      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperStepsItem } from 'erp-pro-ui/stepper';",
+      "import { Stepper, StepperSteps, StepperWizard, StepperWizardStep, type Step, type StepperLabelPosition, type StepperStepsItem, type StepperStepsState } from 'erp-pro-ui/stepper';",
   },
   chip: {
     exportName: "Chip",

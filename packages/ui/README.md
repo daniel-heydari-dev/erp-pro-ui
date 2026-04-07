@@ -439,7 +439,7 @@ The tables below document the public surface you can use from another project.
 | `Tooltip`                                                                | `erp-pro-ui/tooltip`    | Short contextual help                                   |
 | `HoverCard`                                                              | `erp-pro-ui/hover-card` | Rich hover previews                                     |
 | `Carousel`                                                               | `erp-pro-ui/carousel`   | Horizontal content sliders                              |
-| `Stepper`                                                                | `erp-pro-ui/stepper`    | Multi-step workflow progress                            |
+| `Stepper`                                                                | `erp-pro-ui/stepper`    | Centered or inline multi-step workflow progress         |
 | `Alert`                                                                  | `erp-pro-ui/alert`      | Inline success, warning, info, or destructive messaging |
 | `Loading`                                                                | `erp-pro-ui/loading`    | Unified loading API                                     |
 | `Spinner`, `Dots`, `Pulse`, `Bars`, `Ring`, `Bounce`, `Wave`, `Skeleton` | `erp-pro-ui/loading`    | Individual loading variants                             |

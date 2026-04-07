@@ -6,6 +6,7 @@ import type {
   StepperProps,
   StepIndicatorProps,
   StepStatus,
+  StepperLabelPosition,
   StepperSize,
   StepperVariant,
 } from "./types";
@@ -13,25 +14,38 @@ import type {
 // Size configurations for indicators and icons
 const sizeConfig: Record<
   StepperSize,
-  { indicator: string; icon: string; text: string; connectorThickness: string }
+  {
+    indicator: string;
+    indicatorPx: number;
+    icon: string;
+    text: string;
+    connectorThickness: string;
+    connectorThicknessPx: number;
+  }
 > = {
   sm: {
     indicator: "w-8 h-8",
+    indicatorPx: 32,
     icon: "w-4 h-4",
     text: "text-xs",
     connectorThickness: "2px",
+    connectorThicknessPx: 2,
   },
   md: {
     indicator: "w-10 h-10",
+    indicatorPx: 40,
     icon: "w-5 h-5",
     text: "text-sm",
     connectorThickness: "2px",
+    connectorThicknessPx: 2,
   },
   lg: {
     indicator: "w-12 h-12",
+    indicatorPx: 48,
     icon: "w-6 h-6",
     text: "text-base",
     connectorThickness: "4px",
+    connectorThicknessPx: 4,
   },
 };
 
@@ -74,6 +88,16 @@ const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
 
   return baseStyles[variant][status];
 };
+
+const getConnectorTrackClassName = (variant: StepperVariant) =>
+  variant === "glass"
+    ? "bg-white/30 backdrop-blur-sm dark:bg-white/10"
+    : "bg-neutral-200 dark:bg-neutral-700";
+
+const getResolvedLabelPosition = (
+  orientation: StepperProps["orientation"],
+  labelPosition: StepperLabelPosition,
+) => (orientation === "vertical" ? "right" : labelPosition);
 
 // Step Indicator Component
 const StepIndicator = ({
@@ -158,6 +182,7 @@ export const Stepper = ({
   orientation = "horizontal",
   size = "md",
   variant = "glass",
+  labelPosition = "bottom",
   showNumbers = true,
   clickable = true,
   showConnector = true,
@@ -171,7 +196,21 @@ export const Stepper = ({
   colors,
 }: StepperProps) => {
   const isVertical = orientation === "vertical";
+  const resolvedLabelPosition = getResolvedLabelPosition(
+    orientation,
+    labelPosition,
+  );
+  const isHorizontalInline =
+    orientation === "horizontal" && resolvedLabelPosition === "right";
   const config = sizeConfig[size];
+  const indicatorPaddingPx =
+    variant === "glass" || variant === "outlined" || variant === "minimal"
+      ? 4
+      : 2;
+  const indicatorShellSizePx = config.indicatorPx + indicatorPaddingPx * 2;
+  const connectorInsetPx = indicatorShellSizePx / 2;
+  const connectorCenterOffsetPx =
+    connectorInsetPx - config.connectorThicknessPx / 2;
 
   const getStepStatus = (index: number): StepStatus => {
     if (showErrors && errorSteps.includes(index)) return "error";
@@ -201,42 +240,37 @@ export const Stepper = ({
     <div
       className={mergeClassNames(
         "w-full relative",
-        isVertical ? "flex flex-col" : "flex items-start justify-between",
+        isVertical
+          ? "flex flex-col"
+          : isHorizontalInline
+            ? "flex items-center"
+            : "flex items-start justify-between",
         className,
       )}
     >
       {/* Global Background Continuous Connector */}
       {showConnector &&
+        isVertical &&
         (() => {
-          const paddingValue =
-            variant === "glass" ||
-            variant === "outlined" ||
-            variant === "minimal"
-              ? 4
-              : 2;
           return (
             <div
               className={mergeClassNames(
                 "absolute rounded-full",
-                variant === "glass"
-                  ? "bg-white/30 dark:bg-white/10 backdrop-blur-sm"
-                  : "bg-neutral-200 dark:bg-neutral-700",
+                getConnectorTrackClassName(variant),
                 connectorClassName,
               )}
               style={{
                 ...(isVertical
                   ? {
-                      // Vertical background line
-                      top: "0",
-                      bottom: "0",
-                      left: `calc(${paddingValue}px + 1px + ${config.indicator.split(" ")[0].replace("w-", "")} * 0.125rem - ${config.connectorThickness} / 2)`,
+                      top: `${connectorInsetPx}px`,
+                      bottom: `${connectorInsetPx}px`,
+                      left: `${connectorCenterOffsetPx}px`,
                       width: config.connectorThickness,
                     }
                   : {
-                      // Horizontal background line
-                      left: "0",
-                      right: "0",
-                      top: `calc(${paddingValue}px + 1px + ${config.indicator.split(" ")[1].replace("h-", "")} * 0.125rem - ${config.connectorThickness} / 2)`,
+                      left: `${connectorInsetPx}px`,
+                      right: `${connectorInsetPx}px`,
+                      top: `${connectorCenterOffsetPx}px`,
                       height: config.connectorThickness,
                     }),
               }}
@@ -280,129 +314,224 @@ export const Stepper = ({
       {steps.map((step, index) => {
         const status = getStepStatus(index);
         const isLast = index === steps.length - 1;
-        const isClickable = clickable && !step.disabled; // Keep steps clickable unconditionally for navigation
-        const paddingValue =
-          variant === "glass" || variant === "outlined" || variant === "minimal"
-            ? 4
-            : 2;
-
-        return (
-          <div
-            key={step.id}
+        const isClickable = clickable && !step.disabled;
+        const isConnectorCompleted = getStepStatus(index) === "completed";
+        const textBlock = (
+          <motion.div
             className={mergeClassNames(
-              "relative z-10",
-              isVertical
-                ? "flex gap-4 pb-8" // spacing between vertical elements
-                : "flex flex-1 flex-col items-center",
-              !isLast && isVertical && "mb-2",
+              resolvedLabelPosition === "right"
+                ? "min-w-0 text-left"
+                : "w-full px-2 text-center",
+              isVertical && "flex-1 pb-6",
               isVertical && isLast && "pb-0",
-              stepClassName,
             )}
-            style={{
-              // Ensure perfect horizontal distribution
-              ...(!isVertical
-                ? {
-                    flexBasis: 0,
-                    flexGrow: 1,
-                    // Keep first item aligned left, last aligned right, others centered
-                    alignItems:
-                      index === 0
-                        ? "flex-start"
-                        : isLast
-                          ? "flex-end"
-                          : "center",
-                  }
-                : {}),
-            }}
+            style={isVertical ? { marginTop: "-4px" } : undefined}
+            initial={animated ? { opacity: 0, y: 10 } : undefined}
+            animate={animated ? { opacity: 1, y: 0 } : undefined}
+            transition={{ delay: index * 0.1 }}
           >
-            {/* Step Indicator */}
-            <button
-              type="button"
-              onClick={() => handleStepClick(index)}
-              disabled={!isClickable}
+            <p
               className={mergeClassNames(
-                "relative z-10 shrink-0 flex items-center justify-center bg-white dark:bg-neutral-900 rounded-full", // Mask background line
-                isClickable ? "cursor-pointer" : "cursor-default",
-                // Horizontal offset logic for end items to align with text
-                !isVertical && index === 0 && "mx-0",
-                !isVertical && isLast && "mx-0",
+                "font-medium transition-colors duration-200",
+                config.text,
+                status === "current"
+                  ? "text-accent"
+                  : status === "completed"
+                    ? "text-neutral-700 dark:text-neutral-200"
+                    : status === "error"
+                      ? "text-red-500"
+                      : "text-neutral-500 dark:text-neutral-400",
               )}
-              style={{
-                // Adjust the background masking size depending on variant so the line doesn't peek through the edges
-                padding: `${paddingValue}px`,
-              }}
-              aria-current={status === "current" ? "step" : undefined}
             >
-              <StepIndicator
-                step={step}
-                index={index}
-                status={status}
-                size={size}
-                variant={variant}
-                showNumbers={showNumbers}
-                animated={animated}
-                colors={colors}
-              />
-            </button>
-
-            {/* Step text content */}
-            <motion.div
-              className={mergeClassNames(
-                "mt-2",
-                isVertical ? "flex-1 pb-6" : "text-center px-2",
-                !isVertical && index === 0 && "text-left px-0",
-                !isVertical && isLast && "text-right px-0",
-                isVertical && isLast && "pb-0",
+              {step.title}
+              {step.optional && (
+                <span className="ml-1 font-normal text-neutral-400 dark:text-neutral-500">
+                  (Optional)
+                </span>
               )}
-              style={isVertical ? { marginTop: "-4px" } : undefined}
-              initial={animated ? { opacity: 0, y: 10 } : undefined}
-              animate={animated ? { opacity: 1, y: 0 } : undefined}
-              transition={{ delay: index * 0.1 }}
-            >
+            </p>
+            {step.description && (
               <p
                 className={mergeClassNames(
-                  "font-medium transition-colors duration-200",
-                  config.text,
-                  status === "current"
-                    ? "text-accent"
-                    : status === "completed"
-                      ? "text-neutral-700 dark:text-neutral-200"
-                      : status === "error"
-                        ? "text-red-500"
-                        : "text-neutral-500 dark:text-neutral-400",
+                  "mt-0.5 text-xs text-neutral-500 dark:text-neutral-400",
+                  resolvedLabelPosition === "right" && "text-left",
                 )}
               >
-                {step.title}
-                {step.optional && (
-                  <span className="ml-1 text-neutral-400 dark:text-neutral-500 font-normal">
-                    (Optional)
-                  </span>
-                )}
+                {step.description}
               </p>
-              {step.description && (
-                <p
-                  className={mergeClassNames(
-                    "mt-0.5 text-neutral-500 dark:text-neutral-400",
-                    size === "sm" ? "text-xs" : "text-xs",
-                  )}
-                >
-                  {step.description}
-                </p>
-              )}
-            </motion.div>
-
-            {/* Step content (for vertical with content) */}
-            {isVertical && step.content && status === "current" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="pl-14 pb-4 w-full"
-              >
-                {step.content}
-              </motion.div>
             )}
-          </div>
+          </motion.div>
+        );
+
+        return (
+          <>
+            <div
+              key={step.id}
+              className={mergeClassNames(
+                "relative z-10 min-w-0",
+                isVertical
+                  ? "flex gap-4 pb-8"
+                  : isHorizontalInline
+                    ? "flex items-center gap-3"
+                    : "flex flex-1 flex-col items-center text-center",
+                !isLast && isVertical && "mb-2",
+                isVertical && isLast && "pb-0",
+                stepClassName,
+              )}
+              style={
+                !isVertical && !isHorizontalInline
+                  ? { flexBasis: 0, flexGrow: 1 }
+                  : undefined
+              }
+            >
+              {!isVertical && index > 0 ? (
+                <div
+                  className={mergeClassNames(
+                    "pointer-events-none absolute z-0 rounded-full",
+                    getConnectorTrackClassName(variant),
+                    connectorClassName,
+                  )}
+                  style={{
+                    top: `${connectorCenterOffsetPx}px`,
+                    left: 0,
+                    right: "50%",
+                    height: config.connectorThickness,
+                  }}
+                  aria-hidden="true"
+                >
+                  <div
+                    className="absolute inset-y-0 right-0 rounded-full bg-accent"
+                    style={{
+                      left: 0,
+                      backgroundColor: colors?.connector || colors?.completed,
+                      opacity:
+                        status === "completed" || status === "current" ? 1 : 0,
+                    }}
+                  />
+                </div>
+              ) : null}
+
+              {!isVertical && !isHorizontalInline && !isLast ? (
+                <div
+                  className={mergeClassNames(
+                    "pointer-events-none absolute z-0 rounded-full",
+                    getConnectorTrackClassName(variant),
+                    connectorClassName,
+                  )}
+                  style={{
+                    top: `${connectorCenterOffsetPx}px`,
+                    left: "50%",
+                    right: 0,
+                    height: config.connectorThickness,
+                  }}
+                  aria-hidden="true"
+                >
+                  {animated ? (
+                    <motion.div
+                      className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                      initial={{ width: 0 }}
+                      animate={{
+                        width:
+                          status === "completed" || status === "current"
+                            ? "100%"
+                            : "0%",
+                      }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      style={{
+                        backgroundColor: colors?.connector || colors?.completed,
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                      style={{
+                        width:
+                          status === "completed" || status === "current"
+                            ? "100%"
+                            : "0%",
+                        backgroundColor: colors?.connector || colors?.completed,
+                      }}
+                    />
+                  )}
+                </div>
+              ) : null}
+
+              <button
+                type="button"
+                onClick={() => handleStepClick(index)}
+                disabled={!isClickable}
+                className={mergeClassNames(
+                  "relative z-10 shrink-0 rounded-full bg-white dark:bg-neutral-900",
+                  isClickable ? "cursor-pointer" : "cursor-default",
+                  resolvedLabelPosition === "right"
+                    ? "flex items-center justify-center"
+                    : "flex items-center justify-center",
+                )}
+                style={{
+                  padding: `${indicatorPaddingPx}px`,
+                }}
+                aria-current={status === "current" ? "step" : undefined}
+              >
+                <StepIndicator
+                  step={step}
+                  index={index}
+                  status={status}
+                  size={size}
+                  variant={variant}
+                  showNumbers={showNumbers}
+                  animated={animated}
+                  colors={colors}
+                />
+              </button>
+
+              {textBlock}
+
+              {isVertical && step.content && status === "current" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="w-full pb-4 pl-14"
+                >
+                  {step.content}
+                </motion.div>
+              )}
+            </div>
+
+            {isHorizontalInline && showConnector && !isLast ? (
+              <div
+                className={mergeClassNames(
+                  "relative mx-4 min-w-8 flex-1 shrink-0 overflow-hidden rounded-full",
+                  getConnectorTrackClassName(variant),
+                  connectorClassName,
+                )}
+                style={{ height: config.connectorThickness }}
+                aria-hidden="true"
+              >
+                {animated ? (
+                  <motion.div
+                    className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: isConnectorCompleted ? "100%" : "0%",
+                    }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    style={{
+                      backgroundColor: colors?.connector || colors?.completed,
+                    }}
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                    style={{
+                      width: isConnectorCompleted ? "100%" : "0%",
+                      backgroundColor: colors?.connector || colors?.completed,
+                    }}
+                  />
+                )}
+              </div>
+            ) : null}
+          </>
         );
       })}
     </div>

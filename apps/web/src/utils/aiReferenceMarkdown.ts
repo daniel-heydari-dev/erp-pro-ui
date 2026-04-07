@@ -147,6 +147,122 @@ export function SearchTrigger() {
     ],
   },
   {
+    title: "Stepper",
+    route: "/ui-basics/stepper",
+    scope: "published-library",
+    summary:
+      "Stepper guidance for centered workflow progress, inline label layouts, connected step buttons, and wizard-style staged flows.",
+    details: [
+      'The core `Stepper` centers labels under the circle by default and supports `labelPosition="right"` for denser inline layouts.',
+      "Horizontal connectors now begin at the first circle and stop at the last circle instead of extending to the container edges.",
+      "Use `StepperSteps` for validation-heavy settings flows and `StepperWizard` when each step owns a content panel with next/back actions.",
+    ],
+    codeExamples: [
+      {
+        title: "Inline label layout",
+        language: "tsx",
+        code: `import { Stepper, type Step } from "erp-pro-ui";
+
+const onboardingSteps: Step[] = [
+  { id: "general", title: "General Information", description: "Workspace basics" },
+  { id: "billing", title: "Billing Setup", description: "Payment and invoicing" },
+  { id: "team", title: "Team Access", description: "Invite collaborators" },
+  { id: "review", title: "Review", description: "Confirm and launch" },
+];
+
+export function InlineStepperLabelsExample() {
+  return (
+    <Stepper
+      steps={onboardingSteps}
+      currentStep={0}
+      labelPosition="right"
+      variant="glass"
+    />
+  );
+}`,
+      },
+    ],
+  },
+  {
+    title: "Data Table",
+    route: "/ui-basics/data-table",
+    scope: "published-library",
+    summary:
+      "Workspace-grade table guidance for search, filters, pagination, dense row layouts, and richer custom cells.",
+    details: [
+      "Use the default table for broad admin screens, then move to explicit `filterOptions` when the workflow needs curated controls instead of auto-generated filters.",
+      "Pagination now keeps the active page-size value visible and renders the rows-per-page dropdown above the footer so it does not get clipped by the table shell.",
+      "Use `columns[].renderCell` for richer row content like progress meters, status composites, or compact dashboards inside a cell.",
+    ],
+    codeExamples: [
+      {
+        title: "Workspace table example",
+        language: "tsx",
+        code: `import { DataTable } from "erp-pro-ui";
+
+<DataTable
+  data={data}
+  columns={columns}
+  pageSize={5}
+  searchPlaceholder="Search team members..."
+/>`,
+      },
+    ],
+  },
+  {
+    title: "Scrollbar",
+    route: "/ui-basics/scrollbar",
+    scope: "published-library",
+    summary:
+      "Shared scrollbar token and utility guidance for themed scrollbars, hidden-scrollbar mode, and overflow behavior tuning.",
+    details: [
+      "`erp-pro-ui/styles.css` now ships themed scrollbar foundation rules, so web and Storybook inherit the same default scrollbar treatment automatically.",
+      "Use the `scrollbar-none` utility to hide browser scrollbar chrome while still keeping scroll behavior available until overflow is explicitly set to `hidden`.",
+      "The first-party docs and Storybook now both expose editable playgrounds so token values and hide/show behavior can be tuned visually in either surface.",
+    ],
+    codeExamples: [
+      {
+        title: "Hidden scrollbar utility",
+        language: "tsx",
+        code: `<div
+  className="scrollbar-none"
+  style={{ overflowX: "auto", overflowY: "auto" }}
+>
+  ...scroll content
+</div>`,
+      },
+    ],
+  },
+  {
+    title: "Dialog",
+    route: "/ui-basics/dialog",
+    scope: "published-library",
+    summary:
+      "Dialog guidance for app-top modal overlays, preset confirmation flows, and custom content panels.",
+    details: [
+      "The shared `Dialog` now renders through a portal attached to `document.body`, so it escapes local stacking contexts created by app shells, transforms, or nested layouts.",
+      "The overlay root uses a very high z-index to keep the backdrop and panel above the rest of the application when a dialog must cover the entire page.",
+      'Use `preset="confirm"` for standard verification flows and `preset="custom"` when the dialog body contains richer layouts or forms.',
+    ],
+    codeExamples: [
+      {
+        title: "Top-level dialog pattern",
+        language: "tsx",
+        code: `import { Dialog } from "erp-pro-ui";
+
+<Dialog
+  open={isOpen}
+  onOpenChange={setIsOpen}
+  title="Create approval policy"
+  description="This dialog renders above the full application shell."
+  preset="custom"
+>
+  <PolicyEditor />
+</Dialog>`,
+      },
+    ],
+  },
+  {
     title: "Preview Showcase",
     route: "/ui-basics/preview",
     scope: "docs-app-only",

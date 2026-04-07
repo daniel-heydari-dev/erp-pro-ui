@@ -48,7 +48,10 @@ const DialogDoc = () => {
       <p className="docs-paragraph">
         A flexible dialog component for displaying content or requesting
         confirmation overlaying the main view. It supports multiple animations,
-        preset footers, and intent-driven variants.
+        preset footers, and intent-driven variants. The shared implementation is
+        portaled to <code>document.body</code> with an app-top z-index so it
+        stays above the entire web application instead of getting trapped by
+        local stacking contexts.
       </p>
 
       {/* Preview Section */}

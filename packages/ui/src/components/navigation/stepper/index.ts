@@ -5,6 +5,7 @@ export { default as StepperWizard, StepperWizardStep } from "./Stepper2";
 export type {
   StepperProps,
   Step,
+  StepperLabelPosition,
   ResponsiveStepperOrientation,
   StepperOrientation,
   StepperVariant,
