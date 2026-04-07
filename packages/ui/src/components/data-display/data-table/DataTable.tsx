@@ -361,6 +361,7 @@ const ICON_BUTTON_CLASS_NAME =
 const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:opacity-40 disabled:cursor-not-allowed`;
 const TABLE_CONTROL_ICON_CLASS_NAME = "h-[18px] w-[18px] shrink-0";
 const TABLE_COMPLEX_ICON_CLASS_NAME = "h-5 w-5 shrink-0";
+const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 30, 50, 100] as const;
 
 const isFilterValueEmpty = (value?: FilterValue | null): boolean => {
   if (value === undefined || value === null) {
@@ -914,16 +915,19 @@ function DataTablePagination<T>({
   const itemCount = totalCount ?? filteredCount;
   const pageStart = itemCount === 0 ? 0 : pageIndex * pageSize + 1;
   const pageEnd = Math.min((pageIndex + 1) * pageSize, itemCount);
+  const pageSizeOptions = Array.from(
+    new Set([...DEFAULT_PAGE_SIZE_OPTIONS, pageSize]),
+  ).sort((left, right) => left - right);
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-t border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/50">
+    <div className="relative z-20 flex flex-col gap-3 border-t border-neutral-200 bg-neutral-50 px-4 py-3 overflow-visible dark:border-neutral-700 dark:bg-neutral-800/50 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2">
         <span className="text-sm text-neutral-600 dark:text-neutral-400">
           Showing {pageStart} to {pageEnd} of {itemCount} items
         </span>
       </div>
 
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center justify-end gap-2 overflow-visible">
         <span className="text-sm text-neutral-600 dark:text-neutral-400">
           Rows
         </span>
@@ -931,9 +935,11 @@ function DataTablePagination<T>({
           value={String(pageSize)}
           onChange={(event) => table.setPageSize(Number(event.target.value))}
           aria-label="Rows per page"
-          containerClassName="w-24 min-w-24 shrink-0"
-          triggerClassName="px-3 font-medium text-neutral-900 dark:text-white"
-          options={[10, 20, 30, 50, 100].map((size) => ({
+          size="compact"
+          containerClassName="w-[5.5rem] min-w-[5.5rem] shrink-0"
+          triggerClassName="px-2.5 font-medium text-neutral-900 dark:text-white"
+          dropdownClassName="top-auto bottom-full z-[80] mb-1 mt-0"
+          options={pageSizeOptions.map((size) => ({
             value: String(size),
             label: String(size),
           }))}
@@ -1805,7 +1811,7 @@ export default function DataTable<T = Record<string, any>>({
       </div>
 
       {/* Table */}
-      <div className="bg-background-secondary rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden">
+      <div className="relative overflow-visible rounded-lg border border-neutral-200 bg-background-secondary dark:border-neutral-700">
         <DataTableToolbar
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}

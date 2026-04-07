@@ -2,6 +2,7 @@ import { useSyncExternalStore } from "react";
 
 import { Button } from "../../forms/button";
 import { AlertTriangleIcon, CheckIcon } from "../../icons";
+import { TruncatedText } from "../../typography/truncated-text";
 import { mergeClassNames } from "../../../utils";
 import type { StepperStepsProps, StepperStepsState } from "./types";
 
@@ -81,33 +82,39 @@ function renderStepContent(
 ) {
   if (state === "valid") {
     return (
-      <span className="flex items-center gap-2">
+      <span className="flex min-w-0 items-center gap-2">
         <CheckIcon className="h-5 w-5" aria-hidden="true" />
-        <span className="truncate">{label}</span>
+        <TruncatedText as="span" showTitleOnHover className="flex-1">
+          {label}
+        </TruncatedText>
       </span>
     );
   }
 
   if (state === "invalid") {
     return (
-      <span className="flex items-center gap-2">
+      <span className="flex min-w-0 items-center gap-2">
         <AlertTriangleIcon className="h-5 w-5" aria-hidden="true" />
-        <span className="truncate">{label}</span>
+        <TruncatedText as="span" showTitleOnHover className="flex-1">
+          {label}
+        </TruncatedText>
       </span>
     );
   }
 
   if (icon) {
     return (
-      <span className="flex items-center gap-2">
+      <span className="flex min-w-0 items-center gap-2">
         <span className="shrink-0">{icon}</span>
-        <span className="truncate">{label}</span>
+        <TruncatedText as="span" showTitleOnHover className="flex-1">
+          {label}
+        </TruncatedText>
       </span>
     );
   }
 
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex min-w-0 items-center gap-2">
       <span
         className={mergeClassNames(
           "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-semibold",
@@ -117,7 +124,9 @@ function renderStepContent(
       >
         {stepNumber}
       </span>
-      <span className="truncate">{label}</span>
+      <TruncatedText as="span" showTitleOnHover className="flex-1">
+        {label}
+      </TruncatedText>
     </span>
   );
 }

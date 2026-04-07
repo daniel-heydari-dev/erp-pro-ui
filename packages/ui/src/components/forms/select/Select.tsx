@@ -11,6 +11,7 @@ import {
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { CheckIcon, ChevronDownIcon } from "../../icons";
+import { TruncatedText } from "../../typography/truncated-text";
 import { mergeClassNames } from "../../../utils";
 import type { SelectProps } from "./types";
 
@@ -206,13 +207,17 @@ export const Select = forwardRef(function SelectComponent(
             aria-expanded={open}
           >
             {selectedOption ? (
-              <span className="min-w-0 flex-1 truncate text-foreground">
+              <TruncatedText
+                as="span"
+                showTitleOnHover
+                className="flex-1 text-foreground"
+              >
                 {selectedOption.label}
-              </span>
+              </TruncatedText>
             ) : (
-              <span className="min-w-0 flex-1 truncate text-muted-foreground">
+              <TruncatedText as="span" className="flex-1 text-muted-foreground">
                 {placeholder}
-              </span>
+              </TruncatedText>
             )}
 
             <span
@@ -276,8 +281,9 @@ export const Select = forwardRef(function SelectComponent(
                     ) : null}
                   </span>
                 ) : null}
-
-                <span className="min-w-0 flex-1 truncate">{option.label}</span>
+                <TruncatedText as="span" showTitleOnHover className="flex-1">
+                  {option.label}
+                </TruncatedText>
               </div>
             ))}
           </div>

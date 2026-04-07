@@ -4,6 +4,18 @@ import { SearchIcon } from "../../icons";
 import { StoryStack, StorySurface } from "../../shared/storybook";
 import { Button } from "./Button";
 
+const variantsSource = `import { Button } from "erp-pro-ui";
+
+export function ButtonVariantsExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button label="Save changes" variant="primary" />
+      <Button label="Cancel" variant="secondary" />
+      <Button label="View details" variant="tertiary" />
+    </div>
+  );
+}`;
+
 const meta = {
   title: "Forms/Button",
   component: Button,
@@ -18,14 +30,20 @@ const meta = {
     docs: {
       description: {
         component:
-          "Primary action button with predictable sizing and content slots for labels or inline icons.",
+          "Action button with primary, secondary, and tertiary variants, predictable sizing, and support for labels or inline icons.",
       },
     },
   },
   argTypes: {
+    variant: {
+      control: "radio",
+      options: ["primary", "secondary", "tertiary"],
+      description:
+        "Visual variant for primary, secondary, or tertiary actions.",
+    },
     primary: {
-      control: "boolean",
-      description: "Use primary style (filled) or secondary (glass)",
+      control: false,
+      description: 'Legacy alias for `variant="primary"`. Prefer `variant`.',
     },
     backgroundColor: {
       control: "color",
@@ -73,9 +91,26 @@ export const Default: Story = {
  */
 export const Primary: Story = {
   args: {
-    primary: true,
+    variant: "primary",
     children: "Primary Action",
   },
+};
+
+/**
+ * ## Variants
+ * Use primary for the main CTA, secondary for standard actions, and tertiary for the lightest supporting action.
+ */
+export const Variants: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:max-w-xl">
+      <div className="ui:flex ui:flex-wrap ui:items-center ui:gap-3">
+        <Button label="Save changes" variant="primary" />
+        <Button label="Cancel" variant="secondary" />
+        <Button label="View details" variant="tertiary" />
+      </div>
+    </StorySurface>
+  ),
+  parameters: { docs: { source: { code: variantsSource } } },
 };
 
 /**
@@ -106,6 +141,9 @@ export const Disabled: Story = {
           Primary Disabled
         </Button>
         <Button disabled>Secondary Disabled</Button>
+        <Button disabled variant="tertiary">
+          Tertiary Disabled
+        </Button>
       </div>
     </StorySurface>
   ),
@@ -124,6 +162,9 @@ export const WithIcon: Story = {
         </Button>
         <Button>
           Settings <SearchIcon width={16} height={16} />
+        </Button>
+        <Button variant="tertiary">
+          <SearchIcon width={16} height={16} /> Learn more
         </Button>
       </StoryStack>
     </StorySurface>
@@ -155,7 +196,7 @@ export const DangerAction: Story = {
   render: () => (
     <StorySurface widthClassName="ui:max-w-xl">
       <div className="ui:flex ui:items-center ui:justify-end ui:gap-3">
-        <Button>Keep record</Button>
+        <Button variant="tertiary">Keep record</Button>
         <Button backgroundColor="#dc2626" label="Delete permanently" />
       </div>
     </StorySurface>

@@ -21,7 +21,7 @@ const ButtonDoc = () => {
       <h1 className="docs-category-title">Button</h1>
       <p className="docs-paragraph">
         Button is the primary action trigger for forms, dialogs, cards, and
-        table toolbars. It supports two visual variants, three sizes, and all
+        table toolbars. It supports three visual variants, three sizes, and all
         native button attributes.
       </p>
 
@@ -39,8 +39,9 @@ const ButtonDoc = () => {
 export function BasicButtons() {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <Button label="Save changes" primary />
-      <Button label="Cancel" />
+      <Button label="Save changes" variant="primary" />
+      <Button label="Cancel" variant="secondary" />
+      <Button label="View details" variant="tertiary" />
     </div>
   );
 }`}
@@ -48,21 +49,30 @@ export function BasicButtons() {
 
       <h2 className="docs-category-subtitle">Variants</h2>
       <p className="docs-paragraph">
-        Use <code>primary</code> for the highest-priority action in a section.
-        Keep secondary actions neutral to preserve clear hierarchy.
+        Use <code>variant=&quot;primary&quot;</code> for the highest-priority
+        action,
+        <code>variant=&quot;secondary&quot;</code> for standard actions, and
+        <code>variant=&quot;tertiary&quot;</code> for the lightest supporting
+        action.
       </p>
 
       <div className="docs-showcase-grid">
         <div className="docs-showcase-card">
-          <Button label="Publish" primary />
+          <Button label="Publish" variant="primary" />
           <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
             Primary
           </span>
         </div>
         <div className="docs-showcase-card">
-          <Button label="Preview" />
+          <Button label="Preview" variant="secondary" />
           <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
             Secondary
+          </span>
+        </div>
+        <div className="docs-showcase-card">
+          <Button label="Learn more" variant="tertiary" />
+          <span className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+            Tertiary
           </span>
         </div>
       </div>
@@ -73,8 +83,9 @@ export function BasicButtons() {
 export function ButtonVariants() {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <Button label="Publish" primary />
-      <Button label="Preview" />
+      <Button label="Publish" variant="primary" />
+      <Button label="Preview" variant="secondary" />
+      <Button label="Learn more" variant="tertiary" />
     </div>
   );
 }`}
@@ -88,8 +99,8 @@ export function ButtonVariants() {
 
       <div className="docs-showcase-card flex-row items-end flex-wrap">
         <Button label="Small" size="small" primary />
-        <Button label="Medium" size="medium" primary />
-        <Button label="Large" size="large" primary />
+        <Button label="Medium" size="medium" variant="primary" />
+        <Button label="Large" size="large" variant="primary" />
       </div>
 
       <CodeBlock
@@ -98,9 +109,9 @@ export function ButtonVariants() {
 export function ButtonSizes() {
   return (
     <div className="flex flex-wrap items-end gap-3">
-      <Button label="Small" size="small" primary />
-      <Button label="Medium" size="medium" primary />
-      <Button label="Large" size="large" primary />
+      <Button label="Small" size="small" variant="primary" />
+      <Button label="Medium" size="medium" variant="primary" />
+      <Button label="Large" size="large" variant="primary" />
     </div>
   );
 }`}
@@ -117,7 +128,7 @@ export function ButtonSizes() {
           <span aria-hidden>+</span>
           <span>Create report</span>
         </Button>
-        <Button label="Saving disabled" primary disabled />
+        <Button label="Saving disabled" variant="primary" disabled />
       </div>
 
       <CodeBlock
@@ -130,7 +141,7 @@ export function DisabledButtons() {
         <span aria-hidden>+</span>
         <span>Create report</span>
       </Button>
-      <Button label="Saving disabled" primary disabled />
+      <Button label="Saving disabled" variant="primary" disabled />
     </div>
   );
 }`}
@@ -145,7 +156,7 @@ export function DisabledButtons() {
       <div className="docs-showcase-card flex-col items-start gap-3">
         <Button
           label={isSubmitting ? "Saving..." : "Save profile"}
-          primary
+          variant="primary"
           disabled={isSubmitting}
           onClick={handleAsyncSave}
         />
@@ -171,7 +182,7 @@ export function AsyncSaveButton() {
   return (
     <Button
       label={isSubmitting ? 'Saving...' : 'Save profile'}
-      primary
+      variant='primary'
       disabled={isSubmitting}
       onClick={handleAsyncSave}
     />
@@ -200,12 +211,22 @@ export function AsyncSaveButton() {
               <td>Optional text label rendered after children.</td>
             </tr>
             <tr>
+              <td className="docs-prop-name">variant</td>
+              <td>
+                <span className="docs-prop-type">
+                  'primary' | 'secondary' | 'tertiary'
+                </span>
+              </td>
+              <td>'secondary'</td>
+              <td>Controls the visual action hierarchy.</td>
+            </tr>
+            <tr>
               <td className="docs-prop-name">primary</td>
               <td>
                 <span className="docs-prop-type">boolean</span>
               </td>
               <td>false</td>
-              <td>Applies the filled primary visual treatment.</td>
+              <td>Legacy alias for the primary variant.</td>
             </tr>
             <tr>
               <td className="docs-prop-name">size</td>

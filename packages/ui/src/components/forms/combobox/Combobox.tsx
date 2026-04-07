@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { CheckIcon, ChevronDownIcon } from "../../icons";
+import { TruncatedText } from "../../typography/truncated-text";
 import { mergeClassNames } from "../../../utils";
 
 export interface ComboboxOption {
@@ -100,11 +101,17 @@ const Combobox: React.FC<ComboboxProps> = ({
           }}
         >
           {value ? (
-            <span className="flex-1 truncate text-foreground">
+            <TruncatedText
+              as="span"
+              showTitleOnHover
+              className="flex-1 text-foreground"
+            >
               {options.find((opt) => opt.value === value)?.label}
-            </span>
+            </TruncatedText>
           ) : (
-            <span className="flex-1 text-muted-foreground">{placeholder}</span>
+            <TruncatedText as="span" className="flex-1 text-muted-foreground">
+              {placeholder}
+            </TruncatedText>
           )}
           <span
             className={mergeClassNames(
@@ -160,7 +167,9 @@ const Combobox: React.FC<ComboboxProps> = ({
                     <CheckIcon className="text-accent" width={18} height={18} />
                   )}
                 </span>
-                <span className="min-w-0 flex-1 truncate">{opt.label}</span>
+                <TruncatedText as="span" showTitleOnHover className="flex-1">
+                  {opt.label}
+                </TruncatedText>
               </div>
             ))}
           </div>
@@ -178,9 +187,9 @@ const Combobox: React.FC<ComboboxProps> = ({
                 <span className="flex w-5 items-center justify-center">
                   {/* Optionally add an icon here */}
                 </span>
-                <span className="min-w-0 flex-1 truncate">
+                <TruncatedText as="span" showTitleOnHover className="flex-1">
                   {createOptionLabel}
-                </span>
+                </TruncatedText>
               </div>
             </div>
           )}

@@ -1,4 +1,4 @@
-import type { ButtonProps } from "./types";
+import type { ButtonProps, ButtonVariant } from "./types";
 
 const baseClasses = `
   inline-flex
@@ -21,7 +21,9 @@ const variantClassMap = {
   primary: "bg-accent hover:bg-accent-hover text-on-accent shadow-2",
   secondary:
     "bg-surface border border-border text-fg shadow-1 hover:border-border-strong hover:bg-canvas",
-};
+  tertiary:
+    "bg-transparent text-fg shadow-none hover:bg-canvas/70 hover:text-accent border border-transparent",
+} satisfies Record<ButtonVariant, string>;
 const sizeClassMap = {
   small: "py-2 px-3 text-xs",
   medium: "py-2.5 px-4 text-sm",
@@ -30,6 +32,7 @@ const sizeClassMap = {
 
 export const Button = ({
   primary = false,
+  variant,
   size = "medium",
   backgroundColor,
   label,
@@ -38,7 +41,8 @@ export const Button = ({
   className = "",
   ...props
 }: ButtonProps) => {
-  const variantClasses = variantClassMap[primary ? "primary" : "secondary"];
+  const resolvedVariant = variant ?? (primary ? "primary" : "secondary");
+  const variantClasses = variantClassMap[resolvedVariant];
   const sizeClasses =
     sizeClassMap[size as keyof typeof sizeClassMap] || sizeClassMap.medium;
 

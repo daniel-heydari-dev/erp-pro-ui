@@ -131,6 +131,11 @@ export const catalogCategories: CatalogCategory[] = [
       },
       ...uiCatalogItems.map(createCatalogItem),
       {
+        name: "Scrollbar",
+        slug: "scrollbar",
+        loader: () => import("@/docs/ui-basics/ScrollbarDoc"),
+      },
+      {
         name: "Preview",
         slug: "preview",
         loader: () => import("@/docs/ui-basics/PreviewDoc"),

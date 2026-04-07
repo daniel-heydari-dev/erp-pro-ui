@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { TruncatedText } from "../../typography/truncated-text";
 import { normalizeChartColors } from "./chartPalette";
 import { chartPillTooltipStyle } from "./chartStyles";
 
@@ -87,12 +88,14 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
       {showSummary && (activeSegment || totalValue > 0) ? (
         <div className="flex items-start justify-between gap-4 rounded-xl border border-border/70 bg-background/70 px-4 py-3 backdrop-blur-md">
           <div className="min-w-0">
-            <p
+            <TruncatedText
+              as="p"
+              showTitleOnHover
               className="truncate text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase transition-colors duration-200"
               style={activeSegment ? { color: activeSegment.color } : undefined}
             >
               {summaryTitle}
-            </p>
+            </TruncatedText>
             <p className="mt-1 text-xs text-muted-foreground">{summaryMeta}</p>
           </div>
           <p

@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 
 import { CloseIcon } from "../../icons";
+import { TruncatedText } from "../../typography/truncated-text";
 
 export type ChipVariant = "filled" | "outlined" | "soft" | "glass";
 export type ChipColor =
@@ -221,7 +222,13 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
             {startIcon}
           </span>
         )}
-        <span className="truncate font-semibold">{children}</span>
+        <TruncatedText
+          as="span"
+          showTitleOnHover
+          className="max-w-full font-semibold"
+        >
+          {children}
+        </TruncatedText>
         {endIcon && !isRemovable && (
           <span className={`shrink-0 ${iconSizeStyles[size]}`}>{endIcon}</span>
         )}

@@ -158,6 +158,7 @@ export function SearchTrigger() {
 
       <DocsButtonBar
         prev={{ label: "Truncated Text", route: "/ui-basics/truncated-text" }}
+        next={{ label: "Scrollbar", route: "/ui-basics/scrollbar" }}
       />
     </section>
   );

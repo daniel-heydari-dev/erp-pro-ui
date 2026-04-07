@@ -1,8 +1,12 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
+export type ButtonVariant = "primary" | "secondary" | "tertiary";
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Use primary style (filled) or secondary (glass) */
+  /** Legacy alias for the filled primary variant. Prefer `variant`. */
   primary?: boolean;
+  /** Visual treatment for action hierarchy. */
+  variant?: ButtonVariant;
   /** Custom background color override */
   backgroundColor?: string;
   /** Button size */
