@@ -365,16 +365,16 @@
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
-    "@storybook/react-vite": "^10.3.4",
+    "@storybook/react-vite": "^10.3.5",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.183.1",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.0",
-    "storybook": "^10.3.4",
+    "storybook": "^10.3.5",
     "terser": "^5.46.1",
     "typescript": "^6.0.2",
-    "vite": "^8.0.5",
+    "vite": "^8.0.8",
     "vite-plugin-dts": "^4.5.4"
   }
 }

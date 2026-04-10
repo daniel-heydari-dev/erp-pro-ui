@@ -5,18 +5,18 @@ A powerful, flexible data table component with built-in filtering, search, pagin
 ## Installation
 
 ```bash
-pnpm add design-system.lib
+pnpm add erp-pro-ui
 # or
-npm install design-system.lib
+npm install erp-pro-ui
 # or
-yarn add design-system.lib
+yarn add erp-pro-ui
 ```
 
 ## Quick Start
 
 ```tsx
-import { DataTable } from "design-system.lib";
-import "design-system.lib/styles.css";
+import { DataTable } from "erp-pro-ui";
+import "erp-pro-ui/styles.css";
 
 function MyComponent() {
   const columns = [
@@ -43,6 +43,8 @@ function MyComponent() {
 - ⚡ **Async Support** - Server-side filtering with loading states
 - 🎨 **Theming** - Full dark mode support
 - 📱 **Responsive** - Works on all screen sizes
+- 🧱 **Composable Primitives** - Build your own table UI with exported table subcomponents
+- 🎛️ **Style Slots** - Override table structure styles from outside the library
 
 ## Props
 
@@ -64,6 +66,137 @@ function MyComponent() {
 | `onColumnToggle`      | `(columnId: string) => void`                    | -              | Column visibility callback            |
 | `onExport`            | `() => void`                                    | -              | Export or refresh callback            |
 | `onRowAction`         | `(action: string, row: T) => void`              | -              | Row action callback                   |
+| `rowActions`          | `DataTableRowAction<T>[]`                        | default edit/delete | Custom 3-dots menu actions        |
+| `caption`             | `ReactNode`                                     | -              | Optional table caption                |
+| `className`           | `string`                                        | -              | Root wrapper class override           |
+| `tableContainerClassName` | `string`                                    | -              | Scroll container class override       |
+| `tableClassName`      | `string`                                        | -              | `<table>` class override              |
+| `captionClassName`    | `string`                                        | -              | Caption class override                |
+| `headerClassName`     | `string`                                        | -              | `<thead>` class override              |
+| `headerRowClassName`  | `string`                                        | -              | Header `<tr>` class override          |
+| `headClassName`       | `string`                                        | -              | Header cell `<th>` class override     |
+| `bodyClassName`       | `string`                                        | -              | `<tbody>` class override              |
+| `rowClassName`        | `string`                                        | -              | Body row `<tr>` class override        |
+| `cellClassName`       | `string`                                        | -              | Body cell `<td>` class override       |
+| `footerClassName`     | `string`                                        | -              | Footer wrapper class override         |
+| `labels`              | `Partial<DataTableTextLabels>`                  | -              | Override built-in UI text labels      |
+| `renderFilterSelectorFooterActions` | `(context) => ReactNode`          | -              | Add extra actions beside SHOW/HIDE in filter selector |
+| `renderFilterRowActions` | `ReactNode`                                  | -              | Add custom icons/buttons to the filter row right-side area |
+| `renderEmptyState`    | `(context) => ReactNode`                      | -              | Render custom centered empty content when table has no rows |
+
+## Composable Table Primitives
+
+Use these exports when you want a custom table layout but still stay inside `erp-pro-ui`:
+
+- `TableContainer`
+- `Table`
+- `TableHeader`
+- `TableBody`
+- `TableFooter`
+- `TableRow`
+- `TableHead`
+- `TableCell`
+- `TableCaption`
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "erp-pro-ui";
+```
+
+## Styling Slots Example
+
+```tsx
+<DataTable
+  columns={columns}
+  data={rows}
+  caption="Team roster"
+  tableClassName="min-w-[720px]"
+  headerRowClassName="bg-cyan-50/70 dark:bg-cyan-900/30"
+  headClassName="text-cyan-900 dark:text-cyan-100"
+  rowClassName="hover:bg-cyan-50/70 dark:hover:bg-cyan-950/50"
+  cellClassName="font-medium"
+/>
+```
+
+## Custom Actions + Translations Example
+
+```tsx
+import { Button, DataTable } from "erp-pro-ui";
+import { DownloadIcon } from "erp-pro-ui/icons";
+
+<DataTable
+  columns={columns}
+  data={rows}
+  labels={{
+    showFilters: "Filter anzeigen",
+    showAll: "ALLE",
+    hideAll: "AUSBLENDEN",
+    addFilter: "Filter hinzufügen",
+    clearFilters: "Filter zurücksetzen",
+    filterProfiles: "Filterprofile",
+    saveNewFilterProfile: "Neues Filterprofil speichern",
+  }}
+  renderFilterSelectorFooterActions={({ onShowAll, onHideAll }) => (
+    <>
+      <Button size="small" onClick={onShowAll} className="px-2">
+        Default all
+      </Button>
+      <Button size="small" onClick={onHideAll} className="px-2">
+        Clear all
+      </Button>
+    </>
+  )}
+  renderFilterRowActions={
+    <Button size="small" className="ml-1">
+      <DownloadIcon className="h-4 w-4" />
+      Export CSV
+    </Button>
+  }
+/>
+```
+
+## Custom Empty State Example
+
+```tsx
+<DataTable
+  columns={columns}
+  data={[]}
+  renderEmptyState={() => (
+    <div className="flex flex-col items-center gap-3">
+      <p className="text-lg font-semibold">You have no products</p>
+      <Button primary size="small">
+        Add product
+      </Button>
+    </div>
+  )}
+/>
+```
+
+## Backend-Managed Pagination (No Frontend Pagination Logic)
+
+Yes, this is supported. Pass the current page rows, total row count, and listen to `onPaginationChange`:
+
+```tsx
+const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+
+<DataTable
+  columns={columns}
+  data={currentPageRowsFromBackend}
+  totalCount={totalRowsFromBackend}
+  pageSize={pagination.pageSize}
+  onPaginationChange={(pageIndex, pageSize) => {
+    setPagination({ pageIndex, pageSize });
+    // trigger backend request here
+  }}
+/>;
+```
 
 ## Column Definition
 
@@ -151,7 +284,7 @@ When using multi-select, filter values can be arrays:
 Filters are automatically generated from unique column values when columns have `filterable: true`.
 
 ```tsx
-import { DataTable } from "design-system.lib";
+import { DataTable } from "erp-pro-ui";
 import { useState } from "react";
 
 function UsersTable() {
@@ -209,7 +342,7 @@ function UsersTable() {
 Define your own filter options with specific values.
 
 ```tsx
-import { DataTable, FilterOption } from "design-system.lib";
+import { DataTable, FilterOption } from "erp-pro-ui";
 
 function OrdersTable() {
   const filterOptions: FilterOption[] = [
@@ -244,7 +377,7 @@ function OrdersTable() {
 For large datasets where filtering happens on the backend.
 
 ```tsx
-import { DataTable, FilterOption, FilterValues } from "design-system.lib";
+import { DataTable, FilterOption, FilterValues } from "erp-pro-ui";
 import { useState } from "react";
 
 function ServerSideTable() {
@@ -302,7 +435,7 @@ function ServerSideTable() {
 Best practice for production applications.
 
 ```tsx
-import { DataTable, FilterOption, FilterValues } from "design-system.lib";
+import { DataTable, FilterOption, FilterValues } from "erp-pro-ui";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -376,7 +509,7 @@ The table includes three filter-related icons:
 The component uses Tailwind CSS with the `ui:` prefix. Make sure to import the styles:
 
 ```tsx
-import "design-system.lib/styles.css";
+import "erp-pro-ui/styles.css";
 ```
 
 ### Dark Mode

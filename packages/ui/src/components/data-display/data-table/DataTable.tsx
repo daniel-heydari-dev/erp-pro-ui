@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,21 +9,13 @@ import {
   type CellContext,
   type ColumnDef,
   type PaginationState,
-  type Table,
+  type Table as TanStackTable,
 } from "@tanstack/react-table";
-import { Chip } from "../chip";
 import { Button } from "../../forms/button";
-import { Combobox } from "../../forms/combobox";
-import { MultiSelectCombobox } from "../../forms/multi-select-combobox";
 import { Checkbox } from "../../forms/checkbox";
 import { Input } from "../../forms/input";
 import { Select } from "../../forms/select";
-import { Switch } from "../../forms/switch";
-import {
-  DatePicker,
-  type DatePickerValue,
-  type DateRangeValue,
-} from "../../forms/date-picker";
+import { type DatePickerValue } from "../../forms/date-picker";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -33,12 +26,52 @@ import {
   FilterProfileIcon,
   FilterXIcon,
   LoaderIcon,
-  RefreshIcon,
-  SearchIcon,
-  SelectionIcon,
-  SettingsIcon,
-  TrashIcon,
 } from "../../icons";
+import { mergeClassNames } from "../../../utils";
+import {
+  TableContainer,
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "./TablePrimitives";
+import { DataTableRows } from "./DataTableRows";
+import type { DataTableEmptyStateContext } from "./DataTableRows";
+import { DataTableToolbar, ToolbarIconButton } from "./DataTableToolbar";
+import {
+  ColumnToggle,
+  FilterButton,
+  FilterDropdown,
+} from "./DataTableControls";
+import {
+  FilterFieldControl,
+  filterClientData,
+  isFilterActive,
+  resolveFilterOptions,
+  useAsyncFilterOptions,
+} from "./DataTableFilters";
+export {
+  TableContainer,
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "./TablePrimitives";
+export type { DataTableEmptyStateContext } from "./DataTableRows";
+export {
+  ColumnToggle,
+  FilterButton,
+  FilterDropdown,
+} from "./DataTableControls";
+export { ToolbarIconButton } from "./DataTableToolbar";
 
 // Filter option type - can be static or async
 export interface FilterOption {
@@ -113,6 +146,40 @@ export interface DataTableColumn<T> {
   renderCell?: (context: DataTableCellRenderContext<T>) => React.ReactNode;
 }
 
+export interface DataTableRowAction<T> {
+  id: string;
+  label: string;
+  variant?: "default" | "destructive";
+  onClick?: (row: T) => void;
+}
+
+export interface DataTableTextLabels {
+  columns: string;
+  showAll: string;
+  hideAll: string;
+  showFilters: string;
+  addFilter: string;
+  clearFilters: string;
+  filterProfiles: string;
+  saveNewFilterProfile: string;
+}
+
+const DEFAULT_DATA_TABLE_LABELS: DataTableTextLabels = {
+  columns: "COLUMNS",
+  showAll: "SHOW ALL",
+  hideAll: "HIDE ALL",
+  showFilters: "SHOW FILTERS",
+  addFilter: "Add filter",
+  clearFilters: "Clear filters",
+  filterProfiles: "Filter profiles",
+  saveNewFilterProfile: "Save new filter profile",
+};
+
+export interface FilterSelectorFooterContext {
+  onShowAll: () => void;
+  onHideAll: () => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DataTableProps<T = Record<string, any>> {
   columns: DataTableColumn<T>[];
@@ -126,6 +193,7 @@ export interface DataTableProps<T = Record<string, any>> {
   onSearch?: (query: string) => void;
   onExport?: () => void;
   onRowAction?: (action: string, row: T) => void;
+  rowActions?: DataTableRowAction<T>[];
   onBulkDelete?: (rows: T[]) => void;
   renderBulkActions?: (
     context: DataTableBulkActionContext<T>,
@@ -146,6 +214,25 @@ export interface DataTableProps<T = Record<string, any>> {
   totalCount?: number;
   /** Callback when pagination changes (for server-side pagination) */
   onPaginationChange?: (pageIndex: number, pageSize: number) => void;
+  renderEmptyState?: (context: DataTableEmptyStateContext) => React.ReactNode;
+  labels?: Partial<DataTableTextLabels>;
+  renderFilterSelectorFooterActions?: (
+    context: FilterSelectorFooterContext,
+  ) => React.ReactNode;
+  renderFilterRowActions?: React.ReactNode;
+  renderToolbarActions?: React.ReactNode;
+  className?: string;
+  tableContainerClassName?: string;
+  tableClassName?: string;
+  caption?: React.ReactNode;
+  captionClassName?: string;
+  headerClassName?: string;
+  headerRowClassName?: string;
+  headClassName?: string;
+  bodyClassName?: string;
+  rowClassName?: string;
+  cellClassName?: string;
+  footerClassName?: string;
 }
 
 function renderDefaultCellValue(value: unknown): React.ReactNode {
@@ -163,124 +250,6 @@ function renderDefaultCellValue(value: unknown): React.ReactNode {
 
   return value as React.ReactNode;
 }
-
-interface FilterDropdownProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}
-
-export const FilterDropdown: React.FC<FilterDropdownProps> = ({
-  isOpen,
-  onClose,
-  children,
-}) => {
-  if (!isOpen) return null;
-
-  return (
-    <>
-      <div
-        className="fixed inset-0 z-40"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div className="absolute top-full right-0 z-50 mt-2 min-w-64 overflow-hidden rounded-[4px] border border-white/45 bg-neutral-50 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-white/35 backdrop-blur-2xl dark:border-white/10 dark:bg-neutral-800/50 dark:shadow-[0_22px_48px_rgba(0,0,0,0.42)] dark:ring-white/6">
-        {children}
-      </div>
-    </>
-  );
-};
-
-interface FilterButtonProps {
-  icon: React.ReactNode;
-  label: string;
-  onClick: () => void;
-  hasActive?: boolean;
-}
-
-export const FilterButton: React.FC<FilterButtonProps> = ({
-  icon,
-  label,
-  onClick,
-  hasActive,
-}) => (
-  <Button
-    onClick={onClick}
-    title={label}
-    aria-label={label}
-    className={`h-10 min-w-10 px-0 py-0 shadow-none ${
-      hasActive
-        ? "border-accent/20 bg-accent-subtle text-accent hover:bg-accent-subtle hover:opacity-100"
-        : "border-transparent bg-transparent text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 hover:opacity-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
-    }`}
-  >
-    {icon}
-  </Button>
-);
-
-interface ColumnToggleProps {
-  columns: {
-    id: string;
-    label: string;
-    visible?: boolean;
-  }[];
-  onToggle: (columnId: string) => void;
-  onShowAll?: () => void;
-  onHideAll?: () => void;
-}
-
-export const ColumnToggle: React.FC<ColumnToggleProps> = ({
-  columns,
-  onToggle,
-  onShowAll,
-  onHideAll,
-}) => (
-  <div className="p-4 space-y-3">
-    <div className="flex items-center justify-between mb-3">
-      <span className="text-sm font-semibold text-neutral-900 dark:text-white">
-        COLUMNS
-      </span>
-    </div>
-
-    <div className="space-y-2 max-h-64 overflow-y-auto">
-      {columns.map((col) => (
-        <div
-          key={col.id}
-          className="rounded-[8px] px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-700"
-        >
-          <Checkbox
-            checked={col.visible !== false}
-            onChange={() => onToggle(col.id)}
-            label={col.label}
-          />
-        </div>
-      ))}
-    </div>
-
-    {(onShowAll || onHideAll) && (
-      <div className="flex gap-2 border-t border-neutral-200 pt-2 dark:border-neutral-700">
-        {onShowAll && (
-          <Button
-            onClick={onShowAll}
-            size="small"
-            className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
-          >
-            SHOW ALL
-          </Button>
-        )}
-        {onHideAll && (
-          <Button
-            onClick={onHideAll}
-            size="small"
-            className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-600 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
-          >
-            HIDE ALL
-          </Button>
-        )}
-      </div>
-    )}
-  </div>
-);
 
 interface FilterProfileProps {
   isOpen: boolean;
@@ -349,559 +318,201 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
   );
 };
 
-type AsyncFilterOptionsState = Record<
-  string,
-  { options: string[]; isLoading: boolean }
->;
-
-type NumberRangeFilterValue = { min?: number; max?: number };
-
-const ICON_BUTTON_CLASS_NAME =
-  "inline-flex items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-700";
-const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:opacity-40 disabled:cursor-not-allowed`;
 const TABLE_CONTROL_ICON_CLASS_NAME = "h-[18px] w-[18px] shrink-0";
-const TABLE_COMPLEX_ICON_CLASS_NAME = "h-5 w-5 shrink-0";
+const TABLE_COMPLEX_ICON_CLASS_NAME = TABLE_CONTROL_ICON_CLASS_NAME;
 const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 30, 50, 100] as const;
-
-const isFilterValueEmpty = (value?: FilterValue | null): boolean => {
-  if (value === undefined || value === null) {
-    return true;
-  }
-
-  if (typeof value === "string") {
-    return value === "";
-  }
-
-  if (Array.isArray(value)) {
-    return value.length === 0;
-  }
-
-  if (value instanceof Date || typeof value === "boolean") {
-    return false;
-  }
-
-  if ("start" in value || "end" in value) {
-    const rangeValue = value as DateRangeValue;
-    return !rangeValue.start && !rangeValue.end;
-  }
-
-  return value.min === undefined && value.max === undefined;
-};
-
-const isFilterActive = (value?: FilterValue): boolean =>
-  !isFilterValueEmpty(value);
-
-const toSelectOptions = (options?: string[]) =>
-  (options || []).map((option) => ({
-    value: option,
-    label: option,
-  }));
-
-const getStringFilterValue = (value?: FilterValue): string =>
-  typeof value === "string" ? value : "";
-
-const getMultiStringFilterValue = (value?: FilterValue): string[] => {
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  return typeof value === "string" && value ? [value] : [];
-};
-
-const getNumberRangeFilterValue = (
-  value?: FilterValue,
-): NumberRangeFilterValue => {
-  if (
-    !value ||
-    typeof value !== "object" ||
-    "start" in value ||
-    "end" in value
-  ) {
-    return {};
-  }
-
-  return value as NumberRangeFilterValue;
-};
-
-const getDateFilterValue = (value?: FilterValue): DatePickerValue =>
-  value instanceof Date || value === null ? value : null;
-
-const getDateRangeFilterValue = (value?: FilterValue): DateRangeValue => {
-  if (
-    value &&
-    typeof value === "object" &&
-    "start" in value &&
-    "end" in value
-  ) {
-    return value as DateRangeValue;
-  }
-
-  return { start: null, end: null };
-};
-
-function buildGeneratedFilterOptions<T>(
-  columns: DataTableProps<T>["columns"],
-  data: T[],
-): FilterOption[] {
-  return columns
-    .filter((column) => column.filterable !== false)
-    .map((column) => {
-      const uniqueValues = new Set<string>();
-
-      data.forEach((row) => {
-        const value = (row as Record<string, unknown>)[column.id];
-        if (value !== undefined && value !== null && value !== "") {
-          uniqueValues.add(String(value));
-        }
-      });
-
-      return {
-        id: column.id,
-        label: column.label,
-        options: Array.from(uniqueValues).sort(),
-        multiple: column.multiFilter,
-      };
-    });
-}
-
-function resolveFilterOptions<T>(
-  columns: DataTableProps<T>["columns"],
-  data: T[],
-  externalFilterOptions: FilterOption[] | undefined,
-  asyncFilterOptions: AsyncFilterOptionsState,
-): FilterOption[] {
-  if (!externalFilterOptions?.length) {
-    return buildGeneratedFilterOptions(columns, data);
-  }
-
-  return externalFilterOptions.map((filter) => {
-    const asyncState = asyncFilterOptions[filter.id];
-    if (!asyncState) {
-      return filter;
-    }
-
-    return {
-      ...filter,
-      options: asyncState.options,
-      isLoading: asyncState.isLoading,
-    };
-  });
-}
-
-function matchesSearchQuery<T>(row: T, searchQuery: string): boolean {
-  if (!searchQuery.trim()) {
-    return true;
-  }
-
-  const query = searchQuery.toLowerCase();
-  return Object.values(row as Record<string, unknown>).some((value) => {
-    if (value === undefined || value === null) {
-      return false;
-    }
-
-    return String(value).toLowerCase().includes(query);
-  });
-}
-
-function matchesFilterValue(
-  rowValue: unknown,
-  filterValue: FilterValue,
-  filterOption?: FilterOption,
-): boolean {
-  if (isFilterValueEmpty(filterValue)) {
-    return true;
-  }
-
-  switch (filterOption?.type) {
-    case "text":
-      return String(rowValue)
-        .toLowerCase()
-        .includes(String(filterValue).toLowerCase());
-    case "number-range": {
-      const rangeValue = getNumberRangeFilterValue(filterValue);
-      const numericValue = Number(rowValue);
-      if (rangeValue.min !== undefined && numericValue < rangeValue.min) {
-        return false;
-      }
-      if (rangeValue.max !== undefined && numericValue > rangeValue.max) {
-        return false;
-      }
-      return true;
-    }
-    case "date-range": {
-      const rangeValue = getDateRangeFilterValue(filterValue);
-      if (!rangeValue.start) {
-        return true;
-      }
-      const timeValue = new Date(rowValue as string | number | Date).getTime();
-      if (timeValue < rangeValue.start.getTime()) {
-        return false;
-      }
-      return !rangeValue.end || timeValue <= rangeValue.end.getTime();
-    }
-    case "date": {
-      const selectedDate = filterValue as Date;
-      const rowDate = new Date(rowValue as string | number | Date);
-      return selectedDate.toDateString() === rowDate.toDateString();
-    }
-    case "switch":
-    case "checkbox":
-      return Boolean(rowValue) === Boolean(filterValue);
-    default: {
-      const rowValueString = String(rowValue).toLowerCase();
-      if (Array.isArray(filterValue)) {
-        return filterValue.some(
-          (value) => String(value).toLowerCase() === rowValueString,
-        );
-      }
-
-      return typeof filterValue !== "string"
-        ? true
-        : rowValueString === filterValue.toLowerCase();
-    }
-  }
-}
-
-function filterClientData<T>(
-  data: T[],
-  activeFilters: FilterValues,
-  searchQuery: string,
-  serverSideFiltering: boolean,
-  filterOptions: FilterOption[],
-): T[] {
-  if (serverSideFiltering) {
-    return data;
-  }
-
-  const filterOptionsMap = new Map(
-    filterOptions.map((filterOption) => [filterOption.id, filterOption]),
-  );
-
-  return data.filter((row) => {
-    if (!matchesSearchQuery(row, searchQuery)) {
-      return false;
-    }
-
-    return Object.entries(activeFilters).every(([filterId, filterValue]) => {
-      const rowValue = (row as Record<string, unknown>)[filterId];
-      return matchesFilterValue(
-        rowValue,
-        filterValue,
-        filterOptionsMap.get(filterId),
-      );
-    });
-  });
-}
-
-function useAsyncFilterOptions(
-  externalFilterOptions: FilterOption[] | undefined,
-  filterSelectorOpen: boolean,
-): AsyncFilterOptionsState {
-  const [asyncFilterOptions, setAsyncFilterOptions] =
-    React.useState<AsyncFilterOptionsState>({});
-  const asyncFilterOptionsRef = React.useRef(asyncFilterOptions);
-
-  React.useEffect(() => {
-    asyncFilterOptionsRef.current = asyncFilterOptions;
-  }, [asyncFilterOptions]);
-
-  const fetchAsyncOptions = React.useCallback(async (filter: FilterOption) => {
-    if (
-      !filter.fetchOptions ||
-      asyncFilterOptionsRef.current[filter.id]?.options.length
-    ) {
-      return;
-    }
-
-    setAsyncFilterOptions((prev) => ({
-      ...prev,
-      [filter.id]: { options: [], isLoading: true },
-    }));
-
-    try {
-      const options = await filter.fetchOptions();
-      setAsyncFilterOptions((prev) => ({
-        ...prev,
-        [filter.id]: { options, isLoading: false },
-      }));
-    } catch {
-      setAsyncFilterOptions((prev) => ({
-        ...prev,
-        [filter.id]: { options: [], isLoading: false },
-      }));
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (!filterSelectorOpen || !externalFilterOptions) {
-      return;
-    }
-
-    externalFilterOptions.forEach((filter) => {
-      if (filter.fetchOptions) {
-        void fetchAsyncOptions(filter);
-      }
-    });
-  }, [externalFilterOptions, fetchAsyncOptions, filterSelectorOpen]);
-
-  return asyncFilterOptions;
-}
-
-function LoadingFilterField({ label }: { label: string }) {
-  return (
-    <div className="h-10 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 rounded-md px-3">
-      <LoaderIcon
-        className="w-4 h-4 animate-spin text-neutral-400"
-        aria-hidden="true"
-      />
-      <span className="ml-2 text-sm text-neutral-500">{label}</span>
-    </div>
-  );
-}
-
-interface NumberRangeFilterProps {
-  value: NumberRangeFilterValue;
-  onChange: (value: NumberRangeFilterValue) => void;
-}
-
-function NumberRangeFilter({ value, onChange }: NumberRangeFilterProps) {
-  return (
-    <div className="flex items-center gap-1">
-      <Input
-        type="number"
-        placeholder="Min"
-        value={value.min ?? ""}
-        onChange={(event) => {
-          const min =
-            event.target.value === "" ? undefined : Number(event.target.value);
-          onChange({ ...value, min });
-        }}
-        className="h-9 px-2 text-xs"
-      />
-      <span className="text-neutral-400">-</span>
-      <Input
-        type="number"
-        placeholder="Max"
-        value={value.max ?? ""}
-        onChange={(event) => {
-          const max =
-            event.target.value === "" ? undefined : Number(event.target.value);
-          onChange({ ...value, max });
-        }}
-        className="h-9 px-2 text-xs"
-      />
-    </div>
-  );
-}
-
-interface FilterFieldControlProps {
-  filter: FilterOption;
-  value?: FilterValue;
-  isActive: boolean;
-  onChange: (value: FilterValue) => void;
-}
-
-function FilterFieldControl({
-  filter,
-  value,
-  isActive,
-  onChange,
-}: FilterFieldControlProps) {
-  if (filter.isLoading) {
-    return <LoadingFilterField label={filter.label} />;
-  }
-
-  const activeClassName = isActive ? "border-accent" : "";
-
-  switch (filter.type) {
-    case "text":
-      return (
-        <Input
-          value={getStringFilterValue(value)}
-          onChange={(event) => onChange(event.target.value)}
-          placeholder={filter.placeholder || filter.label}
-          className={activeClassName}
-        />
-      );
-    case "select":
-      return (
-        <Select
-          value={getStringFilterValue(value)}
-          onChange={(event) => onChange(event.target.value)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-          className={activeClassName}
-        />
-      );
-    case "switch":
-    case "checkbox":
-      return (
-        <Switch
-          checked={Boolean(value)}
-          onChange={(event) => onChange(event.target.checked)}
-          label={filter.label}
-        />
-      );
-    case "date":
-      return (
-        <DatePicker
-          mode="single"
-          value={getDateFilterValue(value)}
-          onChange={(nextValue) => onChange(nextValue)}
-          placeholder={filter.placeholder || filter.label}
-        />
-      );
-    case "date-range":
-      return (
-        <DatePicker
-          mode="range"
-          value={getDateRangeFilterValue(value)}
-          onChange={(nextValue) => onChange(nextValue)}
-          placeholder={filter.placeholder || filter.label}
-        />
-      );
-    case "number-range":
-      return (
-        <NumberRangeFilter
-          value={getNumberRangeFilterValue(value)}
-          onChange={onChange}
-        />
-      );
-    default:
-      return filter.multiple ? (
-        <MultiSelectCombobox
-          value={getMultiStringFilterValue(value)}
-          onChange={(values) => onChange(values)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
-        />
-      ) : (
-        <Combobox
-          value={getStringFilterValue(value)}
-          onChange={(nextValue) => onChange(nextValue)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
-        />
-      );
-  }
-}
-
-interface ToolbarIconButtonProps {
-  title: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  children: React.ReactNode;
-}
-
-function ToolbarIconButton({
-  title,
-  onClick,
-  disabled,
-  children,
-}: ToolbarIconButtonProps) {
-  return (
-    <Button
-      onClick={onClick}
-      disabled={disabled}
-      title={title}
-      aria-label={title}
-      className={
-        disabled
-          ? `${DISABLED_ICON_BUTTON_CLASS_NAME} h-10 w-10 shrink-0 border-transparent bg-transparent px-0 py-0 text-base shadow-none hover:bg-transparent hover:opacity-100`
-          : `${ICON_BUTTON_CLASS_NAME} h-10 w-10 shrink-0 border-transparent bg-transparent px-0 py-0 text-base shadow-none hover:opacity-100`
-      }
-    >
-      {children}
-    </Button>
-  );
-}
-
-interface SearchFieldProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-}
-
-function SearchField({ value, onChange, placeholder }: SearchFieldProps) {
-  return (
-    <div className="relative w-[300px]">
-      <SearchIcon
-        className={`pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-neutral-400 ${TABLE_CONTROL_ICON_CLASS_NAME}`}
-        aria-hidden="true"
-      />
-      <Input
-        type="text"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        style={{ paddingLeft: "2.75rem" }}
-      />
-    </div>
-  );
-}
+const ROW_ACTIONS_CELL_WIDTH_CLASS_NAME = "w-12 min-w-12 max-w-12";
+const ROW_ACTIONS_MENU_MIN_WIDTH_PX = 140;
+const ROW_ACTIONS_MENU_MAX_WIDTH_PX = 200;
+const ROW_ACTIONS_MENU_GAP_PX = 6;
+const ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX = 8;
+const ROW_ACTIONS_MENU_RIGHT_GUTTER_PX = 0;
 
 interface RowActionsCellProps<T> {
   rowIndex: number;
   row: T;
   isOpen: boolean;
+  openDirection: "up" | "down";
+  tableContainerRef: React.RefObject<HTMLDivElement | null>;
   onToggle: (rowIndex: number) => void;
   onClose: () => void;
   onRowAction?: (action: string, row: T) => void;
+  actions: DataTableRowAction<T>[];
 }
 
 function RowActionsCell<T>({
   rowIndex,
   row,
   isOpen,
+  openDirection,
+  tableContainerRef,
   onToggle,
   onClose,
   onRowAction,
+  actions,
 }: RowActionsCellProps<T>) {
-  return (
-    <td className="px-2 py-3 text-right relative">
-      <Button
-        onClick={() => onToggle(rowIndex)}
-        aria-label="Open row actions"
-        className="h-8 w-8 border-none bg-transparent px-0 py-0 text-neutral-500 shadow-none hover:bg-neutral-100 hover:text-neutral-700 hover:opacity-100 dark:hover:bg-neutral-600 dark:hover:text-neutral-200"
-      >
-        <EllipsisVerticalIcon
-          className={TABLE_CONTROL_ICON_CLASS_NAME}
-          aria-hidden="true"
-        />
-      </Button>
-      {isOpen ? (
+  const toggleAnchorRef = React.useRef<HTMLDivElement | null>(null);
+  const menuRef = React.useRef<HTMLDivElement | null>(null);
+  const [menuPosition, setMenuPosition] = React.useState<{
+    top: number;
+    right: number;
+  } | null>(null);
+
+  const updateMenuPosition = React.useCallback(() => {
+    if (!isOpen || !toggleAnchorRef.current) {
+      return;
+    }
+
+    const anchorRect = toggleAnchorRef.current.getBoundingClientRect();
+    const tableRect = tableContainerRef.current?.getBoundingClientRect();
+    const menuHeight =
+      menuRef.current?.getBoundingClientRect().height ??
+      Math.max(actions.length, 1) * 36 + 12;
+
+    const spaceBelow =
+      window.innerHeight - anchorRect.bottom - ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX;
+    const spaceAbove = anchorRect.top - ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX;
+
+    const openUpward =
+      openDirection === "up"
+        ? spaceBelow < menuHeight || spaceAbove > spaceBelow
+        : spaceBelow < menuHeight && spaceAbove > spaceBelow;
+
+    const targetTop = openUpward
+      ? anchorRect.top - menuHeight - ROW_ACTIONS_MENU_GAP_PX
+      : anchorRect.bottom + ROW_ACTIONS_MENU_GAP_PX;
+
+    const maxTop = Math.max(
+      ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX,
+      window.innerHeight - menuHeight - ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX,
+    );
+    const clampedTop = Math.min(
+      Math.max(targetTop, ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX),
+      maxTop,
+    );
+
+    const rightOffset = Math.max(
+      window.innerWidth -
+        (tableRect?.right ?? anchorRect.right) +
+        ROW_ACTIONS_MENU_RIGHT_GUTTER_PX,
+      ROW_ACTIONS_MENU_RIGHT_GUTTER_PX,
+    );
+
+    setMenuPosition({
+      top: clampedTop,
+      right: rightOffset,
+    });
+  }, [actions.length, isOpen, openDirection, tableContainerRef]);
+
+  React.useLayoutEffect(() => {
+    if (!isOpen) {
+      setMenuPosition(null);
+      return;
+    }
+
+    updateMenuPosition();
+    const rafId = window.requestAnimationFrame(updateMenuPosition);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [isOpen, updateMenuPosition]);
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const handleViewportChange = () => onClose();
+    const tableContainerElement = tableContainerRef.current;
+
+    window.addEventListener("keydown", handleEscape);
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("scroll", handleViewportChange, true);
+    tableContainerElement?.addEventListener("scroll", handleViewportChange, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("scroll", handleViewportChange, true);
+      tableContainerElement?.removeEventListener("scroll", handleViewportChange);
+    };
+  }, [isOpen, onClose, tableContainerRef]);
+
+  const rowActionsMenu = isOpen
+    ? createPortal(
         <>
-          <div className="fixed inset-0 z-40" onClick={onClose} />
-          <div className="absolute right-0 top-full mt-1 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 z-50 min-w-32 py-1">
-            <Button
-              onClick={() => {
-                onRowAction?.("edit", row);
-                onClose();
-              }}
-              className="w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 shadow-none hover:bg-neutral-50 hover:text-neutral-900 hover:opacity-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:hover:text-white"
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={() => {
-                onRowAction?.("delete", row);
-                onClose();
-              }}
-              className="w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal text-error shadow-none hover:bg-neutral-50 hover:text-error hover:opacity-100 dark:hover:bg-neutral-700"
-            >
-              Delete
-            </Button>
+          <div className="fixed inset-0 z-[220]" onClick={onClose} />
+          <div
+            ref={menuRef}
+            className="fixed z-[230] min-w-[140px] max-w-[200px] rounded-lg border border-neutral-200 bg-white py-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-800"
+            style={{
+              top: menuPosition?.top,
+              right: menuPosition?.right,
+              minWidth: `${ROW_ACTIONS_MENU_MIN_WIDTH_PX}px`,
+              maxWidth: `${ROW_ACTIONS_MENU_MAX_WIDTH_PX}px`,
+            }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            {actions.map((action) => (
+              <Button
+                key={action.id}
+                onClick={() => {
+                  action.onClick?.(row);
+                  onRowAction?.(action.id, row);
+                  onClose();
+                }}
+                className={mergeClassNames(
+                  "w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal shadow-none hover:bg-neutral-50 hover:opacity-100 dark:hover:bg-neutral-700",
+                  action.variant === "destructive"
+                    ? "text-error hover:text-error"
+                    : "text-neutral-700 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white",
+                )}
+              >
+                {action.label}
+              </Button>
+            ))}
           </div>
-        </>
-      ) : null}
+        </>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <td
+      className={mergeClassNames(
+        "relative sticky right-0 h-full border-l-2 border-neutral-300 bg-background-secondary p-0 text-right align-middle shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)] dark:border-neutral-600 dark:shadow-[-8px_0_12px_-10px_rgba(0,0,0,0.6)]",
+        ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
+        isOpen ? "z-20" : "z-10",
+      )}
+    >
+      <div
+        ref={toggleAnchorRef}
+        className="absolute inset-y-0 right-0 z-10 flex items-center border-l border-neutral-200 bg-background-secondary dark:border-neutral-700"
+      >
+        <Button
+          onClick={() => onToggle(rowIndex)}
+          aria-label="Open row actions"
+          className="h-full w-12 rounded-none border-none bg-background-secondary px-0 py-0 shadow-none hover:bg-background-secondary hover:opacity-100"
+        >
+          <EllipsisVerticalIcon
+            className={TABLE_CONTROL_ICON_CLASS_NAME}
+            aria-hidden="true"
+          />
+        </Button>
+      </div>
+      {rowActionsMenu}
     </td>
   );
 }
 
 interface DataTablePaginationProps<T> {
-  table: Table<T>;
+  table: TanStackTable<T>;
   totalCount?: number;
   filteredCount: number;
 }
@@ -920,7 +531,7 @@ function DataTablePagination<T>({
   ).sort((left, right) => left - right);
 
   return (
-    <div className="relative z-20 flex flex-col gap-3 border-t border-neutral-200 bg-neutral-50 px-4 py-3 overflow-visible dark:border-neutral-700 dark:bg-neutral-800/50 md:flex-row md:items-center md:justify-between">
+    <div className="relative z-10 flex flex-col gap-3 border-t    border-neutral-200 bg-neutral-50 px-4 py-3 overflow-visible dark:border-neutral-700 dark:bg-neutral-800/50 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2">
         <span className="text-sm text-neutral-600 dark:text-neutral-400">
           Showing {pageStart} to {pageEnd} of {itemCount} items
@@ -1003,6 +614,8 @@ interface FilterSelectorMenuProps {
   onToggleFilter: (filterId: string, isVisible: boolean) => void;
   onShowAll: () => void;
   onHideAll: () => void;
+  labels: DataTableTextLabels;
+  footerActions?: React.ReactNode;
 }
 
 function FilterSelectorMenu({
@@ -1011,14 +624,21 @@ function FilterSelectorMenu({
   onToggleFilter,
   onShowAll,
   onHideAll,
+  labels,
+  footerActions,
 }: FilterSelectorMenuProps) {
   return (
-    <div className="p-2 min-w-48 space-y-1">
-      <div className="px-2 pb-2 text-xs font-semibold text-neutral-500 dark:text-neutral-300">
-        Show filters
+    <div className="p-4 min-h-58 min-w-48 space-y-3">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-sm font-semibold text-neutral-900 dark:text-white">
+          {labels.showFilters}
+        </span>
       </div>
       {filterOptions.map((filter) => (
-        <div key={filter.id} className="min-w-36">
+        <div
+          key={filter.id}
+          className="min-w-36 rounded-[8px] px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+        >
           <Checkbox
             checked={visibleFilters.includes(filter.id)}
             onChange={(event) =>
@@ -1034,276 +654,18 @@ function FilterSelectorMenu({
           size="small"
           className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
         >
-          SHOW ALL
+          {labels.showAll}
         </Button>
         <Button
           onClick={onHideAll}
           size="small"
           className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-600 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
         >
-          HIDE ALL
+          {labels.hideAll}
         </Button>
+        {footerActions}
       </div>
     </div>
-  );
-}
-
-interface DataTableToolbarProps<T> {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-  searchPlaceholder: string;
-  bulkDeleteEnabled: boolean;
-  bulkSelectionActive: boolean;
-  selectedCount: number;
-  bulkActionsContent?: React.ReactNode;
-  bulkActionCard?: React.ReactNode;
-  onToggleBulkSelection: () => void;
-  onBulkDeleteSelected: () => void;
-  onExport?: () => void;
-  columnMenuOpen: boolean;
-  onToggleColumnMenu: () => void;
-  onCloseColumnMenu: () => void;
-  columns: DataTableProps<T>["columns"];
-  onColumnToggle?: (columnId: string) => void;
-  onShowAllColumns: () => void;
-  onHideAllColumns: () => void;
-}
-
-function DataTableToolbar<T>({
-  searchQuery,
-  onSearchChange,
-  searchPlaceholder,
-  bulkDeleteEnabled,
-  bulkSelectionActive,
-  selectedCount,
-  bulkActionsContent,
-  bulkActionCard,
-  onToggleBulkSelection,
-  onBulkDeleteSelected,
-  onExport,
-  columnMenuOpen,
-  onToggleColumnMenu,
-  onCloseColumnMenu,
-  columns,
-  onColumnToggle,
-  onShowAllColumns,
-  onHideAllColumns,
-}: DataTableToolbarProps<T>) {
-  const hasSelectedRows = selectedCount > 0;
-
-  return (
-    <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-          {bulkDeleteEnabled ? (
-            <FilterButton
-              icon={
-                <SelectionIcon
-                  className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                  aria-hidden="true"
-                />
-              }
-              label={
-                bulkSelectionActive
-                  ? "Disable bulk selection"
-                  : "Enable bulk selection"
-              }
-              onClick={onToggleBulkSelection}
-              hasActive={bulkSelectionActive}
-            />
-          ) : null}
-
-          <SearchField
-            value={searchQuery}
-            onChange={onSearchChange}
-            placeholder={searchPlaceholder}
-          />
-        </div>
-
-        <div className="flex items-center gap-1 self-end lg:self-auto">
-          <ToolbarIconButton onClick={onExport} title="Refresh">
-            <RefreshIcon
-              className={TABLE_CONTROL_ICON_CLASS_NAME}
-              aria-hidden="true"
-            />
-          </ToolbarIconButton>
-
-          <div className="relative">
-            <ToolbarIconButton
-              onClick={onToggleColumnMenu}
-              title="Column settings"
-            >
-              <SettingsIcon
-                className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                aria-hidden="true"
-              />
-            </ToolbarIconButton>
-
-            <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
-              <ColumnToggle
-                columns={columns}
-                onToggle={(columnId) => {
-                  onColumnToggle?.(columnId);
-                }}
-                onShowAll={onShowAllColumns}
-                onHideAll={onHideAllColumns}
-              />
-            </FilterDropdown>
-          </div>
-        </div>
-      </div>
-
-      {bulkSelectionActive && hasSelectedRows
-        ? (bulkActionCard ?? (
-            <div className="mt-2 flex flex-col gap-2 rounded-[4px] border border-neutral-200 bg-neutral-50 px-3 py-2 shadow-sm dark:border-neutral-700 dark:bg-neutral-800/50 dark:shadow-black/25 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex min-w-0 flex-wrap items-center gap-2">
-                <Chip
-                  variant="soft"
-                  color="primary"
-                  size="sm"
-                  className="uppercase tracking-wide"
-                >
-                  Bulk actions
-                </Chip>
-                <p className="text-sm font-medium text-neutral-900 dark:text-white">
-                  {selectedCount} {selectedCount === 1 ? "row" : "rows"}{" "}
-                  selected
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2">
-                {bulkActionsContent}
-                {bulkDeleteEnabled ? (
-                  <Button
-                    onClick={onBulkDeleteSelected}
-                    primary
-                    size="small"
-                    className="border-accent/20 px-3 py-2 text-sm text-on-accent shadow-lg shadow-accent/20 hover:bg-accent-hover hover:opacity-100"
-                  >
-                    <TrashIcon className="h-4 w-4" aria-hidden="true" />
-                    Delete selected
-                  </Button>
-                ) : null}
-              </div>
-            </div>
-          ))
-        : null}
-    </div>
-  );
-}
-
-interface TableStateRowProps {
-  colSpan: number;
-  children: React.ReactNode;
-}
-
-function TableStateRow({ colSpan, children }: TableStateRowProps) {
-  return (
-    <tr>
-      <td colSpan={colSpan} className="px-4 py-12 text-center text-neutral-500">
-        {children}
-      </td>
-    </tr>
-  );
-}
-
-function LoadingTableState({ colSpan }: { colSpan: number }) {
-  return (
-    <TableStateRow colSpan={colSpan}>
-      <div className="flex flex-col items-center gap-3">
-        <LoaderIcon
-          className="w-8 h-8 animate-spin text-accent"
-          aria-hidden="true"
-        />
-        <span>Loading data...</span>
-      </div>
-    </TableStateRow>
-  );
-}
-
-function EmptyTableState({ colSpan }: { colSpan: number }) {
-  return (
-    <TableStateRow colSpan={colSpan}>
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-4xl">🔍</span>
-        <p className="font-medium">No results found</p>
-        <p className="text-sm">Try adjusting the filter</p>
-      </div>
-    </TableStateRow>
-  );
-}
-
-interface DataTableRowsProps<T> {
-  table: Table<T>;
-  isLoading: boolean;
-  bulkSelectionActive: boolean;
-  selectedRowIds: Record<string, boolean>;
-  onToggleRowSelection: (rowId: string, checked: boolean) => void;
-  rowMenuOpen: number | null;
-  onToggleRowMenu: (rowIndex: number) => void;
-  onCloseRowMenu: () => void;
-  onRowAction?: (action: string, row: T) => void;
-}
-
-function DataTableRows<T>({
-  table,
-  isLoading,
-  bulkSelectionActive,
-  selectedRowIds,
-  onToggleRowSelection,
-  rowMenuOpen,
-  onToggleRowMenu,
-  onCloseRowMenu,
-  onRowAction,
-}: DataTableRowsProps<T>) {
-  const colSpan =
-    table.getVisibleLeafColumns().length + (bulkSelectionActive ? 2 : 1);
-
-  if (isLoading) {
-    return <LoadingTableState colSpan={colSpan} />;
-  }
-
-  if (table.getRowModel().rows.length === 0) {
-    return <EmptyTableState colSpan={colSpan} />;
-  }
-
-  return (
-    <>
-      {table.getRowModel().rows.map((row) => (
-        <tr
-          key={row.id}
-          className="border-b border-neutral-100 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors"
-        >
-          {bulkSelectionActive ? (
-            <td className="w-12 px-4 py-3 align-middle">
-              <Checkbox
-                aria-label={`Select row ${row.id}`}
-                checked={Boolean(selectedRowIds[row.id])}
-                onChange={(event) =>
-                  onToggleRowSelection(row.id, event.target.checked)
-                }
-              />
-            </td>
-          ) : null}
-          {row.getVisibleCells().map((cell) => (
-            <td
-              key={cell.id}
-              className="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300"
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </td>
-          ))}
-          <RowActionsCell
-            rowIndex={row.index}
-            row={row.original}
-            isOpen={rowMenuOpen === row.index}
-            onToggle={onToggleRowMenu}
-            onClose={onCloseRowMenu}
-            onRowAction={onRowAction}
-          />
-        </tr>
-      ))}
-    </>
   );
 }
 
@@ -1323,6 +685,7 @@ export default function DataTable<T = Record<string, any>>({
   onSearch,
   onExport,
   onRowAction,
+  rowActions,
   onBulkDelete,
   renderBulkActions,
   renderBulkActionCard,
@@ -1333,7 +696,44 @@ export default function DataTable<T = Record<string, any>>({
   searchPlaceholder = "Search ...",
   totalCount,
   onPaginationChange,
+  renderEmptyState,
+  labels: labelsProp,
+  renderFilterSelectorFooterActions,
+  renderFilterRowActions,
+  renderToolbarActions,
+  className,
+  tableContainerClassName,
+  tableClassName,
+  caption,
+  captionClassName,
+  headerClassName,
+  headerRowClassName,
+  headClassName,
+  bodyClassName,
+  rowClassName,
+  cellClassName,
+  footerClassName,
 }: DataTableProps<T>) {
+  const resolvedRowActions = React.useMemo<DataTableRowAction<T>[]>(
+    () =>
+      rowActions && rowActions.length > 0
+        ? rowActions
+        : [
+            { id: "copy", label: "Copy product" },
+            { id: "edit", label: "Edit" },
+            { id: "delete", label: "Delete", variant: "destructive" },
+          ],
+    [rowActions],
+  );
+
+  const labels = React.useMemo<DataTableTextLabels>(
+    () => ({
+      ...DEFAULT_DATA_TABLE_LABELS,
+      ...labelsProp,
+    }),
+    [labelsProp],
+  );
+
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: pageSize,
@@ -1587,6 +987,10 @@ export default function DataTable<T = Record<string, any>>({
   const handleToggleRowMenu = React.useCallback((rowIndex: number) => {
     setRowMenuOpen((previous) => (previous === rowIndex ? null : rowIndex));
   }, []);
+  const handleCloseRowMenu = React.useCallback(() => {
+    setRowMenuOpen(null);
+  }, []);
+  const tableContainerRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleToggleFilterSelector = React.useCallback(() => {
     setFilterSelectorOpen((previous) => !previous);
@@ -1717,9 +1121,9 @@ export default function DataTable<T = Record<string, any>>({
   };
 
   return (
-    <div className="space-y-0">
+    <div className={mergeClassNames("space-y-0", className)}>
       {/* Row 1: Filters Row - Separated with border */}
-      <div className="mb-4 flex items-center justify-between gap-4 rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-4 dark:border-neutral-700 dark:bg-neutral-800/50">
+      <div className="mb-4 min-h-[80px] flex items-center justify-between gap-4 rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-4 dark:border-neutral-700 dark:bg-neutral-800/50">
         <div className="flex items-center gap-3 flex-wrap">
           {filterOptions
             .filter((filter) => visibleFilters.includes(filter.id))
@@ -1751,7 +1155,7 @@ export default function DataTable<T = Record<string, any>>({
           <div className="relative">
             <ToolbarIconButton
               onClick={handleToggleFilterSelector}
-              title="Add filter"
+              title={labels.addFilter}
             >
               <FilterIcon
                 className={TABLE_COMPLEX_ICON_CLASS_NAME}
@@ -1768,25 +1172,28 @@ export default function DataTable<T = Record<string, any>>({
                 onToggleFilter={handleToggleFilterVisibility}
                 onShowAll={handleShowAllFilters}
                 onHideAll={handleHideAllFilters}
+                labels={labels}
+                footerActions={renderFilterSelectorFooterActions?.({
+                  onShowAll: handleShowAllFilters,
+                  onHideAll: handleHideAllFilters,
+                })}
               />
             </FilterDropdown>
           </div>
-
           <ToolbarIconButton
             onClick={handleResetFilters}
             disabled={!hasActiveFilters}
-            title="Clear filters"
+            title={labels.clearFilters}
           >
             <FilterXIcon
               className={TABLE_COMPLEX_ICON_CLASS_NAME}
               aria-hidden="true"
             />
           </ToolbarIconButton>
-
           <div className="relative">
             <ToolbarIconButton
               onClick={handleToggleProfileMenu}
-              title="Filter profiles"
+              title={labels.filterProfiles}
             >
               <FilterProfileIcon
                 className={TABLE_COMPLEX_ICON_CLASS_NAME}
@@ -1802,14 +1209,14 @@ export default function DataTable<T = Record<string, any>>({
                   onClick={handleOpenProfile}
                   className="w-full justify-start border-2 border-dashed border-accent/40 bg-transparent px-4 py-3 text-left text-sm font-medium text-accent shadow-none hover:bg-accent-subtle hover:opacity-100"
                 >
-                  Save new filter profile
+                  {labels.saveNewFilterProfile}
                 </Button>
               </div>
             </FilterDropdown>
           </div>
+          {renderFilterRowActions}
         </div>
       </div>
-
       {/* Table */}
       <div className="relative overflow-visible rounded-lg border border-neutral-200 bg-background-secondary dark:border-neutral-700">
         <DataTableToolbar
@@ -1831,19 +1238,38 @@ export default function DataTable<T = Record<string, any>>({
           onColumnToggle={handleToggleColumnVisibility}
           onShowAllColumns={handleShowAllColumns}
           onHideAllColumns={handleHideAllColumns}
+          labels={labels}
+          toolbarActions={renderToolbarActions}
         />
 
         {/* Table Container */}
-        <div className="overflow-auto" style={{ maxHeight }}>
-          <table className="w-full min-w-[600px]">
-            <thead className="sticky top-0 z-10 bg-background-secondary">
+        <TableContainer
+          ref={tableContainerRef}
+          className={tableContainerClassName}
+          style={{ maxHeight }}
+        >
+          <Table className={tableClassName}>
+            {caption ? (
+              <TableCaption className={captionClassName}>
+                {caption}
+              </TableCaption>
+            ) : null}
+            <TableHeader className={mergeClassNames("z-40", headerClassName)}>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr
+                <TableRow
                   key={headerGroup.id}
-                  className="border-b border-neutral-200 dark:border-neutral-700"
+                  className={mergeClassNames(
+                    "border-b border-neutral-200 dark:border-neutral-700",
+                    headerRowClassName,
+                  )}
                 >
                   {bulkSelectionActive ? (
-                    <th className="w-12 px-4 py-3 bg-background-secondary">
+                    <TableHead
+                      className={mergeClassNames(
+                        "w-12 bg-background-secondary px-4 py-3",
+                        headClassName,
+                      )}
+                    >
                       <Checkbox
                         aria-label="Select all visible rows"
                         checked={allVisibleRowsSelected}
@@ -1851,12 +1277,15 @@ export default function DataTable<T = Record<string, any>>({
                           handleToggleAllVisibleRows(event.target.checked)
                         }
                       />
-                    </th>
+                    </TableHead>
                   ) : null}
                   {headerGroup.headers.map((header) => (
-                    <th
+                    <TableHead
                       key={header.id}
-                      className="bg-background-secondary px-4 py-3 text-left text-sm font-semibold text-neutral-900 dark:text-white whitespace-nowrap"
+                      className={mergeClassNames(
+                        "whitespace-nowrap bg-background-secondary px-4 py-3 text-left text-sm font-semibold text-neutral-900 dark:text-white",
+                        headClassName,
+                      )}
                     >
                       {header.isPlaceholder
                         ? null
@@ -1864,13 +1293,21 @@ export default function DataTable<T = Record<string, any>>({
                             header.column.columnDef.header,
                             header.getContext(),
                           )}
-                    </th>
+                    </TableHead>
                   ))}
-                  <th className="w-12 bg-background-secondary"></th>
-                </tr>
+                  <TableHead
+                    className={mergeClassNames(
+                      "sticky top-0 right-0 z-30 border-l-2 border-neutral-300 bg-background-secondary p-0 shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)] dark:border-neutral-600 dark:shadow-[-8px_0_12px_-10px_rgba(0,0,0,0.6)]",
+                      ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
+                      headClassName,
+                    )}
+                  >
+                    <div aria-hidden="true" className="h-[45px] w-12" />
+                  </TableHead>
+                </TableRow>
               ))}
-            </thead>
-            <tbody>
+            </TableHeader>
+            <TableBody className={bodyClassName}>
               <DataTableRows
                 table={table}
                 isLoading={isLoading}
@@ -1879,20 +1316,40 @@ export default function DataTable<T = Record<string, any>>({
                 onToggleRowSelection={handleToggleRowSelection}
                 rowMenuOpen={rowMenuOpen}
                 onToggleRowMenu={handleToggleRowMenu}
-                onCloseRowMenu={() => setRowMenuOpen(null)}
+                onCloseRowMenu={handleCloseRowMenu}
                 onRowAction={onRowAction}
+                rowClassName={rowClassName}
+                cellClassName={cellClassName}
+                hasActiveFilters={hasActiveFilters}
+                searchQuery={searchQuery}
+                renderEmptyState={renderEmptyState}
+                renderRowActionsCell={(context) => (
+                  <RowActionsCell
+                    rowIndex={context.rowIndex}
+                    row={context.row}
+                    isOpen={context.isOpen}
+                    openDirection={context.openDirection}
+                    tableContainerRef={tableContainerRef}
+                    onToggle={context.onToggle}
+                    onClose={context.onClose}
+                    onRowAction={context.onRowAction}
+                    actions={resolvedRowActions}
+                  />
+                )}
               />
-            </tbody>
-          </table>
+            </TableBody>
+            <TableFooter className={footerClassName} />
+          </Table>
+        </TableContainer>
+
+        <div className={footerClassName}>
+          <DataTablePagination
+            table={table}
+            totalCount={totalCount}
+            filteredCount={filteredData.length}
+          />
         </div>
-
-        <DataTablePagination
-          table={table}
-          totalCount={totalCount}
-          filteredCount={filteredData.length}
-        />
       </div>
-
       {/* Profile Modal */}
       <FilterProfile
         isOpen={profileOpen}

@@ -454,6 +454,7 @@ The tables below document the public surface you can use from another project.
 | `ColorPalette`                                                    | `erp-pro-ui/color-palette` | Design token or palette presentation              |
 | `DataTable`                                                       | `erp-pro-ui/data-table`    | Feature-rich tables with filtering and pagination |
 | `FilterDropdown`, `FilterButton`, `ColumnToggle`, `FilterProfile` | `erp-pro-ui/data-table`    | DataTable helper building blocks                  |
+| `TableContainer`, `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption` | `erp-pro-ui/data-table` | Composable table primitives with style control    |
 | `AreaChart`                                                       | `erp-pro-ui/charts`        | Area chart visualizations                         |
 | `BarChart`                                                        | `erp-pro-ui/charts`        | Bar chart visualizations                          |
 | `PieChart`                                                        | `erp-pro-ui/charts`        | Pie and donut charts                              |
@@ -525,6 +526,36 @@ const rows = [
 ];
 
 <DataTable columns={columns} data={rows} searchPlaceholder="Search users" />;
+```
+
+### Composable table primitives
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "erp-pro-ui";
+
+<Table>
+  <TableCaption>Quarterly summary</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Role</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Ava Stone</TableCell>
+      <TableCell>Admin</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>;
 ```
 
 ### Charts

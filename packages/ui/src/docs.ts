@@ -355,9 +355,13 @@ const componentDocSeeds = {
   "data-table": {
     exportName: "DataTable",
     summary:
-      "Feature-rich data grid with sorting, filtering, column toggles, and filter profiles.",
+      "Feature-rich data grid with filtering, column toggles, pagination, plus composable table primitives and style slots for external customization.",
     aliases: ["table", "grid"],
     related: ["loading", "skeleton", "chip"],
+    rootImport:
+      "import { DataTable, Table, TableHeader, TableHead, TableBody, TableRow, TableCell, TableFooter, TableCaption, TableContainer } from 'erp-pro-ui';",
+    subpathImport:
+      "import { DataTable, Table, TableHeader, TableHead, TableBody, TableRow, TableCell, TableFooter, TableCaption, TableContainer } from 'erp-pro-ui/data-table';",
   },
   loading: {
     exportName: "Loading",
