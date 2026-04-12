@@ -48,41 +48,47 @@ function MyComponent() {
 
 ## Props
 
-| Prop                  | Type                                            | Default        | Description                           |
-| --------------------- | ----------------------------------------------- | -------------- | ------------------------------------- |
-| `columns`             | `Column[]`                                      | required       | Array of column definitions           |
-| `data`                | `T[]`                                           | required       | Array of data objects                 |
-| `isLoading`           | `boolean`                                       | `false`        | Show loading spinner                  |
-| `pageSize`            | `number`                                        | `10`           | Initial page size                     |
-| `maxHeight`           | `string`                                        | `'500px'`      | Max height for the scrollable table   |
-| `filterOptions`       | `FilterOption[]`                                | auto           | Custom filter options                 |
-| `serverSideFiltering` | `boolean`                                       | `false`        | Enable server-side filtering mode     |
-| `searchPlaceholder`   | `string`                                        | `'Search ...'` | Search input placeholder              |
-| `totalCount`          | `number`                                        | -              | Total rows available from the backend |
-| `onSearch`            | `(query: string) => void`                       | -              | Search callback                       |
-| `onFilterChange`      | `(filters: FilterValues) => void`               | -              | Filter change callback                |
-| `onFiltersApply`      | `(filters: FilterValues) => void`               | -              | Server-side filter callback           |
-| `onPaginationChange`  | `(pageIndex: number, pageSize: number) => void` | -              | Backend pagination callback           |
-| `onColumnToggle`      | `(columnId: string) => void`                    | -              | Column visibility callback            |
-| `onExport`            | `() => void`                                    | -              | Export or refresh callback            |
-| `onRowAction`         | `(action: string, row: T) => void`              | -              | Row action callback                   |
-| `rowActions`          | `DataTableRowAction<T>[]`                        | default edit/delete | Custom 3-dots menu actions        |
-| `caption`             | `ReactNode`                                     | -              | Optional table caption                |
-| `className`           | `string`                                        | -              | Root wrapper class override           |
-| `tableContainerClassName` | `string`                                    | -              | Scroll container class override       |
-| `tableClassName`      | `string`                                        | -              | `<table>` class override              |
-| `captionClassName`    | `string`                                        | -              | Caption class override                |
-| `headerClassName`     | `string`                                        | -              | `<thead>` class override              |
-| `headerRowClassName`  | `string`                                        | -              | Header `<tr>` class override          |
-| `headClassName`       | `string`                                        | -              | Header cell `<th>` class override     |
-| `bodyClassName`       | `string`                                        | -              | `<tbody>` class override              |
-| `rowClassName`        | `string`                                        | -              | Body row `<tr>` class override        |
-| `cellClassName`       | `string`                                        | -              | Body cell `<td>` class override       |
-| `footerClassName`     | `string`                                        | -              | Footer wrapper class override         |
-| `labels`              | `Partial<DataTableTextLabels>`                  | -              | Override built-in UI text labels      |
-| `renderFilterSelectorFooterActions` | `(context) => ReactNode`          | -              | Add extra actions beside SHOW/HIDE in filter selector |
-| `renderFilterRowActions` | `ReactNode`                                  | -              | Add custom icons/buttons to the filter row right-side area |
-| `renderEmptyState`    | `(context) => ReactNode`                      | -              | Render custom centered empty content when table has no rows |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `columns` | `Column[]` | required | Array of column definitions |
+| `data` | `T[]` | required | Array of data objects |
+| `isLoading` | `boolean` | `false` | Show loading spinner |
+| `pageSize` | `number` | `10` | Initial page size |
+| `maxHeight` | `string` | `'500px'` | Max height for the scrollable table |
+| `filterOptions` | `FilterOption[]` | auto | Custom filter options |
+| `serverSideFiltering` | `boolean` | `false` | Enable server-side filtering mode |
+| `searchPlaceholder` | `string` | `'Search ...'` | Search input placeholder |
+| `totalCount` | `number` | - | Total rows available from the backend |
+| `onSearch` | `(query: string) => void` | - | Search callback |
+| `onFilterChange` | `(filters: FilterValues) => void` | - | Filter change callback |
+| `onFiltersApply` | `(filters: FilterValues) => void` | - | Server-side filter callback |
+| `onPaginationChange` | `(pageIndex: number, pageSize: number) => void` | - | Backend pagination callback |
+| `onColumnToggle` | `(columnId: string) => void` | - | Column visibility callback |
+| `onExport` | `() => void` | - | Toolbar action callback (export, refresh, or custom action) |
+| `onRowAction` | `(action: string, row: T) => void` | - | 3-dots row action callback |
+| `rowActions` | `DataTableRowAction<T>[]` | `[{id:'copy'},{id:'edit'},{id:'delete'}]` | Custom 3-dots menu actions |
+| `caption` | `ReactNode` | - | Optional table caption |
+| `labels` | `Partial<DataTableTextLabels>` | - | Override built-in UI labels (translations) |
+| `renderFilterSelectorFooterActions` | `(context) => ReactNode` | - | Add extra actions beside SHOW/HIDE in filter selector |
+| `renderFilterRowActions` | `ReactNode` | - | Add custom icons/buttons to the filter row right-side area |
+| `renderToolbarActions` | `ReactNode` | - | Add custom icons/buttons near refresh and column settings |
+| `renderEmptyState` | `(context) => ReactNode` | - | Render custom centered empty content when no rows match |
+
+### Style Slot Props (class overrides)
+
+| Prop | Target |
+| --- | --- |
+| `className` | Root wrapper |
+| `tableContainerClassName` | Scroll container |
+| `tableClassName` | `<table>` |
+| `captionClassName` | `<caption>` |
+| `headerClassName` | `<thead>` |
+| `headerRowClassName` | Header `<tr>` |
+| `headClassName` | Header `<th>` |
+| `bodyClassName` | `<tbody>` |
+| `rowClassName` | Body row `<tr>` |
+| `cellClassName` | Body cell `<td>` |
+| `footerClassName` | Footer wrapper |
 
 ## Composable Table Primitives
 
@@ -100,14 +106,139 @@ Use these exports when you want a custom table layout but still stay inside `erp
 
 ```tsx
 import {
+  TableContainer,
   Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
+  TableFooter,
   TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
 } from "erp-pro-ui";
+
+function PrimitiveTableExample() {
+  return (
+    <TableContainer className="max-h-[320px] overflow-auto">
+      <Table>
+        <TableCaption>Products</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Price</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Notebook</TableCell>
+            <TableCell>$19</TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter />
+      </Table>
+    </TableContainer>
+  );
+}
+```
+
+## Row Actions (3-dots)
+
+By default, the row menu includes these actions:
+
+- `Copy product`
+- `Edit`
+- `Delete` (destructive)
+
+You can fully replace them with `rowActions`. Each action supports:
+
+- `id: string`
+- `label: string`
+- `variant?: "default" | "destructive"`
+- `onClick?: (row) => void`
+
+When an action is clicked:
+
+1. Action `onClick` runs first (if provided).
+2. `onRowAction(actionId, row)` runs next (if provided).
+3. Menu closes.
+
+Menu behavior:
+
+- Pinned to the table right side
+- Closes on outside click
+- Closes on `Escape`
+- Closes on scroll/resize to avoid stale position
+
+```tsx
+<DataTable
+  columns={columns}
+  data={rows}
+  rowActions={[
+    { id: "copy", label: "Copy product" },
+    { id: "publish", label: "Publish" },
+    { id: "delete", label: "Delete", variant: "destructive" },
+  ]}
+  onRowAction={(action, row) => {
+    if (action === "publish") publishProduct(row.id);
+  }}
+/>
+```
+
+## Toolbar Actions
+
+Use `renderToolbarActions` with `ToolbarIconButton` for consistent icon size, hover state, and spacing near refresh and column settings.
+
+```tsx
+import { DataTable, ToolbarIconButton } from "erp-pro-ui";
+import { ArrowDownIcon, ArrowUpIcon } from "erp-pro-ui/icons";
+
+<DataTable
+  columns={columns}
+  data={rows}
+  onExport={() => refetch()}
+  renderToolbarActions={
+    <>
+      <ToolbarIconButton title="Import data" onClick={openImportDialog}>
+        <ArrowDownIcon className="ui:h-[18px] ui:w-[18px] ui:shrink-0" />
+      </ToolbarIconButton>
+      <ToolbarIconButton title="Export data" onClick={exportCsv}>
+        <ArrowUpIcon className="ui:h-[18px] ui:w-[18px] ui:shrink-0" />
+      </ToolbarIconButton>
+    </>
+  }
+/>
+```
+
+## Filters UX Customization
+
+You can customize filter UX in three ways:
+
+- `labels`: translate built-in text (`Show filters`, `SHOW ALL`, `HIDE ALL`, etc.)
+- `renderFilterRowActions`: inject custom controls on the filter row right side
+- `renderFilterSelectorFooterActions`: add extra footer actions next to default SHOW/HIDE controls
+
+```tsx
+<DataTable
+  columns={columns}
+  data={rows}
+  labels={{
+    showFilters: "Filter anzeigen",
+    showAll: "ALLE",
+    hideAll: "AUSBLENDEN",
+    addFilter: "Filter hinzufügen",
+  }}
+  renderFilterSelectorFooterActions={({ onShowAll, onHideAll }) => (
+    <>
+      <Button size="small" onClick={onShowAll}>
+        Enable defaults
+      </Button>
+      <Button size="small" onClick={onHideAll}>
+        Clear defaults
+      </Button>
+    </>
+  )}
+  renderFilterRowActions={<Button size="small">Save preset</Button>}
+/>
 ```
 
 ## Styling Slots Example
@@ -181,7 +312,7 @@ import { DownloadIcon } from "erp-pro-ui/icons";
 
 ## Backend-Managed Pagination (No Frontend Pagination Logic)
 
-Yes, this is supported. Pass the current page rows, total row count, and listen to `onPaginationChange`:
+This is fully supported. Pass only the current backend page rows plus `totalCount`, then react to `onPaginationChange` to fetch next pages.
 
 ```tsx
 const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
@@ -511,6 +642,8 @@ The component uses Tailwind CSS with the `ui:` prefix. Make sure to import the s
 ```tsx
 import "erp-pro-ui/styles.css";
 ```
+
+The table is fully theme-token driven (`bg-background-*`, `text-text-*`, `border-border-*`), so switching `data-brand` / `data-mode` updates table surfaces, text, and borders automatically.
 
 ### Dark Mode
 

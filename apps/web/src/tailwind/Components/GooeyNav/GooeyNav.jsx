@@ -1,5 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 
+const PARTICLE_COLOR_TOKENS = {
+  1: "var(--ds-color-accent)",
+  2: "var(--ds-color-info)",
+  3: "var(--ds-color-success)",
+  4: "var(--ds-color-warning)",
+  5: "var(--ds-color-danger)",
+};
+
+const DEFAULT_PARTICLE_COLOR = "var(--ds-color-accent)";
+
 const GooeyNav = ({
   items,
   animationTime = 600,
@@ -15,6 +25,37 @@ const GooeyNav = ({
   const filterRef = useRef(null);
   const textRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+
+  const resolveParticleColor = (colorValue) => {
+    if (typeof colorValue === "number") {
+      return PARTICLE_COLOR_TOKENS[colorValue] ?? DEFAULT_PARTICLE_COLOR;
+    }
+
+    if (typeof colorValue === "string") {
+      const trimmed = colorValue.trim();
+      if (!trimmed) {
+        return DEFAULT_PARTICLE_COLOR;
+      }
+
+      if (
+        trimmed.startsWith("var(") ||
+        trimmed.startsWith("#") ||
+        trimmed.startsWith("rgb") ||
+        trimmed.startsWith("hsl")
+      ) {
+        return trimmed;
+      }
+
+      const parsed = Number(trimmed);
+      if (Number.isFinite(parsed)) {
+        return PARTICLE_COLOR_TOKENS[parsed] ?? DEFAULT_PARTICLE_COLOR;
+      }
+
+      return trimmed;
+    }
+
+    return DEFAULT_PARTICLE_COLOR;
+  };
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
   const getXY = (distance, pointIndex, totalPoints) => {
@@ -52,7 +93,7 @@ const GooeyNav = ({
         particle.style.setProperty("--end-y", `${p.end[1]}px`);
         particle.style.setProperty("--time", `${p.time}ms`);
         particle.style.setProperty("--scale", `${p.scale}`);
-        particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
+        particle.style.setProperty("--color", resolveParticleColor(p.color));
         particle.style.setProperty("--rotate", `${p.rotate}deg`);
         point.classList.add("point");
         particle.appendChild(point);

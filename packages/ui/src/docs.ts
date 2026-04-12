@@ -570,7 +570,7 @@ export const libraryInstallSteps = [
   {
     title: "Use colors and fonts directly",
     description:
-      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from the shared semantic tokens. Prefer semantic utilities and --ds-* tokens in new code; the legacy --color-* aliases remain for migration.",
+      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from shared semantic tokens. Prefer semantic utilities and --ds-* tokens in new code; deprecated bridges remain available for migration.",
     examples: [
       {
         title: "Raw token import",
@@ -590,7 +590,7 @@ export const libraryInstallSteps = [
       {
         title: "Chart token usage",
         language: "tsx",
-        code: 'import { AreaChart, getChartColorVar } from "erp-pro-ui";\n\n<AreaChart\n  data={data}\n  categories={[\n    { key: "revenue", color: getChartColorVar(1) },\n    { key: "cost", color: "chart-6" },\n    { key: "forecast", color: "var(--color-chart-10)" },\n  ]}\n/>',
+        code: 'import { AreaChart, getChartColorVar } from "erp-pro-ui";\n\n<AreaChart\n  data={data}\n  categories={[\n    { key: "revenue", color: getChartColorVar(1) },\n    { key: "cost", color: "chart-6" },\n    { key: "forecast", color: "var(--ds-chart-10)" },\n  ]}\n/>',
         description:
           "Chart components accept raw CSS colors, theme chart variables, or the built-in chart token helper. The shared token surface includes chart slots 1 through 15.",
       },

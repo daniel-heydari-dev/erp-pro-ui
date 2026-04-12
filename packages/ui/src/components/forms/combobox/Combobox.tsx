@@ -131,7 +131,7 @@ const Combobox: React.FC<ComboboxProps> = ({
       {open && (
         <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition">
           {/* Sticky search input */}
-          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-elevated/95 backdrop-blur-sm">
+          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-background-secondary/95 backdrop-blur-sm">
             <input
               autoFocus
               className="w-full bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent"
@@ -175,7 +175,7 @@ const Combobox: React.FC<ComboboxProps> = ({
           </div>
           {/* Sticky create option */}
           {createOptionLabel && onCreateOption && (
-            <div className="sticky bottom-0 z-10 rounded-b-lg border-t border-border-muted bg-elevated/95 backdrop-blur-sm">
+            <div className="sticky bottom-0 z-10 rounded-b-lg border-t border-border-muted bg-background-secondary/95 backdrop-blur-sm">
               <div
                 className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-accent hover:text-on-accent"
                 onClick={() => {

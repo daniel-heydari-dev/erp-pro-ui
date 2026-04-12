@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { Calendar } from "../calendar";
+import { CloseIcon } from "../../icons";
 
 import type { DatePickerProps, DatePickerValue, DateRangeValue } from "./types";
 
@@ -63,6 +64,11 @@ export const DatePicker = ({
     }
     return formatDate(singleValue);
   }, [mode, rangeValue.end, rangeValue.start, singleValue]);
+
+  const hasSelection =
+    mode === "range"
+      ? Boolean(rangeValue.start || rangeValue.end)
+      : Boolean(singleValue);
 
   const updateValue = (next: DatePickerValue) => {
     if (!isControlled) {
@@ -204,6 +210,15 @@ export const DatePicker = ({
     setOpen(false);
   };
 
+  const handleClearSelection = () => {
+    if (disabled) {
+      return;
+    }
+
+    updateValue(mode === "range" ? { ...emptyRange } : null);
+    setOpen(false);
+  };
+
   return (
     <div ref={containerRef} className={`w-full space-y-2 ${className}`.trim()}>
       {label && <p className="text-sm font-medium text-heading">{label}</p>}
@@ -227,30 +242,51 @@ export const DatePicker = ({
           onMouseLeave={!disabled ? () => setVisible(false) : undefined}
           className={
             disabled
-              ? "group/date-picker rounded-lg border-none bg-muted p-[2px]"
+              ? "group/date-picker rounded-lg border-none bg-background-secondary p-[2px]"
               : "group/date-picker rounded-lg border-border p-[2px]"
           }
         >
-          <button
-            ref={triggerRef}
-            type="button"
-            className={`flex w-full items-center justify-between rounded-md border border-input bg-background-secondary px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out ${
-              disabled ? "cursor-not-allowed opacity-50" : ""
-            }`}
-            onClick={() => !disabled && setOpen((prev) => !prev)}
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            disabled={disabled}
-          >
-            <span
-              className={
-                displayValue ? "text-foreground" : "text-muted-foreground"
-              }
+          <div className="relative">
+            <button
+              ref={triggerRef}
+              type="button"
+              className={`flex w-full items-center justify-between rounded-md border border-input bg-background-secondary px-3 py-2 pr-10 text-sm text-foreground transition duration-400 ease-in-out ${
+                disabled ? "cursor-not-allowed opacity-50" : ""
+              }`}
+              onClick={() => !disabled && setOpen((prev) => !prev)}
+              aria-haspopup="dialog"
+              aria-expanded={open}
+              disabled={disabled}
             >
-              {displayValue || placeholder}
-            </span>
-            <span aria-hidden="true">📅</span>
-          </button>
+              <span
+                className={
+                  displayValue ? "text-foreground" : "text-muted-foreground"
+                }
+              >
+                {displayValue || placeholder}
+              </span>
+            </button>
+
+            {hasSelection && !disabled ? (
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent-subtle hover:text-foreground"
+                onClick={handleClearSelection}
+                aria-label={
+                  mode === "range" ? "Clear selected date range" : "Clear selected date"
+                }
+              >
+                <CloseIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            ) : (
+              <span
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                aria-hidden="true"
+              >
+                📅
+              </span>
+            )}
+          </div>
         </motion.div>
       </div>
       {helperText && (
@@ -299,7 +335,7 @@ export const DatePicker = ({
                   }
                 />
                 {presets?.length ? (
-                  <div className="mt-3 flex flex-wrap gap-2 rounded-lg border border-white/20 bg-white/70 p-3 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70">
+                  <div className="mt-3 flex flex-wrap gap-2 rounded-lg border border-border bg-background-secondary/95 p-3 shadow-xl backdrop-blur-xl">
                     {presets.map((preset) => (
                       <button
                         key={preset.label}

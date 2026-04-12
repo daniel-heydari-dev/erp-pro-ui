@@ -183,6 +183,15 @@ export function createReactAppViteConfig({
   appSrcPath = path.resolve(appDir, "src"),
   portEnvVar = "VITE_PORT",
 }) {
+  const reactRuntimeDedupe = [
+    "react",
+    "react-dom",
+    "react/jsx-runtime",
+    "react/jsx-dev-runtime",
+    "scheduler",
+    "recharts",
+  ];
+
   return defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
     const configuredPort = Number(env[portEnvVar]);
@@ -196,6 +205,7 @@ export function createReactAppViteConfig({
           appSrcPath,
           uiPackageRoot,
         }),
+        dedupe: reactRuntimeDedupe,
       },
       server:
         Number.isFinite(configuredPort) && configuredPort > 0
@@ -210,6 +220,15 @@ export function createStorybookViteConfig({
   uiPackageRoot,
   includeThemeAlias = true,
 }) {
+  const reactRuntimeDedupe = [
+    "react",
+    "react-dom",
+    "react/jsx-runtime",
+    "react/jsx-dev-runtime",
+    "scheduler",
+    "recharts",
+  ];
+
   return {
     build: createSharedBuildConfig(),
     plugins: [tailwindcss()],
@@ -219,6 +238,7 @@ export function createStorybookViteConfig({
         uiPackageRoot,
         includeThemeAlias,
       }),
+      dedupe: reactRuntimeDedupe,
     },
   };
 }

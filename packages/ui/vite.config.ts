@@ -40,6 +40,10 @@ function copyStylesheetAsset(): Plugin {
           resolveFromRoot("src/tokens.css"),
           resolveFromRoot("dist/tokens.css"),
         ),
+        cp(
+          resolveFromRoot("src/tokens-legacy-erp.css"),
+          resolveFromRoot("dist/tokens-legacy-erp.css"),
+        ),
         cp(resolveFromRoot("src/fonts.css"), resolveFromRoot("dist/fonts.css")),
       ]);
 

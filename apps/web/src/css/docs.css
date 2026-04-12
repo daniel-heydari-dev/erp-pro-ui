@@ -7,7 +7,7 @@
   font-size: 36px !important;
   font-weight: 600 !important;
   margin-bottom: 0.3em !important;
-  color: var(--color-heading) !important;
+  color: var(--ds-color-fg) !important;
   letter-spacing: -0.5px !important;
 }
 
@@ -16,7 +16,7 @@
   font-weight: 600;
   margin-top: 1.5em;
   margin-bottom: 0.6em;
-  color: var(--color-heading);
+  color: var(--ds-color-fg);
   letter-spacing: -0.5px;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .docs-paragraph.dim {
-  color: var(--color-muted-foreground);
+  color: var(--ds-color-fg-muted);
   font-size: 18px;
 }
 
@@ -50,20 +50,20 @@
 
 .docs-highlight {
   font-weight: 600;
-  color: var(--color-primary);
-  background: var(--color-primary-foreground);
+  color: var(--ds-brand-primary);
+  background: var(--ds-color-on-accent);
   padding: 0.1em 0.3em;
   border-radius: 4px;
   font-family: monospace;
   font-size: 0.9em;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--ds-color-border);
 }
 
 /* Button Bar */
 .docs-button-bar {
   margin-top: 3em;
   padding-top: 2em;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--ds-color-border);
   display: flex;
   gap: 1em;
   justify-content: flex-end;
@@ -83,19 +83,19 @@
 
 .docs-button-primary {
   margin-right: auto;
-  color: var(--color-foreground);
-  border: 1px solid var(--color-border);
+  color: var(--ds-color-fg);
+  border: 1px solid var(--ds-color-border);
   background-color: transparent;
 }
 
 .docs-button-primary:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--ds-neutral-subtle);
 }
 
 .docs-button-secondary {
-  background-color: var(--color-primary);
+  background-color: var(--ds-brand-primary);
   color: #fff;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--ds-brand-primary);
 }
 
 .docs-button-secondary:hover {
@@ -109,14 +109,14 @@
   gap: 1rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  background-color: var(--color-background);
-  border: 1px solid var(--color-border);
+  background-color: var(--ds-color-bg-canvas);
+  border: 1px solid var(--ds-color-border);
   border-radius: 12px;
   transition: border-color 0.2s ease;
 }
 
 .docs-tool-item:hover {
-  border-color: var(--color-primary);
+  border-color: var(--ds-brand-primary);
 }
 
 /* Custom Showcase Grid */
@@ -130,8 +130,8 @@
 .docs-showcase-card {
   padding: 1.5rem;
   border-radius: 12px;
-  border: 1px solid var(--color-border);
-  background: var(--color-background);
+  border: 1px solid var(--ds-color-border);
+  background: var(--ds-color-bg-canvas);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -149,29 +149,29 @@
 .docs-props-table th {
   text-align: left;
   padding: 0.8em;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-heading);
+  border-bottom: 1px solid var(--ds-color-border);
+  color: var(--ds-color-fg);
   font-weight: 600;
 }
 
 .docs-props-table td {
   padding: 0.8em;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--ds-color-border);
   color: var(--paragraph-color);
   vertical-align: top;
 }
 
 .docs-prop-name {
-  color: var(--color-primary);
+  color: var(--ds-brand-primary);
   font-family: monospace;
   font-weight: 600;
 }
 
 .docs-prop-type {
-  color: var(--color-muted-foreground);
+  color: var(--ds-color-fg-muted);
   font-family: monospace;
   font-size: 0.9em;
-  background: var(--color-secondary);
+  background: var(--ds-neutral-subtle);
   padding: 0.2em 0.4em;
   border-radius: 4px;
 }
@@ -187,10 +187,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--ds-color-border);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted-foreground);
+  background: var(--ds-color-fg-muted);
 }

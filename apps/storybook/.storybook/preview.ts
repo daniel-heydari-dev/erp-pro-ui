@@ -13,6 +13,7 @@ import "../src/index.css";
 
 type StorybookThemeColor = "purple" | "teal" | "yellow" | "green";
 type StorybookThemeMode = "light" | "dark";
+type StorybookThemeDarkVariant = "default" | "alt";
 
 const STORYBOOK_LAYOUT_TAGS = ["StoryStack", "StoryPanel", "StorySection"];
 const REACT_HOOK_IMPORTS = [
@@ -237,17 +238,20 @@ function StorybookThemeBridge({
   children,
   theme,
   mode,
+  darkVariant,
 }: {
   children?: ReactNode;
   theme: StorybookThemeColor;
   mode: StorybookThemeMode;
+  darkVariant: StorybookThemeDarkVariant;
 }) {
-  const { setMode, setTheme } = useThemeContext();
+  const { setMode, setTheme, setDarkVariant } = useThemeContext();
 
   useEffect(() => {
     setMode(mode);
     setTheme(theme);
-  }, [mode, setMode, setTheme, theme]);
+    setDarkVariant(darkVariant);
+  }, [darkVariant, mode, setDarkVariant, setMode, setTheme, theme]);
 
   return createElement(
     "div",
@@ -255,6 +259,7 @@ function StorybookThemeBridge({
       className:
         "min-h-screen bg-background p-6 text-foreground transition-colors duration-200",
       "data-mode": mode,
+      "data-dark-variant": darkVariant,
     },
     children,
   );
@@ -314,6 +319,7 @@ const preview: Preview = {
   initialGlobals: {
     themeMode: "dark",
     themeColor: "purple",
+    themeDarkVariant: "default",
   },
   globalTypes: {
     themeColor: {
@@ -342,6 +348,18 @@ const preview: Preview = {
         ],
       },
     },
+    themeDarkVariant: {
+      name: "Dark variant",
+      description: "Dark foundation variant for Storybook canvas",
+      toolbar: {
+        icon: "contrast",
+        dynamicTitle: true,
+        items: [
+          { value: "default", title: "Dark: Default" },
+          { value: "alt", title: "Dark: Alt" },
+        ],
+      },
+    },
   },
   decorators: [
     (Story, context) =>
@@ -353,6 +371,8 @@ const preview: Preview = {
           {
             theme: context.globals.themeColor as StorybookThemeColor,
             mode: context.globals.themeMode as StorybookThemeMode,
+            darkVariant:
+              context.globals.themeDarkVariant as StorybookThemeDarkVariant,
           },
           createElement(
             StorybookCatalogMeta,

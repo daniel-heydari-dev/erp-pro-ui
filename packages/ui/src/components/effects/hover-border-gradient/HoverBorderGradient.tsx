@@ -14,15 +14,15 @@ type HoverBorderGradientProps =
   };
 
 const movingMap: Record<Direction, string> = {
-  TOP: "radial-gradient(50.7% 50% at 50% 0%, var(--color-hover-gradient) 0%, transparent 100%)",
-  LEFT: "radial-gradient(25.6% 43.1% at 0% 50%, var(--color-hover-gradient) 0%, transparent 100%)",
+  TOP: "radial-gradient(50.7% 50% at 50% 0%, var(--ds-gradient-accent-hover) 0%, transparent 100%)",
+  LEFT: "radial-gradient(25.6% 43.1% at 0% 50%, var(--ds-gradient-accent-hover) 0%, transparent 100%)",
   BOTTOM:
-    "radial-gradient(50.7% 50% at 50% 100%, var(--color-hover-gradient) 0%, transparent 100%)",
+    "radial-gradient(50.7% 50% at 50% 100%, var(--ds-gradient-accent-hover) 0%, transparent 100%)",
   RIGHT:
-    "radial-gradient(25.2% 41% at 100% 50%, var(--color-hover-gradient) 0%, transparent 100%)",
+    "radial-gradient(25.2% 41% at 100% 50%, var(--ds-gradient-accent-hover) 0%, transparent 100%)",
 };
 
-const highlight = `radial-gradient(85% 181% at 50% 50%, var(--color-hover-gradient) 0%, transparent 100%)`;
+const highlight = `radial-gradient(85% 181% at 50% 50%, var(--ds-gradient-accent-hover) 0%, transparent 100%)`;
 
 export function HoverBorderGradient({
   containerClassName,

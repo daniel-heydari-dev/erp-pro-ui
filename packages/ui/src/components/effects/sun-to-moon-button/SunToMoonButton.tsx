@@ -117,7 +117,7 @@ export default function SunToMoonButton({
             style={{
               strokeLinecap: "round",
               strokeWidth: 6,
-              stroke: "var(--color-yellow-500)",
+              stroke: "var(--ds-color-warning)",
             }}
           >
             <motion.path
@@ -146,8 +146,8 @@ export default function SunToMoonButton({
                     d: sunPath || fallbackPath,
                     rotate: 0,
                     scale: 1,
-                    stroke: "var(--color-yellow-500)",
-                    fill: "var(--color-yellow-500)",
+                    stroke: "var(--ds-color-warning)",
+                    fill: "var(--ds-color-warning)",
                     fillOpacity: 0.5,
                     strokeOpacity: 1,
                   }
@@ -155,8 +155,8 @@ export default function SunToMoonButton({
                     d: moonPath || fallbackPath,
                     rotate: -360,
                     scale: 2,
-                    stroke: "var(--color-blue-400)",
-                    fill: "var(--color-blue-400)",
+                    stroke: "var(--ds-color-info)",
+                    fill: "var(--ds-color-info)",
                     fillOpacity: 0.35,
                     strokeOpacity: 1,
                   }

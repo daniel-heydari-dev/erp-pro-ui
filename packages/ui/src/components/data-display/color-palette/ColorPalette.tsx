@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface ColorSwatch {
   name: string;
   value: string;
@@ -21,45 +23,45 @@ const lightThemeGroups: ColorGroup[] = [
   {
     name: "Active Accent Scale",
     colors: [
-      { name: "primary-50", value: "#f6efff", textColor: "dark" },
-      { name: "primary-100", value: "#ead9fd", textColor: "dark" },
-      { name: "primary-200", value: "#d8b3fb", textColor: "dark" },
-      { name: "primary-300", value: "#c084fc", textColor: "dark" },
-      { name: "primary-400", value: "#a855f7", textColor: "light" },
-      { name: "primary-500", value: "#9333ea", textColor: "light" },
-      { name: "primary-600", value: "#7e22ce", textColor: "light" },
-      { name: "primary-700", value: "#6b21a8", textColor: "light" },
-      { name: "primary-800", value: "#581c87", textColor: "light" },
-      { name: "primary-900", value: "#3b0764", textColor: "light" },
+      { name: "primary-50", value: "var(--ds-accent-50)", textColor: "dark" },
+      { name: "primary-100", value: "var(--ds-accent-100)", textColor: "dark" },
+      { name: "primary-200", value: "var(--ds-accent-200)", textColor: "dark" },
+      { name: "primary-300", value: "var(--ds-accent-300)", textColor: "dark" },
+      { name: "primary-400", value: "var(--ds-accent-400)", textColor: "light" },
+      { name: "primary-500", value: "var(--ds-accent-500)", textColor: "light" },
+      { name: "primary-600", value: "var(--ds-accent-600)", textColor: "light" },
+      { name: "primary-700", value: "var(--ds-accent-700)", textColor: "light" },
+      { name: "primary-800", value: "var(--ds-accent-800)", textColor: "light" },
+      { name: "primary-900", value: "var(--ds-accent-900)", textColor: "light" },
     ],
   },
   {
     name: "Semantic Surfaces",
     colors: [
-      { name: "bg-canvas", value: "#f4f7fe", textColor: "dark" },
-      { name: "bg-surface", value: "#ffffff", textColor: "dark" },
-      { name: "bg-elevated", value: "#ffffff", textColor: "dark" },
-      { name: "bg-muted", value: "#f4f3f8", textColor: "dark" },
-      { name: "accent-subtle", value: "#f3e8fd", textColor: "dark" },
+      { name: "bg-canvas", value: "var(--ds-color-bg-canvas)", textColor: "dark" },
+      { name: "bg-surface", value: "var(--ds-color-bg-surface)", textColor: "dark" },
+      { name: "bg-elevated", value: "var(--ds-color-bg-elevated)", textColor: "dark" },
+      { name: "bg-muted", value: "var(--ds-color-bg-muted)", textColor: "dark" },
+      { name: "accent-subtle", value: "var(--ds-color-accent-subtle)", textColor: "dark" },
     ],
   },
   {
     name: "Semantic Foreground",
     colors: [
-      { name: "fg", value: "#1e293b", textColor: "light" },
-      { name: "fg-muted", value: "#475467", textColor: "light" },
-      { name: "fg-subtle", value: "#64748b", textColor: "light" },
-      { name: "on-accent", value: "#ffffff", textColor: "dark" },
+      { name: "fg", value: "var(--ds-color-fg)", textColor: "light" },
+      { name: "fg-muted", value: "var(--ds-color-fg-muted)", textColor: "light" },
+      { name: "fg-subtle", value: "var(--ds-color-fg-subtle)", textColor: "light" },
+      { name: "on-accent", value: "var(--ds-color-on-accent)", textColor: "dark" },
     ],
   },
   {
     name: "Semantic Borders",
     colors: [
-      { name: "border", value: "#e5e7eb", textColor: "dark" },
-      { name: "border-strong", value: "#d1d5db", textColor: "dark" },
-      { name: "border-muted", value: "#f3f4f6", textColor: "dark" },
-      { name: "border-field", value: "#e9e8e8", textColor: "dark" },
-      { name: "focus-ring", value: "#c595f2", textColor: "dark" },
+      { name: "border", value: "var(--ds-color-border)", textColor: "dark" },
+      { name: "border-strong", value: "var(--ds-color-border-strong)", textColor: "dark" },
+      { name: "border-muted", value: "var(--ds-color-border-muted)", textColor: "dark" },
+      { name: "border-field", value: "var(--ds-color-border-field)", textColor: "dark" },
+      { name: "focus-ring", value: "var(--ds-color-focus-ring)", textColor: "dark" },
     ],
   },
   {
@@ -73,21 +75,17 @@ const lightThemeGroups: ColorGroup[] = [
     ],
   },
   {
-    name: "Compatibility Aliases",
+    name: "Foundation Tokens",
     colors: [
-      { name: "--color-primary", value: "#4318ff", textColor: "light" },
+      { name: "--ds-primary", value: "var(--ds-primary)", textColor: "light" },
       {
-        name: "--color-background-primary",
-        value: "#f4f7fe",
+        name: "--ds-surface-canvas",
+        value: "var(--ds-surface-canvas)",
         textColor: "dark",
       },
-      {
-        name: "--color-background-secondary",
-        value: "#ffffff",
-        textColor: "dark",
-      },
-      { name: "--color-text-primary", value: "#1e293b", textColor: "light" },
-      { name: "--color-border-primary", value: "#d1d5db", textColor: "dark" },
+      { name: "--ds-surface-1", value: "var(--ds-surface-1)", textColor: "dark" },
+      { name: "--ds-text-1", value: "var(--ds-text-1)", textColor: "light" },
+      { name: "--ds-border-1", value: "var(--ds-border-1)", textColor: "dark" },
     ],
   },
 ];
@@ -96,45 +94,45 @@ const darkThemeGroups: ColorGroup[] = [
   {
     name: "Active Accent Scale (Dark)",
     colors: [
-      { name: "primary-50", value: "#f6efff", textColor: "dark" },
-      { name: "primary-100", value: "#ead9fd", textColor: "dark" },
-      { name: "primary-200", value: "#d8b3fb", textColor: "dark" },
-      { name: "primary-300", value: "#c084fc", textColor: "dark" },
-      { name: "primary-400", value: "#a855f7", textColor: "light" },
-      { name: "primary-500", value: "#9333ea", textColor: "light" },
-      { name: "primary-600", value: "#7e22ce", textColor: "light" },
-      { name: "primary-700", value: "#6b21a8", textColor: "light" },
-      { name: "primary-800", value: "#581c87", textColor: "light" },
-      { name: "primary-900", value: "#3b0764", textColor: "light" },
+      { name: "primary-50", value: "var(--ds-accent-50)", textColor: "dark" },
+      { name: "primary-100", value: "var(--ds-accent-100)", textColor: "dark" },
+      { name: "primary-200", value: "var(--ds-accent-200)", textColor: "dark" },
+      { name: "primary-300", value: "var(--ds-accent-300)", textColor: "dark" },
+      { name: "primary-400", value: "var(--ds-accent-400)", textColor: "light" },
+      { name: "primary-500", value: "var(--ds-accent-500)", textColor: "light" },
+      { name: "primary-600", value: "var(--ds-accent-600)", textColor: "light" },
+      { name: "primary-700", value: "var(--ds-accent-700)", textColor: "light" },
+      { name: "primary-800", value: "var(--ds-accent-800)", textColor: "light" },
+      { name: "primary-900", value: "var(--ds-accent-900)", textColor: "light" },
     ],
   },
   {
     name: "Semantic Surfaces (Dark)",
     colors: [
-      { name: "bg-canvas", value: "#070f2e", textColor: "light" },
-      { name: "bg-surface", value: "#111c44", textColor: "light" },
-      { name: "bg-elevated", value: "#111c44", textColor: "light" },
-      { name: "bg-muted", value: "#18254f", textColor: "light" },
-      { name: "accent-subtle", value: "#24194b", textColor: "light" },
+      { name: "bg-canvas", value: "var(--ds-color-bg-canvas)", textColor: "light" },
+      { name: "bg-surface", value: "var(--ds-color-bg-surface)", textColor: "light" },
+      { name: "bg-elevated", value: "var(--ds-color-bg-elevated)", textColor: "light" },
+      { name: "bg-muted", value: "var(--ds-color-bg-muted)", textColor: "light" },
+      { name: "accent-subtle", value: "var(--ds-color-accent-subtle)", textColor: "light" },
     ],
   },
   {
     name: "Semantic Foreground (Dark)",
     colors: [
-      { name: "fg", value: "#f1f5f9", textColor: "dark" },
-      { name: "fg-muted", value: "#cbd5e1", textColor: "dark" },
-      { name: "fg-subtle", value: "#94a3b8", textColor: "dark" },
-      { name: "on-accent", value: "#ffffff", textColor: "dark" },
+      { name: "fg", value: "var(--ds-color-fg)", textColor: "dark" },
+      { name: "fg-muted", value: "var(--ds-color-fg-muted)", textColor: "dark" },
+      { name: "fg-subtle", value: "var(--ds-color-fg-subtle)", textColor: "dark" },
+      { name: "on-accent", value: "var(--ds-color-on-accent)", textColor: "dark" },
     ],
   },
   {
     name: "Semantic Borders (Dark)",
     colors: [
-      { name: "border", value: "#4b5563", textColor: "light" },
-      { name: "border-strong", value: "#374151", textColor: "light" },
-      { name: "border-muted", value: "#6b7280", textColor: "light" },
-      { name: "border-field", value: "#545b58", textColor: "light" },
-      { name: "focus-ring", value: "#b57fe7", textColor: "dark" },
+      { name: "border", value: "var(--ds-color-border)", textColor: "light" },
+      { name: "border-strong", value: "var(--ds-color-border-strong)", textColor: "light" },
+      { name: "border-muted", value: "var(--ds-color-border-muted)", textColor: "light" },
+      { name: "border-field", value: "var(--ds-color-border-field)", textColor: "light" },
+      { name: "focus-ring", value: "var(--ds-color-focus-ring)", textColor: "dark" },
     ],
   },
   {
@@ -148,21 +146,17 @@ const darkThemeGroups: ColorGroup[] = [
     ],
   },
   {
-    name: "Compatibility Aliases (Dark)",
+    name: "Foundation Tokens (Dark)",
     colors: [
-      { name: "--color-primary", value: "#4318ff", textColor: "light" },
+      { name: "--ds-primary", value: "var(--ds-primary)", textColor: "light" },
       {
-        name: "--color-background-primary",
-        value: "#070f2e",
+        name: "--ds-surface-canvas",
+        value: "var(--ds-surface-canvas)",
         textColor: "light",
       },
-      {
-        name: "--color-background-secondary",
-        value: "#111c44",
-        textColor: "light",
-      },
-      { name: "--color-text-primary", value: "#f1f5f9", textColor: "dark" },
-      { name: "--color-border-primary", value: "#374151", textColor: "light" },
+      { name: "--ds-surface-1", value: "var(--ds-surface-1)", textColor: "light" },
+      { name: "--ds-text-1", value: "var(--ds-text-1)", textColor: "dark" },
+      { name: "--ds-border-1", value: "var(--ds-border-1)", textColor: "light" },
     ],
   },
 ];
@@ -227,10 +221,39 @@ const gradientGroups: ColorGroup[] = [
 // Default groups (backwards compatibility)
 const defaultGroups: ColorGroup[] = lightThemeGroups;
 
+interface DisplayColorGroup {
+  group: ColorGroup;
+  mode?: "light" | "dark";
+}
+
 function ColorSwatchItem({ color }: { color: ColorSwatch }) {
+  const swatchRef = React.useRef<HTMLDivElement | null>(null);
+  const [resolvedValue, setResolvedValue] = React.useState<string>(color.value);
+
+  // Resolve runtime CSS variable values so docs reflect live theme tokens.
+  React.useEffect(() => {
+    if (!swatchRef.current) {
+      return;
+    }
+
+    if (color.value.startsWith("var(")) {
+      const computedBackground = getComputedStyle(swatchRef.current).backgroundColor;
+      setResolvedValue(computedBackground || color.value);
+      return;
+    }
+
+    setResolvedValue(color.value);
+  }, [color.value]);
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(color.value);
+    navigator.clipboard.writeText(resolvedValue);
   };
+
+  const swatchLabel = color.value.startsWith("var(")
+    ? "LIVE"
+    : color.value.length <= 9
+      ? color.value.toUpperCase()
+      : "RGBA";
 
   return (
     <div
@@ -239,25 +262,26 @@ function ColorSwatchItem({ color }: { color: ColorSwatch }) {
       title="Click to copy"
     >
       <div
+        ref={swatchRef}
         className="w-20 h-20 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex items-center justify-center text-xs font-mono"
         style={{ backgroundColor: color.value }}
       >
-        <span
-          className={
-            color.textColor === "light" ? "text-white" : "text-neutral-900"
-          }
-        >
-          {color.value.length <= 9 ? color.value.toUpperCase() : "RGBA"}
+        <span className="font-semibold text-white mix-blend-difference">
+          {swatchLabel}
         </span>
       </div>
       <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300 text-center max-w-20">
         {color.name}
+      </span>
+      <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 text-center max-w-20 break-all">
+        {resolvedValue}
       </span>
     </div>
   );
 }
 
 function GradientPreview() {
+  // Static examples to illustrate common gradient recipes.
   return (
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
@@ -353,6 +377,7 @@ function GradientPreview() {
 }
 
 function UsageExamples() {
+  // Token usage references for semantic utilities + raw CSS variables.
   return (
     <div className="mt-8 p-6 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl">
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
@@ -421,22 +446,30 @@ export default function ColorPalette({
   showUsageExamples = true,
   className,
 }: ColorPaletteProps) {
-  // Determine which groups to show
-  let displayGroups: ColorGroup[];
+  // Build display groups based on requested mode. Each group can be rendered
+  // inside an explicit `data-mode` wrapper so light and dark values are both
+  // resolved accurately on the same page.
+  let displayGroups: DisplayColorGroup[];
   if (groups) {
-    displayGroups = groups;
+    displayGroups = groups.map((group) => ({ group }));
   } else if (theme === "light") {
-    displayGroups = lightThemeGroups;
+    displayGroups = lightThemeGroups.map((group) => ({ group, mode: "light" }));
   } else if (theme === "dark") {
-    displayGroups = darkThemeGroups;
+    displayGroups = darkThemeGroups.map((group) => ({ group, mode: "dark" }));
   } else {
     // Show all
-    displayGroups = [...lightThemeGroups, ...darkThemeGroups];
+    displayGroups = [
+      ...lightThemeGroups.map((group) => ({ group, mode: "light" as const })),
+      ...darkThemeGroups.map((group) => ({ group, mode: "dark" as const })),
+    ];
   }
 
-  // Add gradients if requested and no custom groups
+  // Append optional gradient/opacity examples when using built-in groups.
   if (showGradients && !groups) {
-    displayGroups = [...displayGroups, ...gradientGroups];
+    displayGroups = [
+      ...displayGroups,
+      ...gradientGroups.map((group) => ({ group })),
+    ];
   }
 
   return (
@@ -453,8 +486,9 @@ export default function ColorPalette({
         <code className="font-mono bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded">
           semantic utilities and --ds-* tokens
         </code>{" "}
-        • Compatibility aliases remain available for migration. Click any swatch
-        to copy the color value.
+        • Compatibility aliases remain available for migration. Light and dark
+        sections are resolved in their own mode contexts. Click any swatch to
+        copy the resolved color value.
       </p>
 
       <div className="mb-6 flex flex-wrap gap-2">
@@ -483,8 +517,8 @@ export default function ColorPalette({
         )}
       </div>
 
-      {displayGroups.map((group) => (
-        <div key={group.name} className="mb-8">
+      {displayGroups.map(({ group, mode }) => (
+        <div key={group.name} data-mode={mode} className="mb-8">
           <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
             {group.name}
           </h3>

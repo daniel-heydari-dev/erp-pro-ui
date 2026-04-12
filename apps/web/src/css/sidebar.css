@@ -1,6 +1,6 @@
 .sidebar,
 .sidebar-mobile {
-  background-color: var(--color-background) !important;
+  background-color: var(--ds-color-bg-canvas) !important;
 }
 
 .sidebar::before {
@@ -11,7 +11,7 @@
   width: 100%;
   height: 200px;
   pointer-events: none;
-  background: linear-gradient(to top, var(--color-background), transparent);
+  background: linear-gradient(to top, var(--ds-color-bg-canvas), transparent);
   z-index: 4;
   transition: opacity 0.3s ease;
 }
@@ -24,7 +24,7 @@
   min-width: 240px;
   padding: 7.5rem 0 6em 0 !important;
   /* border-right: 1px solid #f0f0f0; Ultra-soft border */
-  background-color: var(--background);
+  background-color: var(--ds-color-bg-canvas);
 }
 
 @media only screen and (max-width: 967px) {
@@ -86,7 +86,7 @@
 }
 
 .category-header.active-category-header .category-name {
-  color: var(--primary);
+  color: var(--ds-color-accent);
   font-weight: 600;
   text-shadow: none;
 }
@@ -105,7 +105,7 @@
 
 .category-chevron {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  color: var(--color-muted-foreground);
+  color: var(--ds-color-fg-muted);
 }
 
 .category-chevron.expanded {
@@ -137,7 +137,7 @@
 .sidebar-item {
   position: relative;
   font-size: 1rem;
-  color: var(--muted-foreground);
+  color: var(--ds-color-fg-muted);
   padding: 0.5em 0.5em 0.5em 0.5em;
   margin-right: 1em;
   display: flex;
@@ -152,8 +152,8 @@
 }
 
 .sidebar-item:hover {
-  color: var(--foreground);
-  background-color: var(--secondary);
+  color: var(--ds-color-fg);
+  background-color: var(--ds-neutral-subtle);
 }
 
 .active-sidebar-item {
@@ -178,9 +178,9 @@
   bottom: 0;
   border-radius: 8px;
   z-index: 0;
-  background: var(--secondary);
+  background: var(--ds-neutral-subtle);
   box-shadow: 0 1px 4px rgba(115, 103, 240, 0.05);
-  border: 1px solid var(--primary) !important;
+  border: 1px solid var(--ds-color-accent) !important;
   pointer-events: none;
 }
 
@@ -329,9 +329,9 @@ html:not(.dark) .active-sidebar-item::after {
 }
 
 .github-button {
-  border: 1px solid var(--border);
-  background-color: var(--background);
-  color: var(--foreground);
+  border: 1px solid var(--ds-color-border);
+  background-color: var(--ds-color-bg-canvas);
+  color: var(--ds-color-fg);
   transition: 0.3s ease;
 }
 
@@ -342,7 +342,7 @@ html:not(.dark) .active-sidebar-item::after {
 
 .github-button:hover {
   border-color: rgba(124, 58, 237, 0.4);
-  background-color: var(--secondary) !important;
+  background-color: var(--ds-neutral-subtle) !important;
 }
 
 .cta-button-docs {

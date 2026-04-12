@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { StorySurface } from "../../shared/storybook";
 import SunToMoonButton from "./SunToMoonButton";
+import ThemeSwitcherButtons from "./ThemeSwitcherButtons";
 
 const meta = {
   title: "Foundations/Theme/SunToMoonButton",
@@ -12,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes.",
+          "Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes, brand palettes, and dark variants.",
       },
     },
   },
@@ -61,6 +62,23 @@ export const ToolbarPlacement: Story = {
           </p>
         </div>
         <SunToMoonButton showLabelAndImage={false} />
+      </div>
+    </StorySurface>
+  ),
+};
+
+/**
+ * ## Full Theme Controls
+ * Sun/Moon mode toggle + brand and dark-variant controls in one compact panel.
+ */
+export const FullThemeControls: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-2xl">
+      <div className="ui:grid ui:gap-4 md:ui:grid-cols-[220px_1fr]">
+        <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-3">
+          <SunToMoonButton />
+        </div>
+        <ThemeSwitcherButtons />
       </div>
     </StorySurface>
   ),

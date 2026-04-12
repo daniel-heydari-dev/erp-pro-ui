@@ -117,7 +117,7 @@ If you use Next.js, import `erp-pro-ui/styles.css` from your app-level global st
 
 The library now ships a two-layer theme contract so another project can use the same tokens without copying theme config:
 
-- `erp-pro-ui/tokens.css`: raw `--ds-*` tokens plus compatibility CSS variables
+- `erp-pro-ui/tokens.css`: raw `--ds-*` tokens plus internal legacy ERP bridge import
 - `erp-pro-ui/colors.css`: Tailwind v4 `@theme` bridge that generates semantic utilities
 - `erp-pro-ui/styles.css`: full package stylesheet, including fonts, tokens, bridge, foundations, and animations
 
@@ -212,15 +212,149 @@ The token system is split into stable layers:
 
 For new components, use the semantic utility layer or the `--ds-*` variables directly. Keep the compatibility aliases for migration work and external consumers that still rely on the legacy contract.
 
+### Token priority and quick groups
+
+Priority order (top to bottom):
+
+1. Global foundation defaults (`:root` / `:host`)
+2. Global mode overrides (dark/light + system fallback)
+3. Brand accent scales (`purple` / `teal` / `yellow` / `green`)
+4. Brand + mode surface/text/border overrides
+
+When debugging a color:
+
+- Check `--ds-surface-*` (background layers)
+- Check `--ds-text-*` (text hierarchy)
+- Check `--ds-border-*` (border hierarchy)
+- Check `--ds-accent-*` (brand accents)
+
+Quick groups:
+
+- `--ds-surface-*`: background layers
+  - `--ds-surface-canvas`: main app/page background
+  - `--ds-surface-1`: default card/panel background on top of canvas
+  - `--ds-surface-2`: elevated background (modal/popover/raised panel)
+- `--ds-text-*`: text hierarchy
+  - `--ds-text-1`: primary text (titles, key content)
+  - `--ds-text-2`: secondary text (supporting labels/metadata)
+  - `--ds-text-3`: tertiary text (hints/helper/low emphasis)
+- `--ds-border-*`: border hierarchy
+  - `--ds-border-1`: strongest border
+  - `--ds-border-2`: default border
+  - `--ds-border-3`: subtle border
+  - `--ds-border-field`: input border
+- `--ds-accent-*`: brand accent scale
+  - `--ds-accent-50..900`: light to dark scale
+  - `--ds-accent`: active accent for CTA/active states
+  - `--ds-accent-contrast`: text/icon color on accent backgrounds
+- `--ds-color-*`: semantic derived tokens
+  - `--ds-color-bg-*`: semantic backgrounds
+  - `--ds-color-fg*`: semantic text
+  - `--ds-color-border*`: semantic borders
+  - `--ds-color-accent*`: interaction/brand states
+  - status tokens: success, warning, danger, info, disabled
+
 ### Theme switching
 
-If you use `ThemeProvider`, the library updates `data-brand` and `data-mode` for you. It still writes the old `data-theme` attribute for compatibility, but the new architecture treats brand and mode as separate axes.
+If you use `ThemeProvider`, the library updates `data-brand`, `data-mode`, and `data-dark-variant` for you. It still writes the old `data-theme` attribute for compatibility, but the architecture treats brand, mode, and dark variant as separate axes.
 
 If you do not use `ThemeProvider`, you can still switch manually in your app shell:
 
 ```html
-<html data-brand="teal" data-mode="dark"></html>
+<html data-brand="teal" data-mode="dark" data-dark-variant="alt"></html>
 ```
+
+Quick mental model:
+
+- `data-brand` controls accent family and brand-specific palette.
+- `data-mode` controls light/dark surface, text, and border foundations.
+- `data-dark-variant` controls which dark foundation to use (`default` or `alt`) when `data-mode="dark"`.
+- Components consume semantic tokens, so they update automatically.
+
+### Brand palette presets (light + dark)
+
+The shipped token presets now include a tinted SaaS surface system for each brand. When you switch brand, mode, or dark variant, semantic tokens (`bg-surface`, `text-fg`, `border-border`) update automatically. The `dark-alt` variant uses a shared dark foundation while each brand keeps its own accent family.
+
+| Brand preset | Light canvas / surface / stroke / text | Dark default canvas / surface / stroke / text | Dark alt canvas / surface / stroke |
+| --- | --- | --- | --- |
+| `purple` | `#F4F7FE` / `#FFFFFF` / `#E9EDF7` / `#2B3674` | `#0A0B1C` / `#161936` / `#2B308B` / `#EFF4FB` | `#0F111A` / `#1A1D29` / `#2D3748` |
+| `teal` | `#F0F9FA` / `#FFFFFF` / `#D1E9ED` / `#134E48` | `#061113` / `#0E2529` / `#1A4D57` / `#E0F2F1` | `#0F111A` / `#1A1D29` / `#2D3748` |
+| `yellow` | `#FEFCE8` / `#FFFFFF` / `#FEF08A` / `#854D0E` | `#121002` / `#241D05` / `#4D3D02` / `#FEF9C3` | `#0F111A` / `#1A1D29` / `#2D3748` |
+| `green` | `#F0FDF4` / `#FFFFFF` / `#DCFCE7` / `#064E3B` | `#020C09` / `#06241B` / `#065F46` / `#D1FAE5` | `#0F111A` / `#1A1D29` / `#2D3748` |
+
+You can target these via:
+
+- `data-brand="purple|teal|yellow|green"` + `data-mode="light|dark"` + optional `data-dark-variant="default|alt"`
+- legacy compatibility (deprecated): `data-brand="secondary"` or `data-theme="secondary-dark"` still works and maps to `purple`.
+
+### Token migration guide (`primary` naming)
+
+New canonical tokens:
+
+- `--ds-foundation-light-primary`
+- `--ds-foundation-dark-primary`
+- `--ds-primary`
+
+Deprecated aliases kept for compatibility:
+
+- `--ds-foundation-light-primary-purple` -> `--ds-foundation-light-primary`
+- `--ds-foundation-dark-primary-purple` -> `--ds-foundation-dark-primary`
+- `--ds-primary-purple` -> `--ds-primary`
+
+You can still ship old apps safely today because deprecated aliases are still defined in `tokens.css`.
+
+### AI prompt for migrating another app
+
+Use this prompt with your AI assistant in another project:
+
+```text
+Migrate my app from legacy ERP token names to the new canonical DS primary tokens.
+
+Rules:
+1) Replace token usage:
+   --ds-foundation-light-primary-purple -> --ds-foundation-light-primary
+   --ds-foundation-dark-primary-purple -> --ds-foundation-dark-primary
+   --ds-primary-purple -> --ds-primary
+2) Do not change visual output.
+3) Keep backward compatibility aliases if this app exports tokens.
+4) Update docs/comments to mark old names as deprecated.
+5) Return a summary with changed files and a grep checklist for remaining old tokens.
+```
+
+### AI prompt for migrating ERP tokens to DS tokens
+
+Use this prompt with your AI assistant in another project:
+
+```text
+Migrate this app from legacy ERP CSS variables (--erp-*) to canonical DS tokens (--ds-*), without changing visuals.
+
+Rules:
+1) Replace usages in source files:
+   --erp-color-primary -> --ds-brand-primary
+   --erp-color-secondary -> --ds-brand-secondary
+   --erp-color-background-primary -> --ds-color-bg-canvas
+   --erp-color-background-secondary -> --ds-color-bg-surface
+   --erp-color-background-tertiary -> --ds-color-bg-elevated
+   --erp-color-text-primary -> --ds-text-1
+   --erp-color-text-secondary -> --ds-text-2
+   --erp-color-text-tertiary -> --ds-text-3
+   --erp-color-border-primary -> --ds-border-1
+   --erp-color-border-secondary -> --ds-border-2
+   --erp-color-border-tertiary -> --ds-border-3
+   --erp-color-success -> --ds-color-success
+   --erp-color-warning -> --ds-color-warning
+   --erp-color-error -> --ds-color-danger
+   --erp-color-info -> --ds-color-info
+2) Keep compatibility available while migrating by continuing to import erp-pro-ui/styles.css or erp-pro-ui/tokens.css.
+3) Do not change component behavior or spacing/typography.
+4) Update docs/comments to mark --erp-* as deprecated.
+5) Return:
+   - changed files list
+   - grep command for remaining --erp-* usages
+   - any risky/manual-review spots.
+```
+
+Full migration checklist: [MIGRATION_ERP_TO_DS.md](./MIGRATION_ERP_TO_DS.md)
 
 ## Import Patterns
 

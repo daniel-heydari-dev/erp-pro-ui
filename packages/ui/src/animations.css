@@ -23,8 +23,8 @@
   width: var(--size);
   background: linear-gradient(
     to left,
-    var(--color-from),
-    var(--color-to),
+    var(--beam-color-from),
+    var(--beam-color-to),
     transparent
   );
   offset-anchor: calc(var(--anchor) * 1%) 50%;

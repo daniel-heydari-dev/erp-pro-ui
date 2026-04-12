@@ -10,7 +10,7 @@
   font-weight: 300;
   overflow: hidden;
   padding: 3rem;
-  color: var(--color-foreground);
+  color: var(--ds-color-fg);
 }
 
 .rotating-text-main {
@@ -143,7 +143,7 @@
 
 .announcement-close {
   position: absolute;
-  background-color: var(--color-background);
+  background-color: var(--ds-color-bg-canvas);
   top: 16px;
   right: 16px;
 }
@@ -154,14 +154,14 @@
   gap: 4px;
   width: 100%;
   border: 2px solid transparent;
-  background-color: var(--color-background);
+  background-color: var(--ds-color-bg-canvas);
   padding: 8px 16px;
   border-radius: 8px;
   margin-top: 8px;
 }
 
 .announcement-share:hover {
-  border: 2px solid var(--color-background);
+  border: 2px solid var(--ds-color-bg-canvas);
 }
 
 .announcement-share:focus,
@@ -253,7 +253,7 @@
 }
 
 .results-container::-webkit-scrollbar-track {
-  background: var(--color-background);
+  background: var(--ds-color-bg-canvas);
 }
 
 .results-container::-webkit-scrollbar-thumb {
@@ -263,7 +263,7 @@
 
 .results-container {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-gray-300) var(--color-background);
+  scrollbar-color: var(--ds-color-border-strong) var(--ds-color-bg-canvas);
 }
 
 .eb-demo-card {

@@ -178,7 +178,7 @@ export const Select = forwardRef(function SelectComponent(
           className={mergeClassNames(
             "group/select rounded-lg p-[2px] transition duration-300 hover:border-accent",
             disabled
-              ? "border-none bg-muted"
+              ? "border-none bg-background-secondary"
               : error
                 ? "border-destructive"
                 : "border-border",

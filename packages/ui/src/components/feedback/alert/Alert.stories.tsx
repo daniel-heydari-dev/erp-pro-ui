@@ -9,7 +9,7 @@ const meta: Meta<typeof Alert> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["info", "success", "warning", "destructive"],
+      options: ["info", "success", "warning", "error", "destructive"],
     },
     title: { control: "text" },
     description: { control: "text" },
@@ -25,8 +25,8 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    title: "System Update",
-    description: "A new software update is available for installation.",
+    title: "Info",
+    description: "A new software update is available.",
     variant: "info",
   },
 };
@@ -37,8 +37,8 @@ export const Default: Story = {
  */
 export const Success: Story = {
   args: {
-    title: "Upload Finished",
-    description: "Your files have been successfully uploaded to the server.",
+    title: "Success",
+    description: "Your changes have been saved successfully.",
     variant: "success",
   },
 };
@@ -49,21 +49,39 @@ export const Success: Story = {
  */
 export const Warning: Story = {
   args: {
-    title: "Action Required",
-    description: "Your password will expire in 3 days. Please change it soon.",
+    title: "Warning",
+    description: "Your account is about to expire.",
     variant: "warning",
   },
 };
 
 /**
- * ## Destructive
- * Explicitly critical and blocking warnings.
+ * ## Error
+ * Error state shown independently of theme brand color.
  */
-export const Destructive: Story = {
+export const Error: Story = {
   args: {
-    title: "Payment Failed",
-    description:
-      "Your recent subscription payment could not be processed. Please update your billing info.",
-    variant: "destructive",
+    title: "Error",
+    description: "Something went wrong while processing your request.",
+    variant: "error",
+  },
+};
+
+/**
+ * ## Personalized
+ * You can override background, border, icon, title, and description colors.
+ */
+export const Personalized: Story = {
+  args: {
+    title: "Custom Warning",
+    description: "This alert uses manually customized colors.",
+    variant: "warning",
+    colorOverrides: {
+      background: "#FFF6E8",
+      border: "#E0A92A",
+      icon: "#A56A00",
+      title: "#8C5A00",
+      description: "#6E4B0C",
+    },
   },
 };

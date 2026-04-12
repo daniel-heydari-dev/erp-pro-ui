@@ -13,6 +13,8 @@ export { ThemeProvider, useThemeContext } from "./foundations/theme";
 export type {
   ThemeModeType,
   ThemeColorType,
+  ThemeDarkVariantType,
+  ThemeColorSchemeType,
   UseThemeType,
 } from "./foundations/theme";
 
@@ -255,7 +257,11 @@ export type {
 } from "./components/navigation/stepper";
 
 export { SunToMoonButton } from "./components/effects/sun-to-moon-button";
-export type { SunToMoonButtonProps } from "./components/effects/sun-to-moon-button";
+export { ThemeSwitcherButtons } from "./components/effects/sun-to-moon-button";
+export type {
+  SunToMoonButtonProps,
+  ThemeSwitcherButtonsProps,
+} from "./components/effects/sun-to-moon-button";
 
 export { Switch } from "./components/forms/switch";
 

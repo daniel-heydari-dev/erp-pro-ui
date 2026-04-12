@@ -1,18 +1,82 @@
+@import "./tokens-legacy-erp.css";
+
 @layer theme {
+  /*
+    TOKEN LAYERS (higher number can override lower at runtime):
+    1) Global foundation defaults (:root/:host)
+    2) Global mode overrides (dark/light + system fallback)
+    3) Brand accent scales (purple/teal/yellow/green)
+    4) Brand + mode surface/text/border overrides
+    5) Global dark-alt override
+    6) Semantic token contract (--ds-color-*)
+    7) Legacy bridge tokens in tokens-legacy-erp.css (--erp-*)
+
+    When debugging a color:
+    - Check --ds-surface-* (background layers)
+    - Check --ds-text-* (text hierarchy)
+    - Check --ds-border-* (border hierarchy)
+    - Check --ds-accent-* (brand accents)
+  */
   :root,
   :host {
+    /*
+      --ds-* = Design System source-of-truth tokens
+      Use these for all new work.
+
+      Quick groups:
+      --ds-surface-*   -> background layers (canvas/surface/elevated)
+      --ds-surface-canvas: main app/page background.
+      --ds-surface-1: default card/panel background on top of canvas.
+      --ds-surface-2: elevated background (modal/popover/raised panel).
+
+      --ds-text-*      -> text hierarchy (primary/secondary/tertiary)
+      --ds-text-1: primary text (titles, important body text).
+      --ds-text-2: secondary text (supporting labels, metadata).
+      --ds-text-3: tertiary/subtle text (hints, helper text, low emphasis).
+
+      --ds-border-*    -> border hierarchy (strong/default/subtle/field)
+      --ds-border-1: strongest border (important containers, strong separators).
+      --ds-border-2: default border (most components).
+      --ds-border-3: subtle border (soft dividers, low emphasis).
+      --ds-border-field: input border specifically.
+
+      --ds-accent-*    -> brand accent scale
+      --ds-accent-50..900: full brand scale from light to dark.
+      --ds-accent: active brand color used for CTA/active states.
+      --ds-accent-contrast: text/icon color on accent background.
+
+
+      --ds-color-*     -> semantic tokens derived from the groups above
+      These are the tokens components should mostly consume.
+      They map meaning to UI usage:
+      --ds-color-bg-* (semantic backgrounds)
+      --ds-color-fg* (semantic text)
+      --ds-color-border* (semantic borders)
+      --ds-color-accent* (interaction/brand states)
+      status tokens (success, warning, danger, info, etc.)
+    */
+    /*
+      Token legend:
+      - surface-canvas: page/app background
+      - surface-1: default card/panel surface
+      - surface-2: elevated surface (popover/modal-level base)
+      - surface-3: utility/inner chip surface (for extra layering)
+      - text-1/2/3: primary/secondary/tertiary text hierarchy
+      - border-1/2/3/4: strong/default/subtle/extra-subtle border hierarchy
+      - border-field: input-specific border
+    */
     --ds-brand: purple;
     --ds-mode: light;
 
-    /* Brand primitives */
-    --ds-brand-primary: #4318ff;
-    --ds-brand-secondary: #9333ea;
-    --ds-brand-purple: #9333ea;
+    /* 1) Brand primitives (identity tokens) */
+    --ds-brand-primary: #4f2be2;
+    --ds-brand-secondary: #9333ea; /* legacy identity alias */
+    --ds-brand-purple: #4318ff;
     --ds-brand-teal: #3f9cae;
     --ds-brand-yellow: #ca8a04;
     --ds-brand-green: #10b981;
 
-    /* Active accent defaults to the current purple theme */
+    /* 2) Active accent scale (defaults before brand overrides) */
     --ds-accent-50: #f6efff;
     --ds-accent-100: #ead9fd;
     --ds-accent-200: #d8b3fb;
@@ -27,34 +91,124 @@
     --ds-accent-contrast: #ffffff;
     --ds-accent-2: var(--ds-brand-primary);
 
-    /* Semantic status primitives */
-    --ds-status-success: #1eb564;
-    --ds-status-warning: #ff9500;
-    --ds-status-danger: #e31d1c;
-    --ds-status-info: #0085c4;
-    --ds-status-disabled: #d2d2d3;
+    /* 3) Foundation constants (single source for shared light/dark values) */
+    --ds-foundation-light-status-success: #1eb564;
+    --ds-foundation-light-status-warning: #ff9500;
+    --ds-foundation-light-status-danger: #e31d1c;
+    --ds-foundation-light-status-info: #0085c4;
+    --ds-foundation-light-status-disabled: #d2d2d3;
+    --ds-foundation-light-surface-canvas: #f4f7fe;
+    --ds-foundation-light-surface-1: #ffffff;
+    --ds-foundation-light-surface-2: #f8faff;
+    --ds-foundation-light-surface-3: #eef2ff;
+    --ds-foundation-light-text-1: #1b2559;
+    --ds-foundation-light-text-2: #33406f;
+    --ds-foundation-light-text-3: #4d5b86;
+    --ds-foundation-light-border-1: #e2e8f0;
+    --ds-foundation-light-border-2: #ebf0f7;
+    --ds-foundation-light-border-3: #f3f6fb;
+    --ds-foundation-light-border-4: #dbe4f2;
+    --ds-foundation-light-border-field: #e2e8f0;
+    --ds-foundation-light-primary: #4f2be2;
+    --ds-foundation-light-primary-purple: var(
+      --ds-foundation-light-primary
+    ); /* deprecated alias */
+    --ds-foundation-light-surface-state-error: #ffeceb;
+    --ds-foundation-light-surface-state-success: #e8fff4;
+    --ds-foundation-light-surface-state-warning: #fff7e8;
+    --ds-foundation-light-text-state-error: #8c1d18;
+    --ds-foundation-light-text-state-success: #0f5132;
+    --ds-foundation-light-text-state-warning: #8a5a00;
+    --ds-foundation-light-neutral-subtle: #f4f4f5;
+    --ds-foundation-light-neutral-subtle-foreground: #18181b;
+    --ds-foundation-light-color-fg-inverse: #ffffff;
+    --ds-foundation-light-overlay-scrim: rgb(0 0 0 / 0.55);
+    --ds-foundation-light-gradient-accent-hover: linear-gradient(
+      135deg,
+      color(display-p3 1 1 1 / 0.24),
+      var(--ds-accent)
+    );
+    --ds-foundation-light-hover-primary: #ecececf3;
+    --ds-foundation-light-hover-secondary: #545b58f3;
 
-    /* Light mode primitives */
-    --ds-surface-canvas: #f4f7fe;
-    --ds-surface-1: #ffffff;
-    --ds-surface-2: #ffffff;
+    --ds-foundation-dark-status-success: #22c55e;
+    --ds-foundation-dark-status-warning: #f59e42;
+    --ds-foundation-dark-status-danger: #ef4444;
+    --ds-foundation-dark-status-info: #38bdf8;
+    --ds-foundation-dark-status-disabled: #4b5563;
+    --ds-foundation-dark-surface-canvas: #0b0e14;
+    --ds-foundation-dark-surface-1: #1a1f2e;
+    --ds-foundation-dark-surface-2: #20263a;
+    --ds-foundation-dark-surface-3: #2a3044;
+    --ds-foundation-dark-text-1: #ffffff;
+    --ds-foundation-dark-text-2: #e6ebff;
+    --ds-foundation-dark-text-3: #cfd7f2;
+    --ds-foundation-dark-border-1: #2d3748;
+    --ds-foundation-dark-border-2: #354055;
+    --ds-foundation-dark-border-3: #3d4a63;
+    --ds-foundation-dark-border-4: #465473;
+    --ds-foundation-dark-border-field: #2d3748;
+    --ds-foundation-dark-primary: #4f2be2;
+    --ds-foundation-dark-primary-purple: var(
+      --ds-foundation-dark-primary
+    ); /* deprecated alias */
+    --ds-foundation-dark-surface-state-error: #3b1217;
+    --ds-foundation-dark-surface-state-success: #0f4033;
+    --ds-foundation-dark-surface-state-warning: #5c4518;
+    --ds-foundation-dark-text-state-error: #ffb4ab;
+    --ds-foundation-dark-text-state-success: #9bffc0;
+    --ds-foundation-dark-text-state-warning: #fff0e2;
+    --ds-foundation-dark-neutral-subtle: #27272a;
+    --ds-foundation-dark-neutral-subtle-foreground: #fafafa;
+    --ds-foundation-dark-color-fg-inverse: #09090b;
+    --ds-foundation-dark-overlay-scrim: rgb(0 0 0 / 0.45);
+    --ds-foundation-dark-gradient-accent-hover: linear-gradient(
+      135deg,
+      color(display-p3 0 0 0 / 0.24),
+      var(--ds-accent)
+    );
+    --ds-foundation-dark-hover-primary: #333333f3;
+    --ds-foundation-dark-hover-secondary: #3a3f3df3;
 
-    --ds-text-1: #1e293b;
-    --ds-text-2: #475467;
-    --ds-text-3: #64748b;
-
-    --ds-border-1: #d1d5db;
-    --ds-border-2: #e5e7eb;
-    --ds-border-3: #f3f4f6;
-    --ds-border-field: #e9e8e8;
-
-    /* Neutral compatibility primitives */
-    --ds-neutral-subtle: #f4f4f5;
-    --ds-neutral-subtle-foreground: #18181b;
+    /* 4) Active foundation primitives (resolved by mode and theme selectors) */
+    --ds-status-success: var(--ds-foundation-light-status-success);
+    --ds-status-warning: var(--ds-foundation-light-status-warning);
+    --ds-status-danger: var(--ds-foundation-light-status-danger);
+    --ds-status-info: var(--ds-foundation-light-status-info);
+    --ds-status-disabled: var(--ds-foundation-light-status-disabled);
+    --ds-surface-canvas: var(--ds-foundation-light-surface-canvas);
+    --ds-surface-1: var(--ds-foundation-light-surface-1);
+    --ds-surface-2: var(--ds-foundation-light-surface-2);
+    --ds-surface-3: var(--ds-foundation-light-surface-3);
+    --ds-text-1: var(--ds-foundation-light-text-1);
+    --ds-text-2: var(--ds-foundation-light-text-2);
+    --ds-text-3: var(--ds-foundation-light-text-3);
+    --ds-border-1: var(--ds-foundation-light-border-1);
+    --ds-border-2: var(--ds-foundation-light-border-2);
+    --ds-border-3: var(--ds-foundation-light-border-3);
+    --ds-border-4: var(--ds-foundation-light-border-4);
+    --ds-border-field: var(--ds-foundation-light-border-field);
+    --ds-primary: var(--ds-foundation-light-primary);
+    --ds-primary-purple: var(--ds-primary); /* deprecated alias */
+    --ds-surface-state-error: var(--ds-foundation-light-surface-state-error);
+    --ds-surface-state-success: var(--ds-foundation-light-surface-state-success);
+    --ds-surface-state-warning: var(--ds-foundation-light-surface-state-warning);
+    --ds-text-state-error: var(--ds-foundation-light-text-state-error);
+    --ds-text-state-success: var(--ds-foundation-light-text-state-success);
+    --ds-text-state-warning: var(--ds-foundation-light-text-state-warning);
+    --ds-neutral-subtle: var(--ds-foundation-light-neutral-subtle);
+    --ds-neutral-subtle-foreground: var(
+      --ds-foundation-light-neutral-subtle-foreground
+    );
 
     color-scheme: light;
 
-    /* Derived semantic tokens */
+    /*
+      6) Derived semantic tokens (preferred component contract)
+      background: --ds-color-bg-*
+      text:       --ds-color-fg*
+      border:     --ds-color-border*
+    */
     --ds-color-bg-canvas: var(--ds-surface-canvas);
     --ds-color-bg-surface: var(--ds-surface-1);
     --ds-color-bg-elevated: var(--ds-surface-2);
@@ -68,7 +222,7 @@
     --ds-color-fg: var(--ds-text-1);
     --ds-color-fg-muted: var(--ds-text-2);
     --ds-color-fg-subtle: var(--ds-text-3);
-    --ds-color-fg-inverse: #ffffff;
+    --ds-color-fg-inverse: var(--ds-foundation-light-color-fg-inverse);
 
     --ds-color-border: var(--ds-border-2);
     --ds-color-border-muted: var(--ds-border-3);
@@ -87,7 +241,7 @@
 
     --ds-color-focus-ring: color-mix(in oklch, var(--ds-accent) 55%, white);
     --ds-color-selection: var(--ds-color-accent-subtle);
-    --ds-color-overlay-scrim: rgb(0 0 0 / 0.55);
+    --ds-color-overlay-scrim: var(--ds-foundation-light-overlay-scrim);
 
     --ds-color-success: var(--ds-status-success);
     --ds-color-success-subtle: color-mix(
@@ -157,11 +311,7 @@
     --ds-shadow-input:
       0 1px 2px rgb(15 23 42 / 0.08), 0 1px 3px rgb(15 23 42 / 0.12);
 
-    --ds-gradient-accent-hover: linear-gradient(
-      135deg,
-      color(display-p3 1 1 1 / 0.24),
-      var(--ds-accent)
-    );
+    --ds-gradient-accent-hover: var(--ds-foundation-light-gradient-accent-hover);
 
     --ds-chart-1: #9333ea;
     --ds-chart-2: #0f7cc0;
@@ -179,168 +329,96 @@
     --ds-chart-14: #0284c7;
     --ds-chart-15: #64748b;
 
-    /* Compatibility source aliases */
-    --erp-color-primary: var(--ds-brand-primary);
-    --erp-color-secondary: var(--ds-brand-secondary);
-    --erp-color-purple: var(--ds-brand-purple);
-    --erp-color-teal: var(--ds-brand-teal);
-    --erp-color-yellow: var(--ds-brand-yellow);
-    --erp-color-green: var(--ds-brand-green);
-    --erp-color-brand-primary: var(--ds-brand-primary);
-    --erp-color-brand-secondary: var(--ds-brand-secondary);
+    /*
+      7) Public compatibility vars: --color-* (legacy Tailwind bridge)
+      Note: --erp-* aliases moved to tokens-legacy-erp.css.
+    */
+    --color-primary: var(--ds-brand-primary);
+    --color-secondary: var(--ds-brand-secondary);
+    --color-purple: var(--ds-brand-purple);
+    --color-teal: var(--ds-brand-teal);
+    --color-yellow: var(--ds-brand-yellow);
+    --color-green: var(--ds-brand-green);
+    --color-brand-primary: var(--ds-brand-primary);
+    --color-brand-secondary: var(--ds-brand-secondary);
 
-    --erp-color-background-primary: var(--ds-color-bg-canvas);
-    --erp-color-background-secondary: var(--ds-color-bg-surface);
-    --erp-color-background-tertiary: var(--ds-color-bg-elevated);
-    --erp-color-background-secondary-glass: var(--ds-color-bg-surface-glass);
-    --erp-color-background-primary-light: #f4f7fe;
-    --erp-color-background-secondary-light: #edf1ff;
-    --erp-color-background-tertiary-light: #ffffff;
-    --erp-color-background-primary-dark: #070f2e;
-    --erp-color-background-secondary-dark: #040e4a;
-    --erp-color-background-tertiary-dark: #111c44;
+    --color-background-primary: var(--ds-color-bg-canvas);
+    --color-background-secondary: var(--ds-color-bg-surface);
+    --color-background-tertiary: var(--ds-color-bg-elevated);
+    --color-background-secondary-glass: var(--ds-color-bg-surface-glass);
+    --color-background-primary-light: var(--ds-foundation-light-surface-canvas);
+    --color-background-secondary-light: var(--ds-foundation-light-surface-1);
+    --color-background-tertiary-light: var(--ds-foundation-light-surface-2);
+    --color-background-primary-dark: var(--ds-foundation-dark-surface-canvas);
+    --color-background-secondary-dark: var(--ds-foundation-dark-surface-1);
+    --color-background-tertiary-dark: var(--ds-foundation-dark-surface-2);
 
-    --erp-color-text-primary: var(--ds-text-1);
-    --erp-color-text-secondary: var(--ds-text-2);
-    --erp-color-text-tertiary: var(--ds-text-3);
-    --erp-color-text-primary-light: #1e293b;
-    --erp-color-text-secondary-light: #475467;
-    --erp-color-text-tertiary-light: #64748b;
-    --erp-color-text-primary-dark: #f1f5f9;
-    --erp-color-text-secondary-dark: #cbd5e1;
-    --erp-color-text-tertiary-dark: #94a3b8;
+    --color-text-primary: var(--ds-text-1);
+    --color-text-secondary: var(--ds-text-2);
+    --color-text-tertiary: var(--ds-text-3);
+    --color-text-light: var(--ds-foundation-light-text-1);
+    --color-text-dark: var(--ds-foundation-dark-text-1);
+    --color-text-primary-light: var(--ds-foundation-light-text-1);
+    --color-text-secondary-light: var(--ds-foundation-light-text-2);
+    --color-text-tertiary-light: var(--ds-foundation-light-text-3);
+    --color-text-primary-dark: var(--ds-foundation-dark-text-1);
+    --color-text-secondary-dark: var(--ds-foundation-dark-text-2);
+    --color-text-tertiary-dark: var(--ds-foundation-dark-text-3);
 
-    --erp-color-border-primary: var(--ds-border-1);
-    --erp-color-border-secondary: var(--ds-border-2);
-    --erp-color-border-tertiary: var(--ds-border-3);
-    --erp-color-border-input: var(--ds-border-field);
-    --erp-color-border-primary-light: #d1d5db;
-    --erp-color-border-secondary-light: #e5e7eb;
-    --erp-color-border-tertiary-light: #f3f4f6;
-    --erp-color-border-input-light: #e9e8e8;
-    --erp-color-border-primary-dark: #374151;
-    --erp-color-border-secondary-dark: #4b5563;
-    --erp-color-border-tertiary-dark: #6b7280;
-    --erp-color-border-input-dark: #545b58f3;
+    --color-border-primary: var(--ds-border-1);
+    --color-border-secondary: var(--ds-border-2);
+    --color-border-tertiary: var(--ds-border-3);
+    --color-border-input: var(--ds-border-field);
+    --color-border-primary-light: var(--ds-foundation-light-border-1);
+    --color-border-secondary-light: var(--ds-foundation-light-border-2);
+    --color-border-tertiary-light: var(--ds-foundation-light-border-3);
+    --color-border-input-light: var(--ds-foundation-light-border-field);
+    --color-border-primary-dark: var(--ds-foundation-dark-border-1);
+    --color-border-secondary-dark: var(--ds-foundation-dark-border-2);
+    --color-border-tertiary-dark: var(--ds-foundation-dark-border-3);
+    --color-border-input-dark: var(--ds-foundation-dark-border-field);
 
-    --erp-color-success: var(--ds-color-success);
-    --erp-color-warning: var(--ds-color-warning);
-    --erp-color-error: var(--ds-color-danger);
-    --erp-color-info: var(--ds-color-info);
-    --erp-color-disabled: var(--ds-color-disabled);
-    --erp-color-success-light: #1eb564;
-    --erp-color-warning-light: #ff9500;
-    --erp-color-error-light: #e31d1c;
-    --erp-color-info-light: #0085c4;
-    --erp-color-disabled-light: #d2d2d3;
-    --erp-color-success-dark: #22c55e;
-    --erp-color-warning-dark: #f59e42;
-    --erp-color-error-dark: #ef4444;
-    --erp-color-info-dark: #38bdf8;
-    --erp-color-disabled-dark: #4b5563;
+    --color-success: var(--ds-color-success);
+    --color-warning: var(--ds-color-warning);
+    --color-error: var(--ds-color-danger);
+    --color-info: var(--ds-color-info);
+    --color-disabled: var(--ds-color-disabled);
+    --color-success-light: var(--ds-foundation-light-status-success);
+    --color-warning-light: var(--ds-foundation-light-status-warning);
+    --color-error-light: var(--ds-foundation-light-status-danger);
+    --color-info-light: var(--ds-foundation-light-status-info);
+    --color-disabled-light: var(--ds-foundation-light-status-disabled);
+    --color-success-dark: var(--ds-foundation-dark-status-success);
+    --color-warning-dark: var(--ds-foundation-dark-status-warning);
+    --color-error-dark: var(--ds-foundation-dark-status-danger);
+    --color-info-dark: var(--ds-foundation-dark-status-info);
+    --color-disabled-dark: var(--ds-foundation-dark-status-disabled);
 
-    --erp-color-hover-primary: color-mix(
+    --color-hover-primary: color-mix(
       in oklch,
       var(--ds-surface-1) 84%,
       black
     );
-    --erp-color-hover-secondary: color-mix(
+    --color-hover-secondary: color-mix(
       in oklch,
       var(--ds-border-2) 78%,
       black
     );
-    --erp-color-hover-primary-light: #ecececf3;
-    --erp-color-hover-secondary-light: #545b58f3;
-    --erp-color-hover-primary-dark: #333333f3;
-    --erp-color-hover-secondary-dark: #3a3f3df3;
-
-    /* Public compatibility variables */
-    --color-primary: var(--erp-color-primary);
-    --color-secondary: var(--erp-color-secondary);
-    --color-purple: var(--erp-color-purple);
-    --color-teal: var(--erp-color-teal);
-    --color-yellow: var(--erp-color-yellow);
-    --color-green: var(--erp-color-green);
-    --color-brand-primary: var(--erp-color-brand-primary);
-    --color-brand-secondary: var(--erp-color-brand-secondary);
-
-    --color-background-primary: var(--erp-color-background-primary);
-    --color-background-secondary: var(--erp-color-background-secondary);
-    --color-background-tertiary: var(--erp-color-background-tertiary);
-    --color-background-secondary-glass: var(
-      --erp-color-background-secondary-glass
-    );
-    --color-background-primary-light: var(--erp-color-background-primary-light);
-    --color-background-secondary-light: var(
-      --erp-color-background-secondary-light
-    );
-    --color-background-tertiary-light: var(
-      --erp-color-background-tertiary-light
-    );
-    --color-background-primary-dark: var(--erp-color-background-primary-dark);
-    --color-background-secondary-dark: var(
-      --erp-color-background-secondary-dark
-    );
-    --color-background-tertiary-dark: var(--erp-color-background-tertiary-dark);
-
-    --color-text-primary: var(--erp-color-text-primary);
-    --color-text-secondary: var(--erp-color-text-secondary);
-    --color-text-tertiary: var(--erp-color-text-tertiary);
-    --color-text-light: var(--erp-color-text-primary-light);
-    --color-text-dark: var(--erp-color-text-primary-dark);
-    --color-text-primary-light: var(--erp-color-text-primary-light);
-    --color-text-secondary-light: var(--erp-color-text-secondary-light);
-    --color-text-tertiary-light: var(--erp-color-text-tertiary-light);
-    --color-text-primary-dark: var(--erp-color-text-primary-dark);
-    --color-text-secondary-dark: var(--erp-color-text-secondary-dark);
-    --color-text-tertiary-dark: var(--erp-color-text-tertiary-dark);
-
-    --color-border-primary: var(--erp-color-border-primary);
-    --color-border-secondary: var(--erp-color-border-secondary);
-    --color-border-tertiary: var(--erp-color-border-tertiary);
-    --color-border-input: var(--erp-color-border-input);
-    --color-border-primary-light: var(--erp-color-border-primary-light);
-    --color-border-secondary-light: var(--erp-color-border-secondary-light);
-    --color-border-tertiary-light: var(--erp-color-border-tertiary-light);
-    --color-border-input-light: var(--erp-color-border-input-light);
-    --color-border-primary-dark: var(--erp-color-border-primary-dark);
-    --color-border-secondary-dark: var(--erp-color-border-secondary-dark);
-    --color-border-tertiary-dark: var(--erp-color-border-tertiary-dark);
-    --color-border-input-dark: var(--erp-color-border-input-dark);
-
-    --color-success: var(--erp-color-success);
-    --color-warning: var(--erp-color-warning);
-    --color-error: var(--erp-color-error);
-    --color-info: var(--erp-color-info);
-    --color-disabled: var(--erp-color-disabled);
-    --color-success-light: var(--erp-color-success-light);
-    --color-warning-light: var(--erp-color-warning-light);
-    --color-error-light: var(--erp-color-error-light);
-    --color-info-light: var(--erp-color-info-light);
-    --color-disabled-light: var(--erp-color-disabled-light);
-    --color-success-dark: var(--erp-color-success-dark);
-    --color-warning-dark: var(--erp-color-warning-dark);
-    --color-error-dark: var(--erp-color-error-dark);
-    --color-info-dark: var(--erp-color-info-dark);
-    --color-disabled-dark: var(--erp-color-disabled-dark);
-
-    --color-hover-primary: var(--erp-color-hover-primary);
-    --color-hover-secondary: var(--erp-color-hover-secondary);
-    --color-hover-primary-light: var(--erp-color-hover-primary-light);
-    --color-hover-secondary-light: var(--erp-color-hover-secondary-light);
-    --color-hover-primary-dark: var(--erp-color-hover-primary-dark);
-    --color-hover-secondary-dark: var(--erp-color-hover-secondary-dark);
+    --color-hover-primary-light: var(--ds-foundation-light-hover-primary);
+    --color-hover-secondary-light: var(--ds-foundation-light-hover-secondary);
+    --color-hover-primary-dark: var(--ds-foundation-dark-hover-primary);
+    --color-hover-secondary-dark: var(--ds-foundation-dark-hover-secondary);
     --color-hover-gradient: var(--ds-gradient-accent-hover);
 
-    --surface-1: var(--erp-color-background-primary);
-    --surface-2: var(--erp-color-background-secondary);
-    --surface-3: var(--erp-color-background-tertiary);
-    --text-1: var(--erp-color-text-primary);
-    --text-2: var(--erp-color-text-secondary);
-    --text-3: var(--erp-color-text-tertiary);
-    --border-1: var(--erp-color-border-primary);
-    --border-2: var(--erp-color-border-secondary);
-    --border-3: var(--erp-color-border-tertiary);
+    --surface-1: var(--ds-color-bg-canvas);
+    --surface-2: var(--ds-color-bg-surface);
+    --surface-3: var(--ds-color-bg-elevated);
+    --text-1: var(--ds-text-1);
+    --text-2: var(--ds-text-2);
+    --text-3: var(--ds-text-3);
+    --border-1: var(--ds-border-1);
+    --border-2: var(--ds-border-2);
+    --border-3: var(--ds-border-3);
 
     /* Legacy library runtime tokens used by current components */
     --background: var(--ds-color-bg-canvas);
@@ -362,9 +440,9 @@
     --ring: var(--ds-color-focus-ring);
     --heading: var(--ds-color-fg);
 
-    --text-primary: var(--erp-color-text-primary);
-    --text-secondary: var(--erp-color-text-secondary);
-    --text-tertiary: var(--erp-color-text-tertiary);
+    --text-primary: var(--ds-text-1);
+    --text-secondary: var(--ds-text-2);
+    --text-tertiary: var(--ds-text-3);
 
     --primary-50: var(--ds-accent-50);
     --primary-100: var(--ds-accent-100);
@@ -385,91 +463,181 @@
     --hover-gradient: var(--ds-gradient-accent-hover);
   }
 
+  /*
+    Global mode override: DARK
+    Priority inside block:
+    1) status
+    2) surfaces/background
+    3) text
+    4) border
+    5) extras (neutral, overlay, hover helpers)
+  */
   [data-mode="dark"],
   :host([data-mode="dark"]),
   [data-theme$="-dark"] {
     --ds-mode: dark;
 
-    --ds-status-success: #22c55e;
-    --ds-status-warning: #f59e42;
-    --ds-status-danger: #ef4444;
-    --ds-status-info: #38bdf8;
-    --ds-status-disabled: #4b5563;
+    --ds-status-success: var(--ds-foundation-dark-status-success);
+    --ds-status-warning: var(--ds-foundation-dark-status-warning);
+    --ds-status-danger: var(--ds-foundation-dark-status-danger);
+    --ds-status-info: var(--ds-foundation-dark-status-info);
+    --ds-status-disabled: var(--ds-foundation-dark-status-disabled);
 
-    --ds-surface-canvas: #070f2e;
-    --ds-surface-1: #111c44;
-    --ds-surface-2: #111c44;
+    --ds-surface-canvas: var(--ds-foundation-dark-surface-canvas);
+    --ds-surface-1: var(--ds-foundation-dark-surface-1);
+    --ds-surface-2: var(--ds-foundation-dark-surface-2);
+    --ds-surface-3: var(--ds-foundation-dark-surface-3);
 
-    --ds-text-1: #f1f5f9;
-    --ds-text-2: #cbd5e1;
-    --ds-text-3: #94a3b8;
+    --ds-text-1: var(--ds-foundation-dark-text-1);
+    --ds-text-2: var(--ds-foundation-dark-text-2);
+    --ds-text-3: var(--ds-foundation-dark-text-3);
 
-    --ds-border-1: #374151;
-    --ds-border-2: #4b5563;
-    --ds-border-3: #6b7280;
-    --ds-border-field: #545b58f3;
+    --ds-border-1: var(--ds-foundation-dark-border-1);
+    --ds-border-2: var(--ds-foundation-dark-border-2);
+    --ds-border-3: var(--ds-foundation-dark-border-3);
+    --ds-border-4: var(--ds-foundation-dark-border-4);
+    --ds-border-field: var(--ds-foundation-dark-border-field);
 
-    --ds-neutral-subtle: #27272a;
-    --ds-neutral-subtle-foreground: #fafafa;
+    --ds-primary: var(--ds-foundation-dark-primary);
+    --ds-primary-purple: var(--ds-primary); /* deprecated alias */
+    --ds-surface-state-error: var(--ds-foundation-dark-surface-state-error);
+    --ds-surface-state-success: var(--ds-foundation-dark-surface-state-success);
+    --ds-surface-state-warning: var(--ds-foundation-dark-surface-state-warning);
+    --ds-text-state-error: var(--ds-foundation-dark-text-state-error);
+    --ds-text-state-success: var(--ds-foundation-dark-text-state-success);
+    --ds-text-state-warning: var(--ds-foundation-dark-text-state-warning);
+
+    --ds-neutral-subtle: var(--ds-foundation-dark-neutral-subtle);
+    --ds-neutral-subtle-foreground: var(
+      --ds-foundation-dark-neutral-subtle-foreground
+    );
 
     color-scheme: dark;
 
-    --ds-color-fg-inverse: #09090b;
-    --ds-color-overlay-scrim: rgb(0 0 0 / 0.45);
-    --ds-gradient-accent-hover: linear-gradient(
-      135deg,
-      color(display-p3 0 0 0 / 0.24),
-      var(--ds-accent)
-    );
-
-    --erp-color-hover-primary: #333333f3;
-    --erp-color-hover-secondary: #3a3f3df3;
+    --ds-color-fg-inverse: var(--ds-foundation-dark-color-fg-inverse);
+    --ds-color-overlay-scrim: var(--ds-foundation-dark-overlay-scrim);
+    --ds-gradient-accent-hover: var(--ds-foundation-dark-gradient-accent-hover);
   }
 
+  /*
+    Global mode override: LIGHT
+    Explicit reset for nested light sections inside dark pages.
+    Priority order matches dark block for consistency.
+  */
+  [data-mode="light"],
+  :host([data-mode="light"]),
+  [data-theme$="-light"] {
+    --ds-mode: light;
+
+    --ds-status-success: var(--ds-foundation-light-status-success);
+    --ds-status-warning: var(--ds-foundation-light-status-warning);
+    --ds-status-danger: var(--ds-foundation-light-status-danger);
+    --ds-status-info: var(--ds-foundation-light-status-info);
+    --ds-status-disabled: var(--ds-foundation-light-status-disabled);
+
+    --ds-surface-canvas: var(--ds-foundation-light-surface-canvas);
+    --ds-surface-1: var(--ds-foundation-light-surface-1);
+    --ds-surface-2: var(--ds-foundation-light-surface-2);
+    --ds-surface-3: var(--ds-foundation-light-surface-3);
+
+    --ds-text-1: var(--ds-foundation-light-text-1);
+    --ds-text-2: var(--ds-foundation-light-text-2);
+    --ds-text-3: var(--ds-foundation-light-text-3);
+
+    --ds-border-1: var(--ds-foundation-light-border-1);
+    --ds-border-2: var(--ds-foundation-light-border-2);
+    --ds-border-3: var(--ds-foundation-light-border-3);
+    --ds-border-4: var(--ds-foundation-light-border-4);
+    --ds-border-field: var(--ds-foundation-light-border-field);
+
+    --ds-primary: var(--ds-foundation-light-primary);
+    --ds-primary-purple: var(--ds-primary); /* deprecated alias */
+    --ds-surface-state-error: var(--ds-foundation-light-surface-state-error);
+    --ds-surface-state-success: var(--ds-foundation-light-surface-state-success);
+    --ds-surface-state-warning: var(--ds-foundation-light-surface-state-warning);
+    --ds-text-state-error: var(--ds-foundation-light-text-state-error);
+    --ds-text-state-success: var(--ds-foundation-light-text-state-success);
+    --ds-text-state-warning: var(--ds-foundation-light-text-state-warning);
+
+    --ds-neutral-subtle: var(--ds-foundation-light-neutral-subtle);
+    --ds-neutral-subtle-foreground: var(
+      --ds-foundation-light-neutral-subtle-foreground
+    );
+
+    color-scheme: light;
+
+    --ds-color-fg-inverse: var(--ds-foundation-light-color-fg-inverse);
+    --ds-color-overlay-scrim: var(--ds-foundation-light-overlay-scrim);
+    --ds-gradient-accent-hover: var(--ds-foundation-light-gradient-accent-hover);
+  }
+
+  /* System fallback: DARK when no explicit data-mode/data-theme is set */
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode]):not([data-theme]) {
       --ds-mode: dark;
 
-      --ds-status-success: #22c55e;
-      --ds-status-warning: #f59e42;
-      --ds-status-danger: #ef4444;
-      --ds-status-info: #38bdf8;
-      --ds-status-disabled: #4b5563;
+      --ds-status-success: var(--ds-foundation-dark-status-success);
+      --ds-status-warning: var(--ds-foundation-dark-status-warning);
+      --ds-status-danger: var(--ds-foundation-dark-status-danger);
+      --ds-status-info: var(--ds-foundation-dark-status-info);
+      --ds-status-disabled: var(--ds-foundation-dark-status-disabled);
 
-      --ds-surface-canvas: #070f2e;
-      --ds-surface-1: #111c44;
-      --ds-surface-2: #111c44;
+      --ds-surface-canvas: var(--ds-foundation-dark-surface-canvas);
+      --ds-surface-1: var(--ds-foundation-dark-surface-1);
+      --ds-surface-2: var(--ds-foundation-dark-surface-2);
+      --ds-surface-3: var(--ds-foundation-dark-surface-3);
 
-      --ds-text-1: #f1f5f9;
-      --ds-text-2: #cbd5e1;
-      --ds-text-3: #94a3b8;
+      --ds-text-1: var(--ds-foundation-dark-text-1);
+      --ds-text-2: var(--ds-foundation-dark-text-2);
+      --ds-text-3: var(--ds-foundation-dark-text-3);
 
-      --ds-border-1: #374151;
-      --ds-border-2: #4b5563;
-      --ds-border-3: #6b7280;
-      --ds-border-field: #545b58f3;
+      --ds-border-1: var(--ds-foundation-dark-border-1);
+      --ds-border-2: var(--ds-foundation-dark-border-2);
+      --ds-border-3: var(--ds-foundation-dark-border-3);
+      --ds-border-4: var(--ds-foundation-dark-border-4);
+      --ds-border-field: var(--ds-foundation-dark-border-field);
 
-      --ds-neutral-subtle: #27272a;
-      --ds-neutral-subtle-foreground: #fafafa;
+      --ds-primary: var(--ds-foundation-dark-primary);
+      --ds-primary-purple: var(--ds-primary); /* deprecated alias */
+      --ds-surface-state-error: var(--ds-foundation-dark-surface-state-error);
+      --ds-surface-state-success: var(
+        --ds-foundation-dark-surface-state-success
+      );
+      --ds-surface-state-warning: var(
+        --ds-foundation-dark-surface-state-warning
+      );
+      --ds-text-state-error: var(--ds-foundation-dark-text-state-error);
+      --ds-text-state-success: var(--ds-foundation-dark-text-state-success);
+      --ds-text-state-warning: var(--ds-foundation-dark-text-state-warning);
+
+      --ds-neutral-subtle: var(--ds-foundation-dark-neutral-subtle);
+      --ds-neutral-subtle-foreground: var(
+        --ds-foundation-dark-neutral-subtle-foreground
+      );
 
       color-scheme: dark;
 
-      --ds-color-fg-inverse: #09090b;
-      --ds-color-overlay-scrim: rgb(0 0 0 / 0.45);
-      --ds-gradient-accent-hover: linear-gradient(
-        135deg,
-        color(display-p3 0 0 0 / 0.24),
-        var(--ds-accent)
+      --ds-color-fg-inverse: var(--ds-foundation-dark-color-fg-inverse);
+      --ds-color-overlay-scrim: var(--ds-foundation-dark-overlay-scrim);
+      --ds-gradient-accent-hover: var(
+        --ds-foundation-dark-gradient-accent-hover
       );
-
-      --erp-color-hover-primary: #333333f3;
-      --erp-color-hover-secondary: #3a3f3df3;
     }
   }
 
+  /*
+    Brand accent scales (identity + charts only).
+    Official brand presets: purple | teal | yellow | green.
+    Legacy compatibility alias: secondary -> purple.
+    These blocks DO NOT define background/text/border.
+    Background/text/border come from brand+mode blocks below.
+  */
   [data-brand="purple"],
   :host([data-brand="purple"]),
-  [data-theme^="purple-"] {
+  [data-theme^="purple-"],
+  [data-brand="secondary"],
+  :host([data-brand="secondary"]),
+  [data-theme^="secondary-"] {
     --ds-brand: purple;
     --ds-accent-50: #f6efff;
     --ds-accent-100: #ead9fd;
@@ -498,6 +666,53 @@
     --ds-chart-13: #ca8a04;
     --ds-chart-14: #0284c7;
     --ds-chart-15: #64748b;
+  }
+
+  /*
+    Brand + mode overrides
+    Priority inside EACH block:
+    1) --ds-surface-*  (background layers)
+    2) --ds-text-*     (text hierarchy)
+    3) --ds-border-*   (border hierarchy)
+  */
+  /* Purple: light surface/text/border overrides (legacy secondary maps here) */
+  [data-brand="purple"]:not([data-mode="dark"]),
+  :host([data-brand="purple"]:not([data-mode="dark"])),
+  [data-theme^="purple-"]:not([data-theme*="-dark"]),
+  [data-brand="secondary"]:not([data-mode="dark"]),
+  :host([data-brand="secondary"]:not([data-mode="dark"])),
+  [data-theme^="secondary-"]:not([data-theme*="-dark"]) {
+    --ds-surface-canvas: #f4f7fe;
+    --ds-surface-1: #ffffff;
+    --ds-surface-2: #f8f9ff;
+    --ds-text-1: #2b3674;
+    --ds-text-2: #55629a;
+    --ds-text-3: #7380b0;
+    --ds-border-1: #e9edf7;
+    --ds-border-2: #f0f3fa;
+    --ds-border-3: #f5f7fc;
+    --ds-border-field: #e9edf7;
+  }
+
+  /* Purple: dark surface/text/border overrides (legacy secondary maps here) */
+  [data-brand="purple"][data-mode="dark"],
+  :host([data-brand="purple"][data-mode="dark"]),
+  [data-theme="purple-dark"],
+  [data-theme^="purple-dark-"],
+  [data-brand="secondary"][data-mode="dark"],
+  :host([data-brand="secondary"][data-mode="dark"]),
+  [data-theme="secondary-dark"],
+  [data-theme^="secondary-dark-"] {
+    --ds-surface-canvas: #0a0b1c;
+    --ds-surface-1: #161936;
+    --ds-surface-2: #1d2148;
+    --ds-text-1: #eff4fb;
+    --ds-text-2: #ced8f1;
+    --ds-text-3: #aebadf;
+    --ds-border-1: #2b308b;
+    --ds-border-2: #353b95;
+    --ds-border-3: #4248a1;
+    --ds-border-field: #2b308b;
   }
 
   [data-brand="teal"],
@@ -533,6 +748,39 @@
     --ds-chart-15: #64748b;
   }
 
+  /* Teal: light surface/text/border overrides */
+  [data-brand="teal"]:not([data-mode="dark"]),
+  :host([data-brand="teal"]:not([data-mode="dark"])),
+  [data-theme^="teal-"]:not([data-theme*="-dark"]) {
+    --ds-surface-canvas: #f0f9fa;
+    --ds-surface-1: #ffffff;
+    --ds-surface-2: #f7fcfd;
+    --ds-text-1: #134e48;
+    --ds-text-2: #1d6c63;
+    --ds-text-3: #2f8479;
+    --ds-border-1: #d1e9ed;
+    --ds-border-2: #def0f3;
+    --ds-border-3: #ebf6f8;
+    --ds-border-field: #d1e9ed;
+  }
+
+  /* Teal: dark surface/text/border overrides */
+  [data-brand="teal"][data-mode="dark"],
+  :host([data-brand="teal"][data-mode="dark"]),
+  [data-theme="teal-dark"],
+  [data-theme^="teal-dark-"] {
+    --ds-surface-canvas: #061113;
+    --ds-surface-1: #0e2529;
+    --ds-surface-2: #133236;
+    --ds-text-1: #e0f2f1;
+    --ds-text-2: #b8dfdd;
+    --ds-text-3: #92cbc7;
+    --ds-border-1: #1a4d57;
+    --ds-border-2: #23616c;
+    --ds-border-3: #2b7683;
+    --ds-border-field: #1a4d57;
+  }
+
   [data-brand="yellow"],
   :host([data-brand="yellow"]),
   [data-theme^="yellow-"] {
@@ -566,6 +814,39 @@
     --ds-chart-15: #64748b;
   }
 
+  /* Yellow: light surface/text/border overrides */
+  [data-brand="yellow"]:not([data-mode="dark"]),
+  :host([data-brand="yellow"]:not([data-mode="dark"])),
+  [data-theme^="yellow-"]:not([data-theme*="-dark"]) {
+    --ds-surface-canvas: #fefce8;
+    --ds-surface-1: #ffffff;
+    --ds-surface-2: #fffef4;
+    --ds-text-1: #854d0e;
+    --ds-text-2: #9f6320;
+    --ds-text-3: #b57a35;
+    --ds-border-1: #fef08a;
+    --ds-border-2: #fef4a9;
+    --ds-border-3: #fef8c8;
+    --ds-border-field: #fef08a;
+  }
+
+  /* Yellow: dark surface/text/border overrides */
+  [data-brand="yellow"][data-mode="dark"],
+  :host([data-brand="yellow"][data-mode="dark"]),
+  [data-theme="yellow-dark"],
+  [data-theme^="yellow-dark-"] {
+    --ds-surface-canvas: #121002;
+    --ds-surface-1: #241d05;
+    --ds-surface-2: #302607;
+    --ds-text-1: #fef9c3;
+    --ds-text-2: #f8ee9b;
+    --ds-text-3: #eadf72;
+    --ds-border-1: #4d3d02;
+    --ds-border-2: #654f06;
+    --ds-border-3: #7f6209;
+    --ds-border-field: #4d3d02;
+  }
+
   [data-brand="green"],
   :host([data-brand="green"]),
   [data-theme^="green-"] {
@@ -597,5 +878,74 @@
     --ds-chart-13: #0284c7;
     --ds-chart-14: #9333ea;
     --ds-chart-15: #64748b;
+  }
+
+  /* Green: light surface/text/border overrides */
+  [data-brand="green"]:not([data-mode="dark"]),
+  :host([data-brand="green"]:not([data-mode="dark"])),
+  [data-theme^="green-"]:not([data-theme*="-dark"]) {
+    --ds-surface-canvas: #f0fdf4;
+    --ds-surface-1: #ffffff;
+    --ds-surface-2: #f7fef9;
+    --ds-text-1: #064e3b;
+    --ds-text-2: #0b6e54;
+    --ds-text-3: #19866a;
+    --ds-border-1: #dcfce7;
+    --ds-border-2: #e6feee;
+    --ds-border-3: #effff4;
+    --ds-border-field: #dcfce7;
+  }
+
+  /* Green: dark surface/text/border overrides */
+  [data-brand="green"][data-mode="dark"],
+  :host([data-brand="green"][data-mode="dark"]),
+  [data-theme="green-dark"],
+  [data-theme^="green-dark-"] {
+    --ds-surface-canvas: #020c09;
+    --ds-surface-1: #06241b;
+    --ds-surface-2: #0a3024;
+    --ds-text-1: #d1fae5;
+    --ds-text-2: #a9e8cf;
+    --ds-text-3: #7ed5b7;
+    --ds-border-1: #065f46;
+    --ds-border-2: #0b7a5a;
+    --ds-border-3: #10956e;
+    --ds-border-field: #065f46;
+  }
+
+  /*
+    Global dark variant: ALT
+    Shared dark-alt foundation across all brands while keeping brand accents.
+    - Modern selector: data-mode + data-dark-variant
+    - Legacy selector: data-theme="*-dark-alt"
+  */
+  [data-mode="dark"][data-dark-variant="alt"],
+  :host([data-mode="dark"][data-dark-variant="alt"]),
+  [data-theme$="-dark-alt"] {
+    --ds-surface-canvas: #0f111a;
+    --ds-surface-1: #1a1d29;
+    --ds-surface-2: #20263a;
+    --ds-surface-3: #52525d;
+
+    --ds-text-1: #f4f8f6;
+    --ds-text-2: #d1d1d1;
+    --ds-text-3: #c0c2c1;
+
+    --ds-border-1: #2d3748;
+    --ds-border-2: #354055;
+    --ds-border-3: #3d4a63;
+    --ds-border-4: #3a3b42;
+    --ds-border-field: #3d4a63;
+
+    --ds-primary: #7551ff;
+    --ds-primary-purple: var(--ds-primary); /* deprecated alias */
+    --ds-brand-primary: var(--ds-primary);
+
+    --ds-surface-state-error: #440b0b;
+    --ds-surface-state-success: #0e5a47;
+    --ds-surface-state-warning: #a77c1b;
+    --ds-text-state-error: #ffb4ab;
+    --ds-text-state-success: #9bffc0;
+    --ds-text-state-warning: #fff0e2;
   }
 }

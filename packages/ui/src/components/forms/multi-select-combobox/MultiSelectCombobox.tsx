@@ -114,13 +114,13 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
               selectedLabels.map((label, index) => (
                 <span
                   key={value[index]}
-                  className="inline-flex items-center gap-1 rounded-md bg-accent-subtle px-2 py-0.5 text-xs font-medium text-accent"
+                  className="inline-flex items-center gap-1 rounded-md border border-input bg-background-tertiary px-2 py-0.5 text-xs font-medium text-foreground"
                 >
                   {label}
                   <button
                     type="button"
                     onClick={(e) => handleRemoveTag(value[index], e)}
-                    className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-accent/10"
+                    className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-background-secondary hover:text-foreground"
                   >
                     <CloseIcon className="w-3 h-3" aria-hidden="true" />
                   </button>
@@ -148,7 +148,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
       {open && (
         <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition">
           {/* Sticky search input */}
-          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-elevated/95 backdrop-blur-sm">
+          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-background-secondary/95 backdrop-blur-sm">
             <input
               autoFocus
               className="w-full bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent"
@@ -173,8 +173,8 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                   className={mergeClassNames(
                     "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition",
                     isSelected
-                      ? "bg-accent-subtle text-accent"
-                      : "text-foreground hover:bg-accent hover:text-on-accent",
+                      ? "bg-background-tertiary text-foreground"
+                      : "text-foreground hover:bg-background-tertiary hover:text-foreground",
                   )}
                   onClick={() => handleOptionClick(option.value)}
                 >

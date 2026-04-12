@@ -68,7 +68,7 @@ export const Form = ({
   return (
     <form
       className={cx(
-        "w-full space-y-6 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-6",
+        "w-full space-y-6 rounded-lg border border-border bg-background-secondary p-6",
         className,
       )}
       {...props}

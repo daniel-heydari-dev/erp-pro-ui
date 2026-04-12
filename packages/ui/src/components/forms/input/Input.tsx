@@ -50,7 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const wrapperStateStyles: Record<InputState, string> = {
-      [InputState.DISABLED]: "border border-input bg-muted",
+      [InputState.DISABLED]: "border border-input bg-background-secondary",
       [InputState.ERROR]: "border-destructive ",
       [InputState.SUCCESS]: "border-success-border ",
       [InputState.DEFAULT]: "border-border ",

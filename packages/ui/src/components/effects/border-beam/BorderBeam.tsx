@@ -29,8 +29,8 @@ export function BorderBeam({
           "--duration": `${duration}s`,
           "--anchor": `${anchor}`,
           "--border-width": `${borderWidth}px`,
-          "--color-from": colorFrom,
-          "--color-to": colorTo,
+          "--beam-color-from": colorFrom,
+          "--beam-color-to": colorTo,
           "--delay": `-${delay}s`,
         } as CSSProperties
       }

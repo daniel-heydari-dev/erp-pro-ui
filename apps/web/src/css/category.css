@@ -6,12 +6,12 @@
 }
 
 .main-nav {
-  background: linear-gradient(to bottom, var(--color-background), transparent);
+  background: linear-gradient(to bottom, var(--ds-color-bg-canvas), transparent);
   width: 100%;
   position: fixed;
   padding: 0 2em;
   height: 75px;
-  background: var(--color-background);
+  background: var(--ds-color-bg-canvas);
   left: 0;
   top: 50px;
   display: none;
@@ -43,7 +43,7 @@
   background: linear-gradient(
     to right,
     transparent,
-    var(--color-gray-300),
+    var(--ds-color-border-strong),
     transparent
   );
 }
@@ -57,7 +57,7 @@
   z-index: -1;
   width: 100%;
   height: 50px;
-  background: linear-gradient(to bottom, var(--color-background), transparent);
+  background: linear-gradient(to bottom, var(--ds-color-bg-canvas), transparent);
 }
 
 .main-nav .nav-items .logo {
@@ -69,7 +69,7 @@
 }
 
 .category-name {
-  color: var(--color-muted-foreground);
+  color: var(--ds-color-fg-muted);
   font-weight: 600;
   letter-spacing: -1px;
   font-size: 16px;
@@ -111,15 +111,15 @@
   margin-bottom: 0.5em;
   line-height: 1em;
   font-size: 4.5rem;
-  color: var(--color-heading);
+  color: var(--ds-color-fg);
   font-weight: 900;
 }
 
 .code-highlighter {
-  border: 1px solid var(--border) !important;
+  border: 1px solid var(--ds-color-border) !important;
   margin: 0 !important;
   border-radius: 20px !important;
-  background: var(--secondary) !important;
+  background: var(--ds-neutral-subtle) !important;
   text-shadow: none !important;
   font-size: 14px !important;
 }
@@ -139,8 +139,8 @@
 .demo-container {
   width: 100%;
   margin-top: 1em;
-  background: var(--background);
-  border: 1px solid var(--border);
+  background: var(--ds-color-bg-canvas);
+  border: 1px solid var(--ds-color-border);
   padding: 1em;
   border-radius: 20px;
   display: flex;

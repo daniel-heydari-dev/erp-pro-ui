@@ -293,7 +293,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
               ${variantStyles[variant].base}
               ${!error ? variantStyles[variant].focus : ""}
               ${error ? variantStyles[variant].error : ""}
-              ${disabled ? "opacity-50 cursor-not-allowed bg-muted" : ""}
+              ${disabled ? "opacity-50 cursor-not-allowed bg-background-secondary" : ""}
               ${inputClassName}
             `}
           />,

@@ -145,7 +145,7 @@ export const Calendar = ({
 
   return (
     <div
-      className={`w-[360px] max-w-[calc(100vw-1.5rem)] rounded-lg border border-white/20 bg-white/70 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/70 ${className}`.trim()}
+      className={`w-[360px] max-w-[calc(100vw-1.5rem)] rounded-lg border border-border bg-background-secondary/95 p-4 shadow-xl backdrop-blur-xl ${className}`.trim()}
     >
       <div className="mb-4 flex items-center gap-2">
         <button

@@ -129,39 +129,39 @@ const speedStyles: Record<SkeletonSpeed, string> = {
 
 const toneStyles: Record<SkeletonTone, { base: string; highlight: string }> = {
   default: {
-    base: "var(--color-muted)",
+    base: "var(--ds-color-bg-muted)",
     highlight:
-      "color-mix(in oklch, var(--color-muted) 54%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-bg-muted) 54%, var(--ds-color-bg-canvas))",
   },
   subtle: {
-    base: "color-mix(in oklch, var(--color-muted) 72%, var(--color-background))",
+    base: "color-mix(in oklch, var(--ds-color-bg-muted) 72%, var(--ds-color-bg-canvas))",
     highlight:
-      "color-mix(in oklch, var(--color-muted) 42%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-bg-muted) 42%, var(--ds-color-bg-canvas))",
   },
   accent: {
-    base: "var(--color-accent-subtle)",
+    base: "var(--ds-color-accent-subtle)",
     highlight:
-      "color-mix(in oklch, var(--color-accent-subtle) 48%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-accent-subtle) 48%, var(--ds-color-bg-canvas))",
   },
   success: {
-    base: "var(--color-success-subtle)",
+    base: "var(--ds-color-success-subtle)",
     highlight:
-      "color-mix(in oklch, var(--color-success-subtle) 48%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-success-subtle) 48%, var(--ds-color-bg-canvas))",
   },
   warning: {
-    base: "var(--color-warning-subtle)",
+    base: "var(--ds-color-warning-subtle)",
     highlight:
-      "color-mix(in oklch, var(--color-warning-subtle) 48%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-warning-subtle) 48%, var(--ds-color-bg-canvas))",
   },
   danger: {
-    base: "var(--color-danger-subtle)",
+    base: "var(--ds-color-danger-subtle)",
     highlight:
-      "color-mix(in oklch, var(--color-danger-subtle) 48%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-danger-subtle) 48%, var(--ds-color-bg-canvas))",
   },
   info: {
-    base: "var(--color-info-subtle)",
+    base: "var(--ds-color-info-subtle)",
     highlight:
-      "color-mix(in oklch, var(--color-info-subtle) 48%, var(--color-background))",
+      "color-mix(in oklch, var(--ds-color-info-subtle) 48%, var(--ds-color-bg-canvas))",
   },
 };
 

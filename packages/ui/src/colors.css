@@ -3,14 +3,14 @@
 @theme {
   --color-transparent: transparent;
   --color-current: currentColor;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+  --color-background: var(--ds-color-bg-canvas);
+  --color-foreground: var(--ds-color-fg);
+  --color-card: var(--ds-color-bg-surface);
+  --color-card-foreground: var(--ds-color-fg);
+  --color-popover: var(--ds-color-bg-elevated);
+  --color-popover-foreground: var(--ds-color-fg);
 
-  --color-primary: var(--erp-color-primary);
+  --color-primary: var(--ds-brand-primary);
   --color-primary-50: var(--primary-50);
   --color-primary-100: var(--primary-100);
   --color-primary-200: var(--primary-200);
@@ -22,87 +22,91 @@
   --color-primary-800: var(--primary-800);
   --color-primary-900: var(--primary-900);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--erp-color-secondary);
+  --color-secondary: var(--ds-brand-secondary);
   --color-secondary-foreground: #ffffff;
-  --color-purple: var(--erp-color-purple);
-  --color-teal: var(--erp-color-teal);
-  --color-yellow: var(--erp-color-yellow);
-  --color-green: var(--erp-color-green);
-  --color-brand-primary: var(--erp-color-brand-primary);
-  --color-brand-secondary: var(--erp-color-brand-secondary);
+  --color-purple: var(--ds-brand-purple);
+  --color-teal: var(--ds-brand-teal);
+  --color-yellow: var(--ds-brand-yellow);
+  --color-green: var(--ds-brand-green);
+  --color-brand-primary: var(--ds-brand-primary);
+  --color-brand-secondary: var(--ds-brand-secondary);
 
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--ds-color-bg-muted);
+  --color-muted-foreground: var(--ds-color-fg-muted);
   --color-accent: var(--ds-color-accent);
   --color-accent-foreground: var(--ds-color-on-accent);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-heading: var(--heading);
-  --color-background-primary: var(--erp-color-background-primary);
-  --color-background-secondary: var(--erp-color-background-secondary);
-  --color-background-tertiary: var(--erp-color-background-tertiary);
-  --color-background-secondary-glass: var(
-    --erp-color-background-secondary-glass
+  --color-destructive: var(--ds-color-destructive);
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--ds-color-border);
+  --color-input: var(--ds-color-border-field);
+  --color-ring: var(--ds-color-focus-ring);
+  --color-heading: var(--ds-color-fg);
+  --color-background-primary: var(--ds-color-bg-canvas);
+  --color-background-secondary: var(--ds-color-bg-surface);
+  --color-background-tertiary: var(--ds-color-bg-elevated);
+  --color-background-secondary-glass: var(--ds-color-bg-surface-glass);
+  --color-background-primary-light: var(--ds-foundation-light-surface-canvas);
+  --color-background-secondary-light: var(--ds-foundation-light-surface-1);
+  --color-background-tertiary-light: var(--ds-foundation-light-surface-2);
+  --color-background-primary-dark: var(--ds-foundation-dark-surface-canvas);
+  --color-background-secondary-dark: var(--ds-foundation-dark-surface-1);
+  --color-background-tertiary-dark: var(--ds-foundation-dark-surface-2);
+
+  --color-text-primary: var(--ds-text-1);
+  --color-text-secondary: var(--ds-text-2);
+  --color-text-tertiary: var(--ds-text-3);
+  --color-text-light: var(--ds-foundation-light-text-1);
+  --color-text-dark: var(--ds-foundation-dark-text-1);
+  --color-text-primary-light: var(--ds-foundation-light-text-1);
+  --color-text-secondary-light: var(--ds-foundation-light-text-2);
+  --color-text-tertiary-light: var(--ds-foundation-light-text-3);
+  --color-text-primary-dark: var(--ds-foundation-dark-text-1);
+  --color-text-secondary-dark: var(--ds-foundation-dark-text-2);
+  --color-text-tertiary-dark: var(--ds-foundation-dark-text-3);
+
+  --color-border-primary: var(--ds-border-1);
+  --color-border-secondary: var(--ds-border-2);
+  --color-border-tertiary: var(--ds-border-3);
+  --color-border-input: var(--ds-border-field);
+  --color-border-primary-light: var(--ds-foundation-light-border-1);
+  --color-border-secondary-light: var(--ds-foundation-light-border-2);
+  --color-border-tertiary-light: var(--ds-foundation-light-border-3);
+  --color-border-input-light: var(--ds-foundation-light-border-field);
+  --color-border-primary-dark: var(--ds-foundation-dark-border-1);
+  --color-border-secondary-dark: var(--ds-foundation-dark-border-2);
+  --color-border-tertiary-dark: var(--ds-foundation-dark-border-3);
+  --color-border-input-dark: var(--ds-foundation-dark-border-field);
+
+  --color-success: var(--ds-color-success);
+  --color-warning: var(--ds-color-warning);
+  --color-error: var(--ds-color-danger);
+  --color-info: var(--ds-color-info);
+  --color-disabled: var(--ds-color-disabled);
+  --color-success-light: var(--ds-foundation-light-status-success);
+  --color-warning-light: var(--ds-foundation-light-status-warning);
+  --color-error-light: var(--ds-foundation-light-status-danger);
+  --color-info-light: var(--ds-foundation-light-status-info);
+  --color-disabled-light: var(--ds-foundation-light-status-disabled);
+  --color-success-dark: var(--ds-foundation-dark-status-success);
+  --color-warning-dark: var(--ds-foundation-dark-status-warning);
+  --color-error-dark: var(--ds-foundation-dark-status-danger);
+  --color-info-dark: var(--ds-foundation-dark-status-info);
+  --color-disabled-dark: var(--ds-foundation-dark-status-disabled);
+
+  --color-hover-primary: color-mix(
+    in oklch,
+    var(--ds-surface-1) 84%,
+    black
   );
-  --color-background-primary-light: var(--erp-color-background-primary-light);
-  --color-background-secondary-light: var(
-    --erp-color-background-secondary-light
+  --color-hover-secondary: color-mix(
+    in oklch,
+    var(--ds-border-2) 78%,
+    black
   );
-  --color-background-tertiary-light: var(--erp-color-background-tertiary-light);
-  --color-background-primary-dark: var(--erp-color-background-primary-dark);
-  --color-background-secondary-dark: var(--erp-color-background-secondary-dark);
-  --color-background-tertiary-dark: var(--erp-color-background-tertiary-dark);
-
-  --color-text-primary: var(--erp-color-text-primary);
-  --color-text-secondary: var(--erp-color-text-secondary);
-  --color-text-tertiary: var(--erp-color-text-tertiary);
-  --color-text-light: var(--erp-color-text-primary-light);
-  --color-text-dark: var(--erp-color-text-primary-dark);
-  --color-text-primary-light: var(--erp-color-text-primary-light);
-  --color-text-secondary-light: var(--erp-color-text-secondary-light);
-  --color-text-tertiary-light: var(--erp-color-text-tertiary-light);
-  --color-text-primary-dark: var(--erp-color-text-primary-dark);
-  --color-text-secondary-dark: var(--erp-color-text-secondary-dark);
-  --color-text-tertiary-dark: var(--erp-color-text-tertiary-dark);
-
-  --color-border-primary: var(--erp-color-border-primary);
-  --color-border-secondary: var(--erp-color-border-secondary);
-  --color-border-tertiary: var(--erp-color-border-tertiary);
-  --color-border-input: var(--erp-color-border-input);
-  --color-border-primary-light: var(--erp-color-border-primary-light);
-  --color-border-secondary-light: var(--erp-color-border-secondary-light);
-  --color-border-tertiary-light: var(--erp-color-border-tertiary-light);
-  --color-border-input-light: var(--erp-color-border-input-light);
-  --color-border-primary-dark: var(--erp-color-border-primary-dark);
-  --color-border-secondary-dark: var(--erp-color-border-secondary-dark);
-  --color-border-tertiary-dark: var(--erp-color-border-tertiary-dark);
-  --color-border-input-dark: var(--erp-color-border-input-dark);
-
-  --color-success: var(--erp-color-success);
-  --color-warning: var(--erp-color-warning);
-  --color-error: var(--erp-color-error);
-  --color-info: var(--erp-color-info);
-  --color-disabled: var(--erp-color-disabled);
-  --color-success-light: var(--erp-color-success-light);
-  --color-warning-light: var(--erp-color-warning-light);
-  --color-error-light: var(--erp-color-error-light);
-  --color-info-light: var(--erp-color-info-light);
-  --color-disabled-light: var(--erp-color-disabled-light);
-  --color-success-dark: var(--erp-color-success-dark);
-  --color-warning-dark: var(--erp-color-warning-dark);
-  --color-error-dark: var(--erp-color-error-dark);
-  --color-info-dark: var(--erp-color-info-dark);
-  --color-disabled-dark: var(--erp-color-disabled-dark);
-
-  --color-hover-primary: var(--erp-color-hover-primary);
-  --color-hover-secondary: var(--erp-color-hover-secondary);
-  --color-hover-primary-light: var(--erp-color-hover-primary-light);
-  --color-hover-secondary-light: var(--erp-color-hover-secondary-light);
-  --color-hover-primary-dark: var(--erp-color-hover-primary-dark);
-  --color-hover-secondary-dark: var(--erp-color-hover-secondary-dark);
+  --color-hover-primary-light: var(--ds-foundation-light-hover-primary);
+  --color-hover-secondary-light: var(--ds-foundation-light-hover-secondary);
+  --color-hover-primary-dark: var(--ds-foundation-dark-hover-primary);
+  --color-hover-secondary-dark: var(--ds-foundation-dark-hover-secondary);
 
   --shadow-custom: var(--ds-shadow-3);
   --shadow-input: var(--ds-shadow-input);
@@ -146,7 +150,6 @@
   --color-chart-13: var(--ds-chart-13);
   --color-chart-14: var(--ds-chart-14);
   --color-chart-15: var(--ds-chart-15);
-  --color-destructive: var(--ds-color-destructive);
   --color-disabled-subtle: var(--ds-color-disabled-subtle);
   --color-disabled-border: var(--ds-color-disabled-border);
 
