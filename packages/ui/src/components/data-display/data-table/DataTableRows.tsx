@@ -29,7 +29,7 @@ function TableStateRow({
       <TableCell
         colSpan={colSpan}
         className={mergeClassNames(
-          "px-4 py-12 text-center text-neutral-500",
+          "px-4 py-12 text-center text-ds-2",
           cellClassName,
         )}
       >
@@ -56,7 +56,7 @@ function LoadingTableState({
     >
       <div className="flex flex-col items-center gap-3">
         <LoaderIcon
-          className="w-8 h-8 animate-spin text-accent"
+          className="w-8 h-8 animate-spin text-ds-1"
           aria-hidden="true"
         />
         <span>Loading data...</span>
@@ -173,7 +173,7 @@ export function DataTableRows<T>({
         <TableRow
           key={row.id}
           className={mergeClassNames(
-            "border-b border-neutral-100 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-700/50",
+            "border-b border-ds-border-2 transition-colors hover:bg-ds-surface-2",
             rowClassName,
           )}
         >
@@ -197,7 +197,7 @@ export function DataTableRows<T>({
             <TableCell
               key={cell.id}
               className={mergeClassNames(
-                "px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300",
+                "px-4 py-3 text-sm text-ds-1",
                 cellClassName,
               )}
             >

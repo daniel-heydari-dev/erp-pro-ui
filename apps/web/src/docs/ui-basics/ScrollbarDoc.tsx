@@ -174,7 +174,7 @@ const ScrollbarDoc = () => {
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
                         {card.title}
                       </p>
-                      <p className="mt-2 text-2xl font-semibold text-accent">
+                      <p className="mt-2 text-2xl font-semibold text-ds-1">
                         {card.metric}
                       </p>
                     </div>

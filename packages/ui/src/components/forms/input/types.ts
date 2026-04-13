@@ -22,6 +22,6 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   rightIconClassName?: string;
   icon?: ReactNode;
   iconClassName?: string;
-  /** Custom background classes for light/dark mode (e.g. "ui:bg-white ui:dark:bg-zinc-900") */
+  /** Custom background classes (e.g. "ui:bg-ds-surface-1"). */
   bgClassName?: string;
 }

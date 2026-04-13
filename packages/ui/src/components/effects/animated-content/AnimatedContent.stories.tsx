@@ -68,7 +68,7 @@ const animatedDefaultSource = `import { AnimatedContent } from 'erp-pro-ui';
 export function DefaultAnimatedContentExample() {
   return (
     <AnimatedContent preset="slideUp" duration={0.5}>
-      <div className="rounded-2xl border bg-background p-5 shadow-lg">
+      <div className="rounded-2xl border bg-ds-canvas p-5 shadow-lg">
         <h3 className="mb-2 text-lg font-semibold">Animated Block</h3>
         <p className="text-neutral-500">I reveal myself gracefully.</p>
       </div>
@@ -83,7 +83,7 @@ export function StaggeredAnimatedBlocksExample() {
     <div className="flex flex-wrap gap-4">
       {[1, 2, 3].map((index) => (
         <AnimatedContent key={index} preset="bounce" delay={index * 0.15}>
-          <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-accent text-2xl font-bold text-on-accent shadow-lg">
+          <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-ds-accent text-2xl font-bold text-ds-on-accent shadow-lg">
             {index}
           </div>
         </AnimatedContent>
@@ -113,8 +113,8 @@ export function AnimatedPresetGalleryExample() {
       <div key={instanceKey} className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {presets.map((item, index) => (
           <AnimatedContent key={item.label} preset={item.preset} delay={index * 0.12} duration={0.8}>
-            <div className="flex min-h-32 flex-col items-center justify-center rounded-2xl border bg-background p-5 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-accent-subtle text-sm font-bold text-accent">{item.label}</div>
+            <div className="flex min-h-32 flex-col items-center justify-center rounded-2xl border bg-ds-canvas p-5 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-ds-accent-subtle text-sm font-bold text-ds-1">{item.label}</div>
             </div>
           </AnimatedContent>
         ))}
@@ -154,8 +154,8 @@ export function AnimatedMetricsBoardExample() {
       {metrics.map((card, index) => (
         <AnimatedContent key={card.label} preset="slideUp" delay={index * 0.14}>
           <div className="rounded-2xl border p-5">
-            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{card.label}</p>
-            <p className="mt-3 text-3xl font-semibold text-foreground">{card.value}</p>
+            <p className="text-xs font-medium uppercase tracking-[0.16em] text-ds-2">{card.label}</p>
+            <p className="mt-3 text-3xl font-semibold text-ds-1">{card.value}</p>
           </div>
         </AnimatedContent>
       ))}
@@ -189,7 +189,7 @@ export const Staggered: Story = {
       <div className="ui:flex ui:flex-wrap ui:gap-4">
         {[1, 2, 3].map((i) => (
           <AnimatedContent key={i} preset="bounce" delay={i * 0.15}>
-            <div className="ui:flex ui:h-24 ui:w-24 ui:items-center ui:justify-center ui:rounded-xl ui:bg-accent ui:text-2xl ui:font-bold ui:text-on-accent ui:shadow-lg">
+            <div className="ui:flex ui:h-24 ui:w-24 ui:items-center ui:justify-center ui:rounded-xl ui:bg-ds-accent ui:text-2xl ui:font-bold ui:text-ds-on-accent ui:shadow-lg">
               {i}
             </div>
           </AnimatedContent>
@@ -229,10 +229,10 @@ export const PresetGallery: Story = {
                 duration={0.8}
               >
                 <StoryPanel className="ui:flex ui:min-h-32 ui:flex-col ui:items-center ui:justify-center ui:p-5 ui:text-center">
-                  <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-accent-subtle ui:text-sm ui:font-bold ui:text-accent">
+                  <div className="ui:flex ui:h-16 ui:w-16 ui:items-center ui:justify-center ui:rounded-xl ui:bg-ds-accent-subtle ui:text-sm ui:font-bold ui:text-ds-1">
                     {item.label}
                   </div>
-                  <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">
+                  <p className="ui:mt-3 ui:text-xs ui:text-ds-2">
                     {item.preset}
                   </p>
                 </StoryPanel>
@@ -265,7 +265,7 @@ export const EasingCurves: Story = {
           </div>
           <div key={instanceKey} className="ui:flex ui:flex-wrap ui:gap-6">
             <AnimatedContent preset="slideRight" ease="backOut" duration={1}>
-              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground">
+              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-ds-1">
                 Back Out
               </StoryPanel>
             </AnimatedContent>
@@ -275,7 +275,7 @@ export const EasingCurves: Story = {
               duration={1}
               delay={0.2}
             >
-              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-foreground">
+              <StoryPanel className="ui:px-6 ui:py-4 ui:font-semibold ui:text-ds-1">
                 Anticipate
               </StoryPanel>
             </AnimatedContent>
@@ -298,10 +298,10 @@ export const StaggeredBoard: Story = {
             delay={index * 0.14}
           >
             <StoryPanel className="ui:rounded-2xl ui:p-5">
-              <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+              <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                 {card.label}
               </p>
-              <p className="ui:mt-3 ui:text-3xl ui:font-semibold ui:text-foreground">
+              <p className="ui:mt-3 ui:text-3xl ui:font-semibold ui:text-ds-1">
                 {card.value}
               </p>
             </StoryPanel>

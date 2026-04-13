@@ -48,47 +48,49 @@ function MyComponent() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `columns` | `Column[]` | required | Array of column definitions |
-| `data` | `T[]` | required | Array of data objects |
-| `isLoading` | `boolean` | `false` | Show loading spinner |
-| `pageSize` | `number` | `10` | Initial page size |
-| `maxHeight` | `string` | `'500px'` | Max height for the scrollable table |
-| `filterOptions` | `FilterOption[]` | auto | Custom filter options |
-| `serverSideFiltering` | `boolean` | `false` | Enable server-side filtering mode |
-| `searchPlaceholder` | `string` | `'Search ...'` | Search input placeholder |
-| `totalCount` | `number` | - | Total rows available from the backend |
-| `onSearch` | `(query: string) => void` | - | Search callback |
-| `onFilterChange` | `(filters: FilterValues) => void` | - | Filter change callback |
-| `onFiltersApply` | `(filters: FilterValues) => void` | - | Server-side filter callback |
-| `onPaginationChange` | `(pageIndex: number, pageSize: number) => void` | - | Backend pagination callback |
-| `onColumnToggle` | `(columnId: string) => void` | - | Column visibility callback |
-| `onExport` | `() => void` | - | Toolbar action callback (export, refresh, or custom action) |
-| `onRowAction` | `(action: string, row: T) => void` | - | 3-dots row action callback |
-| `rowActions` | `DataTableRowAction<T>[]` | `[{id:'copy'},{id:'edit'},{id:'delete'}]` | Custom 3-dots menu actions |
-| `caption` | `ReactNode` | - | Optional table caption |
-| `labels` | `Partial<DataTableTextLabels>` | - | Override built-in UI labels (translations) |
-| `renderFilterSelectorFooterActions` | `(context) => ReactNode` | - | Add extra actions beside SHOW/HIDE in filter selector |
-| `renderFilterRowActions` | `ReactNode` | - | Add custom icons/buttons to the filter row right-side area |
-| `renderToolbarActions` | `ReactNode` | - | Add custom icons/buttons near refresh and column settings |
-| `renderEmptyState` | `(context) => ReactNode` | - | Render custom centered empty content when no rows match |
+| Prop                                | Type                                            | Default                                   | Description                                                 |
+| ----------------------------------- | ----------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| `columns`                           | `Column[]`                                      | required                                  | Array of column definitions                                 |
+| `data`                              | `T[]`                                           | required                                  | Array of data objects                                       |
+| `isLoading`                         | `boolean`                                       | `false`                                   | Show loading spinner                                        |
+| `pageSize`                          | `number`                                        | `10`                                      | Initial page size                                           |
+| `maxHeight`                         | `string`                                        | `'500px'`                                 | Max height for the scrollable table                         |
+| `filterOptions`                     | `FilterOption[]`                                | auto                                      | Custom filter options                                       |
+| `serverSideFiltering`               | `boolean`                                       | `false`                                   | Enable server-side filtering mode                           |
+| `searchPlaceholder`                 | `string`                                        | `'Search ...'`                            | Search input placeholder                                    |
+| `totalCount`                        | `number`                                        | -                                         | Total rows available from the backend                       |
+| `onSearch`                          | `(query: string) => void`                       | -                                         | Search callback                                             |
+| `onFilterChange`                    | `(filters: FilterValues) => void`               | -                                         | Filter change callback                                      |
+| `onFiltersApply`                    | `(filters: FilterValues) => void`               | -                                         | Server-side filter callback                                 |
+| `onPaginationChange`                | `(pageIndex: number, pageSize: number) => void` | -                                         | Backend pagination callback                                 |
+| `showRefreshButton`                 | `boolean`                                       | `true`                                    | Show/hide refresh action in toolbar                         |
+| `showExportButton`                  | `boolean`                                       | `true`                                    | Show/hide export action in toolbar                          |
+| `onColumnToggle`                    | `(columnId: string) => void`                    | -                                         | Column visibility callback                                  |
+| `onExport`                          | `() => void`                                    | -                                         | Toolbar action callback (export, refresh, or custom action) |
+| `onRowAction`                       | `(action: string, row: T) => void`              | -                                         | 3-dots row action callback                                  |
+| `rowActions`                        | `DataTableRowAction<T>[]`                       | `[{id:'copy'},{id:'edit'},{id:'delete'}]` | Custom 3-dots menu actions                                  |
+| `caption`                           | `ReactNode`                                     | -                                         | Optional table caption                                      |
+| `labels`                            | `Partial<DataTableTextLabels>`                  | -                                         | Override built-in UI labels (translations)                  |
+| `renderFilterSelectorFooterActions` | `(context) => ReactNode`                        | -                                         | Add extra actions beside SHOW/HIDE in filter selector       |
+| `renderFilterRowActions`            | `ReactNode`                                     | -                                         | Add custom icons/buttons to the filter row right-side area  |
+| `renderToolbarActions`              | `ReactNode`                                     | -                                         | Add custom icons/buttons near refresh and column settings   |
+| `renderEmptyState`                  | `(context) => ReactNode`                        | -                                         | Render custom centered empty content when no rows match     |
 
 ### Style Slot Props (class overrides)
 
-| Prop | Target |
-| --- | --- |
-| `className` | Root wrapper |
+| Prop                      | Target           |
+| ------------------------- | ---------------- |
+| `className`               | Root wrapper     |
 | `tableContainerClassName` | Scroll container |
-| `tableClassName` | `<table>` |
-| `captionClassName` | `<caption>` |
-| `headerClassName` | `<thead>` |
-| `headerRowClassName` | Header `<tr>` |
-| `headClassName` | Header `<th>` |
-| `bodyClassName` | `<tbody>` |
-| `rowClassName` | Body row `<tr>` |
-| `cellClassName` | Body cell `<td>` |
-| `footerClassName` | Footer wrapper |
+| `tableClassName`          | `<table>`        |
+| `captionClassName`        | `<caption>`      |
+| `headerClassName`         | `<thead>`        |
+| `headerRowClassName`      | Header `<tr>`    |
+| `headClassName`           | Header `<th>`    |
+| `bodyClassName`           | `<tbody>`        |
+| `rowClassName`            | Body row `<tr>`  |
+| `cellClassName`           | Body cell `<td>` |
+| `footerClassName`         | Footer wrapper   |
 
 ## Composable Table Primitives
 
@@ -164,7 +166,7 @@ When an action is clicked:
 
 Menu behavior:
 
-- Pinned to the table right side
+- Pinned to the inline-end side of the table (right in LTR, left in RTL)
 - Closes on outside click
 - Closes on `Escape`
 - Closes on scroll/resize to avoid stale position
@@ -182,6 +184,21 @@ Menu behavior:
     if (action === "publish") publishProduct(row.id);
   }}
 />
+```
+
+## RTL Support
+
+`DataTable` automatically detects direction from the nearest `dir` context and adapts:
+
+- Sticky row-actions column (`right` in LTR / `left` in RTL)
+- Row-actions menu anchoring
+- Pagination arrow semantics (first/prev/next/last)
+- Search alignment and dropdown placement
+
+```tsx
+<div dir="rtl">
+  <DataTable columns={columns} data={rows} labels={{ columns: "ستون‌ها" }} />
+</div>
 ```
 
 ## Toolbar Actions
@@ -206,14 +223,14 @@ import { ArrowDownIcon, ArrowUpIcon } from "erp-pro-ui/icons";
       </ToolbarIconButton>
     </>
   }
-/>
+/>;
 ```
 
 ## Filters UX Customization
 
 You can customize filter UX in three ways:
 
-- `labels`: translate built-in text (`Show filters`, `SHOW ALL`, `HIDE ALL`, etc.)
+- `labels`: translate built-in text (`Show filters`, `SHOW ALL`, `HIDE ALL`, `REFRESH`, `EXPORT`, `COLUMNS`, etc.)
 - `renderFilterRowActions`: inject custom controls on the filter row right side
 - `renderFilterSelectorFooterActions`: add extra footer actions next to default SHOW/HIDE controls
 
@@ -249,9 +266,9 @@ You can customize filter UX in three ways:
   data={rows}
   caption="Team roster"
   tableClassName="min-w-[720px]"
-  headerRowClassName="bg-cyan-50/70 dark:bg-cyan-900/30"
-  headClassName="text-cyan-900 dark:text-cyan-100"
-  rowClassName="hover:bg-cyan-50/70 dark:hover:bg-cyan-950/50"
+  headerRowClassName="bg-ds-surface-2 border-b border-ds-border-2"
+  headClassName="text-ds-1"
+  rowClassName="hover:bg-ds-surface-2/70"
   cellClassName="font-medium"
 />
 ```
@@ -290,7 +307,7 @@ import { DownloadIcon } from "erp-pro-ui/icons";
       Export CSV
     </Button>
   }
-/>
+/>;
 ```
 
 ## Custom Empty State Example
@@ -643,7 +660,7 @@ The component uses Tailwind CSS with the `ui:` prefix. Make sure to import the s
 import "erp-pro-ui/styles.css";
 ```
 
-The table is fully theme-token driven (`bg-background-*`, `text-text-*`, `border-border-*`), so switching `data-brand` / `data-mode` updates table surfaces, text, and borders automatically.
+The table is fully theme-token driven (`bg-ds-canvas-*`, `text-text-*`, `border-ds-border-2-*`), so switching `data-brand` / `data-mode` updates table surfaces, text, and borders automatically.
 
 ### Dark Mode
 

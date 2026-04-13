@@ -11,7 +11,7 @@ export const ButtonHoverBorderGradient: React.FC<
     <div className="m-40 flex justify-center text-center" {...props}>
       <HoverBorderGradient
         containerClassName="rounded"
-        className="flex items-center space-x-2 bg-white text-black dark:bg-black dark:text-white"
+        className="flex items-center space-x-2 bg-ds-surface-1 text-ds-1"
       >
         {children}
       </HoverBorderGradient>

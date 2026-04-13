@@ -150,7 +150,7 @@ const GridItem = ({
       className={mergeClassNames(
         "relative overflow-hidden cursor-pointer transition-shadow",
         borderRadiusMap[borderRadius as keyof typeof borderRadiusMap],
-        variant === "glass" && "border border-white/20 dark:border-white/10",
+        variant === "glass" && "border border-ds-border-2/50",
         item.className,
       )}
       style={{
@@ -182,23 +182,23 @@ const GridItem = ({
 
       {/* Glass overlay for gradient variant */}
       {variant === "gradient" && (
-        <div className="absolute inset-0 bg-black/10 dark:bg-black/20" />
+        <div className="absolute inset-0 bg-ds-canvas/15" />
       )}
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center p-6 text-center">
         {item.icon && (
-          <div className="text-4xl text-white mb-3 drop-shadow-lg">
+          <div className="text-4xl text-ds-on-accent mb-3 drop-shadow-lg">
             {item.icon}
           </div>
         )}
         {item.title && (
-          <h3 className="text-lg font-bold text-white mb-1 drop-shadow-md">
+          <h3 className="text-lg font-bold text-ds-on-accent mb-1 drop-shadow-md">
             {item.title}
           </h3>
         )}
         {item.description && (
-          <p className="text-sm text-white/80 drop-shadow-sm">
+          <p className="text-sm text-ds-on-accent/80 drop-shadow-sm">
             {item.description}
           </p>
         )}

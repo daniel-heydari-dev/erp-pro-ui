@@ -56,7 +56,7 @@ export function BasicHoverCardExample() {
       content={
         <div className="w-64">
           <h4 className="text-lg font-bold">Next.js</h4>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-ds-2">
             The React framework for the web. Created by Vercel.
           </p>
         </div>
@@ -78,9 +78,9 @@ export function TeamMemberHoverCardExample() {
         <div className="w-72 space-y-3">
           <div>
             <h4 className="text-base font-semibold">Mina Chen</h4>
-            <p className="text-sm text-muted-foreground">Inventory Operations Lead</p>
+            <p className="text-sm text-ds-2">Inventory Operations Lead</p>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-ds-2">
             Owns receiving audits, transfer approvals, and supplier escalation.
           </p>
         </div>
@@ -104,7 +104,7 @@ export function HoverCardDelayExample() {
       content={
         <div className="space-y-2">
           <h4 className="text-base font-semibold">Supplier Snapshot</h4>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-ds-2">
             Last shipment arrived 2 days ago. 97% on-time delivery this quarter.
           </p>
         </div>
@@ -168,21 +168,21 @@ export const TeamMemberPreview: Story = {
           <div className="ui:w-72 ui:space-y-3">
             <div>
               <h4 className="ui:text-base ui:font-semibold">Mina Chen</h4>
-              <p className="ui:text-sm ui:text-muted-foreground">
+              <p className="ui:text-sm ui:text-ds-2">
                 Inventory Operations Lead
               </p>
             </div>
             <div className="ui:grid ui:grid-cols-2 ui:gap-3 ui:text-sm">
               <div>
-                <p className="ui:text-muted-foreground">Location</p>
+                <p className="ui:text-ds-2">Location</p>
                 <p className="ui:font-medium">Berlin Hub</p>
               </div>
               <div>
-                <p className="ui:text-muted-foreground">Open tasks</p>
+                <p className="ui:text-ds-2">Open tasks</p>
                 <p className="ui:font-medium">12</p>
               </div>
             </div>
-            <p className="ui:text-sm ui:text-muted-foreground">
+            <p className="ui:text-sm ui:text-ds-2">
               Owns receiving audits, transfer approvals, and supplier
               escalation.
             </p>
@@ -224,11 +224,11 @@ export const DelayAndWidth: Story = {
         content={
           <div className="ui:space-y-2">
             <h4 className="ui:text-base ui:font-semibold">Supplier Snapshot</h4>
-            <p className="ui:text-sm ui:text-muted-foreground">
+            <p className="ui:text-sm ui:text-ds-2">
               Last shipment arrived 2 days ago. 97% on-time delivery this
               quarter.
             </p>
-            <p className="ui:text-sm ui:text-muted-foreground">
+            <p className="ui:text-sm ui:text-ds-2">
               Next expected delivery: Friday, 10:30.
             </p>
           </div>

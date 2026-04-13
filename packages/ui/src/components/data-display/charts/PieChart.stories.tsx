@@ -237,7 +237,7 @@ export function CustomPieChartCenterExample() {
       centerLabel="Mix"
       renderCenterContent={({ displayLabel, displayValue, valueFormatter }) => (
         <div className="flex min-w-32 flex-col items-center rounded-2xl border px-4 py-3 text-center backdrop-blur-md">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">{displayLabel}</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-ds-2">{displayLabel}</p>
           <p className="mt-1 text-2xl font-semibold">{valueFormatter(displayValue)}</p>
         </div>
       )}
@@ -416,25 +416,25 @@ export const CustomCenterContent: Story = {
             totalValue,
             valueFormatter,
           }) => (
-            <div className="ui:flex ui:min-w-32 ui:flex-col ui:items-center ui:rounded-2xl ui:border ui:border-border/70 ui:bg-background/70 ui:px-4 ui:py-3 ui:text-center ui:backdrop-blur-md">
+            <div className="ui:flex ui:min-w-32 ui:flex-col ui:items-center ui:rounded-2xl ui:border ui:border-ds-border-2/70 ui:bg-ds-canvas/70 ui:px-4 ui:py-3 ui:text-center ui:backdrop-blur-md">
               <span
                 className="ui:h-2.5 ui:w-2.5 ui:rounded-full"
                 style={{ backgroundColor: activeColor ?? "var(--ds-chart-1)" }}
               />
-              <p className="ui:mt-2 ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+              <p className="ui:mt-2 ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                 {displayLabel}
               </p>
-              <p className="ui:mt-1 ui:text-2xl ui:font-semibold ui:leading-none ui:text-foreground">
+              <p className="ui:mt-1 ui:text-2xl ui:font-semibold ui:leading-none ui:text-ds-1">
                 {valueFormatter(displayValue)}
               </p>
-              <p className="ui:mt-2 ui:text-xs ui:text-muted-foreground">
+              <p className="ui:mt-2 ui:text-xs ui:text-ds-2">
                 {displayPercentageLabel}
               </p>
-              <div className="ui:mt-3 ui:w-full ui:border-t ui:border-border/70 ui:pt-3">
-                <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.14em] ui:text-muted-foreground">
+              <div className="ui:mt-3 ui:w-full ui:border-t ui:border-ds-border-2/70 ui:pt-3">
+                <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.14em] ui:text-ds-2">
                   Total portfolio
                 </p>
-                <p className="ui:mt-1 ui:text-sm ui:font-semibold ui:text-foreground">
+                <p className="ui:mt-1 ui:text-sm ui:font-semibold ui:text-ds-1">
                   {valueFormatter(totalValue)}
                 </p>
               </div>

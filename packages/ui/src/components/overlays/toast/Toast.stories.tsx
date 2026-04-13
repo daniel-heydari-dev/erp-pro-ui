@@ -201,10 +201,10 @@ function ToastWorkflowDemo() {
       <div className="ui:grid ui:gap-6 ui:md:grid-cols-[1.2fr_0.8fr]">
         <div className="ui:space-y-4">
           <div>
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Operational feedback
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               Launch success, warning, and follow-up actions from the same
               provider context.
             </p>
@@ -252,12 +252,12 @@ function ToastWorkflowDemo() {
           </div>
         </div>
 
-        <div className="ui:flex ui:h-full ui:flex-col ui:justify-between ui:rounded-2xl ui:border ui:border-border ui:bg-muted/40 ui:p-4">
+        <div className="ui:flex ui:h-full ui:flex-col ui:justify-between ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/40 ui:p-4">
           <div className="ui:space-y-2">
-            <p className="ui:text-sm ui:font-medium ui:text-foreground">
+            <p className="ui:text-sm ui:font-medium ui:text-ds-1">
               Recommended usage
             </p>
-            <ul className="ui:space-y-2 ui:text-sm ui:text-muted-foreground">
+            <ul className="ui:space-y-2 ui:text-sm ui:text-ds-2">
               <li>
                 Use `success`, `warning`, and `error` for common system states.
               </li>
@@ -314,10 +314,10 @@ function ToastPromiseDemo() {
     <StorySurface widthClassName="ui:w-full ui:max-w-3xl">
       <div className="ui:space-y-4">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Promise handling
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Use `promise()` when an async workflow should automatically
             transition from loading to success or error.
           </p>
@@ -345,14 +345,14 @@ function PositionControls({
       <div className="ui:space-y-4">
         <div className="ui:flex ui:items-center ui:justify-between ui:gap-4">
           <div>
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Active stack position
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               Current provider setting: {position}
             </p>
           </div>
-          <div className="ui:rounded-full ui:bg-muted ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-muted-foreground">
+          <div className="ui:rounded-full ui:bg-ds-surface-3 ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-ds-2">
             Reconfigure once at the app root in production
           </div>
         </div>

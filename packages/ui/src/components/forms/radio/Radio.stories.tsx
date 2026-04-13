@@ -166,7 +166,7 @@ export const RadioGroup: Story = {
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-md">
         <div className="ui:flex ui:flex-col ui:gap-3">
-          <h4 className="ui:mb-1 ui:font-semibold ui:text-foreground">
+          <h4 className="ui:mb-1 ui:font-semibold ui:text-ds-1">
             Select a Plan
           </h4>
           <Radio
@@ -262,7 +262,7 @@ export const ShippingSpeedSelector: Story = {
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-lg">
         <div className="ui:space-y-3">
-          <h4 className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <h4 className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Shipping speed
           </h4>
           <Radio

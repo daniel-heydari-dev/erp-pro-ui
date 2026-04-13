@@ -72,20 +72,20 @@ function SelectionSummaryExample() {
           onChange={setValues}
           placeholder="Select frameworks..."
         />
-        <StoryPanel className="ui:rounded-lg ui:bg-muted/40 ui:p-4 ui:shadow-none">
+        <StoryPanel className="ui:rounded-lg ui:bg-ds-surface-3/40 ui:p-4 ui:shadow-none">
           <p className="ui:mb-2 ui:text-sm ui:font-medium">Selected Values:</p>
           <div className="ui:flex ui:flex-wrap ui:gap-2">
             {values.length > 0 ? (
               values.map((value) => (
                 <code
                   key={value}
-                  className="ui:rounded ui:bg-accent-subtle ui:px-2 ui:py-1 ui:text-xs ui:text-accent"
+                  className="ui:rounded ui:bg-ds-accent-subtle ui:px-2 ui:py-1 ui:text-xs ui:text-ds-1"
                 >
                   {value}
                 </code>
               ))
             ) : (
-              <span className="ui:text-xs ui:italic ui:text-muted-foreground">
+              <span className="ui:text-xs ui:italic ui:text-ds-2">
                 None selected
               </span>
             )}
@@ -104,7 +104,7 @@ function DenseToolbarExample() {
       <StoryPanel className="ui:rounded-2xl ui:p-5">
         <div className="ui:mb-3 ui:flex ui:items-center ui:justify-between ui:gap-3">
           <p className="ui:text-sm ui:font-medium">Task board filters</p>
-          <span className="ui:text-xs ui:text-muted-foreground">
+          <span className="ui:text-xs ui:text-ds-2">
             {values.length} selected
           </span>
         </div>
@@ -113,7 +113,7 @@ function DenseToolbarExample() {
           value={values}
           onChange={setValues}
           placeholder="Filter by stack or capability..."
-          bgClassName="ui:bg-muted"
+          bgClassName="ui:bg-ds-surface-3"
         />
       </StoryPanel>
     </StorySurface>

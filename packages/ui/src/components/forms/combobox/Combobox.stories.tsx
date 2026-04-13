@@ -132,28 +132,28 @@ function FrameworkSelectorPreview() {
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <div className="ui:grid ui:gap-6 ui:md:grid-cols-[1.1fr_0.9fr]">
         <div className="ui:space-y-3">
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Searchable selection
           </p>
-          <p className="ui:text-sm ui:text-muted-foreground">
+          <p className="ui:text-sm ui:text-ds-2">
             Use Combobox when the option list is too long for a standard select
             and people benefit from type-ahead search.
           </p>
-          <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-muted/40 ui:p-4">
-            <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+          <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/40 ui:p-4">
+            <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
               Current selection
             </p>
-            <p className="ui:mt-2 ui:text-xl ui:font-semibold ui:text-foreground">
+            <p className="ui:mt-2 ui:text-xl ui:font-semibold ui:text-ds-1">
               {selected?.label ?? "No framework selected"}
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               Useful for framework presets, assignee routing, or catalog
               filters.
             </p>
           </div>
         </div>
         <div className="ui:min-h-80 ui:w-full">
-          <label className="ui:mb-2 ui:block ui:text-sm ui:font-medium ui:text-foreground">
+          <label className="ui:mb-2 ui:block ui:text-sm ui:font-medium ui:text-ds-1">
             Preferred framework
           </label>
           <Combobox
@@ -177,7 +177,7 @@ function TeamProvisioningPreview() {
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <div className="ui:grid ui:gap-6 ui:md:grid-cols-[0.95fr_1.05fr]">
         <div className="ui:min-h-80 ui:w-full">
-          <label className="ui:mb-2 ui:block ui:text-sm ui:font-medium ui:text-foreground">
+          <label className="ui:mb-2 ui:block ui:text-sm ui:font-medium ui:text-ds-1">
             Assign request owner
           </label>
           <Combobox
@@ -195,21 +195,21 @@ function TeamProvisioningPreview() {
             className="ui:w-full"
           />
         </div>
-        <div className="ui:space-y-3 ui:rounded-2xl ui:border ui:border-border ui:bg-muted/40 ui:p-4">
+        <div className="ui:space-y-3 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/40 ui:p-4">
           <div>
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Create-option workflow
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               Pair `createOptionLabel` with a modal or side panel when the
               desired record is not available yet.
             </p>
           </div>
-          <div className="ui:rounded-xl ui:border ui:border-dashed ui:border-border ui:bg-background ui:p-4">
-            <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+          <div className="ui:rounded-xl ui:border ui:border-dashed ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+            <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
               Activity log
             </p>
-            <div className="ui:mt-3 ui:space-y-2 ui:text-sm ui:text-muted-foreground">
+            <div className="ui:mt-3 ui:space-y-2 ui:text-sm ui:text-ds-2">
               {requests.length > 0 ? (
                 requests.slice(0, 3).map((entry) => <p key={entry}>{entry}</p>)
               ) : (
@@ -231,13 +231,13 @@ function QueueToolbarFilterPreview() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
-      <div className="ui:flex ui:flex-col ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-muted/40 ui:p-4">
+      <div className="ui:flex ui:flex-col ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/40 ui:p-4">
         <div className="ui:flex ui:flex-col ui:gap-3 ui:md:flex-row ui:md:items-center ui:md:justify-between">
           <div>
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Embedded in a dashboard toolbar
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               The same component works as a compact filter control when paired
               with a lightweight background treatment.
             </p>
@@ -261,12 +261,12 @@ function QueueToolbarFilterPreview() {
           ].map((metric) => (
             <div
               key={metric.label}
-              className="ui:rounded-xl ui:border ui:border-border ui:bg-background ui:p-4"
+              className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4"
             >
-              <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+              <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                 {metric.label}
               </p>
-              <p className="ui:mt-2 ui:text-2xl ui:font-semibold ui:text-foreground">
+              <p className="ui:mt-2 ui:text-2xl ui:font-semibold ui:text-ds-1">
                 {metric.value}
               </p>
             </div>

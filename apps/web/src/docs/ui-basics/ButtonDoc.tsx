@@ -161,7 +161,7 @@ export function DisabledButtons() {
           onClick={handleAsyncSave}
         />
         {saved && (
-          <p className="text-sm text-accent">Profile saved successfully.</p>
+          <p className="text-sm text-ds-1">Profile saved successfully.</p>
         )}
       </div>
 

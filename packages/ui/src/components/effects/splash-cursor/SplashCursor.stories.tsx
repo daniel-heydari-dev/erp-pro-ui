@@ -88,11 +88,11 @@ export function BrandedSplashCursorExample() {
       particleCount={15}
       variant="trail"
       blur={6}
-      className="flex h-full w-full items-center justify-center rounded-[22px] border border-border"
+      className="flex h-full w-full items-center justify-center rounded-[22px] border border-ds-border-2"
     >
       <div className="pointer-events-none flex flex-col items-center gap-4 text-center">
-        <div className="rounded-full bg-background px-6 py-3 shadow-md">
-          <span className="font-semibold text-foreground">Branded particle styling</span>
+        <div className="rounded-full bg-ds-canvas px-6 py-3 shadow-md">
+          <span className="font-semibold text-ds-1">Branded particle styling</span>
         </div>
         <Button label="Primary Action" primary className="pointer-events-auto" />
       </div>
@@ -163,9 +163,9 @@ export const VariantGallery: Story = {
       ].map((demo) => (
         <div
           key={demo.label}
-          className="ui:rounded-[24px] ui:bg-background ui:p-4 ui:shadow-sm"
+          className="ui:rounded-[24px] ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
         >
-          <p className="ui:mb-2 ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:mb-2 ui:text-sm ui:font-semibold ui:text-ds-1">
             {demo.label}
           </p>
           <SplashCursor
@@ -174,9 +174,9 @@ export const VariantGallery: Story = {
             size={demo.size}
             blur={demo.blur}
             duration={demo.duration}
-            className="ui:flex ui:h-[220px] ui:w-full ui:items-center ui:justify-center ui:rounded-[20px] ui:border ui:border-dashed ui:border-border ui:bg-muted/30"
+            className="ui:flex ui:h-[220px] ui:w-full ui:items-center ui:justify-center ui:rounded-[20px] ui:border ui:border-dashed ui:border-ds-border-2 ui:bg-ds-surface-3/30"
           >
-            <span className="ui:pointer-events-none ui:text-sm ui:text-muted-foreground">
+            <span className="ui:pointer-events-none ui:text-sm ui:text-ds-2">
               {demo.hint}
             </span>
           </SplashCursor>
@@ -198,11 +198,11 @@ export const BrandCustomization: Story = {
           particleCount={15}
           variant="trail"
           blur={6}
-          className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-[22px] ui:border ui:border-border ui:bg-white/60 dark:ui:bg-neutral-950/60"
+          className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-[22px] ui:border ui:border-ds-border-2 ui:bg-white/60 dark:ui:bg-neutral-950/60"
         >
           <div className="ui:pointer-events-none ui:flex ui:flex-col ui:items-center ui:gap-4 ui:text-center">
-            <div className="ui:rounded-full ui:bg-background ui:px-6 ui:py-3 ui:shadow-md">
-              <span className="ui:font-semibold ui:text-foreground">
+            <div className="ui:rounded-full ui:bg-ds-canvas ui:px-6 ui:py-3 ui:shadow-md">
+              <span className="ui:font-semibold ui:text-ds-1">
                 Branded particle styling
               </span>
             </div>

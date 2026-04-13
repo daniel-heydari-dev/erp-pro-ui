@@ -145,12 +145,12 @@ export const Calendar = ({
 
   return (
     <div
-      className={`w-[360px] max-w-[calc(100vw-1.5rem)] rounded-lg border border-border bg-background-secondary/95 p-4 shadow-xl backdrop-blur-xl ${className}`.trim()}
+      className={`w-[360px] max-w-[calc(100vw-1.5rem)] rounded-lg border border-ds-border-2 bg-ds-surface-1/95 p-4 shadow-xl backdrop-blur-xl ${className}`.trim()}
     >
       <div className="mb-4 flex items-center gap-2">
         <button
           type="button"
-          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-input bg-background-secondary text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ds-border-field bg-ds-surface-1 text-sm text-ds-2 transition-colors hover:border-ds-border-accent hover:text-ds-1"
           onClick={() => updateMonth(-1)}
           aria-label="Previous month"
         >
@@ -195,7 +195,7 @@ export const Calendar = ({
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-input bg-background-secondary text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ds-border-field bg-ds-surface-1 text-sm text-ds-2 transition-colors hover:border-ds-border-accent hover:text-ds-1"
           onClick={() => updateMonth(1)}
           aria-label="Next month"
         >
@@ -205,10 +205,7 @@ export const Calendar = ({
 
       <div className="grid grid-cols-7 gap-2 text-center">
         {dayNames.map((dayName) => (
-          <span
-            key={dayName}
-            className="text-xs font-medium text-muted-foreground"
-          >
+          <span key={dayName} className="text-xs font-medium text-ds-2">
             {dayName}
           </span>
         ))}
@@ -233,12 +230,12 @@ export const Calendar = ({
               key={date.toISOString()}
               className={`rounded-md px-0 py-2 text-sm transition-colors ${
                 isSelected || isRangeStart || isRangeEnd
-                  ? "bg-accent text-on-accent"
+                  ? "bg-ds-accent text-ds-on-accent"
                   : inRange
-                    ? "bg-accent-subtle text-accent"
+                    ? "bg-ds-accent-subtle text-ds-1"
                     : isToday
-                      ? "border border-accent text-accent"
-                      : "text-muted-foreground"
+                      ? "border border-ds-border-accent text-ds-1"
+                      : "text-ds-2"
               }`}
               onClick={() => handleSelect(date)}
             >

@@ -179,7 +179,7 @@ export function ValidationFeedbackFlowExample() {
 }`;
 
 const hintMeta = (
-  <span className="ui:inline-flex ui:items-center ui:gap-1.5 ui:text-xs ui:text-muted-foreground">
+  <span className="ui:inline-flex ui:items-center ui:gap-1.5 ui:text-xs ui:text-ds-2">
     <InfoCircleIcon width={14} height={14} color="currentColor" />
     Hint
   </span>
@@ -233,7 +233,7 @@ const showcaseRows: ShowcaseRow[] = [
     key: "focused",
     buildProps: () => ({
       placeholder: "",
-      className: "ui:border-accent ui:ring-1 ui:ring-accent",
+      className: "ui:border-ds-border-accent ui:ring-1 ui:ring-ds-accent",
     }),
   },
   {
@@ -273,7 +273,7 @@ function InputShowcaseGrid({ withLabel }: { withLabel: boolean }) {
       <div className="ui:grid ui:gap-5 md:ui:grid-cols-2 xl:ui:grid-cols-4">
         {showcaseVariants.map((variant) => (
           <div key={variant.title} className="ui:space-y-4">
-            <p className="ui:text-sm ui:font-medium ui:text-accent">
+            <p className="ui:text-sm ui:font-medium ui:text-ds-1">
               {variant.title}
             </p>
             <div className="ui:space-y-4">
@@ -452,11 +452,7 @@ export const CommonFieldPatterns: Story = {
             type="email"
             placeholder="Email address"
             rightIcon={
-              <MailIcon
-                width={16}
-                height={16}
-                className="ui:text-muted-foreground"
-              />
+              <MailIcon width={16} height={16} className="ui:text-ds-2" />
             }
           />
           <Input
@@ -486,7 +482,7 @@ export const LoginFormExample: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <form className="ui:flex ui:w-full ui:flex-col ui:gap-4">
-        <h3 className="ui:mb-2 ui:text-xl ui:font-semibold ui:text-foreground">
+        <h3 className="ui:mb-2 ui:text-xl ui:font-semibold ui:text-ds-1">
           Sign In
         </h3>
         <Input label="Email" type="email" placeholder="you@example.com" />

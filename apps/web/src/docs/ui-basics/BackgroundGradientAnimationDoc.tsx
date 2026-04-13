@@ -30,7 +30,7 @@ const BackgroundGradientAnimationDoc = () => {
               Modern, interactive gradient animations for high-end landing
               pages. Move your mouse to interact with the center light.
             </p>
-            <Button className="border-white bg-white px-8 py-3 font-bold text-accent shadow-2xl hover:bg-white/90 hover:opacity-100">
+            <Button className="border-white bg-white px-8 py-3 font-bold text-ds-1 shadow-2xl hover:bg-white/90 hover:opacity-100">
               Get Started
             </Button>
           </div>
@@ -56,7 +56,7 @@ export function HeroBackgroundExample() {
         <p className="mt-4 text-lg text-white/80">
           Modern, interactive gradient animations for high-end landing pages.
         </p>
-        <Button className="mt-6 border-white bg-white px-8 py-3 font-bold text-accent">
+        <Button className="mt-6 border-white bg-white px-8 py-3 font-bold text-ds-1">
           Get Started
         </Button>
       </div>

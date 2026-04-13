@@ -26,7 +26,7 @@ const SkeletonDoc = () => {
       </p>
 
       <div className="docs-showcase-card">
-        <div className="w-full max-w-3xl rounded-md border border-border bg-card p-6">
+        <div className="w-full max-w-3xl rounded-md border border-ds-border-2 bg-ds-surface-1 p-6">
           <Skeleton
             lines={4}
             height={14}
@@ -71,23 +71,25 @@ const SkeletonDoc = () => {
             <div
               key={item.mode}
               data-mode={item.mode}
-              className="rounded-md border border-border bg-canvas p-4 shadow-sm"
+              className="rounded-md border border-ds-border-2 bg-ds-canvas p-4 shadow-sm"
             >
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-semibold text-fg">{item.label}</p>
-                  <p className="text-xs uppercase tracking-[0.16em] text-fg-muted">
+                  <p className="text-sm font-semibold text-ds-1">
+                    {item.label}
+                  </p>
+                  <p className="text-xs uppercase tracking-[0.16em] text-ds-2">
                     data-mode=&quot;{item.mode}&quot;
                   </p>
                 </div>
-                <span className="rounded-full bg-accent-subtle px-3 py-1 text-xs font-medium text-accent">
+                <span className="rounded-full bg-ds-accent-subtle px-3 py-1 text-xs font-medium text-ds-1">
                   mode
                 </span>
               </div>
 
               <div className="space-y-4">
                 <SkeletonMetricCard tone="accent" />
-                <div className="rounded-md border border-border bg-card p-4">
+                <div className="rounded-md border border-ds-border-2 bg-ds-surface-1 p-4">
                   <Skeleton
                     lines={3}
                     height={12}
@@ -146,7 +148,7 @@ const SkeletonDoc = () => {
       <div className="docs-showcase-card">
         <div className="grid w-full gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <SkeletonCard showAvatar showActions animation="wave" tone="accent" />
-          <div className="rounded-md border border-border bg-card p-4">
+          <div className="rounded-md border border-ds-border-2 bg-ds-surface-1 p-4">
             <div className="space-y-4">
               <SkeletonListItem animation="wave" showAction />
               <SkeletonListItem animation="wave" showAction />
@@ -171,13 +173,13 @@ const SkeletonDoc = () => {
       </p>
 
       <div className="docs-showcase-card">
-        <div className="w-full max-w-4xl overflow-hidden rounded-md border border-border bg-card px-4 py-2">
+        <div className="w-full max-w-4xl overflow-hidden rounded-md border border-ds-border-2 bg-ds-surface-1 px-4 py-2">
           {Array.from({ length: 5 }).map((_, index) => (
             <SkeletonTableRow
               key={index}
               columns={5}
               animation="wave"
-              className="border-b border-border last:border-b-0"
+              className="border-b border-ds-border-2 last:border-b-0"
             />
           ))}
         </div>
@@ -191,7 +193,7 @@ const SkeletonDoc = () => {
     key={index}
     columns={5}
     animation="wave"
-    className="border-b border-border last:border-b-0"
+    className="border-b border-ds-border-2 last:border-b-0"
   />
 ))}`}
       />

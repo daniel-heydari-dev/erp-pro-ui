@@ -63,75 +63,74 @@ const iconSizeStyles: Record<ChipSize, string> = {
 
 const colorStyles: Record<ChipVariant, Record<ChipColor, string>> = {
   filled: {
-    default:
-      "bg-gradient-to-br from-neutral-100 to-neutral-200 text-neutral-800 shadow-sm dark:from-neutral-700 dark:to-neutral-800 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-600",
+    default: "bg-ds-surface-2 text-ds-1 shadow-sm border border-ds-border-2",
     primary:
-      "bg-linear-to-br from-accent to-accent-hover text-on-accent shadow-md shadow-accent/30 dark:shadow-accent/20",
+      "bg-ds-accent text-ds-on-accent shadow-md shadow-ds-accent/25 border border-ds-border-accent",
     secondary:
-      "bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-md shadow-purple-500/30 dark:shadow-purple-500/20",
+      "bg-ds-accent-subtle text-ds-1 shadow-sm border border-ds-border-accent",
     success:
-      "bg-gradient-to-br from-green-500 to-green-600 text-white shadow-md shadow-green-500/30 dark:shadow-green-500/20",
+      "bg-ds-state-success-surface text-ds-state-success-text shadow-sm border border-ds-state-success-border",
     warning:
-      "bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/30 dark:shadow-amber-500/20",
+      "bg-ds-state-warning-surface text-ds-state-warning-text shadow-sm border border-ds-state-warning-border",
     error:
-      "bg-gradient-to-br from-red-500 to-red-600 text-white shadow-md shadow-red-500/30 dark:shadow-red-500/20",
-    info: "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-500/30 dark:shadow-blue-500/20",
+      "bg-ds-state-error-surface text-ds-state-error-text shadow-sm border border-ds-state-error-border",
+    info: "bg-ds-state-info-surface text-ds-state-info-text shadow-sm border border-ds-state-info-border",
   },
   outlined: {
     default:
-      "border-2 border-neutral-300 text-neutral-700 bg-transparent dark:border-neutral-600 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800/50",
+      "border-2 border-ds-border-3 text-ds-2 bg-transparent hover:bg-ds-surface-2",
     primary:
-      "border-2 border-accent bg-transparent text-accent hover:bg-accent-subtle",
+      "border-2 border-ds-border-accent bg-transparent text-ds-accent hover:bg-ds-accent-subtle",
     secondary:
-      "border-2 border-purple-500 text-purple-600 bg-transparent dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20",
+      "border-2 border-ds-border-3 text-ds-1 bg-transparent hover:bg-ds-surface-2",
     success:
-      "border-2 border-green-500 text-green-600 bg-transparent dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20",
+      "border-2 border-ds-state-success-border text-ds-state-success-text bg-transparent hover:bg-ds-state-success-surface",
     warning:
-      "border-2 border-amber-500 text-amber-600 bg-transparent dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20",
+      "border-2 border-ds-state-warning-border text-ds-state-warning-text bg-transparent hover:bg-ds-state-warning-surface",
     error:
-      "border-2 border-red-500 text-red-600 bg-transparent dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20",
-    info: "border-2 border-blue-500 text-blue-600 bg-transparent dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20",
+      "border-2 border-ds-state-error-border text-ds-state-error-text bg-transparent hover:bg-ds-state-error-surface",
+    info: "border-2 border-ds-state-info-border text-ds-state-info-text bg-transparent hover:bg-ds-state-info-surface",
   },
   soft: {
     default:
-      "bg-neutral-100 text-neutral-800 dark:bg-neutral-800/60 dark:text-neutral-200 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/50",
+      "bg-ds-surface-2 text-ds-1 backdrop-blur-sm border border-ds-border-2",
     primary:
-      "border border-accent/20 bg-accent-subtle text-accent backdrop-blur-sm",
+      "border border-ds-border-accent/20 bg-ds-accent-subtle text-ds-1 backdrop-blur-sm",
     secondary:
-      "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 backdrop-blur-sm border border-purple-200/50 dark:border-purple-800/50",
+      "bg-ds-surface-3/30 text-ds-1 backdrop-blur-sm border border-ds-border-3/50",
     success:
-      "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 backdrop-blur-sm border border-green-200/50 dark:border-green-800/50",
+      "bg-ds-state-success-surface text-ds-state-success-text backdrop-blur-sm border border-ds-state-success-border/70",
     warning:
-      "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 backdrop-blur-sm border border-amber-200/50 dark:border-amber-800/50",
+      "bg-ds-state-warning-surface text-ds-state-warning-text backdrop-blur-sm border border-ds-state-warning-border/70",
     error:
-      "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300 backdrop-blur-sm border border-red-200/50 dark:border-red-800/50",
-    info: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 backdrop-blur-sm border border-blue-200/50 dark:border-blue-800/50",
+      "bg-ds-state-error-surface text-ds-state-error-text backdrop-blur-sm border border-ds-state-error-border/70",
+    info: "bg-ds-state-info-surface text-ds-state-info-text backdrop-blur-sm border border-ds-state-info-border/70",
   },
   glass: {
     default:
-      "bg-white/70 text-neutral-800 dark:bg-neutral-800/70 dark:text-neutral-100 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg",
+      "bg-ds-surface-1/70 text-ds-1 backdrop-blur-xl border border-ds-border-2/40 shadow-lg",
     primary:
-      "border border-accent/20 bg-accent/15 text-accent backdrop-blur-xl shadow-lg shadow-accent/10",
+      "border border-ds-border-accent/20 bg-ds-accent/15 text-ds-1 backdrop-blur-xl shadow-lg shadow-ds-accent/10",
     secondary:
-      "bg-purple-500/20 text-purple-700 dark:bg-purple-500/30 dark:text-purple-200 backdrop-blur-xl border border-purple-300/30 dark:border-purple-400/20 shadow-lg shadow-purple-500/10",
+      "bg-ds-surface-3/45 text-ds-1 backdrop-blur-xl border border-ds-border-3/50 shadow-lg",
     success:
-      "bg-green-500/20 text-green-700 dark:bg-green-500/30 dark:text-green-200 backdrop-blur-xl border border-green-300/30 dark:border-green-400/20 shadow-lg shadow-green-500/10",
+      "bg-ds-state-success-surface/65 text-ds-state-success-text backdrop-blur-xl border border-ds-state-success-border/60 shadow-lg",
     warning:
-      "bg-amber-500/20 text-amber-700 dark:bg-amber-500/30 dark:text-amber-200 backdrop-blur-xl border border-amber-300/30 dark:border-amber-400/20 shadow-lg shadow-amber-500/10",
+      "bg-ds-state-warning-surface/65 text-ds-state-warning-text backdrop-blur-xl border border-ds-state-warning-border/60 shadow-lg",
     error:
-      "bg-red-500/20 text-red-700 dark:bg-red-500/30 dark:text-red-200 backdrop-blur-xl border border-red-300/30 dark:border-red-400/20 shadow-lg shadow-red-500/10",
-    info: "bg-blue-500/20 text-blue-700 dark:bg-blue-500/30 dark:text-blue-200 backdrop-blur-xl border border-blue-300/30 dark:border-blue-400/20 shadow-lg shadow-blue-500/10",
+      "bg-ds-state-error-surface/65 text-ds-state-error-text backdrop-blur-xl border border-ds-state-error-border/60 shadow-lg",
+    info: "bg-ds-state-info-surface/65 text-ds-state-info-text backdrop-blur-xl border border-ds-state-info-border/60 shadow-lg",
   },
 };
 
 const dotColorStyles: Record<ChipColor, string> = {
-  default: "bg-neutral-500 dark:bg-neutral-400",
-  primary: "bg-accent",
-  secondary: "bg-purple-500",
-  success: "bg-green-500",
-  warning: "bg-amber-500",
-  error: "bg-red-500",
-  info: "bg-blue-500",
+  default: "bg-ds-3",
+  primary: "bg-ds-accent",
+  secondary: "bg-ds-border-3",
+  success: "bg-ds-state-success",
+  warning: "bg-ds-state-warning",
+  error: "bg-ds-state-danger",
+  info: "bg-ds-state-info",
 };
 
 const Chip = forwardRef<HTMLSpanElement, ChipProps>(
@@ -239,7 +238,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
             disabled={disabled}
             className={`
               shrink-0 rounded-full p-0.5 ml-1 transition-all duration-200
-              hover:bg-black/20 dark:hover:bg-white/20 hover:scale-110
+              hover:bg-ds-surface-3/35 hover:scale-110
               focus:outline-none focus:ring-2 focus:ring-current focus:ring-offset-1
               ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
             `}

@@ -14,36 +14,28 @@ const variantStyles: Record<
   }
 > = {
   info: {
-    container:
-      "border-[color-mix(in_oklch,var(--ds-color-info)_30%,transparent)] bg-[color-mix(in_oklch,var(--ds-color-info)_14%,transparent)]",
-    icon: "text-[var(--ds-color-info)]",
-    title: "text-[var(--ds-color-info)]",
-    description:
-      "text-[color-mix(in_oklch,var(--ds-color-info)_82%,var(--ds-color-fg))]",
+    container: "border-ds-state-info-border bg-ds-state-info-surface",
+    icon: "text-ds-state-info-text",
+    title: "text-ds-state-info-text",
+    description: "text-ds-1",
   },
   success: {
-    container:
-      "border-[color-mix(in_oklch,var(--ds-color-success)_34%,transparent)] bg-[color-mix(in_oklch,var(--ds-color-success)_14%,transparent)]",
-    icon: "text-[var(--ds-color-success)]",
-    title: "text-[var(--ds-color-success)]",
-    description:
-      "text-[color-mix(in_oklch,var(--ds-color-success)_82%,var(--ds-color-fg))]",
+    container: "border-ds-state-success-border bg-ds-state-success-surface",
+    icon: "text-ds-state-success-text",
+    title: "text-ds-state-success-text",
+    description: "text-ds-1",
   },
   warning: {
-    container:
-      "border-[color-mix(in_oklch,var(--ds-color-warning)_38%,transparent)] bg-[color-mix(in_oklch,var(--ds-color-warning)_14%,transparent)]",
-    icon: "text-[var(--ds-color-warning)]",
-    title: "text-[var(--ds-color-warning)]",
-    description:
-      "text-[color-mix(in_oklch,var(--ds-color-warning)_84%,var(--ds-color-fg))]",
+    container: "border-ds-state-warning-border bg-ds-state-warning-surface",
+    icon: "text-ds-state-warning-text",
+    title: "text-ds-state-warning-text",
+    description: "text-ds-1",
   },
   destructive: {
-    container:
-      "border-[color-mix(in_oklch,var(--ds-color-danger)_38%,transparent)] bg-[color-mix(in_oklch,var(--ds-color-danger)_14%,transparent)]",
-    icon: "text-[var(--ds-color-danger)]",
-    title: "text-[var(--ds-color-danger)]",
-    description:
-      "text-[color-mix(in_oklch,var(--ds-color-danger)_82%,var(--ds-color-fg))]",
+    container: "border-ds-state-error-border bg-ds-state-error-surface",
+    icon: "text-ds-state-error-text",
+    title: "text-ds-state-error-text",
+    description: "text-ds-1",
   },
 };
 
@@ -62,10 +54,9 @@ export const Alert = ({
   const resolvedVariant: ResolvedAlertVariant =
     variant === "error" ? "destructive" : variant;
   const styles = variantStyles[resolvedVariant];
-  const classes =
-    `flex gap-3 rounded-lg border p-4 text-sm ${styles.container}`
-      .concat(" ", className)
-      .trim();
+  const classes = `flex gap-3 rounded-lg border p-4 text-sm ${styles.container}`
+    .concat(" ", className)
+    .trim();
   const containerStyle: CSSProperties = {
     ...style,
     ...(colorOverrides?.background
@@ -94,7 +85,10 @@ export const Alert = ({
       </span>
       <div className="space-y-1">
         {title && (
-          <p className={`text-base font-medium ${styles.title}`} style={titleStyle}>
+          <p
+            className={`text-base font-medium ${styles.title}`}
+            style={titleStyle}
+          >
             {title}
           </p>
         )}

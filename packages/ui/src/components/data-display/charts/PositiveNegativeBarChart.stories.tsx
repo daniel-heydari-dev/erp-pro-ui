@@ -237,12 +237,12 @@ export const CompactReleaseImpact: Story = {
               ].map((metric) => (
                 <div
                   key={metric.label}
-                  className="ui:rounded-xl ui:border ui:border-border ui:bg-muted/35 ui:px-3 ui:py-3"
+                  className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/35 ui:px-3 ui:py-3"
                 >
-                  <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.14em] ui:text-muted-foreground">
+                  <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.14em] ui:text-ds-2">
                     {metric.label}
                   </p>
-                  <p className="ui:mt-2 ui:text-lg ui:font-semibold ui:text-foreground">
+                  <p className="ui:mt-2 ui:text-lg ui:font-semibold ui:text-ds-1">
                     {metric.value}
                   </p>
                 </div>

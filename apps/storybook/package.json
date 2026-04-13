@@ -12,29 +12,30 @@
     "build-storybook": "pnpm --dir ../.. --filter erp-pro-ui story:check && STORYBOOK_STATIC_BUILD=true storybook build"
   },
   "dependencies": {
+    "erp-pro-ui": "workspace:*",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "erp-pro-ui": "workspace:*"
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
-    "@erp-pro/tsconfig": "workspace:*",
     "@erp-pro/eslint-config": "workspace:*",
+    "@erp-pro/tsconfig": "workspace:*",
     "@erp-pro/vite-config": "workspace:*",
     "@storybook/addon-a11y": "^10.3.5",
     "@storybook/addon-docs": "^10.3.5",
     "@storybook/addon-links": "^10.3.5",
+    "@storybook/addon-mcp": "^0.5.0",
     "@storybook/addon-onboarding": "^10.3.5",
     "@storybook/addon-vitest": "^10.3.5",
     "@storybook/react-vite": "^10.3.5",
     "@tailwindcss/vite": "^4.2.2",
-    "storybook": "^10.3.5",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.2.0",
     "eslint-plugin-storybook": "^10.3.5",
+    "storybook": "^10.3.5",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
     "vitest": "^4.1.4"
   }
 }

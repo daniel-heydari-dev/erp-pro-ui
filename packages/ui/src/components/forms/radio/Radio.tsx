@@ -47,7 +47,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         {label && (
           <label
             htmlFor={radioId}
-            className="text-sm font-medium leading-none cursor-pointer text-neutral-900 dark:text-white"
+            className="text-sm font-medium leading-none cursor-pointer text-ds-1"
           >
             {label}
           </label>

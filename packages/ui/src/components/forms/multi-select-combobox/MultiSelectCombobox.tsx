@@ -24,7 +24,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
   onChange,
   placeholder = "Select...",
   className,
-  bgClassName = "bg-background-secondary",
+  bgClassName = "bg-ds-surface-1",
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -95,11 +95,11 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="group/multi-combobox rounded-lg border-border p-[2px] transition duration-300 hover:border-accent"
+        className="group/multi-combobox rounded-lg border-ds-border-2 p-[2px] transition duration-300 hover:border-ds-border-accent"
       >
         <div
           className={mergeClassNames(
-            "flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out group-hover/multi-combobox:shadow-none",
+            "flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-ds-border-field px-3 py-2 text-sm text-ds-1 transition duration-400 ease-in-out group-hover/multi-combobox:shadow-none",
             bgClassName,
           )}
           onClick={() => {
@@ -114,25 +114,25 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
               selectedLabels.map((label, index) => (
                 <span
                   key={value[index]}
-                  className="inline-flex items-center gap-1 rounded-md border border-input bg-background-tertiary px-2 py-0.5 text-xs font-medium text-foreground"
+                  className="inline-flex items-center gap-1 rounded-md border border-ds-border-field bg-ds-surface-2 px-2 py-0.5 text-xs font-medium text-ds-1"
                 >
                   {label}
                   <button
                     type="button"
                     onClick={(e) => handleRemoveTag(value[index], e)}
-                    className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-background-secondary hover:text-foreground"
+                    className="ml-0.5 rounded-full p-0.5 text-ds-2 transition-colors hover:bg-ds-surface-1 hover:text-ds-1"
                   >
                     <CloseIcon className="w-3 h-3" aria-hidden="true" />
                   </button>
                 </span>
               ))
             ) : (
-              <span className="text-muted-foreground">{placeholder}</span>
+              <span className="text-ds-2">{placeholder}</span>
             )}
           </div>
           <span
             className={mergeClassNames(
-              "ml-2 shrink-0 text-muted-foreground transition-transform duration-300",
+              "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
               open ? "rotate-180" : "rotate-0",
             )}
           >
@@ -146,12 +146,12 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
         </div>
       </motion.div>
       {open && (
-        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition">
+        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition">
           {/* Sticky search input */}
-          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-background-secondary/95 backdrop-blur-sm">
+          <div className="sticky top-0 z-10 rounded-t-lg border-b border-ds-border-3  bg-ds-surface-1/95 backdrop-blur-sm">
             <input
               autoFocus
-              className="w-full bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent"
+              className="w-full bg-transparent rounded-t-lg px-3 py-2 text-sm text-ds-1 outline-none placeholder:text-ds-2 focus-visible:ring-1 focus-visible:ring-ds-focus"
               placeholder="Type to search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -161,7 +161,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
           {/* Scrollable options */}
           <div className="max-h-80 flex-1 overflow-auto">
             {filteredOptions.length === 0 && (
-              <div className="p-3 text-center text-muted-foreground text-sm">
+              <div className="p-3 text-center text-ds-2 text-sm">
                 No options found
               </div>
             )}
@@ -173,8 +173,8 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                   className={mergeClassNames(
                     "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition",
                     isSelected
-                      ? "bg-background-tertiary text-foreground"
-                      : "text-foreground hover:bg-background-tertiary hover:text-foreground",
+                      ? "bg-ds-surface-2 text-ds-1"
+                      : "text-ds-1 hover:bg-ds-surface-2 hover:text-ds-1",
                   )}
                   onClick={() => handleOptionClick(option.value)}
                 >
@@ -182,8 +182,8 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                     className={mergeClassNames(
                       "flex h-4 w-4 items-center justify-center rounded border transition",
                       isSelected
-                        ? "border-accent bg-accent text-on-accent"
-                        : "border-border",
+                        ? "border-ds-border-accent bg-ds-accent text-ds-on-accent"
+                        : "border-ds-border-2",
                     )}
                   >
                     {isSelected && <CheckIcon width={12} height={12} />}

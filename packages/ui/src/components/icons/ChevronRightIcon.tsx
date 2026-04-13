@@ -7,7 +7,7 @@ type IconProps = SVGProps<SVGSVGElement> & {
 };
 
 export const ChevronRightIcon: FC<IconProps> = ({
-  className = "text-fg",
+  className = "text-ds-1",
   title,
   titleId,
   ...props

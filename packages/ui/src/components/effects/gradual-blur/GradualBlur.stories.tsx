@@ -33,9 +33,9 @@ const scrollRevealSource = `import { GradualBlur } from 'erp-pro-ui';
 
 export function ScrollRevealBlurExample() {
   return (
-    <GradualBlur blur={12} duration={1} className="max-w-sm rounded-2xl border bg-background p-8 text-center shadow-xl">
-      <h3 className="text-2xl font-bold text-foreground">Revealed Content</h3>
-      <p className="mt-2 text-sm text-muted-foreground">This card clears from blur as it enters view.</p>
+    <GradualBlur blur={12} duration={1} className="max-w-sm rounded-2xl border bg-ds-canvas p-8 text-center shadow-xl">
+      <h3 className="text-2xl font-bold text-ds-1">Revealed Content</h3>
+      <p className="mt-2 text-sm text-ds-2">This card clears from blur as it enters view.</p>
     </GradualBlur>
   );
 }`;
@@ -78,29 +78,29 @@ export const ScrollReveal: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <div className="ui:space-y-4">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Viewport-triggered reveal
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             This mirrors the docs scroll behavior inside a bounded container so
             the effect can be tested directly in Storybook.
           </p>
         </div>
-        <div className="ui:flex ui:h-[400px] ui:items-center ui:justify-center ui:overflow-y-auto ui:rounded-2xl ui:bg-muted/40 ui:p-6">
+        <div className="ui:flex ui:h-[400px] ui:items-center ui:justify-center ui:overflow-y-auto ui:rounded-2xl ui:bg-ds-surface-3/40 ui:p-6">
           <div className="ui:flex ui:min-h-[800px] ui:w-full ui:flex-col ui:items-center ui:justify-center ui:gap-20">
-            <div className="ui:text-sm ui:italic ui:text-muted-foreground">
+            <div className="ui:text-sm ui:italic ui:text-ds-2">
               Scroll down inside this panel to trigger the reveal
             </div>
             <GradualBlur
               {...args}
               blur={12}
               duration={1}
-              className="ui:max-w-sm ui:rounded-2xl ui:border ui:border-border ui:bg-background ui:p-8 ui:text-center ui:shadow-xl"
+              className="ui:max-w-sm ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-8 ui:text-center ui:shadow-xl"
             >
-              <h3 className="ui:text-2xl ui:font-bold ui:text-foreground">
+              <h3 className="ui:text-2xl ui:font-bold ui:text-ds-1">
                 Revealed Content
               </h3>
-              <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
+              <p className="ui:mt-2 ui:text-sm ui:text-ds-2">
                 This card clears from blur as it enters view, which works well
                 for product sections and editorial blocks.
               </p>
@@ -118,10 +118,10 @@ export const DirectionalGallery: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       <div className="ui:space-y-4">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Directional reveal comparisons
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Combine blur with movement to stage feature tiles, metric
             highlights, or onboarding steps.
           </p>

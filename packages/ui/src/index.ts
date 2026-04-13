@@ -13,6 +13,7 @@ export { ThemeProvider, useThemeContext } from "./foundations/theme";
 export type {
   ThemeModeType,
   ThemeColorType,
+  ThemeVariantType,
   ThemeDarkVariantType,
   ThemeColorSchemeType,
   UseThemeType,
@@ -28,6 +29,7 @@ export * from "./utils";
 // -----------------------------------------------------------------------------
 export {
   NeonLineChart,
+  MiniNeonSparkline,
   StackedBarChart,
   ThinBreakdownBar,
   AreaChart,
@@ -39,6 +41,9 @@ export {
   getChartPalette,
 } from "./components/data-display/charts";
 export type {
+  MiniNeonSparklineProps,
+  MiniNeonSparklinePoint,
+  MiniNeonSparklineTone,
   StackedBarData,
   BreakdownSegment,
   AreaChartData,
@@ -74,22 +79,35 @@ export { Calendar } from "./components/forms/calendar";
 export { Card } from "./components/data-display/card";
 
 export { Carousel } from "./components/navigation/carousel";
+export { Tabs } from "./components/navigation/tabs";
+export type {
+  TabsProps,
+  TabsItem,
+  TabsDirection,
+} from "./components/navigation/tabs";
 
 export { Checkbox } from "./components/forms/checkbox";
 
 export { Chip } from "./components/data-display/chip";
+export { SplitChip, StatusDotChip } from "./components/data-display/chip";
 export type {
   ChipProps,
   ChipVariant,
   ChipColor,
   ChipSize,
+  SplitChipProps,
+  StatusDotChipProps,
+  StatusDotChipTone,
 } from "./components/data-display/chip";
 
 export { ProgressBar } from "./components/data-display/progress-bar";
+export { CircularProgress } from "./components/data-display/progress-bar";
 export type {
   ProgressBarProps,
   ProgressBarSize,
   ProgressBarTone,
+  CircularProgressProps,
+  CircularProgressTone,
 } from "./components/data-display/progress-bar";
 
 export { ChromaGrid } from "./components/effects/chroma-grid";

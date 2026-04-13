@@ -58,12 +58,12 @@ const positionStyles: Record<
 };
 
 const arrowStyles: Record<HoverCardPosition, string> = {
-  top: "bottom-[-6px] left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-white/70 dark:border-t-neutral-900/70",
+  top: "bottom-[-6px] left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-ds-surface-1",
   bottom:
-    "top-[-6px] left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-t-transparent border-b-white/70 dark:border-b-neutral-900/70",
-  left: "right-[-6px] top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-r-transparent border-l-white/70 dark:border-l-neutral-900/70",
+    "top-[-6px] left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-t-transparent border-b-ds-surface-1",
+  left: "right-[-6px] top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-r-transparent border-l-ds-surface-1",
   right:
-    "left-[-6px] top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-l-transparent border-r-white/70 dark:border-r-neutral-900/70",
+    "left-[-6px] top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-l-transparent border-r-ds-surface-1",
 };
 
 const motionVariants = {
@@ -189,10 +189,9 @@ const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
               <div
                 className={`
                   w-full
-                  bg-white/70 dark:bg-neutral-900/70
+                  bg-ds-surface-1/95
                   backdrop-blur-xl
-                  rounded-xl shadow-2xl dark:shadow-neutral-950/50
-                  border border-white/40 dark:border-white/10
+                  rounded-xl border border-ds-border-2 shadow-2xl
                   p-4
                   ${className}
                 `}

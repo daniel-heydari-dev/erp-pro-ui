@@ -20,18 +20,9 @@ export const PasswordCriteria = ({ password }: PasswordCriteriaProps) => {
           {item.met ? (
             <CheckIcon className="mr-2 size-4 text-success" title="CheckIcon" />
           ) : (
-            <CloseIcon
-              className="mr-2 size-4 text-neutral-400 dark:text-neutral-500"
-              title="CloseIcon"
-            />
+            <CloseIcon className="mr-2 size-4 text-ds-3" title="CloseIcon" />
           )}
-          <span
-            className={
-              item.met
-                ? "text-success"
-                : "text-neutral-500 dark:text-neutral-400"
-            }
-          >
+          <span className={item.met ? "text-success" : "text-ds-2"}>
             {item.label}
           </span>
         </div>

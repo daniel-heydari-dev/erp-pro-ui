@@ -61,13 +61,13 @@ const minimalCards = [
   {
     id: "ops-1",
     content: (
-      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
+      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8 ui:text-center">
         <div>
-          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-muted-foreground">
+          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-ds-2">
             Utilization
           </p>
           <p className="ui:mt-3 ui:text-4xl ui:font-bold">94%</p>
-          <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-2 ui:text-sm ui:text-ds-2">
             Average picking zone occupancy
           </p>
         </div>
@@ -77,13 +77,13 @@ const minimalCards = [
   {
     id: "ops-2",
     content: (
-      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
+      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8 ui:text-center">
         <div>
-          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-muted-foreground">
+          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-ds-2">
             Order Throughput
           </p>
           <p className="ui:mt-3 ui:text-4xl ui:font-bold">1,284</p>
-          <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-2 ui:text-sm ui:text-ds-2">
             Orders processed in the last 24h
           </p>
         </div>
@@ -93,13 +93,13 @@ const minimalCards = [
   {
     id: "ops-3",
     content: (
-      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 ui:text-center">
+      <div className="ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8 ui:text-center">
         <div>
-          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-muted-foreground">
+          <p className="ui:text-sm ui:uppercase ui:tracking-[0.2em] ui:text-ds-2">
             Pending Approvals
           </p>
           <p className="ui:mt-3 ui:text-4xl ui:font-bold">27</p>
-          <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-2 ui:text-sm ui:text-ds-2">
             Transfers awaiting release
           </p>
         </div>

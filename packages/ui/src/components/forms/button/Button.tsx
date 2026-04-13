@@ -18,11 +18,11 @@ const baseClasses = `
   disabled:cursor-not-allowed
 `;
 const variantClassMap = {
-  primary: "bg-accent hover:bg-accent-hover text-on-accent shadow-2",
+  primary: "bg-ds-accent hover:bg-ds-accent-hover text-ds-on-accent shadow-2",
   secondary:
-    "bg-surface border border-border text-fg shadow-1 hover:border-border-strong hover:bg-canvas",
+    "bg-ds-surface-1 border border-ds-border-2 text-ds-1 shadow-1 hover:border-ds-border-1 hover:bg-ds-canvas",
   tertiary:
-    "bg-transparent text-fg shadow-none hover:bg-canvas/70 hover:text-accent border border-transparent",
+    "bg-transparent text-ds-1 shadow-none hover:bg-ds-canvas/70 hover:text-ds-1 border border-transparent",
 } satisfies Record<ButtonVariant, string>;
 const sizeClassMap = {
   small: "py-2 px-3 text-xs",

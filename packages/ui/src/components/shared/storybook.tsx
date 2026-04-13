@@ -38,7 +38,7 @@ export function StorySurface({
   return (
     <div
       className={mergeClassNames(
-        "ui:mx-auto ui:w-full ui:rounded-2xl ui:border ui:border-border ui:bg-background/95 ui:p-6 ui:text-foreground ui:shadow-sm",
+        "ui:mx-auto ui:w-full ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas/95 ui:p-6 ui:text-ds-1 ui:shadow-sm",
         widthClassName,
         className,
       )}
@@ -87,7 +87,7 @@ export function StoryIntro({
     <div className={className}>
       <p
         className={mergeClassNames(
-          "ui:text-sm ui:font-semibold ui:text-foreground",
+          "ui:text-sm ui:font-semibold ui:text-ds-1",
           titleClassName,
         )}
       >
@@ -96,7 +96,7 @@ export function StoryIntro({
       {description ? (
         <p
           className={mergeClassNames(
-            "ui:mt-1 ui:text-sm ui:text-muted-foreground",
+            "ui:mt-1 ui:text-sm ui:text-ds-2",
             descriptionClassName,
           )}
         >
@@ -116,7 +116,7 @@ export function StoryPanel({ children, className }: StoryPanelProps) {
   return (
     <div
       className={mergeClassNames(
-        "ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-card-foreground ui:shadow-sm",
+        "ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6 ui:text-ds-1 ui:shadow-sm",
         className,
       )}
     >

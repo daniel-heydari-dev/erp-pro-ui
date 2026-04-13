@@ -30,7 +30,7 @@ export const Select = forwardRef(function SelectComponent(
     onChange,
     placeholder = "Select...",
     disabled,
-    bgClassName = "bg-background-secondary",
+    bgClassName = "bg-ds-surface-1",
     size = "default",
     selectionIndicator = "check",
     ...props
@@ -135,7 +135,7 @@ export const Select = forwardRef(function SelectComponent(
       )}
     >
       {label ? (
-        <label className="mb-2 block text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+        <label className="mb-2 block text-sm leading-none font-medium text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
           {label}
         </label>
       ) : null}
@@ -176,22 +176,22 @@ export const Select = forwardRef(function SelectComponent(
           onMouseEnter={!disabled ? () => setVisible(true) : undefined}
           onMouseLeave={!disabled ? () => setVisible(false) : undefined}
           className={mergeClassNames(
-            "group/select rounded-lg p-[2px] transition duration-300 hover:border-accent",
+            "group/select rounded-lg p-[2px] transition duration-300 hover:border-ds-border-accent",
             disabled
-              ? "border-none bg-background-secondary"
+              ? "border-none bg-ds-surface-1"
               : error
-                ? "border-destructive"
-                : "border-border",
+                ? "border-ds-state-error-border"
+                : "border-ds-border-2",
           )}
         >
           <div
             className={mergeClassNames(
-              "flex w-full cursor-pointer items-center justify-between rounded-md border border-input transition duration-400 ease-in-out",
+              "flex w-full cursor-pointer items-center justify-between rounded-md border border-ds-border-field transition duration-400 ease-in-out",
               isCompact ? "h-9 px-2.5 py-2 text-sm" : "h-10 px-3 py-2 text-sm",
               bgClassName,
-              disabled ? "cursor-not-allowed opacity-50" : "text-foreground",
+              disabled ? "cursor-not-allowed opacity-50" : "text-ds-1",
               error
-                ? "border-destructive text-destructive focus-visible:ring-destructive"
+                ? "border-ds-state-error-border text-ds-state-error-text focus-visible:ring-ds-state-error-border"
                 : "",
               triggerClassName,
             )}
@@ -210,19 +210,19 @@ export const Select = forwardRef(function SelectComponent(
               <TruncatedText
                 as="span"
                 showTitleOnHover
-                className="flex-1 text-foreground"
+                className="flex-1 text-ds-1"
               >
                 {selectedOption.label}
               </TruncatedText>
             ) : (
-              <TruncatedText as="span" className="flex-1 text-muted-foreground">
+              <TruncatedText as="span" className="flex-1 text-ds-2">
                 {placeholder}
               </TruncatedText>
             )}
 
             <span
               className={mergeClassNames(
-                "ml-2 shrink-0 text-muted-foreground transition-transform duration-300",
+                "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
                 open ? "rotate-180" : "rotate-0",
               )}
             >
@@ -239,13 +239,13 @@ export const Select = forwardRef(function SelectComponent(
         {open && !disabled ? (
           <div
             className={mergeClassNames(
-              "absolute right-0 left-0 z-20 mt-1 flex flex-col overflow-auto rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition",
+              "absolute right-0 left-0 z-20 mt-1 flex flex-col overflow-auto rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition",
               isCompact ? "max-h-56" : "max-h-60",
               dropdownClassName,
             )}
           >
             {options.length === 0 ? (
-              <div className="px-3 py-2 text-muted-foreground">No options</div>
+              <div className="px-3 py-2 text-ds-2">No options</div>
             ) : null}
 
             {options.map((option) => (
@@ -253,14 +253,14 @@ export const Select = forwardRef(function SelectComponent(
                 key={option.value}
                 ref={option.value === value ? selectedOptionRef : null}
                 className={mergeClassNames(
-                  "mx-1 my-1 flex cursor-pointer items-center rounded-md text-foreground transition",
+                  "mx-1 my-1 flex cursor-pointer items-center rounded-md text-ds-1 transition",
                   isCompact
                     ? "gap-1.5 px-2.5 py-2 text-sm"
                     : "gap-2 px-3 py-2 text-sm",
                   option.value === value
-                    ? "bg-accent-subtle font-semibold text-accent"
+                    ? "bg-ds-accent-subtle font-semibold text-ds-1"
                     : "",
-                  "hover:bg-accent hover:text-on-accent",
+                  "hover:bg-ds-accent hover:text-ds-on-accent",
                   optionClassName,
                 )}
                 onClick={() => handleSelect(option.value)}
@@ -274,7 +274,7 @@ export const Select = forwardRef(function SelectComponent(
                   >
                     {option.value === value ? (
                       <CheckIcon
-                        className="text-accent"
+                        className="text-ds-1"
                         width={isCompact ? 16 : 18}
                         height={isCompact ? 16 : 18}
                       />
@@ -291,10 +291,12 @@ export const Select = forwardRef(function SelectComponent(
       </div>
 
       {error ? (
-        <p className="mt-1 text-sm font-medium text-destructive">{error}</p>
+        <p className="mt-1 text-sm font-medium text-ds-state-error-text">
+          {error}
+        </p>
       ) : null}
       {helperText && !error ? (
-        <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
+        <p className="mt-1 text-sm text-ds-2">{helperText}</p>
       ) : null}
     </div>
   );

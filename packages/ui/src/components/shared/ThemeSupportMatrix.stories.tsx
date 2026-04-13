@@ -92,21 +92,21 @@ function ThemeSupportCard({
     <section
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+      className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
     >
       <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-fg">{brand}</p>
-          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">{brand}</p>
+          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             {mode}
           </p>
         </div>
-        <span className="ui:rounded-full ui:bg-accent-subtle ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-accent">
+        <span className="ui:rounded-full ui:bg-ds-accent-subtle ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-ds-1">
           accent
         </span>
       </div>
 
-      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
+      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
         <div className="ui:space-y-3">
           <Input
             label="Workspace name"
@@ -169,12 +169,12 @@ function DataDisplayThemeCard({
     <section
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+      className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
     >
       <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-fg">{brand}</p>
-          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">{brand}</p>
+          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             {mode}
           </p>
         </div>
@@ -183,7 +183,7 @@ function DataDisplayThemeCard({
         </Chip>
       </div>
 
-      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
+      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
         <Card
           title="Fulfillment health"
           description="Summary cards, chips, and proportion bars should inherit the same accent and status semantics as forms."
@@ -206,10 +206,10 @@ function DataDisplayThemeCard({
 
         <div className="ui:space-y-2">
           <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
-            <p className="ui:text-sm ui:font-medium ui:text-fg">
+            <p className="ui:text-sm ui:font-medium ui:text-ds-1">
               Semantic distribution
             </p>
-            <p className="ui:text-xs ui:text-fg-muted">Status mix</p>
+            <p className="ui:text-xs ui:text-ds-2">Status mix</p>
           </div>
           <ThinBreakdownBar data={[...themeBreakdown]} showLabels={false} />
         </div>
@@ -229,12 +229,12 @@ function ChartThemeCard({
     <section
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+      className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
     >
       <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-fg">{brand}</p>
-          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">{brand}</p>
+          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             {mode}
           </p>
         </div>
@@ -243,7 +243,7 @@ function ChartThemeCard({
         </span>
       </div>
 
-      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
+      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
         <div className="ui:flex ui:flex-wrap ui:gap-2">
           <Chip variant="soft" color="primary">
             Accent
@@ -278,12 +278,12 @@ function NavigationThemeCard({
     <section
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+      className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
     >
       <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-fg">{brand}</p>
-          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">{brand}</p>
+          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             {mode}
           </p>
         </div>
@@ -292,7 +292,7 @@ function NavigationThemeCard({
         </Chip>
       </div>
 
-      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
+      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
         <Stepper
           steps={navigationSteps}
           currentStep={1}
@@ -323,12 +323,12 @@ function OverlayThemeCard({
     <section
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+      className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
     >
       <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-fg">{brand}</p>
-          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">{brand}</p>
+          <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             {mode}
           </p>
         </div>
@@ -337,7 +337,7 @@ function OverlayThemeCard({
         </span>
       </div>
 
-      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4">
+      <div className="ui:space-y-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
         <div className="ui:flex ui:flex-wrap ui:gap-2">
           <Tooltip
             content="Tooltip chrome should follow the active card theme too."
@@ -353,11 +353,11 @@ function OverlayThemeCard({
           <Button label="Open drawer" onClick={() => setDrawerOpen(true)} />
         </div>
 
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-elevated ui:p-3">
-          <p className="ui:text-sm ui:font-medium ui:text-fg">
+        <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-surface-2 ui:p-3">
+          <p className="ui:text-sm ui:font-medium ui:text-ds-1">
             Interactive overlay check
           </p>
-          <p className="ui:mt-1 ui:text-xs ui:text-fg-muted">
+          <p className="ui:mt-1 ui:text-xs ui:text-ds-2">
             Open the dialog or drawer from this tile to inspect overlay chrome,
             actions, and text against the current brand and mode.
           </p>
@@ -392,18 +392,18 @@ function OverlayThemeCard({
           }
         >
           <div className="ui:space-y-3">
-            <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-              <p className="ui:text-sm ui:font-medium ui:text-fg">
+            <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+              <p className="ui:text-sm ui:font-medium ui:text-ds-1">
                 Approval routing
               </p>
-              <p className="ui:mt-1 ui:text-sm ui:text-fg-muted">
+              <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
                 Operations lead and finance reviewer must both confirm before
                 release.
               </p>
             </div>
-            <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-              <p className="ui:text-sm ui:font-medium ui:text-fg">Timing</p>
-              <p className="ui:mt-1 ui:text-sm ui:text-fg-muted">
+            <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+              <p className="ui:text-sm ui:font-medium ui:text-ds-1">Timing</p>
+              <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
                 Scheduled for 18:30 local time with stakeholder notification 15
                 minutes before start.
               </p>
@@ -420,10 +420,10 @@ export const BrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Form and feedback theme verification
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
+          <p className="ui:text-sm ui:text-ds-2">
             This matrix exercises real controls and status components instead of
             token swatches so visual regressions show up where users actually
             interact with the system.
@@ -451,10 +451,10 @@ export const DataDisplayBrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Data display theme verification
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
+          <p className="ui:text-sm ui:text-ds-2">
             Cards, chips, and compact proportional bars are rendered under each
             supported brand and mode pair so accent and status tokens can be
             checked in the same contexts users see in dashboards.
@@ -482,10 +482,10 @@ export const ChartBrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Chart theme verification
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
+          <p className="ui:text-sm ui:text-ds-2">
             Compact chart cards verify that semantic accent, success, warning,
             info, and danger palettes remain legible and consistent across all
             shipped brands and modes.
@@ -513,10 +513,10 @@ export const NavigationBrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Navigation theme verification
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
+          <p className="ui:text-sm ui:text-ds-2">
             Stepper and accordion states are rendered under every brand and mode
             pair so active progress, separators, muted text, and content
             hierarchy can be checked in realistic navigation flows.
@@ -544,10 +544,10 @@ export const OverlayBrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Overlay theme verification
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
+          <p className="ui:text-sm ui:text-ds-2">
             Each tile provides a tooltip plus live dialog and drawer triggers so
             overlay surfaces can be inspected under every supported brand and
             mode combination.

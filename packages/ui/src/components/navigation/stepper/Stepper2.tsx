@@ -129,13 +129,13 @@ export function StepperWizard({
     >
       <div
         className={mergeClassNames(
-          "mx-auto w-full max-w-3xl rounded-3xl border border-border bg-background shadow-2",
+          "mx-auto w-full max-w-3xl rounded-3xl border border-ds-border-2 bg-ds-canvas shadow-2",
           stepCircleContainerClassName,
         )}
       >
         <div
           className={mergeClassNames(
-            "flex w-full items-center gap-3 border-b border-border px-6 py-6 sm:px-8",
+            "flex w-full items-center gap-3 border-b border-ds-border-2 px-6 py-6 sm:px-8",
             stepContainerClassName,
           )}
         >
@@ -194,7 +194,7 @@ export function StepperWizard({
               {currentStep > 0 ? (
                 <Button
                   onClick={handleBack}
-                  className="rounded-md border-transparent bg-transparent px-3 py-2 text-sm font-medium text-muted-foreground shadow-none hover:bg-surface hover:text-foreground"
+                  className="rounded-md border-transparent bg-transparent px-3 py-2 text-sm font-medium text-ds-2 shadow-none hover:bg-ds-surface-1 hover:text-ds-1"
                   {...backButtonProps}
                 >
                   {backButtonText}
@@ -329,7 +329,7 @@ function WizardStepIndicator({
       type="button"
       onClick={() => onStepClick(stepIndex)}
       className={mergeClassNames(
-        "relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-surface-1",
         isClickable ? "cursor-pointer" : "cursor-default",
       )}
       animate={status}
@@ -377,7 +377,7 @@ function WizardStepConnector({ isComplete }: { isComplete: boolean }) {
   return (
     <div className="relative mx-2 h-0.5 flex-1 overflow-hidden rounded-full bg-border">
       <motion.div
-        className="absolute inset-y-0 left-0 rounded-full bg-accent"
+        className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
         initial={false}
         animate={isComplete ? "complete" : "incomplete"}
         variants={{

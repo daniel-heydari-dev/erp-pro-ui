@@ -16,7 +16,7 @@ const HoverCardDoc = () => {
         <HoverCard
           content={
             <div className="flex gap-4">
-              <div className="w-12 h-12 rounded-full bg-accent-subtle flex items-center justify-center text-accent font-bold text-lg border border-accent/20">
+              <div className="w-12 h-12 rounded-full bg-ds-accent-subtle flex items-center justify-center text-ds-1 font-bold text-lg border border-ds-border-accent/20">
                 EP
               </div>
               <div className="flex-1">
@@ -41,7 +41,7 @@ const HoverCardDoc = () => {
             </div>
           }
         >
-          <span className="text-accent font-bold underline decoration-accent/30 underline-offset-4 cursor-pointer hover:decoration-accent transition-all duration-300">
+          <span className="text-ds-1 font-bold underline decoration-ds-accent/30 underline-offset-4 cursor-pointer hover:decoration-ds-accent transition-all duration-300">
             erp pro
           </span>
         </HoverCard>
@@ -55,12 +55,12 @@ export function BasicHoverCardExample() {
     <HoverCard
       content={
         <div className="flex gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/20 bg-accent-subtle font-bold text-accent">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-ds-border-accent/20 bg-ds-accent-subtle font-bold text-ds-1">
             EP
           </div>
           <div>
             <h4 className="text-sm font-bold">ERP PRO</h4>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-ds-2">
               The ultimate SaaS component library for building professional tools.
             </p>
           </div>
@@ -133,9 +133,9 @@ export function TeamMemberHoverCardExample() {
         <div className="w-72 space-y-3">
           <div>
             <h4 className="text-sm font-bold">Mina Chen</h4>
-            <p className="mt-1 text-xs text-muted-foreground">Inventory Operations Lead</p>
+            <p className="mt-1 text-xs text-ds-2">Inventory Operations Lead</p>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-ds-2">
             Owns receiving audits, transfer approvals, and supplier escalation.
           </p>
         </div>
@@ -252,7 +252,7 @@ export function HoverCardDelayExample() {
       content={
         <div className="space-y-2">
           <h4 className="text-sm font-semibold">Supplier Snapshot</h4>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-ds-2">
             Last shipment arrived 2 days ago. 97% on-time delivery this quarter.
           </p>
         </div>

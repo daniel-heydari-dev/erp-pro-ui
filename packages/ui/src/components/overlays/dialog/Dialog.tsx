@@ -101,14 +101,12 @@ const animationTransitions: Record<DialogAnimation, object> = {
 // Crystal glass panel base styling
 const basePanel = `
   relative w-full max-w-lg rounded-2xl overflow-hidden
-  border border-white/30 dark:border-white/10
+  border border-ds-border-2
   backdrop-blur-2xl backdrop-saturate-150
-  bg-gradient-to-br from-white/80 via-white/70 to-white/60
-  dark:from-neutral-900/90 dark:via-neutral-900/80 dark:to-neutral-800/70
+  bg-ds-surface-1/95
   p-6
   shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08)]
-  dark:shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.3)]
-  ring-1 ring-inset ring-white/20 dark:ring-white/5
+  ring-1 ring-inset ring-ds-border-3/40
 `;
 
 // Variant accent colors for icons and confirm buttons
@@ -117,29 +115,29 @@ const variantStyles: Record<
   { icon: string; button: string; iconColor: string }
 > = {
   default: {
-    icon: "bg-accent-subtle",
-    button: "bg-accent hover:bg-accent-hover text-on-accent",
-    iconColor: "text-accent",
+    icon: "bg-ds-accent-subtle",
+    button: "bg-ds-accent hover:bg-ds-accent-hover text-ds-on-accent",
+    iconColor: "text-ds-1",
   },
   destructive: {
-    icon: "bg-danger-subtle",
-    button: "bg-destructive hover:opacity-90 text-white",
-    iconColor: "text-danger",
+    icon: "bg-ds-state-error-surface",
+    button: "bg-ds-state-danger hover:opacity-90 text-ds-on-accent",
+    iconColor: "text-ds-state-error-text",
   },
   success: {
-    icon: "bg-success-subtle",
-    button: "bg-success hover:opacity-90 text-white",
-    iconColor: "text-success",
+    icon: "bg-ds-state-success-surface",
+    button: "bg-ds-state-success hover:opacity-90 text-ds-on-accent",
+    iconColor: "text-ds-state-success-text",
   },
   warning: {
-    icon: "bg-warning-subtle",
-    button: "bg-warning hover:opacity-90 text-neutral-950",
-    iconColor: "text-warning",
+    icon: "bg-ds-state-warning-surface",
+    button: "bg-ds-state-warning hover:opacity-90 text-ds-1",
+    iconColor: "text-ds-state-warning-text",
   },
   info: {
-    icon: "bg-info-subtle",
-    button: "bg-info hover:opacity-90 text-white",
-    iconColor: "text-info",
+    icon: "bg-ds-state-info-surface",
+    button: "bg-ds-state-info hover:opacity-90 text-ds-on-accent",
+    iconColor: "text-ds-state-info-text",
   },
 };
 
@@ -236,10 +234,8 @@ export const Dialog = ({
             className="inline-flex items-center justify-center gap-2 cursor-pointer
               py-2.5 px-4 text-sm font-semibold leading-none
               rounded-lg transition-all duration-200
-              bg-neutral-200 dark:bg-neutral-700
-              border border-neutral-300 dark:border-neutral-600
-              text-neutral-800 dark:text-white
-              shadow-sm hover:bg-neutral-300 dark:hover:bg-neutral-600
+              bg-ds-surface-2 border border-ds-border-2 text-ds-1
+              shadow-sm hover:bg-ds-surface-3
               active:scale-95 hover:opacity-90
               disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -297,7 +293,7 @@ export const Dialog = ({
             transition={currentTransition}
           >
             {/* Subtle gradient overlay for crystal effect */}
-            <div className="absolute inset-0 bg-linear-to-tr from-white/10 via-transparent to-white/5 dark:from-white/5 dark:to-transparent pointer-events-none rounded-2xl" />
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-tr from-ds-accent/8 via-transparent to-ds-accent/4" />
 
             {/* Close button */}
             {showClose && (
@@ -305,9 +301,7 @@ export const Dialog = ({
                 type="button"
                 className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center
                   rounded-full transition-all duration-200
-                  text-neutral-400 dark:text-neutral-500
-                  hover:text-neutral-600 dark:hover:text-neutral-300
-                  hover:bg-neutral-100/50 dark:hover:bg-white/10"
+                  text-ds-2 hover:text-ds-1 hover:bg-ds-surface-2"
                 aria-label="Close dialog"
                 onClick={() => onOpenChange?.(false)}
               >
@@ -331,12 +325,12 @@ export const Dialog = ({
               {/* Text content */}
               <div className="flex-1 min-w-0">
                 {title && (
-                  <h2 className="text-lg font-semibold text-neutral-900 dark:text-white pr-8">
+                  <h2 className="pr-8 text-lg font-semibold text-ds-1">
                     {title}
                   </h2>
                 )}
                 {description && (
-                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  <p className="mt-1 text-sm leading-relaxed text-ds-2">
                     {description}
                   </p>
                 )}

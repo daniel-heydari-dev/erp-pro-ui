@@ -198,15 +198,15 @@ function SignInSubmissionPreview() {
           <Button primary type="submit" className="ui:w-full" label="Sign In" />
         </Form>
 
-        <StoryPanel className="ui:rounded-2xl ui:bg-muted/40 ui:p-4 ui:shadow-none">
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+        <StoryPanel className="ui:rounded-2xl ui:bg-ds-surface-3/40 ui:p-4 ui:shadow-none">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Captured submit payload
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             The form uses native submission semantics, so extracting values with
             `FormData` remains straightforward.
           </p>
-          <pre className="ui:mt-4 ui:min-h-56 ui:overflow-auto ui:rounded-xl ui:bg-background ui:p-4 ui:text-xs ui:text-muted-foreground">
+          <pre className="ui:mt-4 ui:min-h-56 ui:overflow-auto ui:rounded-xl ui:bg-ds-canvas ui:p-4 ui:text-xs ui:text-ds-2">
             {JSON.stringify(
               submitted ?? {
                 status: "Submit the form to inspect the payload.",

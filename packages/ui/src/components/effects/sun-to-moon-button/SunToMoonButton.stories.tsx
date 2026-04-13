@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes, brand palettes, and dark variants.",
+          "Animated theme toggle. Storybook provides ThemeProvider globally so this control behaves like the real app and can be tested in both display modes, brand palettes, and default/alt variants.",
       },
     },
   },
@@ -52,12 +52,12 @@ export const IconOnly: Story = {
 export const ToolbarPlacement: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-      <div className="ui:flex ui:items-center ui:justify-between ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-4 ui:py-3">
+      <div className="ui:flex ui:items-center ui:justify-between ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:px-4 ui:py-3">
         <div>
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Workspace header
           </p>
-          <p className="ui:text-sm ui:text-muted-foreground">
+          <p className="ui:text-sm ui:text-ds-2">
             Theme toggle aligned with other global controls.
           </p>
         </div>
@@ -69,13 +69,13 @@ export const ToolbarPlacement: Story = {
 
 /**
  * ## Full Theme Controls
- * Sun/Moon mode toggle + brand and dark-variant controls in one compact panel.
+ * Sun/Moon mode toggle + brand and variant controls in one compact panel.
  */
 export const FullThemeControls: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-2xl">
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-[220px_1fr]">
-        <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:p-3">
+        <div className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-3">
           <SunToMoonButton />
         </div>
         <ThemeSwitcherButtons />

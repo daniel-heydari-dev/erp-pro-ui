@@ -5,6 +5,7 @@ export {
 export type {
   ThemeModeType,
   ThemeColorType,
+  ThemeVariantType,
   ThemeDarkVariantType,
   ThemeColorSchemeType,
   UseThemeType,

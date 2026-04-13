@@ -17,9 +17,9 @@ import { getSavedComponents } from "@/utils/favorites";
 
 const HOVER_TIMEOUT_DELAY = 150;
 const ACTIVE_LINE_CLASS_NAME =
-  "absolute -left-px top-0 h-6 w-1 rounded-full bg-accent pointer-events-none z-2 transition-all duration-200 ease-in-out";
+  "absolute -left-px top-0 h-6 w-1 rounded-full bg-ds-accent pointer-events-none z-2 transition-all duration-200 ease-in-out";
 const HOVER_LINE_CLASS_NAME =
-  "absolute -left-px top-0 h-6 w-1 rounded-[1px] bg-accent/40 pointer-events-none z-1 transition-all duration-200 ease-in-out";
+  "absolute -left-px top-0 h-6 w-1 rounded-[1px] bg-ds-accent/40 pointer-events-none z-1 transition-all duration-200 ease-in-out";
 const SIDEBAR_CONTENT_CLASS_NAME = "flex flex-col items-stretch space-y-4";
 
 const scrollToTop = () => window.scrollTo(0, 0);

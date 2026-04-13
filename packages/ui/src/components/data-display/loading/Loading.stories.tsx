@@ -78,7 +78,7 @@ const loadingOverlaySource = `import { Loading } from 'erp-pro-ui';
 
 export function LoadingOverlayExample() {
   return (
-    <div className="relative overflow-hidden rounded-2xl border bg-card">
+    <div className="relative overflow-hidden rounded-2xl border bg-ds-surface-1">
       <div className="grid gap-3 p-6 md:grid-cols-3">
         <div className="rounded-xl border p-4">Pending approvals</div>
         <div className="rounded-xl border p-4">Transfers queued</div>
@@ -101,7 +101,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <div className="ui:flex ui:min-h-40 ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card">
+      <div className="ui:flex ui:min-h-40 ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1">
         <Loading {...args} />
       </div>
     </StorySurface>
@@ -147,12 +147,12 @@ export const Variations: Story = {
         ].map((item) => (
           <div
             key={item.label}
-            className="ui:flex ui:min-h-40 ui:flex-col ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6 ui:text-center"
+            className="ui:flex ui:min-h-40 ui:flex-col ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6 ui:text-center"
           >
             <div className="ui:flex ui:min-h-12 ui:items-center ui:justify-center">
               {item.element}
             </div>
-            <p className="ui:mt-4 ui:text-sm ui:font-medium ui:text-muted-foreground">
+            <p className="ui:mt-4 ui:text-sm ui:font-medium ui:text-ds-2">
               {item.label}
             </p>
           </div>
@@ -181,7 +181,7 @@ export const WithText: Story = {
   },
   render: (args) => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <div className="ui:flex ui:min-h-40 ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-border ui:bg-card">
+      <div className="ui:flex ui:min-h-40 ui:items-center ui:justify-center ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1">
         <Loading {...args} />
       </div>
     </StorySurface>
@@ -203,10 +203,10 @@ export const InlineStatusMessaging: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
       <div className="ui:grid ui:w-full ui:gap-4 lg:ui:grid-cols-3">
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
           <Loading variant="spinner" text="Saving supplier profile" />
         </div>
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
           <Loading
             variant="ring"
             size="lg"
@@ -214,7 +214,7 @@ export const InlineStatusMessaging: Story = {
             textPosition="bottom"
           />
         </div>
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
           <Loading
             variant="wave"
             color="#00cfe8"
@@ -240,17 +240,17 @@ export const InlineStatusMessaging: Story = {
 export const ContainedOverlay: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:relative ui:w-full ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card">
+      <div className="ui:relative ui:w-full ui:overflow-hidden ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1">
         <div className="ui:grid ui:gap-3 ui:p-6 md:ui:grid-cols-3">
-          <div className="ui:rounded-xl ui:border ui:border-border ui:bg-muted ui:p-4">
+          <div className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3 ui:p-4">
             <p className="ui:text-sm ui:font-medium">Pending approvals</p>
             <p className="ui:mt-2 ui:text-3xl ui:font-semibold">18</p>
           </div>
-          <div className="ui:rounded-xl ui:border ui:border-border ui:bg-muted ui:p-4">
+          <div className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3 ui:p-4">
             <p className="ui:text-sm ui:font-medium">Transfers queued</p>
             <p className="ui:mt-2 ui:text-3xl ui:font-semibold">42</p>
           </div>
-          <div className="ui:rounded-xl ui:border ui:border-border ui:bg-muted ui:p-4">
+          <div className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3 ui:p-4">
             <p className="ui:text-sm ui:font-medium">Branch sync</p>
             <p className="ui:mt-2 ui:text-3xl ui:font-semibold">94%</p>
           </div>

@@ -62,7 +62,7 @@ export const BeamVariants: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl" className="ui:block">
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
-        <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+        <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
           <BorderBeam
             colorFrom="var(--ds-color-info)"
             colorTo="var(--ds-color-accent)"
@@ -70,7 +70,7 @@ export const BeamVariants: Story = {
           />
           <p className="ui:text-sm ui:font-medium">Cool signal</p>
         </div>
-        <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+        <div className="ui:relative ui:overflow-hidden ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
           <BorderBeam
             colorFrom="var(--ds-color-warning)"
             colorTo="var(--ds-color-danger)"

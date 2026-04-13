@@ -106,7 +106,7 @@ function getScrollbarStyle(args: ScrollbarPlaygroundProps): ScrollbarVars {
 
 function ScrollbarPlayground(args: ScrollbarPlaygroundProps) {
   const previewClassName = [
-    "ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-inner ui:outline-none focus-visible:ui:ring-2 focus-visible:ui:ring-focus",
+    "ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-inner ui:outline-none focus-visible:ui:ring-2 focus-visible:ui:ring-ds-focus",
     args.hideScrollbar ? "scrollbar-none" : "",
   ]
     .filter(Boolean)
@@ -126,7 +126,7 @@ function ScrollbarPlayground(args: ScrollbarPlaygroundProps) {
               {laneLabels.map((label) => (
                 <span
                   key={label}
-                  className="ui:rounded-full ui:border ui:border-border ui:bg-surface ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-fg"
+                  className="ui:rounded-full ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-ds-1"
                 >
                   {label}
                 </span>
@@ -143,17 +143,17 @@ function ScrollbarPlayground(args: ScrollbarPlaygroundProps) {
                 {queueCards.map((card) => (
                   <article
                     key={card.title}
-                    className="ui:grid ui:grid-cols-[180px_minmax(0,1fr)] ui:gap-4 ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-4"
+                    className="ui:grid ui:grid-cols-[180px_minmax(0,1fr)] ui:gap-4 ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4"
                   >
                     <div>
-                      <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
+                      <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                         {card.title}
                       </p>
-                      <p className="ui:mt-2 ui:text-2xl ui:font-semibold ui:text-accent">
+                      <p className="ui:mt-2 ui:text-2xl ui:font-semibold ui:text-ds-1">
                         {card.metric}
                       </p>
                     </div>
-                    <p className="ui:text-sm ui:leading-6 ui:text-fg-muted">
+                    <p className="ui:text-sm ui:leading-6 ui:text-ds-2">
                       {card.note}
                     </p>
                   </article>
@@ -168,23 +168,23 @@ function ScrollbarPlayground(args: ScrollbarPlaygroundProps) {
                 title="Current setup"
                 description="These values map directly to the shared foundation CSS custom properties."
               />
-              <dl className="ui:space-y-2 ui:text-sm ui:text-fg-muted">
+              <dl className="ui:space-y-2 ui:text-sm ui:text-ds-2">
                 <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
-                  <dt className="ui:font-medium ui:text-fg">hide utility</dt>
+                  <dt className="ui:font-medium ui:text-ds-1">hide utility</dt>
                   <dd>
                     {args.hideScrollbar ? "scrollbar-none" : "themed default"}
                   </dd>
                 </div>
                 <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
-                  <dt className="ui:font-medium ui:text-fg">overflow-x</dt>
+                  <dt className="ui:font-medium ui:text-ds-1">overflow-x</dt>
                   <dd>{args.overflowX}</dd>
                 </div>
                 <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
-                  <dt className="ui:font-medium ui:text-fg">overflow-y</dt>
+                  <dt className="ui:font-medium ui:text-ds-1">overflow-y</dt>
                   <dd>{args.overflowY}</dd>
                 </div>
                 <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
-                  <dt className="ui:font-medium ui:text-fg">size</dt>
+                  <dt className="ui:font-medium ui:text-ds-1">size</dt>
                   <dd>{args.scrollbarSize}px</dd>
                 </div>
               </dl>

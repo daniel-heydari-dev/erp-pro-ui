@@ -137,7 +137,7 @@ export function InteractiveBreakdownSummaryExample() {
 export const AllocationOverview: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
         <StoryIntro
           title="Infrastructure spend allocation"
           description="Segment widths are derived from their share of the full spend profile."
@@ -152,14 +152,12 @@ export const AllocationOverview: Story = {
 export const CompactCapacityRows: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:w-full ui:space-y-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+      <div className="ui:w-full ui:space-y-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
         {capacityRows.map((row) => (
           <div key={row.title} className="ui:space-y-2">
             <div className="ui:flex ui:items-center ui:justify-between ui:gap-3">
               <p className="ui:text-sm ui:font-medium">{row.title}</p>
-              <p className="ui:text-xs ui:text-muted-foreground">
-                Live capacity mix
-              </p>
+              <p className="ui:text-xs ui:text-ds-2">Live capacity mix</p>
             </div>
             <ThinBreakdownBar data={row.segments} showLabels={false} />
           </div>
@@ -173,7 +171,7 @@ export const CompactCapacityRows: Story = {
 export const InteractiveSummary: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-6">
+      <StoryStack className="ui:w-full ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6">
         <StoryIntro
           title="Traffic mix with live summary"
           description="The bar shows the total by default, then switches to segment-specific value and share when you hover a slice."

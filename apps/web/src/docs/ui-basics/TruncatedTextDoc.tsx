@@ -172,7 +172,7 @@ export function WidthControlledNoteExample() {
 export function InlineMetaExample() {
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-ds-2">
         Owner
       </span>
       <TruncatedText

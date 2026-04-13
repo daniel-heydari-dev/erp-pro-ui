@@ -384,19 +384,15 @@ export const CustomContent: Story = {
       }
     >
       <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-          <p className="ui:text-sm ui:font-medium ui:text-foreground">
-            Trigger
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+        <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+          <p className="ui:text-sm ui:font-medium ui:text-ds-1">Trigger</p>
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Transfer amount exceeds $5,000.
           </p>
         </div>
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-          <p className="ui:text-sm ui:font-medium ui:text-foreground">
-            Approvers
-          </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+        <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+          <p className="ui:text-sm ui:font-medium ui:text-ds-1">Approvers</p>
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Operations lead, finance controller.
           </p>
         </div>

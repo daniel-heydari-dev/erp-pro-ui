@@ -73,12 +73,11 @@ const variantStyles: Record<TypographyVariant, string> = {
   h3: "text-2xl md:text-4xl font-extrabold tracking-tight italic",
   h4: "text-xl md:text-2xl font-bold tracking-tight",
   h5: "text-lg md:text-xl font-bold",
-  h6: "text-base md:text-lg font-semibold uppercase tracking-widest text-[#888]",
+  h6: "text-base md:text-lg font-semibold uppercase tracking-widest text-ds-3",
   body1: "text-base font-medium leading-relaxed",
-  body2: "text-sm font-medium leading-relaxed text-neutral-500",
-  caption: "text-xs font-semibold uppercase tracking-wider text-neutral-400",
-  overline:
-    "text-[10px] font-black uppercase tracking-[0.2em] text-neutral-500",
+  body2: "text-sm font-medium leading-relaxed text-ds-2",
+  caption: "text-xs font-semibold uppercase tracking-wider text-ds-3",
+  overline: "text-[10px] font-black uppercase tracking-[0.2em] text-ds-2",
 };
 
 const alignStyles: Record<TypographyAlign, string> = {

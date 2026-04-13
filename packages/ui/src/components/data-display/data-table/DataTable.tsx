@@ -54,6 +54,7 @@ import {
   resolveFilterOptions,
   useAsyncFilterOptions,
 } from "./DataTableFilters";
+import { resolveTableDirection, type TableDirection } from "./direction";
 export {
   TableContainer,
   Table,
@@ -157,6 +158,9 @@ export interface DataTableTextLabels {
   columns: string;
   showAll: string;
   hideAll: string;
+  refresh: string;
+  export: string;
+  columnSettings: string;
   showFilters: string;
   addFilter: string;
   clearFilters: string;
@@ -168,6 +172,9 @@ const DEFAULT_DATA_TABLE_LABELS: DataTableTextLabels = {
   columns: "COLUMNS",
   showAll: "SHOW ALL",
   hideAll: "HIDE ALL",
+  refresh: "REFRESH",
+  export: "EXPORT",
+  columnSettings: "COLUMNS",
   showFilters: "SHOW FILTERS",
   addFilter: "Add filter",
   clearFilters: "Clear filters",
@@ -192,6 +199,8 @@ export interface DataTableProps<T = Record<string, any>> {
   maxHeight?: string;
   onSearch?: (query: string) => void;
   onExport?: () => void;
+  showRefreshButton?: boolean;
+  showExportButton?: boolean;
   onRowAction?: (action: string, row: T) => void;
   rowActions?: DataTableRowAction<T>[];
   onBulkDelete?: (rows: T[]) => void;
@@ -280,14 +289,12 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-neutral-800 rounded-xl p-6 max-w-md w-full mx-4"
+        className="bg-ds-surface-1 border border-ds-border-2 rounded-xl p-6 max-w-md w-full mx-4"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">
-          Add new profile
-        </h2>
+        <h2 className="text-2xl font-bold text-ds-1 mb-4">Add new profile</h2>
 
-        <label className="mb-2 block text-sm font-medium text-accent">
+        <label className="mb-2 block text-sm font-medium text-ds-1">
           Enter filter profile name:
         </label>
         <Input
@@ -327,6 +334,7 @@ const ROW_ACTIONS_MENU_MAX_WIDTH_PX = 200;
 const ROW_ACTIONS_MENU_GAP_PX = 6;
 const ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX = 8;
 const ROW_ACTIONS_MENU_RIGHT_GUTTER_PX = 0;
+const ROW_ACTIONS_MENU_LEFT_GUTTER_PX = 0;
 
 interface RowActionsCellProps<T> {
   rowIndex: number;
@@ -338,6 +346,7 @@ interface RowActionsCellProps<T> {
   onClose: () => void;
   onRowAction?: (action: string, row: T) => void;
   actions: DataTableRowAction<T>[];
+  direction: TableDirection;
 }
 
 function RowActionsCell<T>({
@@ -350,12 +359,14 @@ function RowActionsCell<T>({
   onClose,
   onRowAction,
   actions,
+  direction,
 }: RowActionsCellProps<T>) {
   const toggleAnchorRef = React.useRef<HTMLDivElement | null>(null);
   const menuRef = React.useRef<HTMLDivElement | null>(null);
   const [menuPosition, setMenuPosition] = React.useState<{
     top: number;
-    right: number;
+    right?: number;
+    left?: number;
   } | null>(null);
 
   const updateMenuPosition = React.useCallback(() => {
@@ -370,7 +381,9 @@ function RowActionsCell<T>({
       Math.max(actions.length, 1) * 36 + 12;
 
     const spaceBelow =
-      window.innerHeight - anchorRect.bottom - ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX;
+      window.innerHeight -
+      anchorRect.bottom -
+      ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX;
     const spaceAbove = anchorRect.top - ROW_ACTIONS_MENU_VIEWPORT_PADDING_PX;
 
     const openUpward =
@@ -391,6 +404,20 @@ function RowActionsCell<T>({
       maxTop,
     );
 
+    if (direction === "rtl") {
+      const leftOffset = Math.max(
+        (tableRect?.left ?? anchorRect.left) + ROW_ACTIONS_MENU_LEFT_GUTTER_PX,
+        ROW_ACTIONS_MENU_LEFT_GUTTER_PX,
+      );
+
+      setMenuPosition({
+        top: clampedTop,
+        left: leftOffset,
+      });
+
+      return;
+    }
+
     const rightOffset = Math.max(
       window.innerWidth -
         (tableRect?.right ?? anchorRect.right) +
@@ -402,7 +429,7 @@ function RowActionsCell<T>({
       top: clampedTop,
       right: rightOffset,
     });
-  }, [actions.length, isOpen, openDirection, tableContainerRef]);
+  }, [actions.length, direction, isOpen, openDirection, tableContainerRef]);
 
   React.useLayoutEffect(() => {
     if (!isOpen) {
@@ -440,20 +467,27 @@ function RowActionsCell<T>({
       window.removeEventListener("keydown", handleEscape);
       window.removeEventListener("resize", handleViewportChange);
       window.removeEventListener("scroll", handleViewportChange, true);
-      tableContainerElement?.removeEventListener("scroll", handleViewportChange);
+      tableContainerElement?.removeEventListener(
+        "scroll",
+        handleViewportChange,
+      );
     };
   }, [isOpen, onClose, tableContainerRef]);
 
   const rowActionsMenu = isOpen
     ? createPortal(
         <>
-          <div className="fixed inset-0 z-[220]" onClick={onClose} />
+          <div
+            className="fixed inset-0 z-[220] bg-ds-surface-2 "
+            onClick={onClose}
+          />
           <div
             ref={menuRef}
-            className="fixed z-[230] min-w-[140px] max-w-[200px] rounded-lg border border-neutral-200 bg-white py-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-800"
+            className="fixed z-[230] min-w-[140px] max-w-[200px] overflow-hidden rounded-lg border border-ds-border-3 bg-ds-surface-2  shadow-xl"
             style={{
               top: menuPosition?.top,
               right: menuPosition?.right,
+              left: menuPosition?.left,
               minWidth: `${ROW_ACTIONS_MENU_MIN_WIDTH_PX}px`,
               maxWidth: `${ROW_ACTIONS_MENU_MAX_WIDTH_PX}px`,
             }}
@@ -468,10 +502,10 @@ function RowActionsCell<T>({
                   onClose();
                 }}
                 className={mergeClassNames(
-                  "w-full justify-start rounded-none border-none bg-transparent px-4 py-2 text-sm font-normal shadow-none hover:bg-neutral-50 hover:opacity-100 dark:hover:bg-neutral-700",
+                  "w-full justify-start rounded-none border-none bg-ds-surface-2 px-4 py-2 text-sm font-normal shadow-none hover:bg-ds-surface-3 hover:opacity-100",
                   action.variant === "destructive"
                     ? "text-error hover:text-error"
-                    : "text-neutral-700 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white",
+                    : "text-ds-2 hover:text-ds-1",
                 )}
               >
                 {action.label}
@@ -486,19 +520,38 @@ function RowActionsCell<T>({
   return (
     <td
       className={mergeClassNames(
-        "relative sticky right-0 h-full border-l-2 border-neutral-300 bg-background-secondary p-0 text-right align-middle shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)] dark:border-neutral-600 dark:shadow-[-8px_0_12px_-10px_rgba(0,0,0,0.6)]",
+        "relative h-full overflow-hidden border-x border-ds-border-2 bg-ds-surface-1 p-0 align-middle",
+        direction === "rtl"
+          ? "sticky left-0 text-left shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
+          : "sticky right-0 text-right shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)]",
         ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
         isOpen ? "z-20" : "z-10",
       )}
     >
       <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-y-px left-0 z-20 w-px bg-ds-border-2"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-y-px right-0 z-20 w-px bg-ds-border-2"
+      />
+      <div
         ref={toggleAnchorRef}
-        className="absolute inset-y-0 right-0 z-10 flex items-center border-l border-neutral-200 bg-background-secondary dark:border-neutral-700"
+        className={mergeClassNames(
+          "absolute -inset-y-px z-10 flex items-stretch bg-ds-surface-2",
+          direction === "rtl" ? "left-0 justify-start" : "right-0 justify-end",
+        )}
       >
         <Button
           onClick={() => onToggle(rowIndex)}
           aria-label="Open row actions"
-          className="h-full w-12 rounded-none border-none bg-background-secondary px-0 py-0 shadow-none hover:bg-background-secondary hover:opacity-100"
+          className={mergeClassNames(
+            "h-full w-12 rounded-none border-none px-0 py-0 shadow-none hover:opacity-100 ",
+            isOpen
+              ? "bg-ds-surface-2 text-ds-1"
+              : "bg-ds-surface-2 text-ds-2 hover:bg-ds-surface-3 hover:text-ds-1",
+          )}
         >
           <EllipsisVerticalIcon
             className={TABLE_CONTROL_ICON_CLASS_NAME}
@@ -515,12 +568,14 @@ interface DataTablePaginationProps<T> {
   table: TanStackTable<T>;
   totalCount?: number;
   filteredCount: number;
+  direction: TableDirection;
 }
 
 function DataTablePagination<T>({
   table,
   totalCount,
   filteredCount,
+  direction,
 }: DataTablePaginationProps<T>) {
   const { pageIndex, pageSize } = table.getState().pagination;
   const itemCount = totalCount ?? filteredCount;
@@ -531,24 +586,22 @@ function DataTablePagination<T>({
   ).sort((left, right) => left - right);
 
   return (
-    <div className="relative z-10 flex flex-col gap-3 border-t    border-neutral-200 bg-neutral-50 px-4 py-3 overflow-visible dark:border-neutral-700 dark:bg-neutral-800/50 md:flex-row md:items-center md:justify-between">
+    <div className="relative z-10 flex flex-col gap-3 border-t border-ds-border-2 bg-ds-surface-2 px-4 py-3 overflow-visible md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">
+        <span className="text-sm text-ds-2">
           Showing {pageStart} to {pageEnd} of {itemCount} items
         </span>
       </div>
 
       <div className="flex flex-wrap items-center justify-end gap-2 overflow-visible">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">
-          Rows
-        </span>
+        <span className="text-sm text-ds-2">Rows</span>
         <Select
           value={String(pageSize)}
           onChange={(event) => table.setPageSize(Number(event.target.value))}
           aria-label="Rows per page"
           size="compact"
           containerClassName="w-[5.5rem] min-w-[5.5rem] shrink-0"
-          triggerClassName="px-2.5 font-medium text-neutral-900 dark:text-white"
+          triggerClassName="px-2.5 font-medium text-ds-1"
           dropdownClassName="top-auto bottom-full z-[80] mb-1 mt-0"
           options={pageSizeOptions.map((size) => ({
             value: String(size),
@@ -561,10 +614,17 @@ function DataTablePagination<T>({
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          <ChevronsLeftIcon
-            className={TABLE_CONTROL_ICON_CLASS_NAME}
-            aria-hidden="true"
-          />
+          {direction === "rtl" ? (
+            <ChevronsRightIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          ) : (
+            <ChevronsLeftIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          )}
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -572,13 +632,20 @@ function DataTablePagination<T>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          <ChevronLeftIcon
-            className={TABLE_CONTROL_ICON_CLASS_NAME}
-            aria-hidden="true"
-          />
+          {direction === "rtl" ? (
+            <ChevronRightIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          ) : (
+            <ChevronLeftIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          )}
         </ToolbarIconButton>
 
-        <span className="inline-flex h-10 shrink-0 items-center rounded-lg px-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
+        <span className="inline-flex h-10 shrink-0 items-center rounded-lg px-3 text-sm font-medium text-ds-2">
           Page {pageIndex + 1} of {table.getPageCount()}
         </span>
 
@@ -587,10 +654,17 @@ function DataTablePagination<T>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          <ChevronRightIcon
-            className={TABLE_CONTROL_ICON_CLASS_NAME}
-            aria-hidden="true"
-          />
+          {direction === "rtl" ? (
+            <ChevronLeftIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          ) : (
+            <ChevronRightIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          )}
         </ToolbarIconButton>
 
         <ToolbarIconButton
@@ -598,10 +672,17 @@ function DataTablePagination<T>({
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          <ChevronsRightIcon
-            className={TABLE_CONTROL_ICON_CLASS_NAME}
-            aria-hidden="true"
-          />
+          {direction === "rtl" ? (
+            <ChevronsLeftIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          ) : (
+            <ChevronsRightIcon
+              className={TABLE_CONTROL_ICON_CLASS_NAME}
+              aria-hidden="true"
+            />
+          )}
         </ToolbarIconButton>
       </div>
     </div>
@@ -630,14 +711,14 @@ function FilterSelectorMenu({
   return (
     <div className="p-4 min-h-58 min-w-48 space-y-3">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-sm font-semibold text-neutral-900 dark:text-white">
+        <span className="text-sm font-semibold text-ds-1">
           {labels.showFilters}
         </span>
       </div>
       {filterOptions.map((filter) => (
         <div
           key={filter.id}
-          className="min-w-36 rounded-[8px] px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+          className="min-w-36 rounded-[8px] px-2 py-1 hover:bg-ds-surface-2"
         >
           <Checkbox
             checked={visibleFilters.includes(filter.id)}
@@ -648,18 +729,18 @@ function FilterSelectorMenu({
           />
         </div>
       ))}
-      <div className="flex gap-2 border-t border-neutral-200 pt-2 dark:border-neutral-700">
+      <div className="flex gap-2 border-t border-ds-border-2 pt-2">
         <Button
           onClick={onShowAll}
           size="small"
-          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
+          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-ds-1 shadow-none hover:bg-transparent hover:text-ds-accent-hover hover:opacity-100"
         >
           {labels.showAll}
         </Button>
         <Button
           onClick={onHideAll}
           size="small"
-          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-neutral-500 shadow-none hover:bg-transparent hover:text-neutral-600 hover:opacity-100 dark:text-neutral-300 dark:hover:text-white"
+          className="flex-1 border-none bg-transparent px-1 py-1 text-xs font-semibold text-ds-2 shadow-none hover:bg-transparent hover:text-ds-1 hover:opacity-100"
         >
           {labels.hideAll}
         </Button>
@@ -684,6 +765,8 @@ export default function DataTable<T = Record<string, any>>({
   maxHeight = "500px",
   onSearch,
   onExport,
+  showRefreshButton = true,
+  showExportButton = true,
   onRowAction,
   rowActions,
   onBulkDelete,
@@ -714,6 +797,16 @@ export default function DataTable<T = Record<string, any>>({
   cellClassName,
   footerClassName,
 }: DataTableProps<T>) {
+  const tableRootRef = React.useRef<HTMLDivElement | null>(null);
+  const [tableDirection, setTableDirection] =
+    React.useState<TableDirection>("ltr");
+
+  React.useLayoutEffect(() => {
+    setTableDirection(resolveTableDirection(tableRootRef.current));
+  }, []);
+
+  const isRtl = tableDirection === "rtl";
+
   const resolvedRowActions = React.useMemo<DataTableRowAction<T>[]>(
     () =>
       rowActions && rowActions.length > 0
@@ -1121,9 +1214,13 @@ export default function DataTable<T = Record<string, any>>({
   };
 
   return (
-    <div className={mergeClassNames("space-y-0", className)}>
+    <div
+      ref={tableRootRef}
+      dir={tableDirection}
+      className={mergeClassNames("space-y-0", className)}
+    >
       {/* Row 1: Filters Row - Separated with border */}
-      <div className="mb-4 min-h-[80px] flex items-center justify-between gap-4 rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-4 dark:border-neutral-700 dark:bg-neutral-800/50">
+      <div className="relative z-[60] mb-4 min-h-[80px] flex items-center justify-between gap-4 rounded-[8px] border border-ds-border-2 bg-ds-surface-1 px-4 py-4">
         <div className="flex items-center gap-3 flex-wrap">
           {filterOptions
             .filter((filter) => visibleFilters.includes(filter.id))
@@ -1133,11 +1230,11 @@ export default function DataTable<T = Record<string, any>>({
               return (
                 <div
                   key={filter.id}
-                  className={`min-w-[200px] ${
-                    index > 0
-                      ? "border-l border-neutral-200 pl-3 dark:border-neutral-600"
-                      : ""
-                  }`}
+                  className={mergeClassNames(
+                    "min-w-[200px]",
+                    index > 0 && "border-ds-border-2 ps-3",
+                    index > 0 && (isRtl ? "border-r" : "border-l"),
+                  )}
                 >
                   <FilterFieldControl
                     filter={filter}
@@ -1165,6 +1262,7 @@ export default function DataTable<T = Record<string, any>>({
             <FilterDropdown
               isOpen={filterSelectorOpen}
               onClose={() => setFilterSelectorOpen(false)}
+              direction={tableDirection}
             >
               <FilterSelectorMenu
                 filterOptions={filterOptions}
@@ -1203,11 +1301,12 @@ export default function DataTable<T = Record<string, any>>({
             <FilterDropdown
               isOpen={profileMenuOpen}
               onClose={() => setProfileMenuOpen(false)}
+              direction={tableDirection}
             >
               <div className="p-2 min-w-48">
                 <Button
                   onClick={handleOpenProfile}
-                  className="w-full justify-start border-2 border-dashed border-accent/40 bg-transparent px-4 py-3 text-left text-sm font-medium text-accent shadow-none hover:bg-accent-subtle hover:opacity-100"
+                  className="w-full justify-start border-2 border-dashed border-ds-border-accent/40 bg-transparent px-4 py-3 text-start text-sm font-medium text-ds-1 shadow-none hover:bg-ds-accent-subtle hover:opacity-100"
                 >
                   {labels.saveNewFilterProfile}
                 </Button>
@@ -1218,8 +1317,11 @@ export default function DataTable<T = Record<string, any>>({
         </div>
       </div>
       {/* Table */}
-      <div className="relative overflow-visible rounded-lg border border-neutral-200 bg-background-secondary dark:border-neutral-700">
+      <div className="relative overflow-visible rounded-lg border border-ds-border-2 bg-ds-surface-1">
         <DataTableToolbar
+          direction={tableDirection}
+          showRefreshButton={showRefreshButton}
+          showExportButton={showExportButton}
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
           searchPlaceholder={searchPlaceholder}
@@ -1259,14 +1361,14 @@ export default function DataTable<T = Record<string, any>>({
                 <TableRow
                   key={headerGroup.id}
                   className={mergeClassNames(
-                    "border-b border-neutral-200 dark:border-neutral-700",
+                    "border-b border-ds-border-2",
                     headerRowClassName,
                   )}
                 >
                   {bulkSelectionActive ? (
                     <TableHead
                       className={mergeClassNames(
-                        "w-12 bg-background-secondary px-4 py-3",
+                        "w-12 bg-ds-surface-2 px-4 py-3",
                         headClassName,
                       )}
                     >
@@ -1283,7 +1385,8 @@ export default function DataTable<T = Record<string, any>>({
                     <TableHead
                       key={header.id}
                       className={mergeClassNames(
-                        "whitespace-nowrap bg-background-secondary px-4 py-3 text-left text-sm font-semibold text-neutral-900 dark:text-white",
+                        "whitespace-nowrap bg-ds-surface-2 px-4 py-3 text-sm font-semibold text-ds-1",
+                        isRtl ? "text-right" : "text-left",
                         headClassName,
                       )}
                     >
@@ -1297,11 +1400,22 @@ export default function DataTable<T = Record<string, any>>({
                   ))}
                   <TableHead
                     className={mergeClassNames(
-                      "sticky top-0 right-0 z-30 border-l-2 border-neutral-300 bg-background-secondary p-0 shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)] dark:border-neutral-600 dark:shadow-[-8px_0_12px_-10px_rgba(0,0,0,0.6)]",
+                      "sticky top-0 z-30 border-x border-ds-border-2 bg-ds-surface-2 p-0",
+                      isRtl
+                        ? "left-0 shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
+                        : "right-0 shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)]",
                       ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
                       headClassName,
                     )}
                   >
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -inset-y-px left-0 z-30 w-px bg-ds-border-2"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -inset-y-px right-0 z-30 w-px bg-ds-border-2"
+                    />
                     <div aria-hidden="true" className="h-[45px] w-12" />
                   </TableHead>
                 </TableRow>
@@ -1334,6 +1448,7 @@ export default function DataTable<T = Record<string, any>>({
                     onClose={context.onClose}
                     onRowAction={context.onRowAction}
                     actions={resolvedRowActions}
+                    direction={tableDirection}
                   />
                 )}
               />
@@ -1347,6 +1462,7 @@ export default function DataTable<T = Record<string, any>>({
             table={table}
             totalCount={totalCount}
             filteredCount={filteredData.length}
+            direction={tableDirection}
           />
         </div>
       </div>

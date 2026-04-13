@@ -137,7 +137,7 @@ const [date, setDate] = useState<Date | null>(new Date());
               <Button
                 onClick={() => setDate(new Date())}
                 size="small"
-                className="h-auto border-none bg-transparent px-0 py-0 text-xs font-semibold text-accent shadow-none hover:bg-transparent hover:text-accent-hover hover:opacity-100"
+                className="h-auto border-none bg-transparent px-0 py-0 text-xs font-semibold text-ds-1 shadow-none hover:bg-transparent hover:text-ds-accent-hover hover:opacity-100"
               >
                 Today
               </Button>

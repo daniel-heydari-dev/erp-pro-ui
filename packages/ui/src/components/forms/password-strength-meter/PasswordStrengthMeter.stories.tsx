@@ -31,7 +31,7 @@ function InteractiveExample() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+      <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
         <Input
           type="password"
           value={password}
@@ -40,7 +40,7 @@ function InteractiveExample() {
           placeholder="Type a new password"
         />
         <PasswordStrengthMeter password={password} />
-        <p className="ui:mt-3 ui:text-xs ui:text-muted-foreground">
+        <p className="ui:mt-3 ui:text-xs ui:text-ds-2">
           Tip: include upper/lower case, numbers, and symbols for a stronger
           score.
         </p>
@@ -55,7 +55,7 @@ function SignUpFlowExample() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
-      <div className="ui:grid ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8 md:ui:grid-cols-2">
+      <div className="ui:grid ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8 md:ui:grid-cols-2">
         <div>
           <Input
             type="password"
@@ -104,7 +104,7 @@ export const SignUpFlow: Story = {
 export const PresetStrengthStates: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
-      <div className="ui:space-y-6 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+      <div className="ui:space-y-6 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
         <div>
           <p className="ui:mb-2 ui:text-sm ui:font-medium">Weak example</p>
           <PasswordStrengthMeter password="abc" />

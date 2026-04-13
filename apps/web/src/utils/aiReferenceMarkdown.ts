@@ -423,7 +423,7 @@ export function buildAiReferenceMarkdown() {
     "## Styling And Theme Contract",
     "",
     "- Import `erp-pro-ui/styles.css` once with Tailwind v4 for the full packaged theme surface.",
-    "- Prefer semantic utilities in new code: `bg-surface`, `bg-canvas`, `text-fg`, `text-fg-muted`, `border-border`, `bg-accent`, `text-on-accent`, `bg-accent-subtle`, `ring-focus`.",
+    "- Prefer semantic utilities in new code: `bg-ds-surface-1`, `bg-ds-canvas`, `text-ds-1`, `text-ds-2`, `border-ds-border-2`, `bg-ds-accent`, `text-ds-on-accent`, `bg-ds-accent-subtle`, `ring-ds-focus`.",
     "- Prefer raw `--ds-*` tokens when you need CSS variables directly.",
     "- Treat `--color-*` aliases and the legacy `primary-*` scale as migration compatibility, not the preferred authoring API.",
     "- `ThemeProvider` writes `data-brand` and `data-mode` as the primary runtime contract and still writes `data-theme` for compatibility.",

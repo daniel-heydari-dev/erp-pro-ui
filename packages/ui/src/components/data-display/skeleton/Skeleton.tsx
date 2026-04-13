@@ -129,14 +129,14 @@ const speedStyles: Record<SkeletonSpeed, string> = {
 
 const toneStyles: Record<SkeletonTone, { base: string; highlight: string }> = {
   default: {
-    base: "var(--ds-color-bg-muted)",
+    base: "var(--ds-color-bg-ds-surface-3)",
     highlight:
-      "color-mix(in oklch, var(--ds-color-bg-muted) 54%, var(--ds-color-bg-canvas))",
+      "color-mix(in oklch, var(--ds-color-bg-ds-surface-3) 54%, var(--ds-color-bg-canvas))",
   },
   subtle: {
-    base: "color-mix(in oklch, var(--ds-color-bg-muted) 72%, var(--ds-color-bg-canvas))",
+    base: "color-mix(in oklch, var(--ds-color-bg-ds-surface-3) 72%, var(--ds-color-bg-canvas))",
     highlight:
-      "color-mix(in oklch, var(--ds-color-bg-muted) 42%, var(--ds-color-bg-canvas))",
+      "color-mix(in oklch, var(--ds-color-bg-ds-surface-3) 42%, var(--ds-color-bg-canvas))",
   },
   accent: {
     base: "var(--ds-color-accent-subtle)",
@@ -419,7 +419,7 @@ const SkeletonCard = forwardRef<HTMLDivElement, SkeletonCardProps>(
       <div
         ref={ref}
         className={mergeClassNames(
-          "overflow-hidden rounded-md border border-border bg-card shadow-sm",
+          "overflow-hidden rounded-md border border-ds-border-2 bg-ds-surface-1 shadow-sm",
           className,
         )}
       >
@@ -498,7 +498,7 @@ const SkeletonMetricCard = forwardRef<HTMLDivElement, SkeletonMetricCardProps>(
       <div
         ref={ref}
         className={mergeClassNames(
-          "rounded-md border border-border bg-card p-4 shadow-sm",
+          "rounded-md border border-ds-border-2 bg-ds-surface-1 p-4 shadow-sm",
           className,
         )}
       >
@@ -526,7 +526,7 @@ const SkeletonMetricCard = forwardRef<HTMLDivElement, SkeletonMetricCardProps>(
           </div>
 
           {showTrend ? (
-            <div className="rounded-full border border-border bg-surface px-3 py-2">
+            <div className="rounded-full border border-ds-border-2 bg-ds-surface-1 px-3 py-2">
               <Skeleton
                 width={54}
                 height={12}

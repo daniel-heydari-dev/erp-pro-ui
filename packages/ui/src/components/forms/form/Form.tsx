@@ -50,7 +50,7 @@ const messageIntentMap: Record<
   NonNullable<FormMessageProps["intent"]>,
   string
 > = {
-  default: "text-neutral-500 dark:text-neutral-400",
+  default: "text-ds-2",
   error: "text-destructive",
   success: "text-success",
 };
@@ -68,7 +68,7 @@ export const Form = ({
   return (
     <form
       className={cx(
-        "w-full space-y-6 rounded-lg border border-border bg-background-secondary p-6",
+        "w-full space-y-6 rounded-lg border border-ds-border-2 bg-ds-surface-1 p-6",
         className,
       )}
       {...props}
@@ -76,15 +76,9 @@ export const Form = ({
       {(title || description) && (
         <div className="space-y-2">
           {title && (
-            <h2 className="text-xl font-semibold text-neutral-900 dark:text-white">
-              {title}
-            </h2>
+            <h2 className="text-xl font-semibold text-ds-1">{title}</h2>
           )}
-          {description && (
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              {description}
-            </p>
-          )}
+          {description && <p className="text-sm text-ds-2">{description}</p>}
         </div>
       )}
       <div className={gapClassMap[gap]}>{children}</div>
@@ -104,15 +98,9 @@ export const FormSection = ({
       {(title || description) && (
         <header className="space-y-1">
           {title && (
-            <h3 className="text-base font-medium text-neutral-900 dark:text-white">
-              {title}
-            </h3>
+            <h3 className="text-base font-medium text-ds-1">{title}</h3>
           )}
-          {description && (
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              {description}
-            </p>
-          )}
+          {description && <p className="text-sm text-ds-2">{description}</p>}
         </header>
       )}
       <div className={sectionColumnsMap[columns] || sectionColumnsMap[1]}>
@@ -127,10 +115,7 @@ export const FormDescription = ({
   className = "",
   id,
 }: FormDescriptionProps) => (
-  <p
-    id={id}
-    className={cx("text-sm text-neutral-500 dark:text-neutral-400", className)}
-  >
+  <p id={id} className={cx("text-sm text-ds-2", className)}>
     {children}
   </p>
 );
@@ -189,18 +174,11 @@ export const FormField = ({
 
   const labelNode = (
     <div className="flex items-center justify-between gap-2">
-      <label
-        htmlFor={fieldId}
-        className="text-sm font-medium text-neutral-900 dark:text-white"
-      >
+      <label htmlFor={fieldId} className="text-sm font-medium text-ds-1">
         {label}
         {required && <span className="ml-1 text-destructive">*</span>}
       </label>
-      {helperAction && (
-        <div className="text-xs text-neutral-500 dark:text-neutral-400">
-          {helperAction}
-        </div>
-      )}
+      {helperAction && <div className="text-xs text-ds-2">{helperAction}</div>}
     </div>
   );
 

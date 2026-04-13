@@ -2,7 +2,9 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../forms/button";
-import { ProgressBar } from "../progress-bar";
+import { SplitChip, StatusDotChip } from "../chip";
+import { MiniNeonSparkline } from "../charts";
+import { CircularProgress, ProgressBar } from "../progress-bar";
 import { StorySurface } from "../../shared/storybook";
 import { ArrowDownIcon, ArrowUpIcon } from "../../icons";
 import {
@@ -214,6 +216,16 @@ type CapacityRow = {
   capacityPercent: number;
 };
 
+type InventoryDashboardRow = {
+  id: string;
+  sku: string;
+  product: string;
+  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
+  healthScore: number;
+  trend: Array<{ label: string; value: number }>;
+  updatedAt: string;
+};
+
 type ProductRow = {
   id: string;
   sku: string;
@@ -227,6 +239,7 @@ type ProductRow = {
   stock: number;
   reorderLevel: number;
   rating: number;
+  trend: Array<{ label: string; value: number }>;
   isActive: boolean;
   isFeatured: boolean;
   createdAt: string;
@@ -234,7 +247,20 @@ type ProductRow = {
 };
 
 const productColumns = [
-  { id: "sku", label: "SKU", filterable: true, priority: 1 },
+  {
+    id: "sku",
+    label: "SKU",
+    filterable: true,
+    priority: 1,
+    renderCell: ({ value }: { value: unknown }) => (
+      <SplitChip
+        leftLabel="SKU"
+        rightLabel={String(value ?? "")}
+        truncateRight
+        rightMaxWidth="8.5rem"
+      />
+    ),
+  },
   { id: "name", label: "Name", filterable: true, priority: 1 },
   { id: "category", label: "Category", filterable: true, priority: 1 },
   {
@@ -243,14 +269,76 @@ const productColumns = [
     filterable: true,
     multiFilter: true,
     priority: 1,
+    renderCell: ({ value }: { value: unknown }) => {
+      const status = String(value ?? "Draft");
+      const tone =
+        status === "Active"
+          ? "success"
+          : status === "Backorder"
+            ? "warning"
+            : status === "Discontinued"
+              ? "danger"
+              : "info";
+
+      return <StatusDotChip tone={tone} label={status} />;
+    },
   },
   { id: "warehouse", label: "Warehouse", filterable: true, priority: 2 },
   { id: "vendor", label: "Vendor", filterable: true, priority: 2 },
   { id: "country", label: "Country", filterable: true, priority: 2 },
   { id: "price", label: "Price", filterable: true, priority: 2 },
-  { id: "stock", label: "Stock", filterable: true, priority: 2 },
+  {
+    id: "stock",
+    label: "Stock",
+    filterable: true,
+    priority: 2,
+    renderCell: ({ value, row }: { value: unknown; row: ProductRow }) => {
+      const stockValue = typeof value === "number" ? value : 0;
+      const stockPercent = Math.max(
+        0,
+        Math.min(100, (stockValue / Math.max(row.reorderLevel * 3, 1)) * 100),
+      );
+      const tone =
+        stockValue <= row.reorderLevel
+          ? "danger"
+          : stockValue <= row.reorderLevel * 1.5
+            ? "warning"
+            : "success";
+
+      return (
+        <div className="ui:flex ui:items-center ui:gap-2">
+          <CircularProgress
+            value={stockPercent}
+            max={100}
+            size={22}
+            strokeWidth={3}
+            tone={tone}
+            ariaLabel="Stock level"
+          />
+          <span className="ui:text-xs ui:font-medium ui:text-ds-1">
+            {stockValue}
+          </span>
+        </div>
+      );
+    },
+  },
   { id: "reorderLevel", label: "Reorder", filterable: true, priority: 3 },
-  { id: "rating", label: "Rating", filterable: true, priority: 3 },
+  {
+    id: "rating",
+    label: "Trend",
+    filterable: true,
+    priority: 3,
+    renderCell: ({ row }: { row: ProductRow }) => (
+      <div className="ui:w-[110px]">
+        <MiniNeonSparkline
+          data={row.trend}
+          height={30}
+          showTooltip={false}
+          tone="default"
+        />
+      </div>
+    ),
+  },
   { id: "isActive", label: "Active", filterable: true, priority: 3 },
   { id: "isFeatured", label: "Featured", filterable: true, priority: 3 },
   { id: "createdAt", label: "Created", filterable: true, priority: 3 },
@@ -301,6 +389,13 @@ const allProductsData: ProductRow[] = Array.from({ length: 54 }, (_, index) => {
     stock: 12 + (index % 20) * 3,
     reorderLevel: 10 + (index % 5) * 5,
     rating: 2 + (index % 4),
+    trend: [
+      { label: "M", value: 18 + ((index * 3) % 30) },
+      { label: "T", value: 16 + ((index * 5) % 32) },
+      { label: "W", value: 20 + ((index * 4) % 28) },
+      { label: "T", value: 22 + ((index * 6) % 26) },
+      { label: "F", value: 19 + ((index * 7) % 31) },
+    ],
     isActive: index % 3 !== 0,
     isFeatured: index % 5 === 0,
     createdAt: `2026-02-${String((index % 27) + 1).padStart(2, "0")}`,
@@ -365,6 +460,162 @@ const capacityColumns = [
       </div>
     ),
   },
+];
+
+const inventoryDashboardRows: InventoryDashboardRow[] = [
+  {
+    id: "inv-1",
+    sku: "ABC-001234-BL",
+    product: "Wireless Sensor",
+    stockStatus: "In Stock",
+    healthScore: 88,
+    trend: [
+      { label: "M", value: 41 },
+      { label: "T", value: 44 },
+      { label: "W", value: 46 },
+      { label: "T", value: 49 },
+      { label: "F", value: 53 },
+    ],
+    updatedAt: "2026-03-29",
+  },
+  {
+    id: "inv-2",
+    sku: "QWE-009941-SR",
+    product: "Rack Switch",
+    stockStatus: "Low Stock",
+    healthScore: 56,
+    trend: [
+      { label: "M", value: 39 },
+      { label: "T", value: 33 },
+      { label: "W", value: 31 },
+      { label: "T", value: 28 },
+      { label: "F", value: 30 },
+    ],
+    updatedAt: "2026-03-27",
+  },
+  {
+    id: "inv-3",
+    sku: "NXT-177777-XL",
+    product: "Cooling Module",
+    stockStatus: "Out of Stock",
+    healthScore: 24,
+    trend: [
+      { label: "M", value: 27 },
+      { label: "T", value: 24 },
+      { label: "W", value: 20 },
+      { label: "T", value: 18 },
+      { label: "F", value: 16 },
+    ],
+    updatedAt: "2026-03-24",
+  },
+  {
+    id: "inv-4",
+    sku: "TUR-540231-PRO-LONG",
+    product: "Power Relay",
+    stockStatus: "In Stock",
+    healthScore: 73,
+    trend: [
+      { label: "M", value: 37 },
+      { label: "T", value: 40 },
+      { label: "W", value: 42 },
+      { label: "T", value: 43 },
+      { label: "F", value: 45 },
+    ],
+    updatedAt: "2026-03-22",
+  },
+];
+
+const inventoryDashboardColumns = [
+  {
+    id: "sku",
+    label: "SKU",
+    filterable: true,
+    priority: 1,
+    renderCell: ({ value }: { value: unknown }) => (
+      <SplitChip
+        leftLabel="SKU"
+        rightLabel={String(value ?? "")}
+        truncateRight
+        rightMaxWidth="9rem"
+      />
+    ),
+  },
+  { id: "product", label: "Product", filterable: true, priority: 1 },
+  {
+    id: "stockStatus",
+    label: "Stock",
+    filterable: true,
+    priority: 1,
+    renderCell: ({ value }: { value: unknown }) => {
+      const status = String(value ?? "In Stock");
+      const tone =
+        status === "In Stock"
+          ? "success"
+          : status === "Low Stock"
+            ? "warning"
+            : "danger";
+
+      return <StatusDotChip tone={tone} label={status} />;
+    },
+  },
+  {
+    id: "healthScore",
+    label: "Health",
+    filterable: false,
+    priority: 2,
+    renderCell: ({ value }: { value: unknown }) => (
+      <div className="ui:flex ui:items-center ui:gap-2">
+        <CircularProgress
+          value={typeof value === "number" ? value : 0}
+          max={100}
+          size={24}
+          strokeWidth={3}
+          tone={
+            typeof value === "number" && value < 40
+              ? "danger"
+              : typeof value === "number" && value < 65
+                ? "warning"
+                : "success"
+          }
+          ariaLabel="Inventory health score"
+        />
+        <span className="ui:text-xs ui:font-semibold ui:text-ds-1">
+          {typeof value === "number" ? `${Math.round(value)}%` : "0%"}
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "trend",
+    label: "Trend",
+    filterable: false,
+    priority: 2,
+    renderCell: ({ value }: { value: unknown }) => {
+      const trendData = Array.isArray(value) ? value : [];
+      return (
+        <div className="ui:w-[120px]">
+          <MiniNeonSparkline
+            data={trendData}
+            height={34}
+            showTooltip={false}
+            showArea
+          />
+        </div>
+      );
+    },
+  },
+  { id: "updatedAt", label: "Last Update", filterable: true, priority: 3 },
+];
+
+const inventoryDashboardFilters: FilterOption[] = [
+  { id: "product", label: "Product", type: "text" },
+  {
+    id: "stockStatus",
+    label: "Stock",
+    type: "select",
+    options: ["In Stock", "Low Stock", "Out of Stock"],
+  },
+  { id: "updatedAt", label: "Updated", type: "date-range" },
 ];
 
 function DefaultWorkspaceStory(props: Story["args"]) {
@@ -440,7 +691,7 @@ function BulkSelectionCustomActionsStory() {
         />
 
         {reviewedIds.length > 0 ? (
-          <div className="ui:rounded-xl ui:border ui:border-border ui:bg-card ui:px-4 ui:py-3 ui:text-sm ui:text-card-foreground">
+          <div className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:px-4 ui:py-3 ui:text-sm ui:text-ds-1">
             Reviewed rows: {reviewedIds.join(", ")}
           </div>
         ) : null}
@@ -518,6 +769,37 @@ export const CompactAuditQueue: Story = {
 };
 
 /**
+ * ## RTL Workspace (Persian / Arabic)
+ * Verifies search, sticky action column, dropdown anchoring, and pagination controls in RTL layouts.
+ */
+export const RtlWorkspace: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <div dir="rtl">
+        <DataTable
+          data={sampleData}
+          columns={columns}
+          pageSize={4}
+          maxHeight="420px"
+          searchPlaceholder="جستجو در کاربران..."
+          filterOptions={filterOptions}
+          labels={{
+            columns: "ستون‌ها",
+            showAll: "نمایش همه",
+            hideAll: "پنهان‌سازی همه",
+            showFilters: "فیلترها",
+            addFilter: "افزودن فیلتر",
+            clearFilters: "پاک کردن فیلترها",
+            filterProfiles: "پروفایل فیلتر",
+            saveNewFilterProfile: "ذخیره پروفایل جدید",
+          }}
+        />
+      </div>
+    </StorySurface>
+  ),
+};
+
+/**
  * ## Capacity Monitoring
  * Shows a richer cell using the shared ProgressBar via columns[].renderCell.
  */
@@ -529,6 +811,25 @@ export const CapacityMonitoring: Story = {
         columns={capacityColumns}
         pageSize={4}
         searchPlaceholder="Search zones or owners..."
+      />
+    </StorySurface>
+  ),
+};
+
+/**
+ * ## Dashboard Cells (Chips + Circular + Mini Chart)
+ * Uses SplitChip, StatusDotChip, CircularProgress, and MiniNeonSparkline in compact table cells.
+ */
+export const DashboardCellComponents: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <DataTable
+        data={inventoryDashboardRows}
+        columns={inventoryDashboardColumns}
+        pageSize={4}
+        maxHeight="380px"
+        searchPlaceholder="Search SKU or product..."
+        filterOptions={inventoryDashboardFilters}
       />
     </StorySurface>
   ),
@@ -557,13 +858,13 @@ export const BulkSelectionWithCustomActions: Story = {
 export const ComposablePrimitives: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
-      <div className="ui:overflow-hidden ui:rounded-xl ui:border ui:border-border ui:bg-card">
+      <div className="ui:overflow-hidden ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1">
         <Table className="ui:min-w-[520px]">
-          <TableCaption className="ui:py-3 ui:text-card-foreground">
+          <TableCaption className="ui:py-3 ui:text-ds-1">
             Team access overview
           </TableCaption>
           <TableHeader>
-            <TableRow className="ui:border-b ui:border-border">
+            <TableRow className="ui:border-b ui:border-ds-border-2">
               <TableHead className="ui:px-4 ui:py-3 ui:text-left">
                 Name
               </TableHead>
@@ -579,7 +880,7 @@ export const ComposablePrimitives: Story = {
             {sampleData.slice(0, 4).map((row) => (
               <TableRow
                 key={row.id}
-                className="ui:border-b ui:border-border/70 ui:transition-colors ui:hover:bg-muted/50"
+                className="ui:border-b ui:border-ds-border-2/70 ui:transition-colors ui:hover:bg-ds-surface-3/50"
               >
                 <TableCell className="ui:px-4 ui:py-3">{row.name}</TableCell>
                 <TableCell className="ui:px-4 ui:py-3">{row.status}</TableCell>

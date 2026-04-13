@@ -121,7 +121,7 @@ export function SplashCursorVariantsExample() {
           particleCount={15}
           className="w-full h-full flex items-center justify-center"
         >
-          <div className="px-6 py-3 bg-white dark:bg-neutral-800 rounded-full shadow-lg font-bold text-accent">
+          <div className="px-6 py-3 bg-white dark:bg-neutral-800 rounded-full shadow-lg font-bold text-ds-1">
             Custom Style
           </div>
         </SplashCursor>
@@ -139,7 +139,7 @@ export function CustomSplashCursorExample() {
       particleCount={15}
       className="flex h-75 w-full items-center justify-center"
     >
-      <div className="rounded-full bg-white px-6 py-3 font-bold text-accent shadow-lg">
+      <div className="rounded-full bg-white px-6 py-3 font-bold text-ds-1 shadow-lg">
         Custom Style
       </div>
     </SplashCursor>

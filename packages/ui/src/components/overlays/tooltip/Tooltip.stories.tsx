@@ -98,7 +98,7 @@ export function TooltipFormHintExample() {
           <Button aria-label="Threshold help" className="h-6 w-6 rounded-full px-0 py-0 text-xs font-semibold">?</Button>
         </Tooltip>
       </div>
-      <div className="rounded-md border px-3 py-2 text-sm text-muted-foreground">24 units</div>
+      <div className="rounded-md border px-3 py-2 text-sm text-ds-2">24 units</div>
     </div>
   );
 }`;
@@ -233,7 +233,7 @@ export const FormHint: Story = {
             </Button>
           </Tooltip>
         </div>
-        <div className="ui:rounded-md ui:border ui:border-border ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground">
+        <div className="ui:rounded-md ui:border ui:border-ds-border-2 ui:px-3 ui:py-2 ui:text-sm ui:text-ds-2">
           24 units
         </div>
       </div>

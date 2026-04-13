@@ -194,8 +194,10 @@ function matchesFilterValue(
       return false;
     }
 
-    if (rangeValue.min !== undefined && rowNumber < rangeValue.min) return false;
-    if (rangeValue.max !== undefined && rowNumber > rangeValue.max) return false;
+    if (rangeValue.min !== undefined && rowNumber < rangeValue.min)
+      return false;
+    if (rangeValue.max !== undefined && rowNumber > rangeValue.max)
+      return false;
 
     return true;
   }
@@ -224,7 +226,9 @@ export function filterClientData<T>(
         return true;
       }
 
-      const filterOption = filterOptions.find((filter) => filter.id === filterId);
+      const filterOption = filterOptions.find(
+        (filter) => filter.id === filterId,
+      );
       const rowValue = (row as Record<string, unknown>)[filterId];
 
       return matchesFilterValue(rowValue, filterValue, filterOption?.type);
@@ -304,10 +308,10 @@ export const isFilterActive = (value?: FilterValue): boolean =>
 
 function LoadingFilterField({ label }: { label: string }) {
   return (
-    <div className="min-w-[200px] space-y-2 rounded-[10px] border border-neutral-200 bg-neutral-100/60 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800/60">
-      <div className="h-3 w-24 animate-pulse rounded bg-neutral-300 dark:bg-neutral-600" />
-      <div className="h-10 w-full animate-pulse rounded bg-neutral-200 dark:bg-neutral-700" />
-      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+    <div className="min-w-[200px] space-y-2 rounded-[10px] border border-ds-border-2 bg-ds-surface-2/70 px-3 py-2">
+      <div className="h-3 w-24 animate-pulse rounded bg-ds-surface-3" />
+      <div className="h-10 w-full animate-pulse rounded bg-ds-surface-1" />
+      <p className="text-xs text-ds-2">
         Loading {label.toLowerCase()} options...
       </p>
     </div>
@@ -374,7 +378,6 @@ export function FilterFieldControl({
           value={getStringFilterValue(value)}
           onChange={(event) => onChange(event.target.value)}
           placeholder={filter.placeholder || filter.label}
-          className={isActive ? "border-accent border-2" : ""}
         />
       );
     case "select":
@@ -393,7 +396,6 @@ export function FilterFieldControl({
           onChange={(values) => onChange(values)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
         />
       ) : (
         <Combobox
@@ -401,7 +403,6 @@ export function FilterFieldControl({
           onChange={(nextValue) => onChange(nextValue)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
         />
       );
     case "checkbox":
@@ -455,7 +456,6 @@ export function FilterFieldControl({
           onChange={(values) => onChange(values)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
         />
       ) : (
         <Combobox
@@ -463,7 +463,6 @@ export function FilterFieldControl({
           onChange={(nextValue) => onChange(nextValue)}
           placeholder={filter.placeholder || filter.label}
           options={toSelectOptions(filter.options)}
-          className={isActive ? "border-accent border-2" : ""}
         />
       );
   }

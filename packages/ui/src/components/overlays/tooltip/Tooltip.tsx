@@ -39,12 +39,12 @@ const positionStyles: Record<TooltipPosition, string> = {
 };
 
 const arrowStyles: Record<TooltipPosition, string> = {
-  top: "top-full left-1/2 -translate-x-1/2 border-t-neutral-800 dark:border-t-neutral-700 border-x-transparent border-b-transparent border-t-[6px] border-x-[6px] border-b-0",
+  top: "top-full left-1/2 -translate-x-1/2 border-t-ds-surface-2 border-x-transparent border-b-transparent border-t-[6px] border-x-[6px] border-b-0",
   bottom:
-    "bottom-full left-1/2 -translate-x-1/2 border-b-neutral-800 dark:border-b-neutral-700 border-x-transparent border-t-transparent border-b-[6px] border-x-[6px] border-t-0",
-  left: "left-full top-1/2 -translate-y-1/2 border-l-neutral-800 dark:border-l-neutral-700 border-y-transparent border-r-transparent border-l-[6px] border-y-[6px] border-r-0",
+    "bottom-full left-1/2 -translate-x-1/2 border-b-ds-surface-2 border-x-transparent border-t-transparent border-b-[6px] border-x-[6px] border-t-0",
+  left: "left-full top-1/2 -translate-y-1/2 border-l-ds-surface-2 border-y-transparent border-r-transparent border-l-[6px] border-y-[6px] border-r-0",
   right:
-    "right-full top-1/2 -translate-y-1/2 border-r-neutral-800 dark:border-r-neutral-700 border-y-transparent border-l-transparent border-r-[6px] border-y-[6px] border-l-0",
+    "right-full top-1/2 -translate-y-1/2 border-r-ds-surface-2 border-y-transparent border-l-transparent border-r-[6px] border-y-[6px] border-l-0",
 };
 
 const motionVariants = {
@@ -201,8 +201,7 @@ export default function Tooltip({
             className={`
               absolute z-50 ${positionStyles[position]}
               px-3 py-2 text-sm font-medium
-              bg-neutral-800 dark:bg-neutral-700
-              text-white rounded-lg shadow-lg
+              rounded-lg border border-ds-border-2 bg-ds-surface-2 text-ds-1 shadow-lg
               whitespace-normal break-words
               ${className}
             `}

@@ -64,7 +64,7 @@ function ControlledOTPExample() {
 
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-      <div className="ui:flex ui:flex-col ui:items-center ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+      <div className="ui:flex ui:flex-col ui:items-center ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
         <OTPInput
           length={6}
           value={value}
@@ -72,13 +72,13 @@ function ControlledOTPExample() {
           autoFocus
           onComplete={(code) => setStatus(`Code complete: ${code}`)}
         />
-        <p className="ui:text-sm ui:text-muted-foreground">
+        <p className="ui:text-sm ui:text-ds-2">
           Entered Code:{" "}
-          <span className="ui:font-mono ui:font-bold ui:text-accent">
+          <span className="ui:font-mono ui:font-bold ui:text-ds-1">
             {value || "------"}
           </span>
         </p>
-        <p className="ui:text-xs ui:text-muted-foreground">{status}</p>
+        <p className="ui:text-xs ui:text-ds-2">{status}</p>
       </div>
     </StorySurface>
   );
@@ -108,14 +108,14 @@ export const MaskedAndGrouped: Story = {
 
     return (
       <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-        <div className="ui:flex ui:flex-col ui:items-center ui:gap-4 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+        <div className="ui:flex ui:flex-col ui:items-center ui:gap-4 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
           <OTPInput
             {...args}
             value={value}
             onChange={setValue}
             separatorPositions={[3]}
           />
-          <p className="ui:text-xs ui:text-muted-foreground">
+          <p className="ui:text-xs ui:text-ds-2">
             Paste a full code to auto-fill all slots.
           </p>
         </div>
@@ -138,7 +138,7 @@ export const ErrorState: Story = {
   decorators: [
     (StoryFn) => (
       <StorySurface widthClassName="ui:w-full ui:max-w-lg">
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
           <StoryFn />
         </div>
       </StorySurface>

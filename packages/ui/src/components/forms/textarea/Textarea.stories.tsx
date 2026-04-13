@@ -115,7 +115,7 @@ function ControlledTextarea() {
           className="ui:w-full"
           rows={4}
         />
-        <p className="ui:text-right ui:text-xs ui:text-muted-foreground">
+        <p className="ui:text-right ui:text-xs ui:text-ds-2">
           {val.length}/{maxLength}
         </p>
       </div>
@@ -198,9 +198,7 @@ export const FormSegmentExample: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
       <div className="ui:flex ui:w-full ui:flex-col ui:gap-4">
-        <h3 className="ui:text-lg ui:font-medium text-foreground">
-          Submit Feedback
-        </h3>
+        <h3 className="ui:text-lg ui:font-medium text-ds-1">Submit Feedback</h3>
         <Input label="Subject" placeholder="Issue with login" />
         <Textarea
           label="Detailed Description"

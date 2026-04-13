@@ -167,7 +167,7 @@ export function TooltipFormHintExample() {
           </Button>
         </Tooltip>
       </div>
-      <div className="rounded-md border px-3 py-2 text-sm text-muted-foreground">24 units</div>
+      <div className="rounded-md border px-3 py-2 text-sm text-ds-2">24 units</div>
     </div>
   );
 }`}

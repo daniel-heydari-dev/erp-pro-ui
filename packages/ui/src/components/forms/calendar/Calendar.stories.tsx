@@ -48,7 +48,7 @@ function SingleSelectionExample() {
     <StorySurface widthClassName="ui:w-full ui:max-w-md">
       <div className="ui:flex ui:flex-col ui:items-center ui:gap-4">
         <Calendar selectionMode="single" value={date} onSelect={setDate} />
-        <p className="ui:text-sm ui:text-muted-foreground">
+        <p className="ui:text-sm ui:text-ds-2">
           Selected: {date ? date.toLocaleDateString() : "None"}
         </p>
       </div>
@@ -70,7 +70,7 @@ function RangeSelectionExample() {
           range={range}
           onRangeSelect={setRange}
         />
-        <p className="ui:text-sm ui:text-muted-foreground">
+        <p className="ui:text-sm ui:text-ds-2">
           Range: {range.start?.toLocaleDateString() ?? "None"} -{" "}
           {range.end?.toLocaleDateString() ?? "None"}
         </p>
@@ -88,18 +88,18 @@ function FooterActionsExample() {
         value={date}
         onSelect={setDate}
         footer={
-          <div className="ui:flex ui:justify-between ui:border-t ui:border-border ui:pt-3">
+          <div className="ui:flex ui:justify-between ui:border-t ui:border-ds-border-2 ui:pt-3">
             <Button
               label="Today"
               size="small"
               onClick={() => setDate(new Date())}
-              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-accent ui:shadow-none"
+              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-ds-1 ui:shadow-none"
             />
             <Button
               label="Clear"
               size="small"
               onClick={() => setDate(null)}
-              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-muted-foreground ui:shadow-none"
+              className="ui:h-auto ui:border-none ui:bg-transparent ui:px-0 ui:py-0 ui:text-xs ui:font-semibold ui:text-ds-2 ui:shadow-none"
             />
           </div>
         }

@@ -28,13 +28,13 @@ export function PasswordStrengthMeter({
   // Determine strength color based on the calculated strength
   const getColor = (strength: number): string => {
     const colors = [
-      "bg-danger",
-      "bg-danger",
-      "bg-warning",
-      "bg-warning",
-      "bg-success",
+      "bg-ds-state-danger",
+      "bg-ds-state-danger",
+      "bg-ds-state-warning",
+      "bg-ds-state-warning",
+      "bg-ds-state-success",
     ];
-    return colors[strength] || "bg-neutral-600";
+    return colors[strength] || "bg-ds-surface-3";
   };
 
   // Get a text label corresponding to the password strength
@@ -47,12 +47,8 @@ export function PasswordStrengthMeter({
     <div className="mt-2">
       {/* Strength Label */}
       <div className="mb-1 flex items-center justify-between">
-        <span className="text-xs text-neutral-500 dark:text-neutral-400">
-          Password strength
-        </span>
-        <span className="text-xs text-neutral-500 dark:text-neutral-400">
-          {getStrengthText(strength)}
-        </span>
+        <span className="text-xs text-ds-2">Password strength</span>
+        <span className="text-xs text-ds-2">{getStrengthText(strength)}</span>
       </div>
 
       {/* Strength Meter */}
@@ -61,9 +57,7 @@ export function PasswordStrengthMeter({
           <div
             key={index}
             className={`h-1 w-1/4 rounded-full transition-colors duration-300 ${
-              index < strength
-                ? getColor(strength)
-                : "bg-neutral-300 dark:bg-neutral-600"
+              index < strength ? getColor(strength) : "bg-ds-surface-3"
             }`}
           />
         ))}

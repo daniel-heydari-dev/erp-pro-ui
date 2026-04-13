@@ -137,34 +137,34 @@ const typeStyles: Record<
   { bg: string; icon: string; iconBg: string }
 > = {
   success: {
-    bg: "bg-white dark:bg-neutral-800 border-success-border",
-    icon: "text-success",
-    iconBg: "bg-success-subtle",
+    bg: "bg-ds-surface-1 border-ds-state-success-border",
+    icon: "text-ds-state-success-text",
+    iconBg: "bg-ds-state-success-surface",
   },
   error: {
-    bg: "bg-white dark:bg-neutral-800 border-danger-border",
-    icon: "text-danger",
-    iconBg: "bg-danger-subtle",
+    bg: "bg-ds-surface-1 border-ds-state-error-border",
+    icon: "text-ds-state-error-text",
+    iconBg: "bg-ds-state-error-surface",
   },
   warning: {
-    bg: "bg-white dark:bg-neutral-800 border-warning-border",
-    icon: "text-warning",
-    iconBg: "bg-warning-subtle",
+    bg: "bg-ds-surface-1 border-ds-state-warning-border",
+    icon: "text-ds-state-warning-text",
+    iconBg: "bg-ds-state-warning-surface",
   },
   info: {
-    bg: "bg-white dark:bg-neutral-800 border-info-border",
-    icon: "text-info",
-    iconBg: "bg-info-subtle",
+    bg: "bg-ds-surface-1 border-ds-state-info-border",
+    icon: "text-ds-state-info-text",
+    iconBg: "bg-ds-state-info-surface",
   },
   default: {
-    bg: "bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700",
-    icon: "text-neutral-500",
-    iconBg: "bg-neutral-100 dark:bg-neutral-700",
+    bg: "bg-ds-surface-1 border-ds-border-2",
+    icon: "text-ds-2",
+    iconBg: "bg-ds-surface-2",
   },
   loading: {
-    bg: "bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700",
-    icon: "text-accent",
-    iconBg: "bg-accent-subtle",
+    bg: "bg-ds-surface-1 border-ds-border-2",
+    icon: "text-ds-1",
+    iconBg: "bg-ds-accent-subtle",
   },
 };
 
@@ -291,18 +291,18 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
       >
         {/* Progress bar */}
         {duration && duration > 0 && type !== "loading" && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-neutral-100 dark:bg-neutral-700">
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-ds-surface-2">
             <motion.div
               className={`h-full ${
                 type === "success"
-                  ? "bg-success"
+                  ? "bg-ds-state-success"
                   : type === "error"
-                    ? "bg-destructive"
+                    ? "bg-ds-state-danger"
                     : type === "warning"
-                      ? "bg-warning"
+                      ? "bg-ds-state-warning"
                       : type === "info"
-                        ? "bg-info"
-                        : "bg-neutral-400"
+                        ? "bg-ds-state-info"
+                        : "bg-ds-border-3"
               }`}
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.05 }}
@@ -321,17 +321,9 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          {title && (
-            <p className="font-semibold text-neutral-900 dark:text-white text-sm">
-              {title}
-            </p>
-          )}
+          {title && <p className="text-sm font-semibold text-ds-1">{title}</p>}
           {description && (
-            <p
-              className={`text-sm text-neutral-600 dark:text-neutral-300 ${
-                title ? "mt-1" : ""
-              }`}
-            >
+            <p className={`text-sm text-ds-2 ${title ? "mt-1" : ""}`}>
               {description}
             </p>
           )}
@@ -341,7 +333,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
                 action.onClick();
                 onDismiss(toast.id);
               }}
-              className="mt-2 text-sm font-medium text-accent hover:underline"
+              className="mt-2 text-sm font-medium text-ds-1 hover:underline"
             >
               {action.label}
             </button>
@@ -355,7 +347,7 @@ const ToastItem = forwardRef<HTMLDivElement, ToastItemProps>(
               toast.onDismiss?.();
               onDismiss(toast.id);
             }}
-            className="absolute top-3 right-3 p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+            className="absolute top-3 right-3 rounded-full p-1 text-ds-2 transition-colors hover:bg-ds-surface-2 hover:text-ds-1"
             aria-label="Dismiss"
           >
             <CloseIcon className="w-4 h-4" aria-hidden="true" />

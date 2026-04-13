@@ -18,9 +18,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           htmlFor={switchId}
           className={`
             relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full transition-colors duration-200
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus focus-visible:ring-offset-2 focus-visible:ring-offset-ds-surface-1
             disabled:cursor-not-allowed disabled:opacity-50
-            ${checked ? "bg-accent" : "bg-zinc-300 dark:bg-zinc-600"}
+            ${checked ? "bg-ds-accent" : "bg-ds-surface-3"}
           `
             .trim()
             .replace(/\s+/g, " ")}
@@ -41,7 +41,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               w-4
               transform
               rounded-full
-              bg-white
+              bg-ds-surface-1
               shadow-lg
               ring-0
               transition-transform
@@ -56,7 +56,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         {label && (
           <label
             htmlFor={switchId}
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            className="text-sm font-medium leading-none text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
           >
             {label}
           </label>

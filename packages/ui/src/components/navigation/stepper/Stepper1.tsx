@@ -41,35 +41,37 @@ function getStepColors(
   if (isActive) {
     return {
       buttonClassName:
-        "border-accent bg-accent/12 text-accent shadow-sm shadow-accent/10",
-      connectorClassName: "bg-accent",
-      badgeClassName: "border-accent bg-accent text-on-accent",
+        "border-ds-border-accent bg-ds-accent/12 text-ds-1 shadow-sm shadow-ds-accent/10",
+      connectorClassName: "bg-ds-accent",
+      badgeClassName: "border-ds-border-accent bg-ds-accent text-ds-on-accent",
     };
   }
 
   if (state === "valid") {
     return {
       buttonClassName:
-        "border-success bg-success/10 text-success shadow-sm shadow-success/10",
-      connectorClassName: "bg-success",
-      badgeClassName: "border-success bg-success text-on-accent",
+        "border-ds-state-success-border bg-ds-state-success-surface text-ds-state-success-text shadow-sm",
+      connectorClassName: "bg-ds-state-success",
+      badgeClassName:
+        "border-ds-state-success-border bg-ds-state-success text-ds-on-accent",
     };
   }
 
   if (state === "invalid") {
     return {
       buttonClassName:
-        "border-red-500 bg-red-500/10 text-red-600 dark:text-red-300",
-      connectorClassName: "bg-red-500",
-      badgeClassName: "border-red-500 bg-red-500 text-white",
+        "border-ds-state-error-border bg-ds-state-error-surface text-ds-state-error-text",
+      connectorClassName: "bg-ds-state-danger",
+      badgeClassName:
+        "border-ds-state-error-border bg-ds-state-danger text-ds-on-accent",
     };
   }
 
   return {
     buttonClassName:
-      "border-border bg-surface text-muted-foreground hover:border-border-strong hover:bg-canvas",
-    connectorClassName: "bg-border-strong/70",
-    badgeClassName: "border-border bg-background text-muted-foreground",
+      "border-ds-border-2 bg-ds-surface-1 text-ds-2 hover:border-ds-border-1 hover:bg-ds-canvas",
+    connectorClassName: "bg-ds-border-3/70",
+    badgeClassName: "border-ds-border-2 bg-ds-canvas text-ds-2",
   };
 }
 
@@ -188,7 +190,7 @@ export function StepperSteps({
               disabled={!isClickable}
               onClick={() => onStepClick?.(index)}
               className={mergeClassNames(
-                "relative z-10 flex min-h-11 items-center justify-center rounded-md border px-4 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-default disabled:opacity-100",
+                "relative z-10 flex min-h-11 items-center justify-center rounded-md border px-4 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-surface-1 disabled:cursor-default disabled:opacity-100",
                 isVertical ? "w-full" : "w-full min-w-0",
                 colors.buttonClassName,
                 stepClassName,

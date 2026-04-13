@@ -33,7 +33,7 @@ const InputDoc = () => {
             value={query}
             onChange={handleQueryChange}
             helperText="Search runs client-side as you type."
-            icon={<FiSearch size={18} className="text-muted-foreground" />}
+            icon={<FiSearch size={18} className="text-ds-2" />}
           />
         </div>
       </div>
@@ -138,7 +138,7 @@ export function InputValidationStates() {
           <Input
             label="Search"
             placeholder="Search projects"
-            icon={<FiSearch size={18} className="text-muted-foreground" />}
+            icon={<FiSearch size={18} className="text-ds-2" />}
           />
         </div>
         <div className="docs-showcase-card">
@@ -146,7 +146,7 @@ export function InputValidationStates() {
             label="Email"
             placeholder="Email address"
             type="email"
-            icon={<FiMail size={18} className="text-muted-foreground" />}
+            icon={<FiMail size={18} className="text-ds-2" />}
           />
         </div>
         <div className="docs-showcase-card">
@@ -154,7 +154,7 @@ export function InputValidationStates() {
             label="Password"
             placeholder="Password"
             type="password"
-            icon={<FiLock size={18} className="text-muted-foreground" />}
+            icon={<FiLock size={18} className="text-ds-2" />}
             bgClassName="bg-neutral-100 dark:bg-neutral-800"
           />
         </div>

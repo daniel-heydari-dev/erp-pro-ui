@@ -27,7 +27,7 @@ const Combobox: React.FC<ComboboxProps> = ({
   onChange,
   placeholder = "Select...",
   className,
-  bgClassName = "bg-background-secondary",
+  bgClassName = "bg-ds-surface-1",
   createOptionLabel,
   onCreateOption,
 }) => {
@@ -83,11 +83,11 @@ const Combobox: React.FC<ComboboxProps> = ({
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="group/combobox rounded-lg border-border p-[2px] transition duration-300 hover:border-accent"
+        className="group/combobox rounded-lg border-ds-border-2 p-[2px] transition duration-300 hover:border-ds-border-accent"
       >
         <div
           className={mergeClassNames(
-            "flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input px-3 py-2 text-sm text-foreground transition duration-400 ease-in-out focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
+            "flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-ds-border-field px-3 py-2 text-sm text-ds-1 transition duration-400 ease-in-out focus-visible:ring-2 focus-visible:ring-ds-focus focus-visible:outline-none",
             bgClassName,
           )}
           onClick={() => {
@@ -104,18 +104,18 @@ const Combobox: React.FC<ComboboxProps> = ({
             <TruncatedText
               as="span"
               showTitleOnHover
-              className="flex-1 text-foreground"
+              className="flex-1 text-ds-1"
             >
               {options.find((opt) => opt.value === value)?.label}
             </TruncatedText>
           ) : (
-            <TruncatedText as="span" className="flex-1 text-muted-foreground">
+            <TruncatedText as="span" className="flex-1 text-ds-2">
               {placeholder}
             </TruncatedText>
           )}
           <span
             className={mergeClassNames(
-              "ml-2 text-muted-foreground transition-transform duration-300",
+              "ml-2 text-ds-2 transition-transform duration-300",
               open ? "rotate-180" : "rotate-0",
             )}
           >
@@ -129,12 +129,12 @@ const Combobox: React.FC<ComboboxProps> = ({
         </div>
       </motion.div>
       {open && (
-        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-border bg-background-secondary shadow-3 backdrop-blur-xl transition">
+        <div className="absolute right-0 left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition">
           {/* Sticky search input */}
-          <div className="sticky top-0 z-10 rounded-t-lg border-b border-border-muted bg-background-secondary/95 backdrop-blur-sm">
+          <div className="sticky top-0 z-10 rounded-t-lg border-b border-ds-border-3 bg-ds-surface-1/95 backdrop-blur-sm">
             <input
               autoFocus
-              className="w-full bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent"
+              className="w-full bg-transparent px-3 py-2 text-sm text-ds-1 outline-none placeholder:text-ds-2 focus-visible:ring-2 focus-visible:ring-ds-focus"
               placeholder="Type to search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -144,17 +144,17 @@ const Combobox: React.FC<ComboboxProps> = ({
           {/* Scrollable options */}
           <div className="max-h-80 flex-1 overflow-auto">
             {filteredOptions.length === 0 && !createOptionLabel && (
-              <div className="px-3 py-2 text-muted-foreground">No options</div>
+              <div className="px-3 py-2 text-ds-2">No options</div>
             )}
             {filteredOptions.map((opt) => (
               <div
                 key={opt.value}
                 className={mergeClassNames(
-                  "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground transition",
+                  "mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-ds-1 transition",
                   opt.value === value
-                    ? "bg-accent-subtle text-accent font-semibold"
+                    ? "bg-ds-accent-subtle text-ds-1 font-semibold"
                     : "",
-                  "hover:bg-accent hover:text-on-accent",
+                  "hover:bg-ds-accent hover:text-ds-on-accent",
                 )}
                 onClick={() => {
                   onChange(opt.value);
@@ -164,7 +164,7 @@ const Combobox: React.FC<ComboboxProps> = ({
               >
                 <span className="flex w-5 items-center justify-center">
                   {opt.value === value && (
-                    <CheckIcon className="text-accent" width={18} height={18} />
+                    <CheckIcon className="text-ds-1" width={18} height={18} />
                   )}
                 </span>
                 <TruncatedText as="span" showTitleOnHover className="flex-1">
@@ -175,9 +175,9 @@ const Combobox: React.FC<ComboboxProps> = ({
           </div>
           {/* Sticky create option */}
           {createOptionLabel && onCreateOption && (
-            <div className="sticky bottom-0 z-10 rounded-b-lg border-t border-border-muted bg-background-secondary/95 backdrop-blur-sm">
+            <div className="sticky bottom-0 z-10 rounded-b-lg border-t border-ds-border-3 bg-ds-surface-1/95 backdrop-blur-sm">
               <div
-                className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-accent hover:text-on-accent"
+                className="mx-1 my-1 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-ds-1 transition hover:bg-ds-accent hover:text-ds-on-accent"
                 onClick={() => {
                   onCreateOption();
                   setSearch("");

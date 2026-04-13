@@ -114,7 +114,7 @@ export const ConsistentScaleAcrossReports: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl" className="ui:block">
       <div className="ui:grid ui:w-full ui:gap-4 md:ui:grid-cols-2">
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-5">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5">
           <p className="ui:text-sm ui:font-medium">With fixed domain</p>
           <StackedBarChart
             data={staffingData.slice(0, 3)}
@@ -123,7 +123,7 @@ export const ConsistentScaleAcrossReports: Story = {
             yAxisDomain={[0, 90]}
           />
         </div>
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-5">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5">
           <p className="ui:text-sm ui:font-medium">Auto domain</p>
           <StackedBarChart
             data={staffingData.slice(0, 3)}

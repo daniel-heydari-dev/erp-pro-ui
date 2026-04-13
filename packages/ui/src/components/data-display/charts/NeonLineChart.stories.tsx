@@ -125,10 +125,10 @@ export const DefaultNeonStyling: Story = {
       <StoryStack className="ui:gap-5">
         <div className="ui:flex ui:flex-col ui:gap-4 ui:md:flex-row ui:md:items-end ui:md:justify-between">
           <div>
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Latency tracking with the default neon treatment
             </p>
-            <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
               The stock gradient and glow already read as a focal chart without
               extra styling work.
             </p>
@@ -141,12 +141,12 @@ export const DefaultNeonStyling: Story = {
             ].map((metric) => (
               <div
                 key={metric.label}
-                className="ui:rounded-xl ui:border ui:border-border ui:bg-muted/35 ui:px-4 ui:py-3"
+                className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/35 ui:px-4 ui:py-3"
               >
-                <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+                <p className="ui:text-[11px] ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                   {metric.label}
                 </p>
-                <p className="ui:mt-2 ui:text-lg ui:font-semibold ui:text-foreground">
+                <p className="ui:mt-2 ui:text-lg ui:font-semibold ui:text-ds-1">
                   {metric.value}
                 </p>
               </div>
@@ -194,11 +194,11 @@ export const CompactActivityWidget: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
       <div className="ui:grid ui:gap-5 ui:md:grid-cols-[0.8fr_1.2fr]">
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-muted/35 ui:p-5">
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-3/35 ui:p-5">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Retention health
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             A tighter chart can still keep the neon treatment when used in KPI
             side panels.
           </p>
@@ -209,17 +209,17 @@ export const CompactActivityWidget: Story = {
               { label: "Trend", value: "+5 pts recovery" },
             ].map((item) => (
               <div key={item.label}>
-                <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+                <p className="ui:text-xs ui:font-medium ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
                   {item.label}
                 </p>
-                <p className="ui:mt-1 ui:text-xl ui:font-semibold ui:text-foreground">
+                <p className="ui:mt-1 ui:text-xl ui:font-semibold ui:text-ds-1">
                   {item.value}
                 </p>
               </div>
             ))}
           </div>
         </div>
-        <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-background ui:p-3">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-3">
           <NeonLineChart
             data={retentionData}
             height={280}

@@ -83,7 +83,7 @@ export default function SunToMoonButton({
     >
       <span className="flex items-center">
         {showLabelAndImage && (
-          <span className="mr-2 text-neutral-900 dark:text-white">
+          <span className="mr-2 text-ds-1">
             {mode === "light" ? "Light" : "Dark"}
           </span>
         )}
@@ -165,15 +165,15 @@ export default function SunToMoonButton({
         </motion.svg>
       </span>
       {showLabelAndImage && (
-        <span className="mt-2 flex h-[90px] w-[180px] flex-col items-center justify-center rounded-md bg-neutral-100 dark:bg-neutral-800">
+        <span className="mt-2 flex h-[90px] w-[180px] flex-col items-center justify-center rounded-md bg-ds-surface-2">
           <span className="my-4 flex w-[150px] flex-col rounded-md">
-            <span className="mb-1 w-[80px] rounded-full bg-neutral-300 p-1 dark:bg-neutral-600"></span>
-            <span className="mb-1 w-[100px] rounded-full bg-neutral-300 p-1 dark:bg-neutral-600"></span>
-            <span className="w-[150px] rounded-full bg-neutral-300 p-1 dark:bg-neutral-600"></span>
+            <span className="mb-1 w-[80px] rounded-full bg-ds-surface-3 p-1"></span>
+            <span className="mb-1 w-[100px] rounded-full bg-ds-surface-3 p-1"></span>
+            <span className="w-[150px] rounded-full bg-ds-surface-3 p-1"></span>
           </span>
           <span className="my-1 flex w-[150px] justify-between">
-            <span className="mb-1 w-[80px] rounded-full bg-neutral-300 p-1 dark:bg-neutral-600"></span>
-            <span className="mb-1 w-[30px] rounded-full bg-accent p-1"></span>
+            <span className="mb-1 w-[80px] rounded-full bg-ds-surface-3 p-1"></span>
+            <span className="mb-1 w-[30px] rounded-full bg-ds-accent p-1"></span>
           </span>
         </span>
       )}

@@ -114,13 +114,13 @@ export default function ProgressBar({
       {(label || showPercentage) && (
         <div className="flex items-center justify-between gap-4">
           <div
-            className={`font-mono font-semibold tracking-[0.08em] text-foreground ${sizeStyles[size].label}`}
+            className={`font-mono font-semibold tracking-[0.08em] text-ds-1 ${sizeStyles[size].label}`}
           >
             {label}
           </div>
           {showPercentage && (
             <div
-              className={`font-mono font-medium tracking-[0.08em] text-muted-foreground ${sizeStyles[size].percentage}`}
+              className={`font-mono font-medium tracking-[0.08em] text-ds-2 ${sizeStyles[size].percentage}`}
             >
               {resolvedPercentageLabel}
             </div>
@@ -135,7 +135,7 @@ export default function ProgressBar({
         aria-valuemax={safeMax}
         aria-valuenow={Math.round(clampedValue)}
         aria-valuetext={`${roundedPercentage}%`}
-        className={`relative overflow-hidden rounded-full border border-white/12 bg-background-tertiary/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:border-white/6 ${sizeStyles[size].track} ${trackClassName}`}
+        className={`relative overflow-hidden rounded-full border border-ds-border-2/50 bg-ds-surface-2/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] ${sizeStyles[size].track} ${trackClassName}`}
         style={{ background: toneStyle.trackBackground }}
       >
         <div

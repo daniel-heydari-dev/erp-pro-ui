@@ -770,11 +770,11 @@ export const StepperComparison: Story = {
 
 function WizardMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-surface ui:p-4">
-      <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+    <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
+      <p className="ui:text-xs ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
         {label}
       </p>
-      <p className="ui:mt-2 ui:text-sm ui:font-semibold ui:text-foreground">
+      <p className="ui:mt-2 ui:text-sm ui:font-semibold ui:text-ds-1">
         {value}
       </p>
     </div>
@@ -791,7 +791,7 @@ function WorkspaceSetupWizardExample() {
           <p className="ui:text-sm ui:font-semibold ui:text-success">
             Workspace setup is complete.
           </p>
-          <p className="ui:text-sm ui:text-muted-foreground">
+          <p className="ui:text-sm ui:text-ds-2">
             The wizard variant supports animated content transitions and
             built-in next and back controls.
           </p>
@@ -805,10 +805,10 @@ function WorkspaceSetupWizardExample() {
           <StepperWizard onFinalStepCompleted={() => setCompleted(true)}>
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Create workspace
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Start with a workspace name, region, and default currency.
                 </p>
               </div>
@@ -820,19 +820,19 @@ function WorkspaceSetupWizardExample() {
 
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Invite operators
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Bring in the first team members who will handle approvals and
                   inventory.
                 </p>
               </div>
-              <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-surface ui:p-4">
-                <p className="ui:text-sm ui:font-medium ui:text-foreground">
+              <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4">
+                <p className="ui:text-sm ui:font-medium ui:text-ds-1">
                   Pending invites
                 </p>
-                <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+                <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
                   ops@northwind.example, finance@northwind.example
                 </p>
               </div>
@@ -840,10 +840,10 @@ function WorkspaceSetupWizardExample() {
 
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Review automation
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Confirm approval routing, reorder thresholds, and notification
                   rules.
                 </p>
@@ -867,11 +867,11 @@ function ProcurementApprovalWizardExample() {
   return (
     <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
       {completed ? (
-        <div className="ui:rounded-2xl ui:border ui:border-accent/20 ui:bg-accent/8 ui:p-6">
-          <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-accent/20 ui:bg-ds-accent/8 ui:p-6">
+          <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
             Procurement review published.
           </p>
-          <p className="ui:mt-2 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-2 ui:text-sm ui:text-ds-2">
             This scenario shows the wizard pattern working for approvals and
             release signoff, not only first-run setup.
           </p>
@@ -889,10 +889,10 @@ function ProcurementApprovalWizardExample() {
           >
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Scope requisition
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Validate the business owner, spend category, and requested
                   delivery window.
                 </p>
@@ -906,10 +906,10 @@ function ProcurementApprovalWizardExample() {
 
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Risk and vendor checks
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Review supplier status, contractual exposure, and
                   sustainability flags before release.
                 </p>
@@ -925,15 +925,15 @@ function ProcurementApprovalWizardExample() {
 
             <StepperWizardStep>
               <div className="ui:space-y-2">
-                <h3 className="ui:text-lg ui:font-semibold ui:text-foreground">
+                <h3 className="ui:text-lg ui:font-semibold ui:text-ds-1">
                   Finalize release
                 </h3>
-                <p className="ui:text-sm ui:text-muted-foreground">
+                <p className="ui:text-sm ui:text-ds-2">
                   Send approval routing, notify finance, and create the vendor
                   release package.
                 </p>
               </div>
-              <div className="ui:rounded-2xl ui:border ui:border-border ui:bg-surface ui:p-4 ui:text-sm ui:text-muted-foreground">
+              <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-4 ui:text-sm ui:text-ds-2">
                 Routing will notify procurement, finance, and receiving once the
                 decision is published.
               </div>

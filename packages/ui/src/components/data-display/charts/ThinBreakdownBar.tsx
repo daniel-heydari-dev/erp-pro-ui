@@ -86,20 +86,20 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
   return (
     <div className={`w-full flex flex-col gap-3 ${className}`}>
       {showSummary && (activeSegment || totalValue > 0) ? (
-        <div className="flex items-start justify-between gap-4 rounded-xl border border-border/70 bg-background/70 px-4 py-3 backdrop-blur-md">
+        <div className="flex items-start justify-between gap-4 rounded-xl border border-ds-border-2/70 bg-ds-canvas/70 px-4 py-3 backdrop-blur-md">
           <div className="min-w-0">
             <TruncatedText
               as="p"
               showTitleOnHover
-              className="truncate text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase transition-colors duration-200"
+              className="truncate text-[11px] font-medium tracking-[0.16em] text-ds-2 uppercase transition-colors duration-200"
               style={activeSegment ? { color: activeSegment.color } : undefined}
             >
               {summaryTitle}
             </TruncatedText>
-            <p className="mt-1 text-xs text-muted-foreground">{summaryMeta}</p>
+            <p className="mt-1 text-xs text-ds-2">{summaryMeta}</p>
           </div>
           <p
-            className="text-right text-lg font-semibold leading-none text-foreground transition-colors duration-200"
+            className="text-right text-lg font-semibold leading-none text-ds-1 transition-colors duration-200"
             style={activeSegment ? { color: activeSegment.color } : undefined}
           >
             {valueFormatter(summaryValue)}
@@ -110,21 +110,21 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
       <div className="relative">
         {activeSegment && !showSummary && (
           <div
-            className="pointer-events-none absolute -top-10 z-10 -translate-x-1/2 rounded-full px-2.5 py-1 text-[11px] font-medium text-foreground"
+            className="pointer-events-none absolute -top-10 z-10 -translate-x-1/2 rounded-full px-2.5 py-1 text-[11px] font-medium text-ds-1"
             style={{
               ...chartPillTooltipStyle,
               left: `${activeSegment.centerPercent}%`,
             }}
           >
             <span>{activeSegment.label}</span>
-            <span className="mx-1 text-muted-foreground">•</span>
+            <span className="mx-1 text-ds-2">•</span>
             <span style={{ color: activeSegment.color }}>
               {activeSegment.value}
             </span>
           </div>
         )}
 
-        <div className="rounded-full bg-background-tertiary/80 p-0.5">
+        <div className="rounded-full bg-ds-surface-2/80 p-0.5">
           <div
             className="flex w-full gap-1"
             onMouseLeave={() => setActiveSegmentKey(null)}
@@ -173,7 +173,7 @@ export const ThinBreakdownBar: React.FC<ThinBreakdownBarProps> = ({
                 style={{ width: `${segment.widthPercent}%` }}
               >
                 <span
-                  className="whitespace-nowrap px-1 text-center text-[11px] font-medium tracking-wide text-muted-foreground transition-colors duration-200"
+                  className="whitespace-nowrap px-1 text-center text-[11px] font-medium tracking-wide text-ds-2 transition-colors duration-200"
                   style={isActive ? { color: segment.color } : undefined}
                 >
                   {segment.label}

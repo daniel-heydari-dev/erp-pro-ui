@@ -22,19 +22,19 @@ const paddingMap = {
 
 const variantStyles = {
   glass: `
-    bg-white/60 dark:bg-neutral-900/50
+    bg-ds-surface-1/70
     backdrop-blur-2xl
-    border border-white/40 dark:border-white/10
-    shadow-xl shadow-neutral-200/30 dark:shadow-neutral-950/50
+    border border-ds-border-2/60
+    shadow-xl
   `,
   solid: `
-    bg-white dark:bg-neutral-900
-    border border-neutral-200 dark:border-neutral-800
-    shadow-lg shadow-neutral-200/50 dark:shadow-neutral-950/50
+    bg-ds-surface-1
+    border border-ds-border-2
+    shadow-lg
   `,
   outlined: `
     bg-transparent
-    border-2 border-neutral-200 dark:border-neutral-700
+    border-2 border-ds-border-2
   `,
 };
 

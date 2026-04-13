@@ -6,9 +6,9 @@ import { mergeClassNames } from "../../../utils";
 import type { CarouselProps, CarouselAnimation } from "./types";
 
 const variantStyles = {
-  default: "ui:bg-white ui:dark:bg-neutral-900 ui:shadow-xl",
+  default: "ui:bg-ds-surface-1 ui:shadow-xl",
   glass:
-    "ui:bg-white/60 ui:dark:bg-neutral-900/50 ui:backdrop-blur-2xl ui:border ui:border-white/40 ui:dark:border-white/10",
+    "ui:bg-ds-surface-1/70 ui:backdrop-blur-2xl ui:border ui:border-ds-border-2",
   minimal: "ui:bg-transparent",
 };
 
@@ -266,12 +266,12 @@ export const Carousel = ({
               {(currentItem.title || currentItem.description) && (
                 <div className="ui:absolute ui:bottom-0 ui:left-0 ui:right-0 ui:p-6 ui:bg-gradient-to-t ui:from-black/70 ui:to-transparent">
                   {currentItem.title && (
-                    <h3 className="ui:text-2xl ui:font-bold ui:text-white ui:mb-2">
+                    <h3 className="ui:text-2xl ui:font-bold ui:text-ds-on-accent ui:mb-2">
                       {currentItem.title}
                     </h3>
                   )}
                   {currentItem.description && (
-                    <p className="ui:text-white/80">
+                    <p className="ui:text-ds-on-accent/80">
                       {currentItem.description}
                     </p>
                   )}
@@ -299,7 +299,7 @@ export const Carousel = ({
               <motion.button
                 type="button"
                 onClick={goPrev}
-                className="ui:absolute ui:left-4 ui:top-1/2 ui:-translate-y-1/2 ui:z-20 ui:p-2 ui:rounded-full ui:bg-white/80 ui:dark:bg-neutral-800/80 ui:backdrop-blur-sm ui:text-neutral-800 ui:dark:text-white ui:shadow-lg ui:transition-all hover:ui:bg-white ui:dark:hover:bg-neutral-700"
+                className="ui:absolute ui:left-4 ui:top-1/2 ui:-translate-y-1/2 ui:z-20 ui:p-2 ui:rounded-full ui:bg-ds-surface-1/85 ui:backdrop-blur-sm ui:text-ds-1 ui:shadow-lg ui:transition-all hover:ui:bg-ds-surface-2"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Previous slide"
@@ -309,7 +309,7 @@ export const Carousel = ({
               <motion.button
                 type="button"
                 onClick={goNext}
-                className="ui:absolute ui:right-4 ui:top-1/2 ui:-translate-y-1/2 ui:z-20 ui:p-2 ui:rounded-full ui:bg-white/80 ui:dark:bg-neutral-800/80 ui:backdrop-blur-sm ui:text-neutral-800 ui:dark:text-white ui:shadow-lg ui:transition-all hover:ui:bg-white ui:dark:hover:bg-neutral-700"
+                className="ui:absolute ui:right-4 ui:top-1/2 ui:-translate-y-1/2 ui:z-20 ui:p-2 ui:rounded-full ui:bg-ds-surface-1/85 ui:backdrop-blur-sm ui:text-ds-1 ui:shadow-lg ui:transition-all hover:ui:bg-ds-surface-2"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Next slide"
@@ -326,7 +326,7 @@ export const Carousel = ({
 
       {/* Dot Indicators */}
       {showDots && totalSlides > 1 && (
-        <div className="ui:absolute ui:bottom-4 ui:left-1/2 ui:-translate-x-1/2 ui:z-20 ui:flex ui:gap-2 ui:p-2 ui:rounded-full ui:bg-black/20 ui:dark:bg-white/10 ui:backdrop-blur-sm">
+        <div className="ui:absolute ui:bottom-4 ui:left-1/2 ui:-translate-x-1/2 ui:z-20 ui:flex ui:gap-2 ui:rounded-full ui:bg-ds-surface-1/30 ui:p-2 ui:backdrop-blur-sm">
           {items.map((_, index) =>
             renderDot ? (
               renderDot({
@@ -342,8 +342,8 @@ export const Carousel = ({
                 className={mergeClassNames(
                   "ui:rounded-full ui:transition-all ui:duration-300",
                   index === currentIndex
-                    ? "ui:w-8 ui:h-2.5 ui:bg-white ui:shadow-lg"
-                    : "ui:w-2.5 ui:h-2.5 ui:bg-white/60 hover:ui:bg-white/90",
+                    ? "ui:h-2.5 ui:w-8 ui:bg-ds-accent ui:shadow-lg"
+                    : "ui:h-2.5 ui:w-2.5 ui:bg-ds-surface-3 hover:ui:bg-ds-border-3",
                 )}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
@@ -358,7 +358,7 @@ export const Carousel = ({
       {/* Progress indicator */}
       {autoPlay > 0 && !isPaused && (
         <motion.div
-          className="ui:absolute ui:bottom-0 ui:left-0 ui:h-1 ui:bg-accent/80 ui:rounded-full"
+          className="ui:absolute ui:bottom-0 ui:left-0 ui:h-1 ui:bg-ds-accent/80 ui:rounded-full"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ duration: autoPlay / 1000, ease: "linear" }}

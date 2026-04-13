@@ -290,7 +290,7 @@ export const HierarchyLayout: Story = {
   render: () => (
     <StorySurface widthClassName="ui:w-full ui:max-w-6xl">
       <div className="ui:grid ui:grid-cols-1 ui:gap-8 md:ui:grid-cols-2">
-        <div className="ui:flex ui:flex-col ui:justify-center ui:gap-6 ui:rounded-2xl ui:border ui:border-border ui:bg-card ui:p-8">
+        <div className="ui:flex ui:flex-col ui:justify-center ui:gap-6 ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-8">
           <Typography variant="overline" className="ui:text-indigo-500">
             Case Study
           </Typography>

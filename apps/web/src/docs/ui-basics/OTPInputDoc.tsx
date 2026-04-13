@@ -28,7 +28,7 @@ const OTPInputDoc = () => {
           />
           <p className="text-sm text-neutral-500">
             Entered Code:{" "}
-            <span className="font-mono font-bold text-accent">
+            <span className="font-mono font-bold text-ds-1">
               {otp || "------"}
             </span>
           </p>

@@ -1,6 +1,6 @@
 {
   "name": "erp-pro-ui",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Lightweight React UI component library for ERP and SaaS apps with tree-shakeable subpath exports.",
   "type": "module",
   "sideEffects": [
@@ -332,12 +332,12 @@
     "package.json"
   ],
   "scripts": {
-    "build": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && vite build",
+    "build": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && node ./scripts/validate-ds-color-contract.mjs && node ./scripts/validate-ds-contrast.mjs && vite build",
     "contract:check": "node ./scripts/validate-contract.mjs",
-    "lint": "eslint . && node ./scripts/validate-primitive-consumers.mjs",
+    "lint": "eslint . && node ./scripts/validate-primitive-consumers.mjs && node ./scripts/validate-ds-color-contract.mjs && node ./scripts/validate-ds-contrast.mjs",
     "primitive-consumer:check": "node ./scripts/validate-primitive-consumers.mjs",
     "story:check": "node ./scripts/validate-story-metadata.mjs",
-    "typecheck": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && tsc --noEmit"
+    "typecheck": "node ./scripts/validate-contract.mjs && node ./scripts/validate-primitive-consumers.mjs && node ./scripts/validate-ds-color-contract.mjs && node ./scripts/validate-ds-contrast.mjs && tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",

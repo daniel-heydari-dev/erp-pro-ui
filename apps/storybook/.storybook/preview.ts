@@ -251,15 +251,31 @@ function StorybookThemeBridge({
     setMode(mode);
     setTheme(theme);
     setDarkVariant(darkVariant);
+
+    const root = document.documentElement;
+    const themeValue =
+      mode === "dark" && darkVariant === "alt"
+        ? `${theme}-dark-alt`
+        : `${theme}-${mode}`;
+
+    root.setAttribute("data-brand", theme);
+    root.setAttribute("data-mode", mode);
+    root.setAttribute("data-dark-variant", darkVariant);
+    root.setAttribute("data-theme", themeValue);
   }, [darkVariant, mode, setDarkVariant, setMode, setTheme, theme]);
 
   return createElement(
     "div",
     {
       className:
-        "min-h-screen bg-background p-6 text-foreground transition-colors duration-200",
+        "min-h-screen bg-ds-canvas p-6 text-ds-1 transition-colors duration-200",
+      "data-brand": theme,
       "data-mode": mode,
       "data-dark-variant": darkVariant,
+      "data-theme":
+        mode === "dark" && darkVariant === "alt"
+          ? `${theme}-dark-alt`
+          : `${theme}-${mode}`,
     },
     children,
   );
@@ -295,17 +311,17 @@ function StorybookCatalogMeta({
           "div",
           {
             className:
-              "mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs text-muted-foreground",
+              "mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-ds-border-2 bg-ds-surface-1 px-3 py-2 text-xs text-ds-2",
           },
           createElement(
             "span",
-            { className: "font-semibold text-foreground" },
+            { className: "font-semibold text-ds-1" },
             "Catalog",
           ),
           createElement("span", null, docsRoute),
           createElement(
             "span",
-            { className: "font-semibold text-foreground" },
+            { className: "font-semibold text-ds-1" },
             "Import",
           ),
           createElement("code", { className: "font-mono" }, packageImport),
@@ -371,8 +387,8 @@ const preview: Preview = {
           {
             theme: context.globals.themeColor as StorybookThemeColor,
             mode: context.globals.themeMode as StorybookThemeMode,
-            darkVariant:
-              context.globals.themeDarkVariant as StorybookThemeDarkVariant,
+            darkVariant: context.globals
+              .themeDarkVariant as StorybookThemeDarkVariant,
           },
           createElement(
             StorybookCatalogMeta,

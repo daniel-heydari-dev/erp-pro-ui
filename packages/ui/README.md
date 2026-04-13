@@ -53,7 +53,7 @@ In your global stylesheet:
 
 That single import already loads the packaged colors, fonts, foundations, and generated Tailwind v4 tokens. You do not need a local Tailwind theme extension just to use the library palette.
 
-Prefer the semantic utilities and `--ds-*` tokens in new code. The older `--color-*` and `primary-*` aliases are still shipped as a migration surface, not as the preferred authoring API.
+Use DS-only tokens and utilities in new code. The official contract is `--ds-*` plus DS utility classes (for example `text-ds-1`, `bg-ds-surface-1`, `border-ds-border-2`).
 
 If you only want the raw design tokens without the Tailwind bridge, import the internal token layer directly instead:
 
@@ -117,7 +117,7 @@ If you use Next.js, import `erp-pro-ui/styles.css` from your app-level global st
 
 The library now ships a two-layer theme contract so another project can use the same tokens without copying theme config:
 
-- `erp-pro-ui/tokens.css`: raw `--ds-*` tokens plus internal legacy ERP bridge import
+- `erp-pro-ui/tokens.css`: raw `--ds-*` tokens
 - `erp-pro-ui/colors.css`: Tailwind v4 `@theme` bridge that generates semantic utilities
 - `erp-pro-ui/styles.css`: full package stylesheet, including fonts, tokens, bridge, foundations, and animations
 
@@ -128,22 +128,22 @@ After importing `erp-pro-ui/styles.css` or `erp-pro-ui/colors.css`, you can use 
 ```tsx
 export function ThemePreview() {
   return (
-    <section className="bg-surface text-fg border border-border rounded-2xl p-6 shadow-2 font-sans">
-      <h2 className="text-accent text-2xl font-semibold">
+    <section className="bg-ds-surface-1 text-ds-1 border border-ds-border-2 rounded-2xl p-6 shadow-2 font-sans">
+      <h2 className="text-ds-1 text-2xl font-semibold">
         Semantic theme utilities
       </h2>
-      <p className="text-fg-muted">
+      <p className="text-ds-2">
         These classes come from erp-pro-ui. No local Tailwind theme extension is
         required.
       </p>
       <div className="mt-4 flex gap-3">
-        <span className="bg-accent text-on-accent rounded-full px-3 py-1">
+        <span className="bg-ds-accent text-ds-on-accent rounded-full px-3 py-1">
           Accent
         </span>
-        <span className="bg-accent-subtle text-accent rounded-full px-3 py-1">
+        <span className="bg-ds-accent-subtle text-ds-1 rounded-full px-3 py-1">
           Accent Subtle
         </span>
-        <span className="bg-success-subtle text-success rounded-full px-3 py-1">
+        <span className="bg-ds-state-success-surface text-ds-state-success-text rounded-full px-3 py-1">
           Success
         </span>
       </div>
@@ -207,10 +207,22 @@ import { BarChart, getChartColorVar } from "erp-pro-ui";
 The token system is split into stable layers:
 
 - Internal design-system tokens: `--ds-*`
-- Semantic utility aliases: `bg-surface`, `text-fg`, `border-border`, `bg-accent`, `text-on-accent`, `outline-focus`
-- Compatibility color variables: `--color-primary`, `--color-background-primary`, `--color-text-primary`, and the existing `primary-50` through `primary-900` theme scale
+- DS utility classes: `bg-ds-surface-1`, `text-ds-1`, `border-ds-border-2`, `bg-ds-accent`, `text-ds-on-accent`, `ring-ds-focus`
+- Raw DS tokens: `--ds-surface-*`, `--ds-text-*`, `--ds-border-*`, `--ds-color-*`
 
-For new components, use the semantic utility layer or the `--ds-*` variables directly. Keep the compatibility aliases for migration work and external consumers that still rely on the legacy contract.
+### Token contract rules
+
+Use these rules to keep theming simple and predictable across apps:
+
+- Edit theme values only in `tokens.css` brand/mode/variant blocks (`data-brand`, `data-mode`, `data-variant`).
+- Use DS utility classes in component markup (`text-ds-*`, `bg-ds-*`, `border-ds-*`).
+- Do not re-introduce legacy utility aliases (`text-foreground`, `text-muted-foreground`, `text-accent`, `bg-background*`).
+- Do not use raw `text-[var(...)]`, `bg-[var(...)]`, `border-[var(...)]` utility classes in components.
+- Keep official brand presets hue-first: `purple`, `teal`, `yellow`, `green`.
+
+Single rule for theming:
+
+- If you want a different UI color, update the matching `--ds-*` token in the correct theme block. Do not hardcode color values in components.
 
 ### Token priority and quick groups
 
@@ -220,6 +232,7 @@ Priority order (top to bottom):
 2. Global mode overrides (dark/light + system fallback)
 3. Brand accent scales (`purple` / `teal` / `yellow` / `green`)
 4. Brand + mode surface/text/border overrides
+5. Global variant overrides (`light-alt` / `dark-alt`)
 
 When debugging a color:
 
@@ -256,105 +269,36 @@ Quick groups:
 
 ### Theme switching
 
-If you use `ThemeProvider`, the library updates `data-brand`, `data-mode`, and `data-dark-variant` for you. It still writes the old `data-theme` attribute for compatibility, but the architecture treats brand, mode, and dark variant as separate axes.
+If you use `ThemeProvider`, the library updates `data-brand`, `data-mode`, and `data-variant` for you.
 
 If you do not use `ThemeProvider`, you can still switch manually in your app shell:
 
 ```html
-<html data-brand="teal" data-mode="dark" data-dark-variant="alt"></html>
+<html data-brand="teal" data-mode="light" data-variant="alt"></html>
 ```
 
 Quick mental model:
 
 - `data-brand` controls accent family and brand-specific palette.
 - `data-mode` controls light/dark surface, text, and border foundations.
-- `data-dark-variant` controls which dark foundation to use (`default` or `alt`) when `data-mode="dark"`.
+- `data-variant` controls which foundation variant to use (`default` or `alt`) in both light and dark modes.
+- `data-dark-variant` remains supported temporarily as a compatibility alias during migration.
 - Components consume semantic tokens, so they update automatically.
 
 ### Brand palette presets (light + dark)
 
-The shipped token presets now include a tinted SaaS surface system for each brand. When you switch brand, mode, or dark variant, semantic tokens (`bg-surface`, `text-fg`, `border-border`) update automatically. The `dark-alt` variant uses a shared dark foundation while each brand keeps its own accent family.
+The shipped token presets include a tinted SaaS surface system for each brand. When you switch brand, mode, or variant, semantic tokens (`bg-ds-surface-1`, `text-ds-1`, `border-ds-border-2`) update automatically. Both `light-alt` and `dark-alt` use shared foundations while each brand keeps its own accent family.
 
-| Brand preset | Light canvas / surface / stroke / text | Dark default canvas / surface / stroke / text | Dark alt canvas / surface / stroke |
-| --- | --- | --- | --- |
-| `purple` | `#F4F7FE` / `#FFFFFF` / `#E9EDF7` / `#2B3674` | `#0A0B1C` / `#161936` / `#2B308B` / `#EFF4FB` | `#0F111A` / `#1A1D29` / `#2D3748` |
-| `teal` | `#F0F9FA` / `#FFFFFF` / `#D1E9ED` / `#134E48` | `#061113` / `#0E2529` / `#1A4D57` / `#E0F2F1` | `#0F111A` / `#1A1D29` / `#2D3748` |
-| `yellow` | `#FEFCE8` / `#FFFFFF` / `#FEF08A` / `#854D0E` | `#121002` / `#241D05` / `#4D3D02` / `#FEF9C3` | `#0F111A` / `#1A1D29` / `#2D3748` |
-| `green` | `#F0FDF4` / `#FFFFFF` / `#DCFCE7` / `#064E3B` | `#020C09` / `#06241B` / `#065F46` / `#D1FAE5` | `#0F111A` / `#1A1D29` / `#2D3748` |
+| Brand preset | Light default canvas / surface / stroke / text | Light alt canvas / surface / stroke | Dark default canvas / surface / stroke / text | Dark alt canvas / surface / stroke |
+| ------------ | ---------------------------------------------- | ----------------------------------- | --------------------------------------------- | ---------------------------------- |
+| `purple`     | `#F4F7FE` / `#FFFFFF` / `#E9EDF7` / `#2B3674`  | `#F4F7FE` / `#FEFEFF` / `#A3AED0`   | `#0A0B1C` / `#161936` / `#2B308B` / `#EFF4FB` | `#0F111A` / `#1A1D29` / `#2D3748`  |
+| `teal`       | `#F0F9FA` / `#FFFFFF` / `#D1E9ED` / `#134E48`  | `#F4F7FE` / `#FEFEFF` / `#A3AED0`   | `#061113` / `#0E2529` / `#1A4D57` / `#E0F2F1` | `#0F111A` / `#1A1D29` / `#2D3748`  |
+| `yellow`     | `#FEFCE8` / `#FFFFFF` / `#FEF08A` / `#854D0E`  | `#F4F7FE` / `#FEFEFF` / `#A3AED0`   | `#121002` / `#241D05` / `#4D3D02` / `#FEF9C3` | `#0F111A` / `#1A1D29` / `#2D3748`  |
+| `green`      | `#F0FDF4` / `#FFFFFF` / `#DCFCE7` / `#064E3B`  | `#F4F7FE` / `#FEFEFF` / `#A3AED0`   | `#020C09` / `#06241B` / `#065F46` / `#D1FAE5` | `#0F111A` / `#1A1D29` / `#2D3748`  |
 
 You can target these via:
 
-- `data-brand="purple|teal|yellow|green"` + `data-mode="light|dark"` + optional `data-dark-variant="default|alt"`
-- legacy compatibility (deprecated): `data-brand="secondary"` or `data-theme="secondary-dark"` still works and maps to `purple`.
-
-### Token migration guide (`primary` naming)
-
-New canonical tokens:
-
-- `--ds-foundation-light-primary`
-- `--ds-foundation-dark-primary`
-- `--ds-primary`
-
-Deprecated aliases kept for compatibility:
-
-- `--ds-foundation-light-primary-purple` -> `--ds-foundation-light-primary`
-- `--ds-foundation-dark-primary-purple` -> `--ds-foundation-dark-primary`
-- `--ds-primary-purple` -> `--ds-primary`
-
-You can still ship old apps safely today because deprecated aliases are still defined in `tokens.css`.
-
-### AI prompt for migrating another app
-
-Use this prompt with your AI assistant in another project:
-
-```text
-Migrate my app from legacy ERP token names to the new canonical DS primary tokens.
-
-Rules:
-1) Replace token usage:
-   --ds-foundation-light-primary-purple -> --ds-foundation-light-primary
-   --ds-foundation-dark-primary-purple -> --ds-foundation-dark-primary
-   --ds-primary-purple -> --ds-primary
-2) Do not change visual output.
-3) Keep backward compatibility aliases if this app exports tokens.
-4) Update docs/comments to mark old names as deprecated.
-5) Return a summary with changed files and a grep checklist for remaining old tokens.
-```
-
-### AI prompt for migrating ERP tokens to DS tokens
-
-Use this prompt with your AI assistant in another project:
-
-```text
-Migrate this app from legacy ERP CSS variables (--erp-*) to canonical DS tokens (--ds-*), without changing visuals.
-
-Rules:
-1) Replace usages in source files:
-   --erp-color-primary -> --ds-brand-primary
-   --erp-color-secondary -> --ds-brand-secondary
-   --erp-color-background-primary -> --ds-color-bg-canvas
-   --erp-color-background-secondary -> --ds-color-bg-surface
-   --erp-color-background-tertiary -> --ds-color-bg-elevated
-   --erp-color-text-primary -> --ds-text-1
-   --erp-color-text-secondary -> --ds-text-2
-   --erp-color-text-tertiary -> --ds-text-3
-   --erp-color-border-primary -> --ds-border-1
-   --erp-color-border-secondary -> --ds-border-2
-   --erp-color-border-tertiary -> --ds-border-3
-   --erp-color-success -> --ds-color-success
-   --erp-color-warning -> --ds-color-warning
-   --erp-color-error -> --ds-color-danger
-   --erp-color-info -> --ds-color-info
-2) Keep compatibility available while migrating by continuing to import erp-pro-ui/styles.css or erp-pro-ui/tokens.css.
-3) Do not change component behavior or spacing/typography.
-4) Update docs/comments to mark --erp-* as deprecated.
-5) Return:
-   - changed files list
-   - grep command for remaining --erp-* usages
-   - any risky/manual-review spots.
-```
-
-Full migration checklist: [MIGRATION_ERP_TO_DS.md](./MIGRATION_ERP_TO_DS.md)
+- `data-brand="purple|teal|yellow|green"` + `data-mode="light|dark"` + optional `data-variant="default|alt"`
 
 ## Import Patterns
 
@@ -581,20 +525,20 @@ The tables below document the public surface you can use from another project.
 
 ### Data Display And Charts
 
-| Export                                                            | Subpath                    | Use it for                                        |
-| ----------------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
-| `Card`                                                            | `erp-pro-ui/card`          | Panel and container layout                        |
-| `Chip`                                                            | `erp-pro-ui/chip`          | Tags, status pills, and labels                    |
-| `ColorPalette`                                                    | `erp-pro-ui/color-palette` | Design token or palette presentation              |
-| `DataTable`                                                       | `erp-pro-ui/data-table`    | Feature-rich tables with filtering and pagination |
-| `FilterDropdown`, `FilterButton`, `ColumnToggle`, `FilterProfile` | `erp-pro-ui/data-table`    | DataTable helper building blocks                  |
-| `TableContainer`, `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption` | `erp-pro-ui/data-table` | Composable table primitives with style control    |
-| `AreaChart`                                                       | `erp-pro-ui/charts`        | Area chart visualizations                         |
-| `BarChart`                                                        | `erp-pro-ui/charts`        | Bar chart visualizations                          |
-| `PieChart`                                                        | `erp-pro-ui/charts`        | Pie and donut charts                              |
-| `NeonLineChart`                                                   | `erp-pro-ui/charts`        | Glowing line charts                               |
-| `StackedBarChart`                                                 | `erp-pro-ui/charts`        | Stacked comparisons                               |
-| `ThinBreakdownBar`                                                | `erp-pro-ui/charts`        | Compact segmented metric bars                     |
+| Export                                                                                                                     | Subpath                    | Use it for                                        |
+| -------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
+| `Card`                                                                                                                     | `erp-pro-ui/card`          | Panel and container layout                        |
+| `Chip`                                                                                                                     | `erp-pro-ui/chip`          | Tags, status pills, and labels                    |
+| `ColorPalette`                                                                                                             | `erp-pro-ui/color-palette` | Design token or palette presentation              |
+| `DataTable`                                                                                                                | `erp-pro-ui/data-table`    | Feature-rich tables with filtering and pagination |
+| `FilterDropdown`, `FilterButton`, `ColumnToggle`, `FilterProfile`                                                          | `erp-pro-ui/data-table`    | DataTable helper building blocks                  |
+| `TableContainer`, `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption` | `erp-pro-ui/data-table`    | Composable table primitives with style control    |
+| `AreaChart`                                                                                                                | `erp-pro-ui/charts`        | Area chart visualizations                         |
+| `BarChart`                                                                                                                 | `erp-pro-ui/charts`        | Bar chart visualizations                          |
+| `PieChart`                                                                                                                 | `erp-pro-ui/charts`        | Pie and donut charts                              |
+| `NeonLineChart`                                                                                                            | `erp-pro-ui/charts`        | Glowing line charts                               |
+| `StackedBarChart`                                                                                                          | `erp-pro-ui/charts`        | Stacked comparisons                               |
+| `ThinBreakdownBar`                                                                                                         | `erp-pro-ui/charts`        | Compact segmented metric bars                     |
 
 ### Visual Effects And Text Components
 

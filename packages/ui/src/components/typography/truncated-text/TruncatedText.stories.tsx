@@ -43,7 +43,7 @@ const inlineSource = `import { TruncatedText } from 'erp-pro-ui';
 export function InlineMetaExample() {
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-ds-2">
         Owner
       </span>
       <TruncatedText
@@ -112,7 +112,7 @@ export const SingleLineRow: Story = {
         />
         <StoryPanel>
           <div className="ui:flex ui:items-center ui:justify-between ui:gap-4">
-            <span className="ui:text-sm ui:font-medium ui:text-muted-foreground">
+            <span className="ui:text-sm ui:font-medium ui:text-ds-2">
               Attachment
             </span>
             <TruncatedText
@@ -138,14 +138,14 @@ export const MultiLineSummary: Story = {
           "Supplier scorecards now include a blocked-delivery flag so operations teams can distinguish inventory issues from carrier-side delays.",
         ].map((copy) => (
           <StoryPanel key={copy} className="ui:space-y-3">
-            <p className="ui:text-sm ui:font-semibold ui:text-foreground">
+            <p className="ui:text-sm ui:font-semibold ui:text-ds-1">
               Release summary
             </p>
             <TruncatedText
               as="p"
               lines={2}
               showTitleOnHover
-              className="ui:text-sm ui:leading-6 ui:text-muted-foreground"
+              className="ui:text-sm ui:leading-6 ui:text-ds-2"
             >
               {copy}
             </TruncatedText>
@@ -167,7 +167,7 @@ export const WidthControlledNote: Story = {
           lines={3}
           width="16rem"
           showTitleOnHover
-          className="ui:text-sm ui:leading-6 ui:text-muted-foreground"
+          className="ui:text-sm ui:leading-6 ui:text-ds-2"
         >
           Long-form operational notes can be clamped to a predictable block
           width so dense dashboards stay aligned even when individual records
@@ -185,7 +185,7 @@ export const InlineMetadata: Story = {
     <StorySurface widthClassName="ui:w-full ui:max-w-xl">
       <StoryPanel>
         <div className="ui:flex ui:items-center ui:gap-3">
-          <span className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-muted-foreground">
+          <span className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
             Owner
           </span>
           <TruncatedText
@@ -193,7 +193,7 @@ export const InlineMetadata: Story = {
             maxWidth="12rem"
             showTitleOnHover
             style={{ display: "inline-block" }}
-            className="ui:text-sm ui:font-medium ui:text-foreground"
+            className="ui:text-sm ui:font-medium ui:text-ds-1"
           >
             North American Distribution Enablement Team
           </TruncatedText>

@@ -4,3 +4,81 @@
 /* Include Storybook files for Tailwind class scanning */
 @source "../.storybook/**/*.{js,ts,jsx,tsx}";
 @source "./**/*.{js,ts,jsx,tsx}";
+@source "../../packages/ui/src/**/*.{js,ts,jsx,tsx,css}";
+
+/* Make Storybook docs/canvas surfaces follow DS theme tokens globally. */
+html[data-mode] body {
+  background: var(--ds-surface-canvas) !important;
+  color: var(--ds-text-1) !important;
+}
+
+#storybook-root,
+.sb-show-main,
+.sb-main-padded,
+.sb-main-centered,
+.docs-story,
+.sbdocs,
+.sbdocs-wrapper,
+.sbdocs-content,
+.sbdocs-preview {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+.docs-story > div,
+.sb-show-main > div {
+  background: transparent !important;
+}
+
+/* Storybook docs typography should track DS text tokens in dark mode too. */
+.sbdocs,
+.sbdocs-wrapper,
+.sbdocs-content,
+.sbdocs p,
+.sbdocs li,
+.sbdocs td,
+.sbdocs span {
+  color: var(--ds-text-1) !important;
+}
+
+.sbdocs h1,
+.sbdocs h2,
+.sbdocs h3,
+.sbdocs h4,
+.sbdocs h5,
+.sbdocs h6,
+.sbdocs th {
+  color: var(--ds-text-1) !important;
+}
+
+.sbdocs code,
+.sbdocs pre {
+  color: var(--ds-text-1) !important;
+  background: color-mix(
+    in oklch,
+    var(--ds-surface-2) 88%,
+    transparent
+  ) !important;
+  border-color: var(--ds-border-2) !important;
+}
+
+/* Storybook docs semantic blocks can bypass generic selectors; pin them to DS text. */
+.sbdocs-title,
+.sbdocs-subtitle,
+.sbdocs-h1,
+.sbdocs-h2,
+.sbdocs-h3,
+.sbdocs-h4,
+.sbdocs-h5,
+.sbdocs-h6 {
+  color: var(--ds-text-1) !important;
+}
+
+.sbdocs-p,
+.sbdocs-li,
+.sbdocs-caption,
+.sbdocs-a,
+.docblock-argstable-body td,
+.docblock-argstable-head th {
+  color: var(--ds-text-2) !important;
+}

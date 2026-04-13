@@ -64,19 +64,19 @@ const variantStyles: Record<
   { base: string; focus: string; error: string }
 > = {
   outlined: {
-    base: "border border-input bg-background-secondary rounded-lg text-foreground",
-    focus: "focus:border-accent focus:ring-2 focus:ring-accent",
+    base: "border border-ds-border-field bg-ds-surface-1 rounded-lg text-ds-1",
+    focus: "focus:border-ds-border-accent focus:ring-2 focus:ring-ds-accent",
     error: "border-destructive",
   },
   filled: {
-    base: "border border-transparent bg-accent-subtle rounded-lg text-foreground",
+    base: "border border-transparent bg-ds-accent-subtle rounded-lg text-ds-1",
     focus:
-      "focus:border-accent focus:bg-background-secondary focus:ring-2 focus:ring-accent",
+      "focus:border-ds-border-accent focus:bg-ds-surface-1 focus:ring-2 focus:ring-ds-accent",
     error: "bg-danger-subtle border-danger-border",
   },
   underlined: {
-    base: "border-b-2 border-border-strong bg-transparent rounded-none text-foreground",
-    focus: "focus:border-accent",
+    base: "border-b-2 border-ds-border-1 bg-transparent rounded-none text-ds-1",
+    focus: "focus:border-ds-border-accent",
     error: "border-destructive",
   },
 };
@@ -100,7 +100,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
       type = "number",
       className = "",
       inputClassName = "",
-      separator = <span className="text-neutral-400 text-2xl mx-2">—</span>,
+      separator = <span className="text-ds-3 text-2xl mx-2">—</span>,
       separatorPositions = [],
       "aria-label": ariaLabel = "One-time password",
     },
@@ -288,12 +288,12 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
             aria-label={`${ariaLabel} digit ${i + 1}`}
             className={`
               text-center font-semibold outline-none transition-all
-              placeholder:text-muted-foreground
+              placeholder:text-ds-2
               ${sizeStyles[size]}
               ${variantStyles[variant].base}
               ${!error ? variantStyles[variant].focus : ""}
               ${error ? variantStyles[variant].error : ""}
-              ${disabled ? "opacity-50 cursor-not-allowed bg-background-secondary" : ""}
+              ${disabled ? "opacity-50 cursor-not-allowed bg-ds-surface-1" : ""}
               ${inputClassName}
             `}
           />,

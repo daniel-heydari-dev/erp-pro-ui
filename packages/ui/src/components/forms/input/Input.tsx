@@ -23,7 +23,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       rightIconClassName,
       icon,
       iconClassName,
-      bgClassName = "bg-background-secondary",
+      bgClassName = "bg-ds-surface-1",
       ...props
     },
     ref,
@@ -50,18 +50,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const wrapperStateStyles: Record<InputState, string> = {
-      [InputState.DISABLED]: "border border-input bg-background-secondary",
+      [InputState.DISABLED]: "border border-ds-border-field bg-ds-surface-1",
       [InputState.ERROR]: "border-destructive ",
       [InputState.SUCCESS]: "border-success-border ",
-      [InputState.DEFAULT]: "border-border ",
+      [InputState.DEFAULT]: "border-ds-border-2 ",
     };
 
     const inputStateStyles: Record<InputState, string> = {
       [InputState.DISABLED]:
-        "border-transparent bg-transparent text-muted-foreground placeholder:!text-muted-foreground",
+        "border-transparent bg-transparent text-ds-2 placeholder:!text-ds-2",
       [InputState.ERROR]: "text-destructive placeholder:text-destructive",
       [InputState.SUCCESS]: "text-success placeholder:text-success",
-      [InputState.DEFAULT]: "text-foreground",
+      [InputState.DEFAULT]: "text-ds-1",
     };
 
     return (
@@ -76,15 +76,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {label ? (
               <label
                 htmlFor={id}
-                className="block text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="block text-sm leading-none font-medium text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {label}
               </label>
             ) : null}
             {labelHint ? (
-              <div className="shrink-0 text-xs text-muted-foreground">
-                {labelHint}
-              </div>
+              <div className="shrink-0 text-xs text-ds-2">{labelHint}</div>
             ) : null}
           </div>
         ) : null}
@@ -108,7 +106,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           onMouseLeave={!isDisabled ? () => setVisible(false) : undefined}
           className={mergeClassNames(
             "group/input rounded-lg transition duration-300",
-            isDisabled ? "p-px" : "p-[2px] hover:border-accent",
+            isDisabled ? "p-px" : "p-[2px] hover:border-ds-border-accent",
             wrapperStateStyles[resolvedState],
             extra,
           )}
@@ -117,7 +115,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {leftIcon ? (
               <div
                 className={mergeClassNames(
-                  "pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground",
+                  "pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ds-2",
                   leftIconClassName,
                 )}
               >
@@ -127,7 +125,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {trailingIcon ? (
               <div
                 className={mergeClassNames(
-                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground",
+                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-ds-2",
                   trailingIconClassName,
                 )}
               >
@@ -140,7 +138,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               placeholder={placeholder}
               disabled={isDisabled}
               className={mergeClassNames(
-                "flex h-10 w-full rounded-md border border-input py-2 text-sm text-foreground transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                "flex h-10 w-full rounded-md border border-ds-border-field py-2 text-sm text-ds-1 transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-ds-2 focus-visible:ring-1 focus-visible:ring-ds-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 leftIcon ? "pl-10" : "pl-3",
                 trailingIcon ? "pr-10" : "pr-3",
                 bgClassName,
@@ -157,16 +155,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <p
             className={mergeClassNames(
               "text-sm font-medium mt-1",
-              error ? "text-destructive" : "text-muted-foreground",
+              error ? "text-destructive" : "text-ds-2",
             )}
           >
             {error || message}
           </p>
         )}
         {helperText && !error && !message && (
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-            {helperText}
-          </p>
+          <p className="text-sm text-ds-2 mt-1">{helperText}</p>
         )}
       </div>
     );

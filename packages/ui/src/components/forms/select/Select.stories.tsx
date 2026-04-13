@@ -303,7 +303,7 @@ export const ApprovalFormSegment: Story = {
               { label: "Procurement", value: "procurement" },
             ]}
           />
-          <StoryPanel className="ui:rounded-md ui:bg-muted/40 ui:px-3 ui:py-2 ui:text-sm ui:text-muted-foreground ui:shadow-none">
+          <StoryPanel className="ui:rounded-md ui:bg-ds-surface-3/40 ui:px-3 ui:py-2 ui:text-sm ui:text-ds-2 ui:shadow-none">
             Current reviewer queue is generated from the selected department.
           </StoryPanel>
         </StorySection>

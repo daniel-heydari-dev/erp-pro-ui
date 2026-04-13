@@ -65,14 +65,14 @@ export function HoverBorderGradient({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={mergeClassNames(
-        "relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-lg border border-neutral-300 dark:border-white/10 p-px transition duration-500",
+        "relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-lg border border-ds-border-2 p-px transition duration-500",
         containerClassName,
       )}
       {...props}
     >
       <div
         className={mergeClassNames(
-          "bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white z-10 w-auto rounded-[inherit] px-4 py-2",
+          "bg-ds-surface-1 text-ds-1 z-10 w-auto rounded-[inherit] px-4 py-2",
           className,
         )}
       >

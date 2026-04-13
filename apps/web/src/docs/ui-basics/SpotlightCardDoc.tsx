@@ -19,7 +19,7 @@ const SpotlightCardDoc = () => {
           spotlightColor="rgba(115, 103, 240, 0.2)"
         >
           <div className="space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-accent-subtle flex items-center justify-center text-accent">
+            <div className="w-12 h-12 rounded-xl bg-ds-accent-subtle flex items-center justify-center text-ds-1">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -57,7 +57,7 @@ export function BasicSpotlightCardExample() {
       className="max-w-sm"
     >
       <h3 className="text-xl font-bold">Spotlight Effect</h3>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-sm text-ds-2">
         Move your mouse over this card to see the dynamic spotlight effect.
       </p>
     </SpotlightCard>
@@ -175,7 +175,7 @@ export function SpotlightFeatureGridExample() {
         <SpotlightCard key={title} className="w-full min-h-44">
           <div className="flex h-full flex-col justify-between gap-3">
             <p className="text-sm font-semibold">{title}</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-ds-2">
               Designed for high-signal operational workflows with premium interaction feedback.
             </p>
           </div>

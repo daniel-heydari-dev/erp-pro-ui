@@ -167,14 +167,14 @@ export const LightAndDarkModes: Story = {
           <section
             key={item.mode}
             data-mode={item.mode}
-            className="ui:rounded-md ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+            className="ui:rounded-md ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
           >
             <div className="ui:mb-4 ui:flex ui:items-center ui:justify-between ui:gap-3">
               <StoryIntro
                 title={item.label}
                 description="Shared semantic tokens drive the skeleton fill and shimmer in both modes."
               />
-              <span className="ui:rounded-full ui:bg-accent-subtle ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-accent">
+              <span className="ui:rounded-full ui:bg-ds-accent-subtle ui:px-3 ui:py-1 ui:text-xs ui:font-medium ui:text-ds-1">
                 {item.mode}
               </span>
             </div>
@@ -229,7 +229,7 @@ export const DashboardPreview: Story = {
                 key={index}
                 columns={5}
                 animation="wave"
-                className="ui:border-b ui:border-border last:ui:border-b-0"
+                className="ui:border-b ui:border-ds-border-2 last:ui:border-b-0"
               />
             ))}
           </StoryPanel>

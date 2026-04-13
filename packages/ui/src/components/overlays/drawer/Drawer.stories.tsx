@@ -306,19 +306,19 @@ export const SettingsPanel: Story = {
       }
     >
       <div className="ui:space-y-4">
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-          <p className="ui:text-sm ui:font-medium ui:text-foreground">
+        <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+          <p className="ui:text-sm ui:font-medium ui:text-ds-1">
             Approval threshold
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Require a second approver for transfers above $5,000.
           </p>
         </div>
-        <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-          <p className="ui:text-sm ui:font-medium ui:text-foreground">
+        <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+          <p className="ui:text-sm ui:font-medium ui:text-ds-1">
             Restock notifications
           </p>
-          <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+          <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
             Send a digest every 2 hours to branch managers and operations leads.
           </p>
         </div>
@@ -367,19 +367,15 @@ export const ControlledWorkflow: Story = {
           }
         >
           <div className="ui:space-y-4">
-            <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-              <p className="ui:text-sm ui:font-medium ui:text-foreground">
-                Branch
-              </p>
-              <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+              <p className="ui:text-sm ui:font-medium ui:text-ds-1">Branch</p>
+              <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
                 West distribution hub → Midtown store
               </p>
             </div>
-            <div className="ui:rounded-lg ui:border ui:border-border ui:bg-background ui:p-4">
-              <p className="ui:text-sm ui:font-medium ui:text-foreground">
-                Units
-              </p>
-              <p className="ui:mt-1 ui:text-sm ui:text-muted-foreground">
+            <div className="ui:rounded-lg ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4">
+              <p className="ui:text-sm ui:font-medium ui:text-ds-1">Units</p>
+              <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
                 128 units across 6 SKUs
               </p>
             </div>

@@ -4,12 +4,12 @@ import { forwardRef, useId } from "react";
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "-");
 
 const colorClasses: Record<NonNullable<CheckboxProps["color"]>, string> = {
-  red: "checked:bg-[var(--ds-color-danger)]",
-  blue: "checked:bg-[var(--ds-color-info)]",
-  green: "checked:bg-[var(--ds-color-success)]",
-  yellow: "checked:bg-[var(--ds-color-warning)]",
-  teal: "checked:bg-[var(--ds-brand-teal)]",
-  primary: "checked:bg-accent",
+  red: "checked:bg-ds-state-danger",
+  blue: "checked:bg-ds-state-info",
+  green: "checked:bg-ds-state-success",
+  yellow: "checked:bg-ds-state-warning",
+  teal: "checked:bg-ds-brand-teal",
+  primary: "checked:bg-ds-accent",
 };
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -51,23 +51,25 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ref={ref}
             type="checkbox"
             id={checkboxId}
-            className={`checkbox-custom-${checkboxId} peer relative flex h-5 min-h-[20px] w-5 min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 transition duration-200 outline-none checked:border-none checked:text-white hover:cursor-pointer dark:border-white/30 ${
+            className={`checkbox-custom-${checkboxId} peer relative flex h-5 min-h-[20px] w-5 min-w-[20px] appearance-none items-center justify-center rounded-md border border-ds-border-field transition duration-200 outline-none checked:border-none checked:text-ds-on-accent hover:cursor-pointer ${
               isPredefinedColor
                 ? colorClasses[color as keyof typeof colorClasses]
                 : ""
-            } ${error ? "border-destructive" : ""} ${extra} ${className}`}
+            } ${error ? "border-ds-state-error-border" : ""} ${extra} ${className}`}
             {...props}
           />
           {label && (
             <label
               htmlFor={checkboxId}
-              className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              className="text-sm font-medium leading-none text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
             >
               {label}
             </label>
           )}
           {error && (
-            <p className="text-sm font-medium text-destructive mt-1">{error}</p>
+            <p className="mt-1 text-sm font-medium text-ds-state-error-text">
+              {error}
+            </p>
           )}
         </div>
       </>

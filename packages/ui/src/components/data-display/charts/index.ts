@@ -1,4 +1,10 @@
 export { NeonLineChart } from "./NeonLineChart";
+export { MiniNeonSparkline } from "./MiniNeonSparkline";
+export type {
+  MiniNeonSparklineProps,
+  MiniNeonSparklinePoint,
+  MiniNeonSparklineTone,
+} from "./MiniNeonSparkline";
 export { StackedBarChart } from "./StackedBarChart";
 export type { StackedBarData } from "./StackedBarChart";
 export { ThinBreakdownBar } from "./ThinBreakdownBar";

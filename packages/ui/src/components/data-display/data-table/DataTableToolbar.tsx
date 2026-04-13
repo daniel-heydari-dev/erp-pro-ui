@@ -4,19 +4,27 @@ import { Button } from "../../forms/button";
 import { Input } from "../../forms/input";
 import { Tooltip } from "../../overlays/tooltip";
 import {
+  ArrowDownIcon,
+  ColumnsIcon,
   RefreshIcon,
   SearchIcon,
   SelectionIcon,
-  SettingsIcon,
   TrashIcon,
 } from "../../icons";
-import { ColumnToggle, FilterButton, FilterDropdown } from "./DataTableControls";
+import { mergeClassNames } from "../../../utils";
+import {
+  ColumnToggle,
+  FilterButton,
+  FilterDropdown,
+} from "./DataTableControls";
 
 const ICON_BUTTON_CLASS_NAME =
-  "inline-flex items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200";
+  "inline-flex items-center justify-center rounded-lg text-ds-2 transition-colors hover:bg-ds-surface-2 hover:text-ds-1";
 const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:cursor-not-allowed disabled:opacity-40`;
 const TABLE_CONTROL_ICON_CLASS_NAME = "h-[18px] w-[18px] shrink-0";
 const TABLE_COMPLEX_ICON_CLASS_NAME = TABLE_CONTROL_ICON_CLASS_NAME;
+const TOOLBAR_ACTION_BUTTON_CLASS_NAME =
+  "inline-flex h-9 items-center gap-2 rounded-md border border-transparent bg-transparent px-2.5 text-[12px] font-semibold uppercase tracking-[0.03em] text-ds-2 shadow-none transition-colors hover:bg-ds-surface-2 hover:text-ds-1 hover:opacity-100";
 
 interface ToolbarIconButtonProps {
   title: string;
@@ -50,17 +58,66 @@ export function ToolbarIconButton({
   );
 }
 
+interface ToolbarActionButtonProps {
+  title: string;
+  label: string;
+  onClick?: () => void;
+  isActive?: boolean;
+  icon: React.ReactNode;
+}
+
+function ToolbarActionButton({
+  title,
+  label,
+  onClick,
+  isActive = false,
+  icon,
+}: ToolbarActionButtonProps) {
+  return (
+    <Button
+      onClick={onClick}
+      title={title}
+      aria-label={title}
+      aria-pressed={isActive}
+      className={mergeClassNames(
+        TOOLBAR_ACTION_BUTTON_CLASS_NAME,
+        "relative z-10",
+        isActive ? "text-ds-on-accent" : "text-ds-2",
+      )}
+    >
+      <span
+        className={mergeClassNames(
+          "inline-flex h-5 w-5 items-center justify-center text-ds-2",
+          isActive && "text-ds-on-accent",
+        )}
+      >
+        {icon}
+      </span>
+      <span>{label}</span>
+    </Button>
+  );
+}
+
 interface SearchFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
+  direction: "ltr" | "rtl";
 }
 
-function SearchField({ value, onChange, placeholder }: SearchFieldProps) {
+function SearchField({
+  value,
+  onChange,
+  placeholder,
+  direction,
+}: SearchFieldProps) {
   return (
     <div className="relative w-[300px]">
       <SearchIcon
-        className={`pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-neutral-400 ${TABLE_CONTROL_ICON_CLASS_NAME}`}
+        className={`pointer-events-none absolute top-1/2 z-10 -translate-y-1/2 text-ds-2 ${TABLE_CONTROL_ICON_CLASS_NAME}`}
+        style={{
+          insetInlineStart: "1rem",
+        }}
         aria-hidden="true"
       />
       <Input
@@ -68,7 +125,10 @@ function SearchField({ value, onChange, placeholder }: SearchFieldProps) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        style={{ paddingLeft: "2.75rem" }}
+        style={{
+          paddingInlineStart: "2.75rem",
+          textAlign: direction === "rtl" ? "right" : "left",
+        }}
       />
     </div>
   );
@@ -78,9 +138,15 @@ interface ToolbarLabels {
   columns: string;
   showAll: string;
   hideAll: string;
+  refresh: string;
+  export: string;
+  columnSettings: string;
 }
 
 interface DataTableToolbarProps {
+  direction: "ltr" | "rtl";
+  showRefreshButton?: boolean;
+  showExportButton?: boolean;
   searchQuery: string;
   onSearchChange: (value: string) => void;
   searchPlaceholder: string;
@@ -108,6 +174,9 @@ interface DataTableToolbarProps {
 }
 
 export function DataTableToolbar({
+  direction,
+  showRefreshButton = true,
+  showExportButton = true,
   searchQuery,
   onSearchChange,
   searchPlaceholder,
@@ -130,9 +199,41 @@ export function DataTableToolbar({
   toolbarActions,
 }: DataTableToolbarProps) {
   const hasSelectedRows = selectedCount > 0;
+  const visibleActionIds = React.useMemo(
+    () =>
+      [
+        showRefreshButton ? "refresh" : null,
+        showExportButton ? "export" : null,
+        "columns",
+      ].filter(Boolean) as Array<"refresh" | "export" | "columns">,
+    [showExportButton, showRefreshButton],
+  );
+  const [activeAction, setActiveAction] = React.useState<
+    "refresh" | "export" | "columns"
+  >("columns");
+
+  React.useEffect(() => {
+    if (columnMenuOpen) {
+      setActiveAction("columns");
+      return;
+    }
+
+    if (!visibleActionIds.includes(activeAction)) {
+      setActiveAction(visibleActionIds[0] ?? "columns");
+    }
+  }, [activeAction, columnMenuOpen, visibleActionIds]);
+
+  const logicalActiveIndex = Math.max(
+    visibleActionIds.indexOf(activeAction),
+    0,
+  );
+  const visualActiveIndex =
+    direction === "rtl"
+      ? Math.max(visibleActionIds.length - logicalActiveIndex - 1, 0)
+      : logicalActiveIndex;
 
   return (
-    <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
+    <div className="border-b border-ds-border-2 px-4 py-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center lg:justify-between">
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           {bulkDeleteEnabled ? (
@@ -157,30 +258,88 @@ export function DataTableToolbar({
             value={searchQuery}
             onChange={onSearchChange}
             placeholder={searchPlaceholder}
+            direction={direction}
           />
         </div>
 
         <div className="flex items-center gap-1 self-end lg:self-auto">
-          <ToolbarIconButton onClick={onExport} title="Refresh">
-            <RefreshIcon
-              className={TABLE_CONTROL_ICON_CLASS_NAME}
-              aria-hidden="true"
-            />
-          </ToolbarIconButton>
+          <div className="relative overflow-hidden rounded-xl border border-ds-border-2 bg-ds-surface-1 p-1">
+            {visibleActionIds.length > 0 ? (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-1 top-1 rounded-lg border border-ds-border-accent/35 bg-ds-accent shadow-[0_8px_20px_rgba(79,43,226,0.34)] transition-transform duration-300 ease-out"
+                style={{
+                  width: `calc((100% - 0.5rem) / ${visibleActionIds.length})`,
+                  transform: `translateX(${visualActiveIndex * 100}%)`,
+                  insetInlineStart: "0.25rem",
+                }}
+              />
+            ) : null}
+            <div
+              className="grid min-w-[290px] items-center"
+              style={{
+                gridTemplateColumns: `repeat(${visibleActionIds.length}, minmax(0, 1fr))`,
+              }}
+            >
+              {showRefreshButton ? (
+                <ToolbarActionButton
+                  title={labels.refresh}
+                  label={labels.refresh}
+                  isActive={activeAction === "refresh"}
+                  onClick={() => {
+                    setActiveAction("refresh");
+                    onExport?.();
+                  }}
+                  icon={
+                    <RefreshIcon
+                      className={TABLE_CONTROL_ICON_CLASS_NAME}
+                      aria-hidden="true"
+                    />
+                  }
+                />
+              ) : null}
+              {showExportButton ? (
+                <ToolbarActionButton
+                  title={labels.export}
+                  label={labels.export}
+                  isActive={activeAction === "export"}
+                  onClick={() => {
+                    setActiveAction("export");
+                    onExport?.();
+                  }}
+                  icon={
+                    <ArrowDownIcon
+                      className={TABLE_CONTROL_ICON_CLASS_NAME}
+                      aria-hidden="true"
+                    />
+                  }
+                />
+              ) : null}
+              <ToolbarActionButton
+                onClick={() => {
+                  setActiveAction("columns");
+                  onToggleColumnMenu();
+                }}
+                title={labels.columnSettings}
+                label={labels.columnSettings}
+                isActive={activeAction === "columns" || columnMenuOpen}
+                icon={
+                  <ColumnsIcon
+                    className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                    aria-hidden="true"
+                  />
+                }
+              />
+            </div>
+          </div>
           {toolbarActions}
 
           <div className="relative">
-            <ToolbarIconButton
-              onClick={onToggleColumnMenu}
-              title="Column settings"
+            <FilterDropdown
+              isOpen={columnMenuOpen}
+              onClose={onCloseColumnMenu}
+              direction={direction}
             >
-              <SettingsIcon
-                className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                aria-hidden="true"
-              />
-            </ToolbarIconButton>
-
-            <FilterDropdown isOpen={columnMenuOpen} onClose={onCloseColumnMenu}>
               <ColumnToggle
                 columns={columns}
                 onToggle={(columnId) => {
@@ -197,7 +356,7 @@ export function DataTableToolbar({
 
       {bulkSelectionActive && hasSelectedRows
         ? (bulkActionCard ?? (
-            <div className="mt-2 flex flex-col gap-2 rounded-[4px] border border-neutral-200 bg-neutral-50 px-3 py-2 shadow-sm dark:border-neutral-700 dark:bg-neutral-800/50 dark:shadow-black/25 lg:flex-row lg:items-center lg:justify-between">
+            <div className="mt-2 flex flex-col gap-2 rounded-[4px] border border-ds-border-2 bg-ds-surface-2 px-3 py-2 shadow-sm lg:flex-row lg:items-center lg:justify-between">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
                 <Chip
                   variant="soft"
@@ -207,7 +366,7 @@ export function DataTableToolbar({
                 >
                   Bulk actions
                 </Chip>
-                <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                <p className="text-sm font-medium text-ds-1">
                   {selectedCount} {selectedCount === 1 ? "row" : "rows"}{" "}
                   selected
                 </p>
@@ -220,7 +379,7 @@ export function DataTableToolbar({
                     onClick={onBulkDeleteSelected}
                     primary
                     size="small"
-                    className="border-accent/20 px-3 py-2 text-sm text-on-accent shadow-lg shadow-accent/20 hover:bg-accent-hover hover:opacity-100"
+                    className="border-ds-border-accent/20 px-3 py-2 text-sm text-ds-on-accent shadow-lg shadow-ds-accent/20 hover:bg-ds-accent-hover hover:opacity-100"
                   >
                     <TrashIcon className="h-4 w-4" aria-hidden="true" />
                     Delete selected

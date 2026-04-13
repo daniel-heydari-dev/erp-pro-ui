@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { CheckIcon, CloseIcon } from "../../icons";
@@ -53,36 +54,36 @@ const sizeConfig: Record<
 const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
   const baseStyles = {
     default: {
-      completed: "bg-accent text-on-accent shadow-md shadow-accent/25",
+      completed: "bg-ds-accent text-ds-on-accent shadow-md shadow-ds-accent/25",
       current:
-        "bg-accent text-on-accent ring-4 ring-focus/40 shadow-lg shadow-accent/30",
-      upcoming:
-        "bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400",
-      error: "bg-red-500 text-white ring-4 ring-red-500/30",
+        "bg-ds-accent text-ds-on-accent ring-4 ring-ds-focus/40 shadow-lg shadow-ds-accent/30",
+      upcoming: "bg-ds-surface-3 text-ds-2",
+      error:
+        "bg-ds-state-error-surface text-ds-state-error-text ring-4 ring-ds-state-error-border/35",
     },
     glass: {
       completed:
-        "bg-accent/85 text-on-accent backdrop-blur-xl border border-accent/30 shadow-lg shadow-accent/20",
+        "bg-ds-accent/85 text-ds-on-accent backdrop-blur-xl border border-ds-border-accent/30 shadow-lg shadow-ds-accent/20",
       current:
-        "bg-accent/90 text-on-accent backdrop-blur-xl border-2 border-accent ring-4 ring-focus/30 shadow-xl shadow-accent/30",
+        "bg-ds-accent/90 text-ds-on-accent backdrop-blur-xl border-2 border-ds-border-accent ring-4 ring-ds-focus/30 shadow-xl shadow-ds-accent/30",
       upcoming:
-        "bg-white/60 text-neutral-500 backdrop-blur-xl border border-white/40 dark:bg-neutral-800/60 dark:text-neutral-400 dark:border-white/10",
+        "bg-ds-surface-1 text-ds-2 backdrop-blur-xl border border-ds-border-2",
       error:
-        "bg-red-500/80 text-white backdrop-blur-xl border border-red-400/30 ring-4 ring-red-500/20",
+        "bg-ds-state-error-surface text-ds-state-error-text backdrop-blur-xl border border-ds-state-error-border ring-4 ring-ds-state-error-border/25",
     },
     minimal: {
-      completed: "bg-accent-subtle text-accent",
-      current: "bg-accent text-on-accent shadow-sm",
-      upcoming:
-        "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
-      error: "bg-red-100 text-red-500 dark:bg-red-900/30",
+      completed: "bg-ds-accent-subtle text-ds-1",
+      current: "bg-ds-accent text-ds-on-accent shadow-sm",
+      upcoming: "bg-transparent text-ds-2 border-2 border-ds-border-2",
+      error: "bg-ds-state-error-surface text-ds-state-error-text",
     },
     outlined: {
-      completed: "bg-transparent text-accent border-2 border-accent",
-      current: "bg-accent text-on-accent border-2 border-accent shadow-lg",
-      upcoming:
-        "bg-transparent text-neutral-400 border-2 border-neutral-300 dark:border-neutral-600",
-      error: "bg-transparent text-red-500 border-2 border-red-500",
+      completed: "bg-transparent text-ds-1 border-2 border-ds-border-accent",
+      current:
+        "bg-ds-accent text-ds-on-accent border-2 border-ds-border-accent shadow-lg",
+      upcoming: "bg-transparent text-ds-2 border-2 border-ds-border-2",
+      error:
+        "bg-transparent text-ds-state-error-text border-2 border-ds-state-error-border",
     },
   };
 
@@ -91,8 +92,8 @@ const getVariantStyles = (variant: StepperVariant, status: StepStatus) => {
 
 const getConnectorTrackClassName = (variant: StepperVariant) =>
   variant === "glass"
-    ? "bg-white/30 backdrop-blur-sm dark:bg-white/10"
-    : "bg-neutral-200 dark:bg-neutral-700";
+    ? "bg-ds-surface-2/70 backdrop-blur-sm"
+    : "bg-ds-surface-3";
 
 const getResolvedLabelPosition = (
   orientation: StepperProps["orientation"],
@@ -278,7 +279,7 @@ export const Stepper = ({
               {/* Animated fill connector */}
               {animated ? (
                 <motion.div
-                  className="absolute top-0 left-0 bg-accent rounded-full"
+                  className="absolute top-0 left-0 bg-ds-accent rounded-full"
                   initial={{ [isVertical ? "height" : "width"]: 0 }}
                   animate={{
                     [isVertical ? "height" : "width"]:
@@ -292,7 +293,7 @@ export const Stepper = ({
                 />
               ) : (
                 <div
-                  className="absolute top-0 left-0 bg-accent rounded-full"
+                  className="absolute top-0 left-0 bg-ds-accent rounded-full"
                   style={{
                     ...(isVertical
                       ? {
@@ -335,25 +336,23 @@ export const Stepper = ({
                 "font-medium transition-colors duration-200",
                 config.text,
                 status === "current"
-                  ? "text-accent"
+                  ? "text-ds-1"
                   : status === "completed"
-                    ? "text-neutral-700 dark:text-neutral-200"
+                    ? "text-ds-1"
                     : status === "error"
-                      ? "text-red-500"
-                      : "text-neutral-500 dark:text-neutral-400",
+                      ? "text-ds-state-error-text"
+                      : "text-ds-2",
               )}
             >
               {step.title}
               {step.optional && (
-                <span className="ml-1 font-normal text-neutral-400 dark:text-neutral-500">
-                  (Optional)
-                </span>
+                <span className="ml-1 font-normal text-ds-3">(Optional)</span>
               )}
             </p>
             {step.description && (
               <p
                 className={mergeClassNames(
-                  "mt-0.5 text-xs text-neutral-500 dark:text-neutral-400",
+                  "mt-0.5 text-xs text-ds-2",
                   resolvedLabelPosition === "right" && "text-left",
                 )}
               >
@@ -364,9 +363,8 @@ export const Stepper = ({
         );
 
         return (
-          <>
+          <Fragment key={step.id}>
             <div
-              key={step.id}
               className={mergeClassNames(
                 "relative z-10 min-w-0",
                 isVertical
@@ -400,7 +398,7 @@ export const Stepper = ({
                   aria-hidden="true"
                 >
                   <div
-                    className="absolute inset-y-0 right-0 rounded-full bg-accent"
+                    className="absolute inset-y-0 right-0 rounded-full bg-ds-accent"
                     style={{
                       left: 0,
                       backgroundColor: colors?.connector || colors?.completed,
@@ -428,7 +426,7 @@ export const Stepper = ({
                 >
                   {animated ? (
                     <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                      className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
                       initial={{ width: 0 }}
                       animate={{
                         width:
@@ -443,7 +441,7 @@ export const Stepper = ({
                     />
                   ) : (
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                      className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
                       style={{
                         width:
                           status === "completed" || status === "current"
@@ -461,7 +459,7 @@ export const Stepper = ({
                 onClick={() => handleStepClick(index)}
                 disabled={!isClickable}
                 className={mergeClassNames(
-                  "relative z-10 shrink-0 rounded-full bg-white dark:bg-neutral-900",
+                  "relative z-10 shrink-0 rounded-full bg-ds-surface-1",
                   isClickable ? "cursor-pointer" : "cursor-default",
                   resolvedLabelPosition === "right"
                     ? "flex items-center justify-center"
@@ -510,7 +508,7 @@ export const Stepper = ({
               >
                 {animated ? (
                   <motion.div
-                    className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                    className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
                     initial={{ width: 0 }}
                     animate={{
                       width: isConnectorCompleted ? "100%" : "0%",
@@ -522,7 +520,7 @@ export const Stepper = ({
                   />
                 ) : (
                   <div
-                    className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                    className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
                     style={{
                       width: isConnectorCompleted ? "100%" : "0%",
                       backgroundColor: colors?.connector || colors?.completed,
@@ -531,7 +529,7 @@ export const Stepper = ({
                 )}
               </div>
             ) : null}
-          </>
+          </Fragment>
         );
       })}
     </div>

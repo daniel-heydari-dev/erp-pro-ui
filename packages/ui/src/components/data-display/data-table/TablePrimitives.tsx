@@ -31,10 +31,7 @@ export const TableHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={mergeClassNames(
-      "sticky top-0 z-10 bg-background-secondary",
-      className,
-    )}
+    className={mergeClassNames("sticky top-0 z-10 bg-ds-surface-1", className)}
     {...props}
   />
 ));
@@ -86,10 +83,7 @@ export const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={mergeClassNames(
-      "caption-bottom text-sm text-neutral-500",
-      className,
-    )}
+    className={mergeClassNames("caption-bottom text-sm text-ds-2", className)}
     {...props}
   />
 ));

@@ -6,6 +6,7 @@ import ColorPalette from "./ColorPalette";
 
 const brands = ["purple", "teal", "yellow", "green"] as const;
 const modes = ["light", "dark"] as const;
+type ThemeVariant = "default" | "alt";
 
 // Core token checkpoints shown per brand/mode in the verification matrix.
 const TOKEN_KEYS = [
@@ -19,9 +20,11 @@ const TOKEN_KEYS = [
 function ThemeTokenReadout({
   brand,
   mode,
+  variant = "default",
 }: {
   brand: (typeof brands)[number];
   mode: (typeof modes)[number];
+  variant?: ThemeVariant;
 }) {
   const cardRef = React.useRef<HTMLDivElement | null>(null);
   const [values, setValues] = React.useState<Record<string, string>>({});
@@ -34,25 +37,33 @@ function ThemeTokenReadout({
     }
 
     const computed = getComputedStyle(cardRef.current);
-    const nextValues = TOKEN_KEYS.reduce<Record<string, string>>((acc, token) => {
-      acc[token.cssVar] = computed.getPropertyValue(token.cssVar).trim();
-      return acc;
-    }, {});
+    const nextValues = TOKEN_KEYS.reduce<Record<string, string>>(
+      (acc, token) => {
+        acc[token.cssVar] = computed.getPropertyValue(token.cssVar).trim();
+        return acc;
+      },
+      {},
+    );
     setValues(nextValues);
-  }, [brand, mode]);
+  }, [brand, mode, variant]);
 
   return (
     <div
       ref={cardRef}
       data-brand={brand}
       data-mode={mode}
-      className="ui:rounded-xl ui:border ui:border-border ui:bg-surface ui:p-3"
+      data-variant={variant}
+      data-dark-variant={variant}
+      data-theme={
+        variant === "alt" ? `${brand}-${mode}-alt` : `${brand}-${mode}`
+      }
+      className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-3"
     >
       <div className="ui:mb-2 ui:flex ui:items-center ui:justify-between">
-        <span className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-fg-muted">
-          {mode}
+        <span className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
+          {`${mode} (${variant})`}
         </span>
-        <span className="ui:rounded-full ui:bg-accent-subtle ui:px-2 ui:py-0.5 ui:text-[10px] ui:font-medium ui:text-accent">
+        <span className="ui:rounded-full ui:bg-ds-accent-subtle ui:px-2 ui:py-0.5 ui:text-[10px] ui:font-medium ui:text-ds-1">
           live tokens
         </span>
       </div>
@@ -61,18 +72,18 @@ function ThemeTokenReadout({
         {TOKEN_KEYS.map((token) => (
           <div
             key={`${brand}-${mode}-${token.cssVar}`}
-            className="ui:flex ui:items-center ui:justify-between ui:rounded-md ui:border ui:border-border ui:bg-elevated ui:px-2 ui:py-1.5"
+            className="ui:flex ui:items-center ui:justify-between ui:rounded-md ui:border ui:border-ds-border-2 ui:bg-ds-surface-2 ui:px-2 ui:py-1.5"
           >
             <div className="ui:flex ui:items-center ui:gap-2">
               <span
-                className="ui:h-3 ui:w-3 ui:rounded-full ui:border ui:border-border"
+                className="ui:h-3 ui:w-3 ui:rounded-full ui:border ui:border-ds-border-2"
                 style={{ backgroundColor: `var(${token.cssVar})` }}
               />
-              <span className="ui:text-[11px] ui:font-medium ui:text-fg">
+              <span className="ui:text-[11px] ui:font-medium ui:text-ds-1">
                 {token.label}
               </span>
             </div>
-            <span className="ui:text-[10px] ui:font-mono ui:text-fg-muted">
+            <span className="ui:text-[10px] ui:font-mono ui:text-ds-2">
               {values[token.cssVar] ?? "…"}
             </span>
           </div>
@@ -121,7 +132,10 @@ export const QuickReference: Story = {
     showUsageExamples: false,
   },
   render: (args) => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-6xl" className="ui:block ui:p-6">
+    <StorySurface
+      widthClassName="ui:w-full ui:max-w-6xl"
+      className="ui:block ui:p-6"
+    >
       <ColorPalette {...args} />
     </StorySurface>
   ),
@@ -138,7 +152,10 @@ export const SemanticAndGradients: Story = {
     showGradients: true,
   },
   render: (args) => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-6xl" className="ui:block ui:p-6">
+    <StorySurface
+      widthClassName="ui:w-full ui:max-w-6xl"
+      className="ui:block ui:p-6"
+    >
       <ColorPalette {...args} />
     </StorySurface>
   ),
@@ -205,12 +222,12 @@ export const BrandAndModeMatrix: Story = {
     <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
       <div className="ui:space-y-6">
         <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-fg">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
             Brand and mode matrix
           </h2>
-          <p className="ui:text-sm ui:text-fg-muted">
-            One section per brand with compact light and dark previews.{" "}
-            This keeps comparison clear without repeating full content blocks.
+          <p className="ui:text-sm ui:text-ds-2">
+            One section per brand with compact light and dark previews. This
+            keeps comparison clear without repeating full content blocks.
           </p>
         </div>
 
@@ -218,9 +235,9 @@ export const BrandAndModeMatrix: Story = {
           {brands.map((brand) => (
             <section
               key={brand}
-              className="ui:rounded-2xl ui:border ui:border-border ui:bg-canvas ui:p-4 ui:shadow-sm"
+              className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
             >
-              <p className="ui:mb-3 ui:text-sm ui:font-semibold ui:uppercase ui:tracking-[0.12em] ui:text-fg">
+              <p className="ui:mb-3 ui:text-sm ui:font-semibold ui:uppercase ui:tracking-[0.12em] ui:text-ds-1">
                 {brand}
               </p>
 
@@ -232,6 +249,60 @@ export const BrandAndModeMatrix: Story = {
                     mode={mode}
                   />
                 ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </StorySurface>
+  ),
+};
+
+/**
+ * ## 6) Token Audit Matrix
+ * Full audit for all brands across light/default, light/alt, dark/default, and dark/alt.
+ */
+export const TokenAuditMatrix: Story = {
+  args: {
+    showGradients: false,
+    showUsageExamples: false,
+  },
+  render: () => (
+    <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
+      <div className="ui:space-y-6">
+        <div className="ui:max-w-4xl ui:space-y-2">
+          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
+            Token audit matrix
+          </h2>
+          <p className="ui:text-sm ui:text-ds-2">
+            Verifies resolved token output for all brands in light/dark with
+            both default and alt variants.
+          </p>
+        </div>
+
+        <div className="ui:grid ui:grid-cols-1 ui:gap-4 lg:ui:grid-cols-2">
+          {brands.map((brand) => (
+            <section
+              key={brand}
+              className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
+            >
+              <p className="ui:mb-3 ui:text-sm ui:font-semibold ui:uppercase ui:tracking-[0.12em] ui:text-ds-1">
+                {brand}
+              </p>
+
+              <div className="ui:grid ui:grid-cols-1 ui:gap-3 md:ui:grid-cols-4">
+                <ThemeTokenReadout
+                  brand={brand}
+                  mode="light"
+                  variant="default"
+                />
+                <ThemeTokenReadout brand={brand} mode="light" variant="alt" />
+                <ThemeTokenReadout
+                  brand={brand}
+                  mode="dark"
+                  variant="default"
+                />
+                <ThemeTokenReadout brand={brand} mode="dark" variant="alt" />
               </div>
             </section>
           ))}

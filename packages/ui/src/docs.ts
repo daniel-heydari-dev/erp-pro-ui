@@ -355,7 +355,7 @@ const componentDocSeeds = {
   "data-table": {
     exportName: "DataTable",
     summary:
-      "Feature-rich data grid with filtering, column toggles, pagination, plus composable table primitives and style slots for external customization.",
+      "Feature-rich data grid with filtering, column toggles, pagination, RTL-aware interactions, plus composable table primitives and style slots for external customization.",
     aliases: ["table", "grid"],
     related: ["loading", "skeleton", "chip"],
     rootImport:
@@ -570,7 +570,7 @@ export const libraryInstallSteps = [
   {
     title: "Use colors and fonts directly",
     description:
-      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from shared semantic tokens. Prefer semantic utilities and --ds-* tokens in new code; deprecated bridges remain available for migration.",
+      "Import tokens.css for raw CSS variables without Tailwind utilities, or colors.css when you want the Tailwind v4 utility bridge generated from shared semantic tokens. Use DS-prefixed semantic utilities and --ds-* tokens for all new code.",
     examples: [
       {
         title: "Raw token import",
@@ -585,7 +585,7 @@ export const libraryInstallSteps = [
       {
         title: "Theme token usage",
         language: "tsx",
-        code: 'import { Button } from "erp-pro-ui";\n\n<section className="bg-surface text-fg border border-border rounded-2xl p-6">\n  <Button label="Save" primary />\n</section>',
+        code: 'import { Button } from "erp-pro-ui";\n\n<section className="bg-ds-surface-1 text-ds-1 border border-ds-border-2 rounded-2xl p-6">\n  <Button label="Save" primary />\n</section>',
       },
       {
         title: "Chart token usage",
@@ -599,7 +599,7 @@ export const libraryInstallSteps = [
   {
     title: "Wrap your app with ThemeProvider",
     description:
-      "Use ThemeProvider at the root so shared brand and mode attributes are applied as data-brand and data-mode for the token system. The older data-theme attribute is still written for compatibility, but brand and mode are the primary contract.",
+      "Use ThemeProvider at the root so brand, mode, and variant attributes are applied as data-brand, data-mode, and data-variant for the token system. The older data-dark-variant and data-theme attributes are still written for compatibility during migration.",
     examples: [
       {
         title: "Root provider",
@@ -609,7 +609,7 @@ export const libraryInstallSteps = [
       {
         title: "Manual attributes",
         language: "tsx",
-        code: '<html data-brand="teal" data-mode="dark"></html>',
+        code: '<html data-brand="teal" data-mode="light" data-variant="alt"></html>',
       },
     ],
   },

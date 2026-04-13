@@ -4,7 +4,7 @@ import type { DrawerProps, DrawerPosition } from "./types";
 import { useOverlayEffects } from "../../shared/overlay";
 
 const basePanel =
-  "relative flex flex-col overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-white/80 via-white/68 to-white/52 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22),0_8px_28px_rgba(15,23,42,0.14)] ring-1 ring-inset ring-white/25 backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:from-neutral-950/84 dark:via-neutral-950/72 dark:to-neutral-900/58 dark:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_10px_30px_rgba(0,0,0,0.3)] dark:ring-white/10";
+  "relative flex flex-col overflow-hidden rounded-2xl border border-ds-border-2 bg-ds-surface-1/95 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22),0_8px_28px_rgba(15,23,42,0.14)] ring-1 ring-inset ring-ds-border-3/35 backdrop-blur-2xl backdrop-saturate-150";
 
 const positionClasses: Record<DrawerPosition, string> = {
   right: "h-[calc(100%-8px)] my-1 mr-1 w-full max-w-md ml-auto border",
@@ -63,7 +63,7 @@ export const Drawer = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-slate-950/24 backdrop-blur-[3px] dark:bg-black/44"
+            className="fixed inset-0 bg-ds-canvas/55 backdrop-blur-[3px]"
             onClick={() => onOpenChange?.(false)}
           />
           <motion.div
@@ -82,19 +82,19 @@ export const Drawer = ({
           >
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-linear-to-b from-white/30 via-white/10 to-transparent dark:from-white/10 dark:via-white/[0.03] dark:to-transparent"
+              className="pointer-events-none absolute inset-0 bg-linear-to-b from-ds-accent/10 via-transparent to-transparent"
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-white/40 to-transparent dark:from-white/12"
+              className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-ds-accent/16 to-transparent"
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-10 top-[-72px] h-40 w-40 rounded-full bg-white/35 blur-3xl dark:bg-sky-200/10"
+              className="pointer-events-none absolute -right-10 top-[-72px] h-40 w-40 rounded-full bg-ds-accent/18 blur-3xl"
             />
             <button
               type="button"
-              className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/35 bg-white/45 text-lg font-light text-foreground shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-white/72 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+              className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-ds-border-2 bg-ds-surface-2 text-lg font-light text-ds-1 shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-ds-surface-3"
               aria-label="Close drawer"
               onClick={() => onOpenChange?.(false)}
             >
@@ -104,14 +104,12 @@ export const Drawer = ({
               {(title || description) && (
                 <header className="space-y-1 pr-10">
                   {title && (
-                    <h2 className="text-lg font-semibold tracking-tight text-foreground">
+                    <h2 className="text-lg font-semibold tracking-tight text-ds-1">
                       {title}
                     </h2>
                   )}
                   {description && (
-                    <p className="text-sm text-muted-foreground">
-                      {description}
-                    </p>
+                    <p className="text-sm text-ds-2">{description}</p>
                   )}
                 </header>
               )}
@@ -121,7 +119,7 @@ export const Drawer = ({
                 </div>
               )}
               {footer && (
-                <footer className="mt-6 border-t border-white/20 pt-4 dark:border-white/10">
+                <footer className="mt-6 border-t border-ds-border-2 pt-4">
                   {footer}
                 </footer>
               )}

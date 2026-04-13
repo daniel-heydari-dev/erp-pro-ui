@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { StorySurface } from "../../shared/storybook";
 import { Chip } from "./Chip";
+import { SplitChip, StatusDotChip } from "./SpecialChip";
 
 const meta: Meta<typeof Chip> = {
   title: "Data Display/Chip",
@@ -200,4 +201,40 @@ function RemovableFiltersExample() {
  */
 export const Removable: Story = {
   render: () => <RemovableFiltersExample />,
+};
+
+/**
+ * ## Table Chips
+ * Compact split-chip and status-chip styles for dense table cells.
+ */
+export const TableChips: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-2xl">
+      <div className="ui:flex ui:flex-col ui:gap-4">
+        <div className="ui:flex ui:flex-wrap ui:items-center ui:gap-3">
+          <SplitChip
+            leftLabel="SKU"
+            rightLabel="ABC-001234-BL-SUPER-LONG-VARIANT"
+            truncateRight
+            rightMaxWidth="8rem"
+          />
+          <SplitChip leftLabel="ID" rightLabel="USR-00291" />
+        </div>
+        <div className="ui:flex ui:flex-wrap ui:items-center ui:gap-3">
+          <StatusDotChip tone="danger" label="Out of Stock" />
+          <StatusDotChip tone="success" label="In Stock" />
+          <StatusDotChip tone="warning" label="Low Stock" />
+        </div>
+        <div className="ui:flex ui:flex-wrap ui:items-center ui:gap-3">
+          <SplitChip
+            dir="rtl"
+            leftLabel="رمز"
+            rightLabel="ABC-001234-BL-SUPER-LONG-VARIANT"
+            truncateRight
+            rightMaxWidth="8rem"
+          />
+        </div>
+      </div>
+    </StorySurface>
+  ),
 };

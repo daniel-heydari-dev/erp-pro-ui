@@ -52,17 +52,10 @@ export const Accordion = ({
           <div
             key={item.id}
             className={cx(
-              // Glass effect base
-              "rounded-xl backdrop-blur-2xl transition-all duration-300",
-              // Light mode glass
-              "bg-white/60 border border-white/40 shadow-lg shadow-neutral-200/50",
-              // Dark mode glass
-              "dark:bg-neutral-900/50 dark:border-white/10 dark:shadow-neutral-950/50",
-              // Hover effects
-              "hover:bg-white/80 hover:shadow-xl hover:border-white/60",
-              "dark:hover:bg-neutral-800/60 dark:hover:border-white/20",
+              "rounded-xl border border-ds-border-2 bg-ds-surface-1 backdrop-blur-2xl transition-all duration-300",
+              "hover:border-ds-border-1 hover:bg-ds-surface-2",
               // Ring highlight on open
-              open && "ring-2 ring-focus/40",
+              open && "ring-2 ring-ds-focus/40",
               separated ? "p-0" : "",
             )}
           >
@@ -70,13 +63,8 @@ export const Accordion = ({
               type="button"
               className={cx(
                 "flex w-full items-center justify-between gap-4 px-5 py-4 rounded-xl transition-colors duration-200",
-                // Text colors
-                "text-neutral-700 dark:text-neutral-200",
-                // Hover state
-                "hover:bg-white/40 dark:hover:bg-white/5",
-                separated
-                  ? "border-b border-neutral-200/50 dark:border-white/10"
-                  : "",
+                "text-ds-1 hover:bg-ds-surface-2",
+                separated ? "border-b border-ds-border-2" : "",
                 item.disabled
                   ? "opacity-50 cursor-not-allowed"
                   : "cursor-pointer",
@@ -88,21 +76,18 @@ export const Accordion = ({
               disabled={item.disabled}
             >
               <div className="text-left flex-1">
-                <p className="text-base font-semibold text-neutral-900 dark:text-white">
+                <p className="text-base font-semibold text-ds-1">
                   {item.title}
                 </p>
                 {item.description && (
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
-                    {item.description}
-                  </p>
+                  <p className="mt-0.5 text-sm text-ds-2">{item.description}</p>
                 )}
               </div>
               <span
                 className={cx(
                   "p-1.5 rounded-lg transition-all duration-300",
-                  "bg-neutral-100/80 dark:bg-white/10",
-                  "text-neutral-600 dark:text-neutral-300",
-                  open && "rotate-180 bg-accent-subtle text-accent",
+                  "bg-ds-surface-2 text-ds-2",
+                  open && "rotate-180 bg-ds-accent-subtle text-ds-1",
                 )}
               >
                 {caret}
@@ -117,7 +102,7 @@ export const Accordion = ({
                 open ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0",
               )}
             >
-              <div className="px-5 pb-5 pt-2 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+              <div className="px-5 pb-5 pt-2 text-sm leading-relaxed text-ds-2">
                 {item.content}
               </div>
             </div>

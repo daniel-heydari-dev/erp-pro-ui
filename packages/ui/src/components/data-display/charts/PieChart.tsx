@@ -149,13 +149,13 @@ export const PieChart: React.FC<PieChartProps> = ({
             renderCenterContent(centerContentContext)
           ) : (
             <div className="flex max-w-[42%] flex-col items-center text-center">
-              <p className="text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
+              <p className="text-[11px] font-medium tracking-[0.16em] text-ds-2 uppercase">
                 {displayLabel}
               </p>
-              <p className="mt-1 text-2xl font-semibold leading-none text-foreground sm:text-3xl">
+              <p className="mt-1 text-2xl font-semibold leading-none text-ds-1 sm:text-3xl">
                 {valueFormatter(displayValue)}
               </p>
-              <p className="mt-2 text-xs leading-tight text-muted-foreground">
+              <p className="mt-2 text-xs leading-tight text-ds-2">
                 {activePercentage}
               </p>
             </div>

@@ -288,7 +288,7 @@ function Skeleton({
 
   return (
     <div
-      className={`animate-pulse bg-neutral-200 dark:bg-neutral-700 ${roundedMap[rounded]}`}
+      className={`animate-pulse bg-ds-surface-3 ${roundedMap[rounded]}`}
       style={{ width, height }}
     />
   );
@@ -297,7 +297,7 @@ function Skeleton({
 export default function Loading({
   variant = "spinner",
   size = "md",
-  color = "#7367f0",
+  color = "var(--ds-color-accent)",
   text,
   textPosition = "right",
   fullScreen = false,
@@ -344,9 +344,7 @@ export default function Loading({
     >
       {renderLoader()}
       {text && (
-        <span
-          className={`${sizeMap[size].text} text-neutral-600 dark:text-neutral-400 font-medium`}
-        >
+        <span className={`${sizeMap[size].text} text-ds-2 font-medium`}>
           {text}
         </span>
       )}
@@ -355,7 +353,7 @@ export default function Loading({
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-neutral-950/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ds-canvas/80 backdrop-blur-sm">
         {content}
       </div>
     );
@@ -363,7 +361,7 @@ export default function Loading({
 
   if (overlay) {
     return (
-      <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm rounded-inherit">
+      <div className="absolute inset-0 z-10 flex items-center justify-center bg-ds-canvas/70 backdrop-blur-sm rounded-inherit">
         {content}
       </div>
     );
