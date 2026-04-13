@@ -48,7 +48,8 @@ function resolveVar(token, vars, seen = new Set()) {
   const value = vars[token];
   if (!value) return undefined;
 
-  const varOnlyMatch = value.match(/^var\((--[\w-]+)\)$/);
+  const compactValue = value.replace(/\s+/g, " ").trim();
+  const varOnlyMatch = compactValue.match(/^var\(\s*(--[\w-]+)\s*\)$/);
   if (!varOnlyMatch) return value;
   return resolveVar(varOnlyMatch[1], vars, seen);
 }
