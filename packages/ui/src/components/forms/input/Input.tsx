@@ -58,7 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const inputStateStyles: Record<InputState, string> = {
       [InputState.DISABLED]:
-        "border-transparent bg-transparent text-ds-2 placeholder:!text-ds-2",
+        "border-transparent bg-transparent text-ds-2 placeholder:!text-ds-3 placeholder:opacity-60",
       [InputState.ERROR]: "text-destructive placeholder:text-destructive",
       [InputState.SUCCESS]: "text-success placeholder:text-success",
       [InputState.DEFAULT]: "text-ds-1",
@@ -138,7 +138,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               placeholder={placeholder}
               disabled={isDisabled}
               className={mergeClassNames(
-                "flex h-10 w-full rounded-md border border-ds-border-field py-2 text-sm text-ds-1 transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-ds-2 focus-visible:ring-1 focus-visible:ring-ds-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                "flex h-10 w-full rounded-md border border-ds-border-field py-2 text-sm text-ds-1 transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-ds-3 placeholder:opacity-70 focus-visible:ring-1 focus-visible:ring-ds-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
                 leftIcon ? "pl-10" : "pl-3",
                 trailingIcon ? "pr-10" : "pr-3",
                 bgClassName,

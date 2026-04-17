@@ -203,6 +203,8 @@ export interface DataTableProps<T = Record<string, any>> {
   showRefreshButton?: boolean;
   showExportButton?: boolean;
   onRowAction?: (action: string, row: T) => void;
+  onRowClick?: (row: T, rowIndex: number) => void;
+  renderRowDetails?: (row: T, rowIndex: number) => React.ReactNode;
   rowActions?: DataTableRowAction<T>[];
   onBulkDelete?: (rows: T[]) => void;
   renderBulkActions?: (
@@ -542,7 +544,10 @@ function RowActionsCell<T>({
         )}
       >
         <Button
-          onClick={() => onToggle(rowIndex)}
+          onClick={(event) => {
+            event.stopPropagation();
+            onToggle(rowIndex);
+          }}
           aria-label="Open row actions"
           className={mergeClassNames(
             "h-full w-12 rounded-none border-none px-0 py-0 shadow-none hover:opacity-100 ",
@@ -767,6 +772,8 @@ export default function DataTable<T = Record<string, any>>({
   showRefreshButton = true,
   showExportButton = true,
   onRowAction,
+  onRowClick,
+  renderRowDetails,
   rowActions,
   onBulkDelete,
   renderBulkActions,
@@ -835,6 +842,7 @@ export default function DataTable<T = Record<string, any>>({
     Record<string, boolean>
   >({});
   const [rowMenuOpen, setRowMenuOpen] = React.useState<number | null>(null);
+  const [expandedRowId, setExpandedRowId] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [columnVisibility, setColumnVisibility] = React.useState<
     Record<string, boolean>
@@ -1075,6 +1083,9 @@ export default function DataTable<T = Record<string, any>>({
   }, []);
   const handleCloseRowMenu = React.useCallback(() => {
     setRowMenuOpen(null);
+  }, []);
+  const handleToggleExpandedRow = React.useCallback((rowId: string) => {
+    setExpandedRowId((previous) => (previous === rowId ? null : rowId));
   }, []);
   const tableContainerRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -1429,6 +1440,10 @@ export default function DataTable<T = Record<string, any>>({
                 onToggleRowMenu={handleToggleRowMenu}
                 onCloseRowMenu={handleCloseRowMenu}
                 onRowAction={onRowAction}
+                onRowClick={onRowClick}
+                expandedRowId={expandedRowId}
+                onToggleExpandedRow={handleToggleExpandedRow}
+                renderRowDetails={renderRowDetails}
                 rowClassName={rowClassName}
                 cellClassName={cellClassName}
                 hasActiveFilters={hasActiveFilters}

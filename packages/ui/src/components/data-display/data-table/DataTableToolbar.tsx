@@ -126,6 +126,7 @@ function SearchField({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
+        className="placeholder:!text-ds-3"
         style={{
           paddingInlineStart: "2.75rem",
           textAlign: direction === "rtl" ? "right" : "left",

@@ -106,6 +106,10 @@ export interface DataTableRowsProps<T> {
   onRowAction?: (action: string, row: T) => void;
   rowClassName?: string;
   cellClassName?: string;
+  onRowClick?: (row: T, rowIndex: number) => void;
+  expandedRowId: string | null;
+  onToggleExpandedRow: (rowId: string) => void;
+  renderRowDetails?: (row: T, rowIndex: number) => React.ReactNode;
   hasActiveFilters: boolean;
   searchQuery: string;
   renderEmptyState?: (context: DataTableEmptyStateContext) => React.ReactNode;
@@ -133,6 +137,10 @@ export function DataTableRows<T>({
   onRowAction,
   rowClassName,
   cellClassName,
+  onRowClick,
+  expandedRowId,
+  onToggleExpandedRow,
+  renderRowDetails,
   hasActiveFilters,
   searchQuery,
   renderEmptyState,
@@ -173,57 +181,83 @@ export function DataTableRows<T>({
 
   return (
     <>
-      {table.getRowModel().rows.map((row) => (
-        <TableRow
-          key={row.id}
-          className={mergeClassNames(
-            "border-b border-ds-border-2 transition-colors hover:bg-ds-surface-2",
-            rowClassName,
-          )}
-        >
-          {bulkSelectionActive ? (
-            <TableCell
+      {table.getRowModel().rows.map((row) => {
+        const isExpandable = typeof renderRowDetails === "function";
+        const isExpanded = expandedRowId === row.id;
+
+        const handleRowToggle = () => {
+          onRowClick?.(row.original, row.index);
+          if (isExpandable) {
+            onToggleExpandedRow(row.id);
+          }
+        };
+
+        return (
+          <React.Fragment key={row.id}>
+            <TableRow
               className={mergeClassNames(
-                "w-12 px-4 py-3 align-middle",
-                cellClassName,
+                "border-b border-ds-border-2 transition-colors hover:bg-ds-surface-2",
+                (isExpandable || onRowClick) && "cursor-pointer",
+                rowClassName,
               )}
+              onClick={isExpandable || onRowClick ? handleRowToggle : undefined}
             >
-              <Checkbox
-                aria-label={`Select row ${row.id}`}
-                checked={Boolean(selectedRowIds[row.id])}
-                onChange={(event) =>
-                  onToggleRowSelection(row.id, event.target.checked)
-                }
-              />
-            </TableCell>
-          ) : null}
-          {row.getVisibleCells().map((cell) => (
-            <TableCell
-              key={cell.id}
-              className={mergeClassNames(
-                "px-4 py-3 text-sm text-ds-1",
-                cellClassName,
-              )}
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </TableCell>
-          ))}
-          {hasRowActions
-            ? renderRowActionsCell({
-                rowIndex: row.index,
-                row: row.original,
-                isOpen: rowMenuOpen === row.index,
-                openDirection:
-                  row.index >= table.getRowModel().rows.length - 2
-                    ? "up"
-                    : "down",
-                onToggle: onToggleRowMenu,
-                onClose: onCloseRowMenu,
-                onRowAction,
-              })
-            : null}
-        </TableRow>
-      ))}
+              {bulkSelectionActive ? (
+                <TableCell
+                  className={mergeClassNames(
+                    "w-12 px-4 py-3 align-middle",
+                    cellClassName,
+                  )}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <Checkbox
+                    aria-label={`Select row ${row.id}`}
+                    checked={Boolean(selectedRowIds[row.id])}
+                    onChange={(event) =>
+                      onToggleRowSelection(row.id, event.target.checked)
+                    }
+                  />
+                </TableCell>
+              ) : null}
+              {row.getVisibleCells().map((cell) => (
+                <TableCell
+                  key={cell.id}
+                  className={mergeClassNames(
+                    "px-4 py-3 text-sm text-ds-1",
+                    cellClassName,
+                  )}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+              {hasRowActions
+                ? renderRowActionsCell({
+                    rowIndex: row.index,
+                    row: row.original,
+                    isOpen: rowMenuOpen === row.index,
+                    openDirection:
+                      row.index >= table.getRowModel().rows.length - 2
+                        ? "up"
+                        : "down",
+                    onToggle: onToggleRowMenu,
+                    onClose: onCloseRowMenu,
+                    onRowAction,
+                  })
+                : null}
+            </TableRow>
+            {isExpandable && isExpanded ? (
+              <TableRow className={mergeClassNames("bg-ds-surface-2", rowClassName)}>
+                <TableCell
+                  colSpan={colSpan}
+                  className={mergeClassNames("px-4 py-4 text-ds-1", cellClassName)}
+                >
+                  {renderRowDetails?.(row.original, row.index)}
+                </TableCell>
+              </TableRow>
+            ) : null}
+          </React.Fragment>
+        );
+      })}
     </>
   );
 }
