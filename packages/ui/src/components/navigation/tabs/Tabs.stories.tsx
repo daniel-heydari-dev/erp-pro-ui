@@ -128,3 +128,26 @@ export const RTLArabic: Story = {
     </StorySurface>
   ),
 };
+
+export const RTLFromParentAuto: Story = {
+  args: {
+    dir: "auto",
+    defaultValue: "overview",
+    items: defaultTabs,
+  },
+  render: (args) => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
+      <div dir="rtl">
+        <Tabs {...args} />
+      </div>
+    </StorySurface>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Validates RTL inherited from a parent container while Tabs uses dir='auto'.",
+      },
+    },
+  },
+};

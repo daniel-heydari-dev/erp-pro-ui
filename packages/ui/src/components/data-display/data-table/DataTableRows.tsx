@@ -95,6 +95,7 @@ function EmptyTableState({
 
 export interface DataTableRowsProps<T> {
   table: TanStackTable<T>;
+  hasRowActions: boolean;
   isLoading: boolean;
   bulkSelectionActive: boolean;
   selectedRowIds: Record<string, boolean>;
@@ -121,6 +122,7 @@ export interface DataTableRowsProps<T> {
 
 export function DataTableRows<T>({
   table,
+  hasRowActions,
   isLoading,
   bulkSelectionActive,
   selectedRowIds,
@@ -137,7 +139,9 @@ export function DataTableRows<T>({
   renderRowActionsCell,
 }: DataTableRowsProps<T>) {
   const colSpan =
-    table.getVisibleLeafColumns().length + (bulkSelectionActive ? 2 : 1);
+    table.getVisibleLeafColumns().length +
+    (bulkSelectionActive ? 1 : 0) +
+    (hasRowActions ? 1 : 0);
 
   if (isLoading) {
     return (
@@ -204,16 +208,20 @@ export function DataTableRows<T>({
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </TableCell>
           ))}
-          {renderRowActionsCell({
-            rowIndex: row.index,
-            row: row.original,
-            isOpen: rowMenuOpen === row.index,
-            openDirection:
-              row.index >= table.getRowModel().rows.length - 2 ? "up" : "down",
-            onToggle: onToggleRowMenu,
-            onClose: onCloseRowMenu,
-            onRowAction,
-          })}
+          {hasRowActions
+            ? renderRowActionsCell({
+                rowIndex: row.index,
+                row: row.original,
+                isOpen: rowMenuOpen === row.index,
+                openDirection:
+                  row.index >= table.getRowModel().rows.length - 2
+                    ? "up"
+                    : "down",
+                onToggle: onToggleRowMenu,
+                onClose: onCloseRowMenu,
+                onRowAction,
+              })
+            : null}
         </TableRow>
       ))}
     </>

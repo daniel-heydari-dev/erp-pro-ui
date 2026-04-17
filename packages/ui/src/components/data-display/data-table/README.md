@@ -68,7 +68,7 @@ function MyComponent() {
 | `onColumnToggle`                    | `(columnId: string) => void`                    | -                                         | Column visibility callback                                  |
 | `onExport`                          | `() => void`                                    | -                                         | Toolbar action callback (export, refresh, or custom action) |
 | `onRowAction`                       | `(action: string, row: T) => void`              | -                                         | 3-dots row action callback                                  |
-| `rowActions`                        | `DataTableRowAction<T>[]`                       | `[{id:'copy'},{id:'edit'},{id:'delete'}]` | Custom 3-dots menu actions                                  |
+| `rowActions`                        | `DataTableRowAction<T>[]`                       | `[]`                                       | Custom 3-dots menu actions. If omitted/empty, row-actions UI is hidden |
 | `caption`                           | `ReactNode`                                     | -                                         | Optional table caption                                      |
 | `labels`                            | `Partial<DataTableTextLabels>`                  | -                                         | Override built-in UI labels (translations)                  |
 | `renderFilterSelectorFooterActions` | `(context) => ReactNode`                        | -                                         | Add extra actions beside SHOW/HIDE in filter selector       |
@@ -145,13 +145,9 @@ function PrimitiveTableExample() {
 
 ## Row Actions (3-dots)
 
-By default, the row menu includes these actions:
+Row actions are opt-in through `rowActions`. If `rowActions` is omitted or empty, the 3-dots column and menu are not rendered.
 
-- `Copy product`
-- `Edit`
-- `Delete` (destructive)
-
-You can fully replace them with `rowActions`. Each action supports:
+Each action supports:
 
 - `id: string`
 - `label: string`

@@ -198,6 +198,7 @@ export interface DataTableProps<T = Record<string, any>> {
   /** Maximum height for the scrollable table area */
   maxHeight?: string;
   onSearch?: (query: string) => void;
+  onRefresh?: () => void;
   onExport?: () => void;
   showRefreshButton?: boolean;
   showExportButton?: boolean;
@@ -477,10 +478,7 @@ function RowActionsCell<T>({
   const rowActionsMenu = isOpen
     ? createPortal(
         <>
-          <div
-            className="fixed inset-0 z-[220] bg-ds-surface-2 "
-            onClick={onClose}
-          />
+          <div className="fixed inset-0 z-[220]" onClick={onClose} />
           <div
             ref={menuRef}
             className="fixed z-[230] min-w-[140px] max-w-[200px] overflow-hidden rounded-lg border border-ds-border-3 bg-ds-surface-2  shadow-xl"
@@ -764,6 +762,7 @@ export default function DataTable<T = Record<string, any>>({
   pageSize = 10,
   maxHeight = "500px",
   onSearch,
+  onRefresh,
   onExport,
   showRefreshButton = true,
   showExportButton = true,
@@ -808,16 +807,10 @@ export default function DataTable<T = Record<string, any>>({
   const isRtl = tableDirection === "rtl";
 
   const resolvedRowActions = React.useMemo<DataTableRowAction<T>[]>(
-    () =>
-      rowActions && rowActions.length > 0
-        ? rowActions
-        : [
-            { id: "copy", label: "Copy product" },
-            { id: "edit", label: "Edit" },
-            { id: "delete", label: "Delete", variant: "destructive" },
-          ],
+    () => rowActions ?? [],
     [rowActions],
   );
+  const hasRowActions = resolvedRowActions.length > 0;
 
   const labels = React.useMemo<DataTableTextLabels>(
     () => ({
@@ -1332,6 +1325,7 @@ export default function DataTable<T = Record<string, any>>({
           bulkActionCard={bulkActionCard}
           onToggleBulkSelection={handleToggleBulkSelection}
           onBulkDeleteSelected={handleBulkDeleteSelected}
+          onRefresh={onRefresh}
           onExport={onExport}
           columnMenuOpen={columnMenuOpen}
           onToggleColumnMenu={handleToggleColumnMenu}
@@ -1398,32 +1392,35 @@ export default function DataTable<T = Record<string, any>>({
                           )}
                     </TableHead>
                   ))}
-                  <TableHead
-                    className={mergeClassNames(
-                      "sticky top-0 z-30 border-x border-ds-border-2 bg-ds-surface-2 p-0",
-                      isRtl
-                        ? "left-0 shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
-                        : "right-0 shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)]",
-                      ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
-                      headClassName,
-                    )}
-                  >
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -inset-y-px left-0 z-30 w-px bg-ds-border-2"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -inset-y-px right-0 z-30 w-px bg-ds-border-2"
-                    />
-                    <div aria-hidden="true" className="h-[45px] w-12" />
-                  </TableHead>
+                  {hasRowActions ? (
+                    <TableHead
+                      className={mergeClassNames(
+                        "sticky top-0 z-30 border-x border-ds-border-2 bg-ds-surface-2 p-0",
+                        isRtl
+                          ? "left-0 shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
+                          : "right-0 shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)]",
+                        ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
+                        headClassName,
+                      )}
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-y-px left-0 z-30 w-px bg-ds-border-2"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-y-px right-0 z-30 w-px bg-ds-border-2"
+                      />
+                      <div aria-hidden="true" className="h-[45px] w-12" />
+                    </TableHead>
+                  ) : null}
                 </TableRow>
               ))}
             </TableHeader>
             <TableBody className={bodyClassName}>
               <DataTableRows
                 table={table}
+                hasRowActions={hasRowActions}
                 isLoading={isLoading}
                 bulkSelectionActive={bulkSelectionActive}
                 selectedRowIds={selectedRowIds}
@@ -1437,20 +1434,22 @@ export default function DataTable<T = Record<string, any>>({
                 hasActiveFilters={hasActiveFilters}
                 searchQuery={searchQuery}
                 renderEmptyState={renderEmptyState}
-                renderRowActionsCell={(context) => (
-                  <RowActionsCell
-                    rowIndex={context.rowIndex}
-                    row={context.row}
-                    isOpen={context.isOpen}
-                    openDirection={context.openDirection}
-                    tableContainerRef={tableContainerRef}
-                    onToggle={context.onToggle}
-                    onClose={context.onClose}
-                    onRowAction={context.onRowAction}
-                    actions={resolvedRowActions}
-                    direction={tableDirection}
-                  />
-                )}
+                renderRowActionsCell={(context) =>
+                  hasRowActions ? (
+                    <RowActionsCell
+                      rowIndex={context.rowIndex}
+                      row={context.row}
+                      isOpen={context.isOpen}
+                      openDirection={context.openDirection}
+                      tableContainerRef={tableContainerRef}
+                      onToggle={context.onToggle}
+                      onClose={context.onClose}
+                      onRowAction={context.onRowAction}
+                      actions={resolvedRowActions}
+                      direction={tableDirection}
+                    />
+                  ) : null
+                }
               />
             </TableBody>
             <TableFooter className={footerClassName} />

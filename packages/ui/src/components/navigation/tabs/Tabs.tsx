@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { Button } from "../../forms/button";
 import { mergeClassNames } from "../../../utils";
@@ -51,6 +58,9 @@ export function Tabs({
   panelClassName,
   animationDurationMs = 220,
 }: TabsProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const tabSlotRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const panelRef = useRef<HTMLDivElement>(null);
   const isControlled = value !== undefined;
 
@@ -73,7 +83,25 @@ export function Tabs({
   );
 
   const previousIndexRef = useRef(activeIndex);
-  const tabsDirection = useMemo(() => resolveDirection(dir), [dir]);
+  const [indicator, setIndicator] = useState<{
+    left: number;
+    width: number;
+  } | null>(null);
+
+  const getEffectiveDirection = useCallback(() => {
+    if (dir !== "auto") {
+      return dir;
+    }
+
+    if (typeof window !== "undefined" && listRef.current) {
+      const cssDirection = window.getComputedStyle(listRef.current).direction;
+      if (cssDirection === "rtl" || cssDirection === "ltr") {
+        return cssDirection;
+      }
+    }
+
+    return resolveDirection("auto");
+  }, [dir]);
 
   useEffect(() => {
     const previousIndex = previousIndexRef.current;
@@ -90,7 +118,7 @@ export function Tabs({
     const indexDelta = activeIndex - previousIndex;
     const logicalDirection = indexDelta >= 0 ? 1 : -1;
     const visualDirection =
-      tabsDirection === "rtl" ? -logicalDirection : logicalDirection;
+      getEffectiveDirection() === "rtl" ? -logicalDirection : logicalDirection;
     const fromX = visualDirection > 0 ? -14 : 14;
 
     panel.animate(
@@ -105,11 +133,28 @@ export function Tabs({
     );
 
     previousIndexRef.current = activeIndex;
-  }, [activeIndex, animationDurationMs, tabsDirection]);
+  }, [activeIndex, animationDurationMs, getEffectiveDirection]);
 
   const activeItem = items[activeIndex] ?? items[0];
-  const visualActiveIndex =
-    tabsDirection === "rtl" ? items.length - activeIndex - 1 : activeIndex;
+
+  useLayoutEffect(() => {
+    const updateIndicator = () => {
+      const selectedSlot = tabSlotRefs.current[activeItem?.id ?? ""];
+      if (!selectedSlot) {
+        setIndicator(null);
+        return;
+      }
+
+      setIndicator({
+        left: selectedSlot.offsetLeft,
+        width: selectedSlot.offsetWidth,
+      });
+    };
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeItem?.id, items.length]);
 
   const setValue = (nextValue: string) => {
     if (!isControlled) {
@@ -135,84 +180,96 @@ export function Tabs({
   };
 
   return (
-    <div dir={tabsDirection} className={mergeClassNames("w-full", className)}>
+    <div
+      ref={rootRef}
+      dir={dir === "auto" ? undefined : dir}
+      className={mergeClassNames("w-full", className)}
+    >
       <div
+        ref={listRef}
         role="tablist"
         aria-orientation="horizontal"
         className={mergeClassNames(
-          "relative flex w-full items-center gap-2 overflow-hidden rounded-lg border border-ds-border-4 bg-ds-surface-1 p-1",
+          "relative flex h-9 w-full items-center gap-0 overflow-hidden rounded-lg border border-ds-border-3 bg-ds-surface-2 p-1",
           listClassName,
         )}
       >
-        {items.length > 0 ? (
+        {items.length > 0 && indicator ? (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-1 top-1 rounded-md border border-ds-border-accent/40 bg-ds-accent shadow-[0_10px_26px_rgba(79,43,226,0.35)] transition-transform duration-300 ease-out"
+            className="pointer-events-none absolute bottom-1 top-1 rounded-md border border-ds-border-accent/45 bg-ds-accent shadow-[0_1px_3px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.06)] transition-transform duration-300 ease-out"
             style={{
-              width: `calc((100% - 0.5rem) / ${items.length})`,
-              transform: `translateX(${visualActiveIndex * 100}%)`,
-              insetInlineStart: "0.25rem",
+              width: `${indicator.width}px`,
+              transform: `translateX(${indicator.left}px)`,
+              left: 0,
             }}
           />
         ) : null}
         {items.map((item) => {
           const selected = item.id === activeItem?.id;
           return (
-            <Button
+            <div
               key={item.id}
-              role="tab"
-              id={`tab-${item.id}`}
-              aria-selected={selected}
-              aria-controls={`tabpanel-${item.id}`}
-              tabIndex={selected ? 0 : -1}
-              disabled={item.disabled}
-              variant="tertiary"
-              size="small"
-              className={mergeClassNames(
-                "relative z-10 flex-1 rounded-lg px-2 py-2.5 text-sm font-medium transition-colors",
-                "outline-none focus-visible:ring-2 focus-visible:ring-ds-focus/60",
-                selected ? "text-ds-on-accent" : "text-ds-2 hover:text-ds-1",
-                item.disabled && "cursor-not-allowed opacity-55",
-                triggerClassName,
-              )}
-              onClick={() => {
-                if (!item.disabled) {
-                  setValue(item.id);
-                }
+              ref={(node) => {
+                tabSlotRefs.current[item.id] = node;
               }}
-              onKeyDown={(event) => {
-                if (event.key === "ArrowRight") {
-                  event.preventDefault();
-                  moveBy(tabsDirection === "rtl" ? -1 : 1);
-                }
-
-                if (event.key === "ArrowLeft") {
-                  event.preventDefault();
-                  moveBy(tabsDirection === "rtl" ? 1 : -1);
-                }
-
-                if (event.key === "Home") {
-                  event.preventDefault();
-                  const first = items.find((candidate) => !candidate.disabled);
-                  if (first) {
-                    setValue(first.id);
-                  }
-                }
-
-                if (event.key === "End") {
-                  event.preventDefault();
-                  const reversed = [...items].reverse();
-                  const last = reversed.find(
-                    (candidate) => !candidate.disabled,
-                  );
-                  if (last) {
-                    setValue(last.id);
-                  }
-                }
-              }}
+              className="relative z-10 h-full min-w-0 flex-1"
             >
-              {item.label}
-            </Button>
+              <Button
+                role="tab"
+                id={`tab-${item.id}`}
+                aria-selected={selected}
+                aria-controls={`tabpanel-${item.id}`}
+                tabIndex={selected ? 0 : -1}
+                disabled={item.disabled}
+                variant="tertiary"
+                size="small"
+                className={mergeClassNames(
+                  "h-full w-full rounded-md px-3 py-1 text-base font-normal leading-[22px] transition-colors duration-200",
+                  "outline-none focus-visible:ring-2 focus-visible:ring-ds-focus/60",
+                  selected ? "text-ds-on-accent" : "text-ds-2 hover:text-ds-1",
+                  item.disabled && "cursor-not-allowed opacity-55",
+                  triggerClassName,
+                )}
+                onClick={() => {
+                  if (!item.disabled) {
+                    setValue(item.id);
+                  }
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "ArrowRight") {
+                    event.preventDefault();
+                    moveBy(getEffectiveDirection() === "rtl" ? -1 : 1);
+                  }
+
+                  if (event.key === "ArrowLeft") {
+                    event.preventDefault();
+                    moveBy(getEffectiveDirection() === "rtl" ? 1 : -1);
+                  }
+
+                  if (event.key === "Home") {
+                    event.preventDefault();
+                    const first = items.find((candidate) => !candidate.disabled);
+                    if (first) {
+                      setValue(first.id);
+                    }
+                  }
+
+                  if (event.key === "End") {
+                    event.preventDefault();
+                    const reversed = [...items].reverse();
+                    const last = reversed.find(
+                      (candidate) => !candidate.disabled,
+                    );
+                    if (last) {
+                      setValue(last.id);
+                    }
+                  }
+                }}
+              >
+                {item.label}
+              </Button>
+            </div>
           );
         })}
       </div>
@@ -222,7 +279,7 @@ export function Tabs({
         role="tabpanel"
         id={`tabpanel-${activeItem?.id ?? ""}`}
         aria-labelledby={`tab-${activeItem?.id ?? ""}`}
-        className={mergeClassNames("mt-3 w-full", panelClassName)}
+        className={mergeClassNames("mt-2 w-full", panelClassName)}
       >
         {activeItem?.content}
       </div>

@@ -24,7 +24,7 @@ const DISABLED_ICON_BUTTON_CLASS_NAME = `${ICON_BUTTON_CLASS_NAME} disabled:curs
 const TABLE_CONTROL_ICON_CLASS_NAME = "h-[18px] w-[18px] shrink-0";
 const TABLE_COMPLEX_ICON_CLASS_NAME = TABLE_CONTROL_ICON_CLASS_NAME;
 const TOOLBAR_ACTION_BUTTON_CLASS_NAME =
-  "inline-flex h-9 items-center gap-2 rounded-md border border-transparent bg-transparent px-2.5 text-[12px] font-semibold uppercase tracking-[0.03em] text-ds-2 shadow-none transition-colors hover:bg-ds-surface-2 hover:text-ds-1 hover:opacity-100";
+  "inline-flex h-9 items-center gap-2 rounded-md border border-transparent bg-transparent px-2.5 text-[12px] font-semibold uppercase tracking-[0.03em] text-ds-2 shadow-none transition-[border-color,background-color,color] duration-200 hover:border-ds-border-3 hover:bg-ds-surface-2 hover:text-ds-1 hover:opacity-100";
 
 interface ToolbarIconButtonProps {
   title: string;
@@ -81,14 +81,15 @@ function ToolbarActionButton({
       aria-pressed={isActive}
       className={mergeClassNames(
         TOOLBAR_ACTION_BUTTON_CLASS_NAME,
-        "relative z-10",
-        isActive ? "text-ds-on-accent" : "text-ds-2",
+        isActive
+          ? "border-ds-border-3 bg-ds-surface-2 text-ds-1"
+          : "text-ds-2",
       )}
     >
       <span
         className={mergeClassNames(
           "inline-flex h-5 w-5 items-center justify-center text-ds-2",
-          isActive && "text-ds-on-accent",
+          isActive && "text-ds-1",
         )}
       >
         {icon}
@@ -157,6 +158,7 @@ interface DataTableToolbarProps {
   bulkActionCard?: React.ReactNode;
   onToggleBulkSelection: () => void;
   onBulkDeleteSelected: () => void;
+  onRefresh?: () => void;
   onExport?: () => void;
   columnMenuOpen: boolean;
   onToggleColumnMenu: () => void;
@@ -187,6 +189,7 @@ export function DataTableToolbar({
   bulkActionCard,
   onToggleBulkSelection,
   onBulkDeleteSelected,
+  onRefresh,
   onExport,
   columnMenuOpen,
   onToggleColumnMenu,
@@ -199,38 +202,6 @@ export function DataTableToolbar({
   toolbarActions,
 }: DataTableToolbarProps) {
   const hasSelectedRows = selectedCount > 0;
-  const visibleActionIds = React.useMemo(
-    () =>
-      [
-        showRefreshButton ? "refresh" : null,
-        showExportButton ? "export" : null,
-        "columns",
-      ].filter(Boolean) as Array<"refresh" | "export" | "columns">,
-    [showExportButton, showRefreshButton],
-  );
-  const [activeAction, setActiveAction] = React.useState<
-    "refresh" | "export" | "columns"
-  >("columns");
-
-  React.useEffect(() => {
-    if (columnMenuOpen) {
-      setActiveAction("columns");
-      return;
-    }
-
-    if (!visibleActionIds.includes(activeAction)) {
-      setActiveAction(visibleActionIds[0] ?? "columns");
-    }
-  }, [activeAction, columnMenuOpen, visibleActionIds]);
-
-  const logicalActiveIndex = Math.max(
-    visibleActionIds.indexOf(activeAction),
-    0,
-  );
-  const visualActiveIndex =
-    direction === "rtl"
-      ? Math.max(visibleActionIds.length - logicalActiveIndex - 1, 0)
-      : logicalActiveIndex;
 
   return (
     <div className="border-b border-ds-border-2 px-4 py-3">
@@ -263,75 +234,44 @@ export function DataTableToolbar({
         </div>
 
         <div className="flex items-center gap-1 self-end lg:self-auto">
-          <div className="relative overflow-hidden rounded-xl border border-ds-border-2 bg-ds-surface-1 p-1">
-            {visibleActionIds.length > 0 ? (
-              <span
+          {showRefreshButton ? (
+            <ToolbarActionButton
+              title={labels.refresh}
+              label={labels.refresh}
+              onClick={onRefresh}
+              icon={
+                <RefreshIcon
+                  className={TABLE_CONTROL_ICON_CLASS_NAME}
+                  aria-hidden="true"
+                />
+              }
+            />
+          ) : null}
+          {showExportButton ? (
+            <ToolbarActionButton
+              title={labels.export}
+              label={labels.export}
+              onClick={onExport}
+              icon={
+                <ArrowDownIcon
+                  className={TABLE_CONTROL_ICON_CLASS_NAME}
+                  aria-hidden="true"
+                />
+              }
+            />
+          ) : null}
+          <ToolbarActionButton
+            onClick={onToggleColumnMenu}
+            title={labels.columnSettings}
+            label={labels.columnSettings}
+            isActive={columnMenuOpen}
+            icon={
+              <ColumnsIcon
+                className={TABLE_COMPLEX_ICON_CLASS_NAME}
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-1 top-1 rounded-lg border border-ds-border-accent/35 bg-ds-accent shadow-[0_8px_20px_rgba(79,43,226,0.34)] transition-transform duration-300 ease-out"
-                style={{
-                  width: `calc((100% - 0.5rem) / ${visibleActionIds.length})`,
-                  transform: `translateX(${visualActiveIndex * 100}%)`,
-                  insetInlineStart: "0.25rem",
-                }}
               />
-            ) : null}
-            <div
-              className="grid min-w-[290px] items-center"
-              style={{
-                gridTemplateColumns: `repeat(${visibleActionIds.length}, minmax(0, 1fr))`,
-              }}
-            >
-              {showRefreshButton ? (
-                <ToolbarActionButton
-                  title={labels.refresh}
-                  label={labels.refresh}
-                  isActive={activeAction === "refresh"}
-                  onClick={() => {
-                    setActiveAction("refresh");
-                    onExport?.();
-                  }}
-                  icon={
-                    <RefreshIcon
-                      className={TABLE_CONTROL_ICON_CLASS_NAME}
-                      aria-hidden="true"
-                    />
-                  }
-                />
-              ) : null}
-              {showExportButton ? (
-                <ToolbarActionButton
-                  title={labels.export}
-                  label={labels.export}
-                  isActive={activeAction === "export"}
-                  onClick={() => {
-                    setActiveAction("export");
-                    onExport?.();
-                  }}
-                  icon={
-                    <ArrowDownIcon
-                      className={TABLE_CONTROL_ICON_CLASS_NAME}
-                      aria-hidden="true"
-                    />
-                  }
-                />
-              ) : null}
-              <ToolbarActionButton
-                onClick={() => {
-                  setActiveAction("columns");
-                  onToggleColumnMenu();
-                }}
-                title={labels.columnSettings}
-                label={labels.columnSettings}
-                isActive={activeAction === "columns" || columnMenuOpen}
-                icon={
-                  <ColumnsIcon
-                    className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                    aria-hidden="true"
-                  />
-                }
-              />
-            </div>
-          </div>
+            }
+          />
           {toolbarActions}
 
           <div className="relative">
