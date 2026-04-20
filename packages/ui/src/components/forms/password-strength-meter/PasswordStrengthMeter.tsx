@@ -52,7 +52,7 @@ export function PasswordStrengthMeter({
       </div>
 
       {/* Strength Meter */}
-      <div className="flex space-x-1">
+      <div className="flex gap-1">
         {Array.from({ length: 4 }, (_, index) => (
           <div
             key={index}

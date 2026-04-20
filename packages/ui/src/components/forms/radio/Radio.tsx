@@ -31,7 +31,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     const radioId = id || `radio-${sanitizeId(generatedId)}`;
 
     return (
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-2">
         <input
           ref={ref}
           type="radio"

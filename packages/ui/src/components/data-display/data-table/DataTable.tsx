@@ -191,6 +191,8 @@ export interface FilterSelectorFooterContext {
 export interface DataTableProps<T = Record<string, any>> {
   columns: DataTableColumn<T>[];
   data: T[];
+  /** Force layout direction for table internals (row actions, sticky columns, pagination). */
+  direction?: "auto" | TableDirection;
   isLoading?: boolean; // Table data loading state
   onColumnToggle?: (columnId: string) => void;
   /** Number of items per page */
@@ -483,7 +485,11 @@ function RowActionsCell<T>({
           <div className="fixed inset-0 z-[220]" onClick={onClose} />
           <div
             ref={menuRef}
-            className="fixed z-[230] min-w-[140px] max-w-[200px] overflow-hidden rounded-lg border border-ds-border-3 bg-ds-surface-2  shadow-xl"
+            dir={direction}
+            className={mergeClassNames(
+              "fixed z-[230] min-w-[140px] max-w-[200px] overflow-hidden rounded-lg border border-ds-border-3 bg-ds-surface-2 shadow-xl",
+              direction === "rtl" ? "text-right" : "text-left",
+            )}
             style={{
               top: menuPosition?.top,
               right: menuPosition?.right,
@@ -502,7 +508,10 @@ function RowActionsCell<T>({
                   onClose();
                 }}
                 className={mergeClassNames(
-                  "w-full justify-start rounded-none border-none bg-ds-surface-2 px-4 py-2 text-sm font-normal shadow-none hover:bg-ds-surface-3 hover:opacity-100",
+                  "w-full rounded-none border-none bg-ds-surface-2 px-4 py-2 text-sm font-normal shadow-none hover:bg-ds-surface-3 hover:opacity-100",
+                  direction === "rtl"
+                    ? "justify-end text-right"
+                    : "justify-start text-left",
                   action.variant === "destructive"
                     ? "text-error hover:text-error"
                     : "text-ds-2 hover:text-ds-1",
@@ -522,7 +531,7 @@ function RowActionsCell<T>({
       className={mergeClassNames(
         "relative h-full overflow-hidden border-x border-ds-border-2 bg-ds-surface-1 p-0 align-middle",
         direction === "rtl"
-          ? "sticky left-0 text-left shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
+          ? "sticky left-0 text-right shadow-[8px_0_12px_-10px_rgba(15,23,42,0.35)]"
           : "sticky right-0 text-right shadow-[-8px_0_12px_-10px_rgba(15,23,42,0.35)]",
         ROW_ACTIONS_CELL_WIDTH_CLASS_NAME,
         isOpen ? "z-20" : "z-10",
@@ -693,6 +702,7 @@ function DataTablePagination<T>({
 }
 
 interface FilterSelectorMenuProps {
+  direction: TableDirection;
   filterOptions: FilterOption[];
   visibleFilters: string[];
   onToggleFilter: (filterId: string, isVisible: boolean) => void;
@@ -703,6 +713,7 @@ interface FilterSelectorMenuProps {
 }
 
 function FilterSelectorMenu({
+  direction,
   filterOptions,
   visibleFilters,
   onToggleFilter,
@@ -712,7 +723,13 @@ function FilterSelectorMenu({
   footerActions,
 }: FilterSelectorMenuProps) {
   return (
-    <div className="p-4 min-h-58 min-w-48 space-y-3">
+    <div
+      dir={direction}
+      className={mergeClassNames(
+        "p-4 min-h-58 min-w-48 space-y-3",
+        direction === "rtl" ? "text-right" : "text-left",
+      )}
+    >
       <div className="mb-3 flex items-center justify-between">
         <span className="text-sm font-semibold text-ds-1">
           {labels.showFilters}
@@ -732,7 +749,12 @@ function FilterSelectorMenu({
           />
         </div>
       ))}
-      <div className="flex gap-2 border-t border-ds-border-2 pt-2">
+      <div
+        className={mergeClassNames(
+          "flex gap-2 border-t border-ds-border-2 pt-2",
+          direction === "rtl" && "flex-row-reverse",
+        )}
+      >
         <Button
           onClick={onShowAll}
           size="small"
@@ -762,6 +784,7 @@ const usesManualPagination = (
 export default function DataTable<T = Record<string, any>>({
   columns,
   data,
+  direction = "auto",
   isLoading = false,
   onColumnToggle,
   pageSize = 10,
@@ -808,8 +831,13 @@ export default function DataTable<T = Record<string, any>>({
     React.useState<TableDirection>("ltr");
 
   React.useLayoutEffect(() => {
+    if (direction === "rtl" || direction === "ltr") {
+      setTableDirection(direction);
+      return;
+    }
+
     setTableDirection(resolveTableDirection(tableRootRef.current));
-  }, []);
+  }, [direction]);
 
   const isRtl = tableDirection === "rtl";
 
@@ -1089,14 +1117,6 @@ export default function DataTable<T = Record<string, any>>({
   }, []);
   const tableContainerRef = React.useRef<HTMLDivElement | null>(null);
 
-  const handleToggleFilterSelector = React.useCallback(() => {
-    setFilterSelectorOpen((previous) => !previous);
-  }, []);
-
-  const handleToggleProfileMenu = React.useCallback(() => {
-    setProfileMenuOpen((previous) => !previous);
-  }, []);
-
   const handleToggleColumnMenu = React.useCallback(() => {
     setColumnMenuOpen((previous) => !previous);
   }, []);
@@ -1244,6 +1264,7 @@ export default function DataTable<T = Record<string, any>>({
                     filter={filter}
                     value={activeFilters[filter.id]}
                     isActive={isActive}
+                    direction={tableDirection}
                     onChange={(value) => handleFilterChange(filter.id, value)}
                   />
                 </div>
@@ -1252,36 +1273,34 @@ export default function DataTable<T = Record<string, any>>({
         </div>
 
         {/* Right side icons */}
-        <div className="flex items-center gap-1 ml-auto">
-          <div className="relative">
-            <ToolbarIconButton
-              onClick={handleToggleFilterSelector}
-              title={labels.addFilter}
-            >
-              <FilterIcon
-                className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                aria-hidden="true"
-              />
-            </ToolbarIconButton>
-            <FilterDropdown
-              isOpen={filterSelectorOpen}
-              onClose={() => setFilterSelectorOpen(false)}
+        <div className="ms-auto flex items-center gap-1">
+          <FilterDropdown
+            direction={tableDirection}
+            open={filterSelectorOpen}
+            onOpenChange={setFilterSelectorOpen}
+            trigger={
+              <ToolbarIconButton title={labels.addFilter}>
+                <FilterIcon
+                  className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                  aria-hidden="true"
+                />
+              </ToolbarIconButton>
+            }
+          >
+            <FilterSelectorMenu
               direction={tableDirection}
-            >
-              <FilterSelectorMenu
-                filterOptions={filterOptions}
-                visibleFilters={visibleFilters}
-                onToggleFilter={handleToggleFilterVisibility}
-                onShowAll={handleShowAllFilters}
-                onHideAll={handleHideAllFilters}
-                labels={labels}
-                footerActions={renderFilterSelectorFooterActions?.({
-                  onShowAll: handleShowAllFilters,
-                  onHideAll: handleHideAllFilters,
-                })}
-              />
-            </FilterDropdown>
-          </div>
+              filterOptions={filterOptions}
+              visibleFilters={visibleFilters}
+              onToggleFilter={handleToggleFilterVisibility}
+              onShowAll={handleShowAllFilters}
+              onHideAll={handleHideAllFilters}
+              labels={labels}
+              footerActions={renderFilterSelectorFooterActions?.({
+                onShowAll: handleShowAllFilters,
+                onHideAll: handleHideAllFilters,
+              })}
+            />
+          </FilterDropdown>
           <ToolbarIconButton
             onClick={handleResetFilters}
             disabled={!hasActiveFilters}
@@ -1292,31 +1311,33 @@ export default function DataTable<T = Record<string, any>>({
               aria-hidden="true"
             />
           </ToolbarIconButton>
-          <div className="relative">
-            <ToolbarIconButton
-              onClick={handleToggleProfileMenu}
-              title={labels.filterProfiles}
-            >
-              <FilterProfileIcon
-                className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                aria-hidden="true"
-              />
-            </ToolbarIconButton>
-            <FilterDropdown
-              isOpen={profileMenuOpen}
-              onClose={() => setProfileMenuOpen(false)}
-              direction={tableDirection}
-            >
-              <div className="p-2 min-w-48">
-                <Button
-                  onClick={handleOpenProfile}
-                  className="w-full justify-start border-2 border-dashed border-ds-border-accent/40 bg-transparent px-4 py-3 text-start text-sm font-medium text-ds-1 shadow-none hover:bg-ds-accent-subtle hover:opacity-100"
-                >
-                  {labels.saveNewFilterProfile}
-                </Button>
-              </div>
-            </FilterDropdown>
-          </div>
+          <FilterDropdown
+            direction={tableDirection}
+            open={profileMenuOpen}
+            onOpenChange={setProfileMenuOpen}
+            trigger={
+              <ToolbarIconButton title={labels.filterProfiles}>
+                <FilterProfileIcon
+                  className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                  aria-hidden="true"
+                />
+              </ToolbarIconButton>
+            }
+          >
+            <div className="p-2 min-w-48">
+              <Button
+                onClick={handleOpenProfile}
+                className={mergeClassNames(
+                  "w-full border-2 border-dashed border-ds-border-accent/40 bg-transparent px-4 py-3 text-sm font-medium text-ds-1 shadow-none hover:bg-ds-accent-subtle hover:opacity-100",
+                  tableDirection === "rtl"
+                    ? "justify-end text-right"
+                    : "justify-start text-left",
+                )}
+              >
+                {labels.saveNewFilterProfile}
+              </Button>
+            </div>
+          </FilterDropdown>
           {renderFilterRowActions}
         </div>
       </div>
@@ -1431,6 +1452,7 @@ export default function DataTable<T = Record<string, any>>({
             <TableBody className={bodyClassName}>
               <DataTableRows
                 table={table}
+                direction={tableDirection}
                 hasRowActions={hasRowActions}
                 isLoading={isLoading}
                 bulkSelectionActive={bulkSelectionActive}

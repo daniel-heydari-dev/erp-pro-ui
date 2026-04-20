@@ -1,56 +1,38 @@
 import React from "react";
 import { Button } from "../../forms/button";
 import { Checkbox } from "../../forms/checkbox";
+import { DropdownMenu } from "../../overlays/dropdown-menu";
 
 interface FilterDropdownProps {
-  isOpen: boolean;
-  onClose: () => void;
+  trigger: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   direction?: "ltr" | "rtl";
 }
 
 export const FilterDropdown: React.FC<FilterDropdownProps> = ({
-  isOpen,
-  onClose,
+  trigger,
+  open,
+  onOpenChange,
   children,
   direction = "ltr",
 }) => {
-  const panelRef = React.useRef<HTMLDivElement | null>(null);
-
-  React.useLayoutEffect(() => {
-    if (!isOpen || !panelRef.current) {
-      return;
-    }
-
-    panelRef.current.animate(
-      [
-        { opacity: 0, transform: "translateY(-8px) scale(0.98)" },
-        { opacity: 1, transform: "translateY(0) scale(1)" },
-      ],
-      {
-        duration: 220,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-    );
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
   return (
-    <>
-      <div
-        className="fixed inset-0 z-40"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
-        ref={panelRef}
-        className="absolute top-full z-50 mt-2 min-w-64 overflow-hidden rounded-[4px] border border-ds-border-2 bg-ds-surface-1 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-ds-border-3/35 backdrop-blur-2xl"
-        style={direction === "rtl" ? { left: 0 } : { right: 0 }}
-      >
-        {children}
-      </div>
-    </>
+    <DropdownMenu
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      className="relative"
+      animationClassName={`${
+        direction === "rtl" ? "origin-top-left" : "origin-top-right"
+      } transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+      panelClassName={`top-full z-50 mt-2 min-w-64 overflow-hidden rounded-[4px] border border-ds-border-2 bg-ds-surface-1 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-ds-border-3/35 backdrop-blur-2xl ${
+        direction === "rtl" ? "left-0" : "right-0"
+      }`}
+    >
+      {children}
+    </DropdownMenu>
   );
 };
 

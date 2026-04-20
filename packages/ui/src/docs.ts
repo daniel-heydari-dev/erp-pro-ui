@@ -334,6 +334,17 @@ const componentDocSeeds = {
     aliases: ["slider"],
     related: ["card", "animated-content", "spotlight-card"],
   },
+  sidebar: {
+    exportName: "Sidebar",
+    summary:
+      "Dashboard navigation rail with active route highlighting, RTL support, and mobile overlay behavior.",
+    aliases: ["navigation rail", "dashboard sidebar"],
+    related: ["accordion", "drawer", "tooltip"],
+    rootImport:
+      "import { Sidebar, SidebarLinks, type SidebarItem, type SidebarProps } from 'erp-pro-ui';",
+    subpathImport:
+      "import { Sidebar, SidebarLinks, type SidebarItem, type SidebarProps } from 'erp-pro-ui/sidebar';",
+  },
   otpinput: {
     exportName: "OTPInput",
     summary:

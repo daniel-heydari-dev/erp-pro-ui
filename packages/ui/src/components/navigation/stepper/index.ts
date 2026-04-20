@@ -6,6 +6,7 @@ export type {
   StepperProps,
   Step,
   StepperLabelPosition,
+  StepperDirection,
   ResponsiveStepperOrientation,
   StepperOrientation,
   StepperVariant,

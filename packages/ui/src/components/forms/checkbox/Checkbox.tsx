@@ -46,7 +46,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ${customColorStyle ? `background-color: ${customColorStyle} !important;` : ""}
           }
         `}</style>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <input
             ref={ref}
             type="checkbox"

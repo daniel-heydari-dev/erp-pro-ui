@@ -184,6 +184,8 @@ export const Stepper = ({
   size = "md",
   variant = "glass",
   labelPosition = "bottom",
+  direction = "ltr",
+  optionalLabel = "Optional",
   showNumbers = true,
   clickable = true,
   showConnector = true,
@@ -196,6 +198,7 @@ export const Stepper = ({
   animated = true,
   colors,
 }: StepperProps) => {
+  const isRtl = direction === "rtl";
   const isVertical = orientation === "vertical";
   const resolvedLabelPosition = getResolvedLabelPosition(
     orientation,
@@ -244,10 +247,17 @@ export const Stepper = ({
         isVertical
           ? "flex flex-col"
           : isHorizontalInline
-            ? "flex items-center"
-            : "flex items-start justify-between",
+            ? mergeClassNames(
+                "flex items-center",
+                isRtl && "flex-row-reverse",
+              )
+            : mergeClassNames(
+                "flex items-start justify-between",
+                isRtl && "flex-row-reverse",
+              ),
         className,
       )}
+      dir={direction}
     >
       {/* Global Background Continuous Connector */}
       {showConnector &&
@@ -319,12 +329,15 @@ export const Stepper = ({
         const isConnectorCompleted = getStepStatus(index) === "completed";
         const textBlock = (
           <motion.div
-            className={mergeClassNames(
-              resolvedLabelPosition === "right"
-                ? "min-w-0 text-left"
-                : "w-full px-2 text-center",
-              isVertical && "flex-1 pb-6",
-              isVertical && isLast && "pb-0",
+              className={mergeClassNames(
+                resolvedLabelPosition === "right"
+                  ? mergeClassNames(
+                      "min-w-0",
+                      isRtl ? "text-right" : "text-left",
+                    )
+                  : "w-full px-2 text-center",
+                isVertical && "flex-1 pb-6",
+                isVertical && isLast && "pb-0",
             )}
             style={isVertical ? { marginTop: "-4px" } : undefined}
             initial={animated ? { opacity: 0, y: 10 } : undefined}
@@ -346,14 +359,22 @@ export const Stepper = ({
             >
               {step.title}
               {step.optional && (
-                <span className="ml-1 font-normal text-ds-3">(Optional)</span>
+                <span
+                  className={mergeClassNames(
+                    "font-normal text-ds-3",
+                    isRtl ? "mr-1" : "ml-1",
+                  )}
+                >
+                  ({optionalLabel})
+                </span>
               )}
             </p>
             {step.description && (
               <p
                 className={mergeClassNames(
                   "mt-0.5 text-xs text-ds-2",
-                  resolvedLabelPosition === "right" && "text-left",
+                  resolvedLabelPosition === "right" &&
+                    (isRtl ? "text-right" : "text-left"),
                 )}
               >
                 {step.description}
@@ -391,16 +412,20 @@ export const Stepper = ({
                   )}
                   style={{
                     top: `${connectorCenterOffsetPx}px`,
-                    left: 0,
-                    right: "50%",
+                    left: isRtl ? "50%" : 0,
+                    right: isRtl ? 0 : "50%",
                     height: config.connectorThickness,
                   }}
                   aria-hidden="true"
                 >
                   <div
-                    className="absolute inset-y-0 right-0 rounded-full bg-ds-accent"
+                    className={mergeClassNames(
+                      "absolute inset-y-0 rounded-full bg-ds-accent",
+                      isRtl ? "left-0" : "right-0",
+                    )}
                     style={{
                       left: 0,
+                      right: 0,
                       backgroundColor: colors?.connector || colors?.completed,
                       opacity:
                         status === "completed" || status === "current" ? 1 : 0,
@@ -418,15 +443,18 @@ export const Stepper = ({
                   )}
                   style={{
                     top: `${connectorCenterOffsetPx}px`,
-                    left: "50%",
-                    right: 0,
+                    left: isRtl ? 0 : "50%",
+                    right: isRtl ? "50%" : 0,
                     height: config.connectorThickness,
                   }}
                   aria-hidden="true"
                 >
                   {animated ? (
                     <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
+                      className={mergeClassNames(
+                        "absolute inset-y-0 rounded-full bg-ds-accent",
+                        isRtl ? "right-0" : "left-0",
+                      )}
                       initial={{ width: 0 }}
                       animate={{
                         width:
@@ -441,7 +469,10 @@ export const Stepper = ({
                     />
                   ) : (
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
+                      className={mergeClassNames(
+                        "absolute inset-y-0 rounded-full bg-ds-accent",
+                        isRtl ? "right-0" : "left-0",
+                      )}
                       style={{
                         width:
                           status === "completed" || status === "current"
@@ -508,7 +539,10 @@ export const Stepper = ({
               >
                 {animated ? (
                   <motion.div
-                    className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
+                    className={mergeClassNames(
+                      "absolute inset-y-0 rounded-full bg-ds-accent",
+                      isRtl ? "right-0" : "left-0",
+                    )}
                     initial={{ width: 0 }}
                     animate={{
                       width: isConnectorCompleted ? "100%" : "0%",
@@ -520,7 +554,10 @@ export const Stepper = ({
                   />
                 ) : (
                   <div
-                    className="absolute inset-y-0 left-0 rounded-full bg-ds-accent"
+                    className={mergeClassNames(
+                      "absolute inset-y-0 rounded-full bg-ds-accent",
+                      isRtl ? "right-0" : "left-0",
+                    )}
                     style={{
                       width: isConnectorCompleted ? "100%" : "0%",
                       backgroundColor: colors?.connector || colors?.completed,

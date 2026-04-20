@@ -113,6 +113,108 @@ export function App() {
 
 If you use Next.js, import `erp-pro-ui/styles.css` from your app-level global stylesheet and place `ThemeProvider` and `ToastProvider` in your shared app provider wrapper or root layout client boundary.
 
+## Internationalization and RTL Guide
+
+The library can be integrated with any i18n stack (`react-i18next`, `next-intl`, `lingui`, custom dictionaries). The recommended pattern is:
+
+1. Keep all UI strings in your app translation files.
+2. Pass translated strings to component props.
+3. Pass `dir="rtl"` at page/container level and use component direction props where provided.
+
+### RTL app shell setup
+
+```tsx
+const locale = "fa";
+const dir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
+
+return (
+  <div dir={dir}>
+    <App />
+  </div>
+);
+```
+
+### Translatable form dropdowns
+
+`Combobox`, `MultiSelectCombobox`, and `Select` expose text props so you can localize all built-in copy:
+
+- `placeholder`
+- `searchPlaceholder` (`Combobox`, `MultiSelectCombobox`)
+- `noOptionsText`
+
+```tsx
+import { Combobox, MultiSelectCombobox, Select } from "erp-pro-ui";
+
+<Combobox
+  options={countryOptions}
+  value={country}
+  onChange={setCountry}
+  placeholder={t("filters.country.placeholder")}
+  searchPlaceholder={t("common.search")}
+  noOptionsText={t("common.noResults")}
+/>;
+
+<MultiSelectCombobox
+  options={tagOptions}
+  value={tags}
+  onChange={setTags}
+  placeholder={t("filters.tags.placeholder")}
+  searchPlaceholder={t("common.search")}
+  noOptionsText={t("common.noResults")}
+/>;
+
+<Select
+  options={statusOptions}
+  value={status}
+  onChange={(e) => setStatus(e.target.value)}
+  placeholder={t("filters.status.placeholder")}
+  noOptionsText={t("common.noOptions")}
+/>;
+```
+
+### Stepper RTL and translated optional label
+
+`Stepper` supports:
+
+- `direction: "ltr" | "rtl"`
+- `optionalLabel` (for optional step text)
+
+```tsx
+import { Stepper, type Step } from "erp-pro-ui";
+
+const steps: Step[] = [
+  { id: "profile", title: t("stepper.profile") },
+  { id: "billing", title: t("stepper.billing"), optional: true },
+  { id: "review", title: t("stepper.review") },
+];
+
+<Stepper
+  steps={steps}
+  currentStep={1}
+  direction={i18n.dir() as "ltr" | "rtl"}
+  optionalLabel={t("common.optional")}
+/>;
+```
+
+## Dropdown Motion and Width Behavior
+
+`DropdownMenu` is the shared primitive used by table filters and form dropdowns.
+
+- Open animation origin is configurable through `animationClassName`.
+- In form dropdowns (`Select`, `Combobox`, `MultiSelectCombobox`), panel width is anchored to trigger width by using full-width wrapper and `left-0 right-0`.
+
+```tsx
+import { DropdownMenu } from "erp-pro-ui";
+
+<DropdownMenu
+  trigger={<button type="button">Open</button>}
+  animationClassName="origin-top-left"
+  panelClassName="left-0 right-0 mt-2 rounded-lg border border-ds-border-2 bg-ds-surface-1"
+>
+  <div className="p-3">Panel content</div>
+</DropdownMenu>;
+```
+
 ## Colors And Fonts In Another Project
 
 The library now ships a two-layer theme contract so another project can use the same tokens without copying theme config:

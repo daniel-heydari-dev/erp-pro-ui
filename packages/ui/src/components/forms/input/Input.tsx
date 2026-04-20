@@ -115,9 +115,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {leftIcon ? (
               <div
                 className={mergeClassNames(
-                  "pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-ds-2",
+                  "pointer-events-none absolute inset-y-0 flex items-center text-ds-2",
                   leftIconClassName,
                 )}
+                style={{ insetInlineStart: 0, paddingInlineStart: "0.75rem" }}
               >
                 {leftIcon}
               </div>
@@ -125,9 +126,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {trailingIcon ? (
               <div
                 className={mergeClassNames(
-                  "pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-ds-2",
+                  "pointer-events-none absolute inset-y-0 flex items-center text-ds-2",
                   trailingIconClassName,
                 )}
+                style={{ insetInlineEnd: 0, paddingInlineEnd: "0.75rem" }}
               >
                 {trailingIcon}
               </div>
@@ -139,12 +141,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               disabled={isDisabled}
               className={mergeClassNames(
                 "flex h-10 w-full rounded-md border border-ds-border-field py-2 text-sm text-ds-1 transition duration-400 ease-in-out file:border-0 file:text-sm file:font-medium placeholder:text-ds-3 placeholder:opacity-70 focus-visible:ring-1 focus-visible:ring-ds-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-                leftIcon ? "pl-10" : "pl-3",
-                trailingIcon ? "pr-10" : "pr-3",
                 bgClassName,
                 inputStateStyles[resolvedState],
                 className,
               )}
+              style={{
+                paddingInlineStart: leftIcon ? "2.5rem" : "0.75rem",
+                paddingInlineEnd: trailingIcon ? "2.5rem" : "0.75rem",
+              }}
               {...props}
               autoComplete="off"
             />

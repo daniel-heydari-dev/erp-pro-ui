@@ -79,7 +79,21 @@ export { Calendar } from "./components/forms/calendar";
 export { Card } from "./components/data-display/card";
 
 export { Carousel } from "./components/navigation/carousel";
+export {
+  Sidebar,
+  SidebarLinks,
+  NavLink,
+  HamburgerIcon,
+  DashboardSidebarShell,
+} from "./components/navigation/sidebar";
 export { Tabs } from "./components/navigation/tabs";
+export type {
+  SidebarProps,
+  SidebarLinksProps,
+  SidebarDirection,
+  SidebarItem,
+  SidebarNavLinkProps,
+} from "./components/navigation/sidebar";
 export type {
   TabsProps,
   TabsItem,
@@ -158,6 +172,8 @@ export { DatePicker } from "./components/forms/date-picker";
 export type { DatePickerValue } from "./components/forms/date-picker";
 
 export { Dialog } from "./components/overlays/dialog";
+export { DropdownMenu } from "./components/overlays/dropdown-menu";
+export type { DropdownMenuProps } from "./components/overlays/dropdown-menu";
 
 export { Drawer } from "./components/overlays/drawer";
 

@@ -1090,3 +1090,46 @@ export const CustomRowActionsMenu: Story = {
     </StorySurface>
   ),
 };
+
+/**
+ * ## Custom Row Actions (RTL Persian)
+ * Custom row action labels in Persian with RTL layout and correct menu alignment.
+ */
+export const CustomRowActionsMenuRtlPersian: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
+      <div dir="rtl">
+        <DataTable
+          data={sampleData}
+          columns={advancedColumns}
+          direction="rtl"
+          pageSize={5}
+          maxHeight="480px"
+          searchPlaceholder="جستجو بر اساس نام، تیم، موقعیت..."
+          filterOptions={advancedFilterOptions}
+          rowActions={[
+            { id: "copy", label: "کپی ردیف" },
+            { id: "publish", label: "انتشار محصول" },
+            { id: "archive", label: "بایگانی" },
+            { id: "delete", label: "حذف", variant: "destructive" },
+          ]}
+          labels={{
+            columns: "ستون‌ها",
+            showAll: "نمایش همه",
+            hideAll: "پنهان‌سازی همه",
+            showFilters: "فیلترها",
+            addFilter: "افزودن فیلتر",
+            clearFilters: "پاک کردن فیلترها",
+            filterProfiles: "پروفایل فیلتر",
+            saveNewFilterProfile: "ذخیره پروفایل جدید",
+          }}
+          onRowAction={(action, row) => {
+            // Demo handler
+            // eslint-disable-next-line no-console
+            console.log("row action rtl", action, row.id);
+          }}
+        />
+      </div>
+    </StorySurface>
+  ),
+};

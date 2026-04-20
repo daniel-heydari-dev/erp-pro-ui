@@ -837,10 +837,10 @@
     --ds-text-3: #7884ad;
 
     --ds-border-1: #e4e4e7;
-    --ds-border-2: #a3aed0;
-    --ds-border-3: #a3aed0;
+    --ds-border-2: #d2d9ea;
+    --ds-border-3: #e0e5f1;
     --ds-border-4: #e0e5f2;
-    --ds-border-field: #a3aed0;
+    --ds-border-field: #d2d9ea;
 
     --ds-primary: #4f2be2;
     --ds-brand-primary: var(--ds-primary);

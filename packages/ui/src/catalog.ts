@@ -221,6 +221,12 @@ export const uiCatalogItems = [
     storybookTitle: "Layout/Carousel",
   },
   {
+    name: "Sidebar",
+    slug: "sidebar",
+    packageExportPath: "sidebar",
+    storybookTitle: "Navigation/Sidebar",
+  },
+  {
     name: "OTPInput",
     slug: "otpinput",
     packageExportPath: "otp-input",

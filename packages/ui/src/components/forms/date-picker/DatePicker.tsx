@@ -250,9 +250,10 @@ export const DatePicker = ({
             <button
               ref={triggerRef}
               type="button"
-              className={`flex w-full items-center justify-between rounded-md border border-ds-border-field bg-ds-surface-1 px-3 py-2 pr-10 text-sm text-ds-1 transition duration-400 ease-in-out ${
+              className={`flex w-full items-center justify-between rounded-md border border-ds-border-field bg-ds-surface-1 px-3 py-2 text-sm text-ds-1 transition duration-400 ease-in-out ${
                 disabled ? "cursor-not-allowed opacity-50" : ""
               }`}
+              style={{ paddingInlineEnd: "2.5rem" }}
               onClick={() => !disabled && setOpen((prev) => !prev)}
               aria-haspopup="dialog"
               aria-expanded={open}
@@ -266,7 +267,8 @@ export const DatePicker = ({
             {hasSelection && !disabled ? (
               <button
                 type="button"
-                className="absolute right-3 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-ds-2 transition-colors hover:bg-ds-accent-subtle hover:text-ds-1"
+                className="absolute top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-ds-2 transition-colors hover:bg-ds-accent-subtle hover:text-ds-1"
+                style={{ insetInlineEnd: "0.75rem" }}
                 onClick={handleClearSelection}
                 aria-label={
                   mode === "range"
@@ -278,7 +280,8 @@ export const DatePicker = ({
               </button>
             ) : (
               <span
-                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ds-2"
+                className="pointer-events-none absolute top-1/2 -translate-y-1/2 text-ds-2"
+                style={{ insetInlineEnd: "0.75rem" }}
                 aria-hidden="true"
               >
                 📅

@@ -95,6 +95,7 @@ function EmptyTableState({
 
 export interface DataTableRowsProps<T> {
   table: TanStackTable<T>;
+  direction: "ltr" | "rtl";
   hasRowActions: boolean;
   isLoading: boolean;
   bulkSelectionActive: boolean;
@@ -126,6 +127,7 @@ export interface DataTableRowsProps<T> {
 
 export function DataTableRows<T>({
   table,
+  direction,
   hasRowActions,
   isLoading,
   bulkSelectionActive,
@@ -224,6 +226,7 @@ export function DataTableRows<T>({
                   key={cell.id}
                   className={mergeClassNames(
                     "px-4 py-3 text-sm text-ds-1",
+                    direction === "rtl" ? "text-right" : "text-left",
                     cellClassName,
                   )}
                 >
@@ -249,7 +252,11 @@ export function DataTableRows<T>({
               <TableRow className={mergeClassNames("bg-ds-surface-2", rowClassName)}>
                 <TableCell
                   colSpan={colSpan}
-                  className={mergeClassNames("px-4 py-4 text-ds-1", cellClassName)}
+                  className={mergeClassNames(
+                    "px-4 py-4 text-ds-1",
+                    direction === "rtl" ? "text-right" : "text-left",
+                    cellClassName,
+                  )}
                 >
                   {renderRowDetails?.(row.original, row.index)}
                 </TableCell>

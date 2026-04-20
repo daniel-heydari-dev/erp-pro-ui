@@ -1,6 +1,6 @@
 {
   "name": "erp-pro-ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Lightweight React UI component library for ERP and SaaS apps with tree-shakeable subpath exports.",
   "type": "module",
   "sideEffects": [
@@ -96,6 +96,12 @@
       "import": "./dist/carousel.mjs",
       "require": "./dist/carousel.cjs",
       "default": "./dist/carousel.mjs"
+    },
+    "./sidebar": {
+      "types": "./dist/components/navigation/sidebar/index.d.ts",
+      "import": "./dist/sidebar.mjs",
+      "require": "./dist/sidebar.cjs",
+      "default": "./dist/sidebar.mjs"
     },
     "./charts": {
       "types": "./dist/components/data-display/charts/index.d.ts",

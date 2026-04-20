@@ -3,24 +3,56 @@ import { forwardRef, useId } from "react";
 import type { SwitchProps } from "./types";
 
 const sanitizeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "-");
+const rtlLanguages = /^(ar|fa|ur|he)(-|$)/i;
+
+function resolveDirection(
+  direction: string | undefined,
+): "ltr" | "rtl" {
+  if (direction === "rtl" || direction === "ltr") {
+    return direction;
+  }
+
+  if (typeof document !== "undefined") {
+    const explicitDirection =
+      document.documentElement.getAttribute("dir") ?? undefined;
+
+    if (explicitDirection === "rtl" || explicitDirection === "ltr") {
+      return explicitDirection;
+    }
+  }
+
+  if (
+    typeof navigator !== "undefined" &&
+    rtlLanguages.test(navigator.language)
+  ) {
+    return "rtl";
+  }
+
+  return "ltr";
+}
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
-  ({ className = "", label, error, id, checked, ...props }, ref) => {
+  ({ className = "", label, error, id, checked, dir, ...props }, ref) => {
     const generatedId = useId();
     const switchId = id || `switch-${sanitizeId(generatedId)}`;
-    const containerClasses = `flex items-center space-x-2 ${className}`
+    const isRtl = resolveDirection(dir) === "rtl";
+    const containerClasses = `flex items-center gap-2 ${className}`
       .trim()
       .replace(/\s+/g, " ");
 
     return (
-      <div className={containerClasses}>
+      <div className={containerClasses} dir={dir}>
         <label
           htmlFor={switchId}
+          style={{
+            borderRadius: "var(--border-radius-full, 9999px)",
+            ...(checked ? {} : { background: "#E0E5F2" }),
+          }}
           className={`
             relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full transition-colors duration-200
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus focus-visible:ring-offset-2 focus-visible:ring-offset-ds-surface-1
             disabled:cursor-not-allowed disabled:opacity-50
-            ${checked ? "bg-ds-accent" : "bg-ds-surface-3"}
+            ${checked ? "bg-ds-accent" : ""}
           `
             .trim()
             .replace(/\s+/g, " ")}
@@ -47,7 +79,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               transition-transform
               duration-300
               ease-in-out
-              ${checked ? "translate-x-6" : "translate-x-1"}
+              ${checked
+      ? isRtl
+        ? "translate-x-1"
+        : "translate-x-6"
+      : isRtl
+        ? "translate-x-6"
+        : "translate-x-1"}
             `
               .trim()
               .replace(/\s+/g, " ")}
@@ -56,7 +94,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         {label && (
           <label
             htmlFor={switchId}
-            className="text-sm font-medium leading-none text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            className={`cursor-pointer text-sm font-medium leading-none text-ds-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
+              isRtl ? "text-right" : "text-left"
+            }`}
           >
             {label}
           </label>

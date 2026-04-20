@@ -261,37 +261,44 @@ export function DataTableToolbar({
               }
             />
           ) : null}
-          <ToolbarActionButton
-            onClick={onToggleColumnMenu}
-            title={labels.columnSettings}
-            label={labels.columnSettings}
-            isActive={columnMenuOpen}
-            icon={
-              <ColumnsIcon
-                className={TABLE_COMPLEX_ICON_CLASS_NAME}
-                aria-hidden="true"
-              />
-            }
-          />
           {toolbarActions}
 
-          <div className="relative">
-            <FilterDropdown
-              isOpen={columnMenuOpen}
-              onClose={onCloseColumnMenu}
-              direction={direction}
-            >
-              <ColumnToggle
-                columns={columns}
-                onToggle={(columnId) => {
-                  onColumnToggle?.(columnId);
-                }}
-                onShowAll={onShowAllColumns}
-                onHideAll={onHideAllColumns}
-                labels={labels}
+          <FilterDropdown
+            direction={direction}
+            open={columnMenuOpen}
+            onOpenChange={(nextOpen) => {
+              if (nextOpen) {
+                if (!columnMenuOpen) {
+                  onToggleColumnMenu();
+                }
+                return;
+              }
+              onCloseColumnMenu();
+            }}
+            trigger={
+              <ToolbarActionButton
+                title={labels.columnSettings}
+                label={labels.columnSettings}
+                isActive={columnMenuOpen}
+                icon={
+                  <ColumnsIcon
+                    className={TABLE_COMPLEX_ICON_CLASS_NAME}
+                    aria-hidden="true"
+                  />
+                }
               />
-            </FilterDropdown>
-          </div>
+            }
+          >
+            <ColumnToggle
+              columns={columns}
+              onToggle={(columnId) => {
+                onColumnToggle?.(columnId);
+              }}
+              onShowAll={onShowAllColumns}
+              onHideAll={onHideAllColumns}
+              labels={labels}
+            />
+          </FilterDropdown>
         </div>
       </div>
 

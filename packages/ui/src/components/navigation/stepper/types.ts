@@ -5,6 +5,7 @@ export type StepperOrientation = "horizontal" | "vertical";
 export type StepperSize = "sm" | "md" | "lg";
 export type StepperVariant = "default" | "glass" | "minimal" | "outlined";
 export type StepperLabelPosition = "bottom" | "right";
+export type StepperDirection = "ltr" | "rtl";
 export type StepperStepsState = "untouched" | "valid" | "invalid";
 export type ResponsiveStepperOrientation = StepperOrientation | "responsive";
 
@@ -40,6 +41,10 @@ export interface StepperProps {
   variant?: StepperVariant;
   /** Horizontal label position relative to the indicator */
   labelPosition?: StepperLabelPosition;
+  /** Layout direction */
+  direction?: StepperDirection;
+  /** Label used for optional steps */
+  optionalLabel?: string;
   /** Whether to show step numbers */
   showNumbers?: boolean;
   /** Whether to allow clicking on completed steps */

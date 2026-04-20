@@ -320,12 +320,20 @@ function LoadingFilterField({ label }: { label: string }) {
 
 interface NumberRangeFilterProps {
   value: NumberRangeFilterValue;
+  direction: "ltr" | "rtl";
   onChange: (value: NumberRangeFilterValue) => void;
 }
 
-function NumberRangeFilter({ value, onChange }: NumberRangeFilterProps) {
+function NumberRangeFilter({
+  value,
+  direction,
+  onChange,
+}: NumberRangeFilterProps) {
   return (
-    <div className="flex gap-2">
+    <div
+      dir={direction}
+      className={`flex gap-2 ${direction === "rtl" ? "flex-row-reverse" : ""}`}
+    >
       <Input
         type="number"
         placeholder="Min"
@@ -358,6 +366,7 @@ interface FilterFieldControlProps {
   filter: FilterOption;
   value: FilterValue | undefined;
   isActive: boolean;
+  direction: "ltr" | "rtl";
   onChange: (value: FilterValue) => void;
 }
 
@@ -365,6 +374,7 @@ export function FilterFieldControl({
   filter,
   value,
   isActive,
+  direction,
   onChange,
 }: FilterFieldControlProps) {
   if (filter.isLoading) {
@@ -375,6 +385,7 @@ export function FilterFieldControl({
     case "text":
       return (
         <Input
+          dir={direction}
           value={getStringFilterValue(value)}
           onChange={(event) => onChange(event.target.value)}
           placeholder={filter.placeholder || filter.label}
@@ -383,6 +394,7 @@ export function FilterFieldControl({
     case "select":
       return (
         <Select
+          dir={direction}
           value={getStringFilterValue(value)}
           onChange={(event) => onChange(event.target.value)}
           options={toSelectOptions(filter.options)}
@@ -391,19 +403,23 @@ export function FilterFieldControl({
       );
     case "combobox":
       return filter.multiple ? (
-        <MultiSelectCombobox
-          value={getMultiStringFilterValue(value)}
-          onChange={(values) => onChange(values)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-        />
+        <div dir={direction}>
+          <MultiSelectCombobox
+            value={getMultiStringFilterValue(value)}
+            onChange={(values) => onChange(values)}
+            placeholder={filter.placeholder || filter.label}
+            options={toSelectOptions(filter.options)}
+          />
+        </div>
       ) : (
-        <Combobox
-          value={getStringFilterValue(value)}
-          onChange={(nextValue) => onChange(nextValue)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-        />
+        <div dir={direction}>
+          <Combobox
+            value={getStringFilterValue(value)}
+            onChange={(nextValue) => onChange(nextValue)}
+            placeholder={filter.placeholder || filter.label}
+            options={toSelectOptions(filter.options)}
+          />
+        </div>
       );
     case "checkbox":
       return (
@@ -419,6 +435,7 @@ export function FilterFieldControl({
       return (
         <div className="flex h-10 items-center px-2">
           <Switch
+            dir={direction}
             checked={Boolean(value)}
             onChange={(event) => onChange(event.target.checked)}
           />
@@ -446,24 +463,29 @@ export function FilterFieldControl({
       return (
         <NumberRangeFilter
           value={getNumberRangeFilterValue(value)}
+          direction={direction}
           onChange={onChange}
         />
       );
     default:
       return filter.multiple ? (
-        <MultiSelectCombobox
-          value={getMultiStringFilterValue(value)}
-          onChange={(values) => onChange(values)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-        />
+        <div dir={direction}>
+          <MultiSelectCombobox
+            value={getMultiStringFilterValue(value)}
+            onChange={(values) => onChange(values)}
+            placeholder={filter.placeholder || filter.label}
+            options={toSelectOptions(filter.options)}
+          />
+        </div>
       ) : (
-        <Combobox
-          value={getStringFilterValue(value)}
-          onChange={(nextValue) => onChange(nextValue)}
-          placeholder={filter.placeholder || filter.label}
-          options={toSelectOptions(filter.options)}
-        />
+        <div dir={direction}>
+          <Combobox
+            value={getStringFilterValue(value)}
+            onChange={(nextValue) => onChange(nextValue)}
+            placeholder={filter.placeholder || filter.label}
+            options={toSelectOptions(filter.options)}
+          />
+        </div>
       );
   }
 }

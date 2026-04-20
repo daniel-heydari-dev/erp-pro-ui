@@ -11,6 +11,7 @@ import {
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { CheckIcon, ChevronDownIcon } from "../../icons";
+import { DropdownMenu } from "../../overlays/dropdown-menu";
 import { TruncatedText } from "../../typography/truncated-text";
 import { mergeClassNames } from "../../../utils";
 import type { SelectProps } from "./types";
@@ -29,6 +30,7 @@ export const Select = forwardRef(function SelectComponent(
     value,
     onChange,
     placeholder = "Select...",
+    noOptionsText = "No options",
     disabled,
     bgClassName = "bg-ds-surface-1",
     size = "default",
@@ -39,7 +41,6 @@ export const Select = forwardRef(function SelectComponent(
 ) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const hiddenSelectRef = useRef<HTMLSelectElement>(null);
   const selectedOptionRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
@@ -58,25 +59,6 @@ export const Select = forwardRef(function SelectComponent(
       ref.current = hiddenSelectRef.current;
     }
   }, [ref]);
-
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    if (open) {
-      document.addEventListener("mousedown", handleClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [open]);
 
   useEffect(() => {
     if (!open || !selectedOptionRef.current) {
@@ -156,96 +138,102 @@ export const Select = forwardRef(function SelectComponent(
         ))}
       </select>
 
-      <div
-        ref={containerRef}
-        className={mergeClassNames("relative w-full", className)}
-      >
-        <motion.div
-          style={{
-            backgroundImage: disabled
-              ? "none"
-              : useMotionTemplate`
+      <DropdownMenu
+        className={mergeClassNames("w-full", className)}
+        open={open}
+        onOpenChange={(nextOpen) => {
+          if (disabled) {
+            setOpen(false);
+            return;
+          }
+
+          setOpen(nextOpen);
+        }}
+        panelClassName={mergeClassNames(
+          " left-0 top-[40px] z-20 mt-1 flex flex-col overflow-auto rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition",
+          isCompact ? "max-h-56" : "max-h-60",
+          dropdownClassName,
+        )}
+        animationClassName="origin-top-left"
+        trigger={
+          <motion.div
+            style={{
+              backgroundImage: disabled
+                ? "none"
+                : useMotionTemplate`
                   radial-gradient(
                     ${visible ? `${radius}px` : "0px"} circle at ${mouseX}px ${mouseY}px,
                     var(--ds-color-accent),
                     transparent 90%
                   )
                 `,
-          }}
-          onMouseMove={!disabled ? handleMouseMove : undefined}
-          onMouseEnter={!disabled ? () => setVisible(true) : undefined}
-          onMouseLeave={!disabled ? () => setVisible(false) : undefined}
-          className={mergeClassNames(
-            "group/select rounded-lg p-[2px] transition duration-300 hover:border-ds-border-accent",
-            disabled
-              ? "border-none bg-ds-surface-1"
-              : error
-                ? "border-ds-state-error-border"
-                : "border-ds-border-2",
-          )}
-        >
-          <div
-            className={mergeClassNames(
-              "flex w-full cursor-pointer items-center justify-between rounded-md border border-ds-border-field transition duration-400 ease-in-out",
-              isCompact ? "h-9 px-2.5 py-2 text-sm" : "h-10 px-3 py-2 text-sm",
-              bgClassName,
-              disabled ? "cursor-not-allowed opacity-50" : "text-ds-1",
-              error
-                ? "border-ds-state-error-border text-ds-state-error-text focus-visible:ring-ds-state-error-border"
-                : "",
-              triggerClassName,
-            )}
-            onClick={() => {
-              if (!disabled) {
-                setOpen((current) => !current);
-              }
             }}
-            onKeyDown={handleKeyDown}
-            role="button"
-            tabIndex={disabled ? -1 : 0}
-            aria-haspopup="listbox"
-            aria-expanded={open}
-          >
-            {selectedOption ? (
-              <TruncatedText
-                as="span"
-                showTitleOnHover
-                className="flex-1 text-ds-1"
-              >
-                {selectedOption.label}
-              </TruncatedText>
-            ) : (
-              <TruncatedText as="span" className="flex-1 text-ds-2">
-                {placeholder}
-              </TruncatedText>
-            )}
-
-            <span
-              className={mergeClassNames(
-                "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
-                open ? "rotate-180" : "rotate-0",
-              )}
-            >
-              <ChevronDownIcon
-                width={24}
-                height={24}
-                color="currentColor"
-                className={isCompact ? "h-4 w-4" : "h-5 w-5"}
-              />
-            </span>
-          </div>
-        </motion.div>
-
-        {open && !disabled ? (
-          <div
+            onMouseMove={!disabled ? handleMouseMove : undefined}
+            onMouseEnter={!disabled ? () => setVisible(true) : undefined}
+            onMouseLeave={!disabled ? () => setVisible(false) : undefined}
             className={mergeClassNames(
-              "absolute right-0 left-0 z-20 mt-1 flex flex-col overflow-auto rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition",
-              isCompact ? "max-h-56" : "max-h-60",
-              dropdownClassName,
+              "group/select w-full rounded-lg p-[2px] transition duration-300 hover:border-ds-border-accent",
+              disabled
+                ? "border-none bg-ds-surface-1"
+                : error
+                  ? "border-ds-state-error-border"
+                  : "border-ds-border-2",
             )}
           >
+            <div
+              className={mergeClassNames(
+                "flex w-full cursor-pointer items-center justify-between rounded-md border border-ds-border-field transition duration-400 ease-in-out",
+                isCompact
+                  ? "h-9 px-2.5 py-2 text-sm"
+                  : "h-10 px-3 py-2 text-sm",
+                bgClassName,
+                disabled ? "cursor-not-allowed opacity-50" : "text-ds-1",
+                error
+                  ? "border-ds-state-error-border text-ds-state-error-text focus-visible:ring-ds-state-error-border"
+                  : "",
+                triggerClassName,
+              )}
+              onKeyDown={handleKeyDown}
+              role="button"
+              tabIndex={disabled ? -1 : 0}
+              aria-haspopup="listbox"
+              aria-expanded={open}
+            >
+              {selectedOption ? (
+                <TruncatedText
+                  as="span"
+                  showTitleOnHover
+                  className="flex-1 text-ds-1"
+                >
+                  {selectedOption.label}
+                </TruncatedText>
+              ) : (
+                <TruncatedText as="span" className="flex-1 text-ds-2">
+                  {placeholder}
+                </TruncatedText>
+              )}
+
+              <span
+                className={mergeClassNames(
+                  "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
+                  open ? "rotate-180" : "rotate-0",
+                )}
+              >
+                <ChevronDownIcon
+                  width={24}
+                  height={24}
+                  color="currentColor"
+                  className={isCompact ? "h-4 w-4" : "h-5 w-5"}
+                />
+              </span>
+            </div>
+          </motion.div>
+        }
+      >
+        {!disabled ? (
+          <>
             {options.length === 0 ? (
-              <div className="px-3 py-2 text-ds-2">No options</div>
+              <div className="px-3 py-2 text-ds-2">{noOptionsText}</div>
             ) : null}
 
             {options.map((option) => (
@@ -286,9 +274,9 @@ export const Select = forwardRef(function SelectComponent(
                 </TruncatedText>
               </div>
             ))}
-          </div>
+          </>
         ) : null}
-      </div>
+      </DropdownMenu>
 
       {error ? (
         <p className="mt-1 text-sm font-medium text-ds-state-error-text">

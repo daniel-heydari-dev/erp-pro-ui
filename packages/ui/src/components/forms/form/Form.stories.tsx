@@ -4,7 +4,11 @@ import { useState, type FormEvent } from "react";
 import { Form, FormSection, FormField, FormActions, InputGroup } from "./Form";
 import { Button } from "../button";
 import { Checkbox } from "../checkbox";
+import { DatePicker, type DatePickerValue } from "../date-picker";
 import { Input } from "../input";
+import { Radio } from "../radio";
+import { Select } from "../select";
+import { Switch } from "../switch";
 import { Textarea } from "../textarea";
 import { StoryPanel, StorySurface } from "../../shared/storybook";
 
@@ -373,6 +377,109 @@ function InlineBillingPreview() {
   );
 }
 
+function RtlFormsMatrixPreview() {
+  const [language, setLanguage] = useState("fa");
+  const [notifyBySms, setNotifyBySms] = useState(true);
+  const [contactMethod, setContactMethod] = useState("email");
+  const [reportDate, setReportDate] = useState<DatePickerValue>(new Date());
+
+  return (
+    <StorySurface widthClassName="ui:w-full ui:max-w-5xl">
+      <div dir="rtl" className="ui:w-full">
+        <Form
+          title="بررسی فرم‌ها در حالت راست‌به‌چپ"
+          description="این نمونه برای بررسی سریع RTL در ورودی‌ها، انتخاب‌ها و کنترل‌های فرم است."
+        >
+          <FormSection
+            title="اطلاعات پایه"
+            description="تراز متن، فاصله‌گذاری و جایگاه آیکن‌ها باید در RTL درست باشند."
+          >
+            <InputGroup columns={2}>
+              <FormField label="نام" htmlFor="rtl-first-name" required>
+                <Input id="rtl-first-name" placeholder="علی" />
+              </FormField>
+              <FormField label="نام خانوادگی" htmlFor="rtl-last-name" required>
+                <Input id="rtl-last-name" placeholder="رضایی" />
+              </FormField>
+            </InputGroup>
+
+            <FormField label="توضیحات" htmlFor="rtl-bio">
+              <Textarea
+                id="rtl-bio"
+                rows={3}
+                placeholder="توضیحات کوتاه درباره کاربر"
+              />
+            </FormField>
+          </FormSection>
+
+          <FormSection
+            title="انتخاب‌ها و وضعیت"
+            description="کنترل‌های انتخابی، سوییچ و تاریخ در RTL."
+          >
+            <InputGroup columns={2}>
+              <FormField label="زبان رابط">
+                <Select
+                  value={language}
+                  onChange={(event) => setLanguage(event.target.value)}
+                  options={[
+                    { value: "fa", label: "فارسی" },
+                    { value: "ar", label: "العربية" },
+                    { value: "en", label: "English" },
+                  ]}
+                />
+              </FormField>
+
+              <FormField label="تاریخ گزارش">
+                <DatePicker
+                  mode="single"
+                  value={reportDate}
+                  onChange={(nextValue) => setReportDate(nextValue)}
+                  placeholder="انتخاب تاریخ"
+                />
+              </FormField>
+            </InputGroup>
+
+            <InputGroup columns={2}>
+              <FormField label="روش ارتباط">
+                <div className="ui:flex ui:flex-col ui:gap-2">
+                  <Radio
+                    name="rtl-contact-method"
+                    label="ایمیل"
+                    checked={contactMethod === "email"}
+                    onChange={() => setContactMethod("email")}
+                  />
+                  <Radio
+                    name="rtl-contact-method"
+                    label="تماس"
+                    checked={contactMethod === "phone"}
+                    onChange={() => setContactMethod("phone")}
+                  />
+                </div>
+              </FormField>
+
+              <FormField label="اعلان‌ها">
+                <div className="ui:flex ui:flex-col ui:gap-3 ui:pt-1">
+                  <Checkbox id="rtl-newsletter" label="خبرنامه هفتگی" />
+                  <Switch
+                    label="ارسال پیامک"
+                    checked={notifyBySms}
+                    onChange={(event) => setNotifyBySms(event.target.checked)}
+                  />
+                </div>
+              </FormField>
+            </InputGroup>
+          </FormSection>
+
+          <FormActions align="end">
+            <Button label="انصراف" />
+            <Button label="ذخیره تغییرات" primary />
+          </FormActions>
+        </Form>
+      </div>
+    </StorySurface>
+  );
+}
+
 export const SignInCapture: Story = {
   name: "Sign-In Submission",
   render: () => <SignInSubmissionPreview />,
@@ -407,4 +514,9 @@ export const InlineFieldLayout: Story = {
       },
     },
   },
+};
+
+export const RtlFormsMatrix: Story = {
+  name: "RTL Forms Matrix",
+  render: () => <RtlFormsMatrixPreview />,
 };

@@ -85,6 +85,7 @@ const uiDocsLoaders: Record<UiCatalogSlug, ComponentLoader> = {
     import("@/docs/ui-basics/PasswordStrengthMeterDoc"),
   "sun-to-moon-button": () => import("@/docs/ui-basics/SunToMoonButtonDoc"),
   carousel: () => import("@/docs/ui-basics/CarouselDoc"),
+  sidebar: () => import("@/docs/ui-basics/SidebarDoc"),
   otpinput: () => import("@/docs/ui-basics/OTPInputDoc"),
   form: () => import("@/docs/ui-basics/FormDoc"),
   "data-table": () => import("@/docs/ui-basics/DataTableDoc"),

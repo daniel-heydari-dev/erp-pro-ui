@@ -11,6 +11,7 @@ export interface SelectProps extends Omit<
   error?: string;
   helperText?: string;
   placeholder?: string;
+  noOptionsText?: string;
   bgClassName?: string;
   containerClassName?: string;
   triggerClassName?: string;
