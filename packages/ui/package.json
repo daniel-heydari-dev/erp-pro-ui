@@ -1,6 +1,6 @@
 {
   "name": "erp-pro-ui",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Lightweight React UI component library for ERP and SaaS apps with tree-shakeable subpath exports.",
   "type": "module",
   "sideEffects": [
@@ -374,13 +374,13 @@
     "@storybook/react-vite": "^10.3.5",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/three": "^0.183.1",
+    "@types/three": "^0.184.0",
     "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^10.2.0",
+    "eslint": "^10.2.1",
     "storybook": "^10.3.5",
-    "terser": "^5.46.1",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8",
+    "terser": "^5.46.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10",
     "vite-plugin-dts": "^4.5.4"
   }
 }
