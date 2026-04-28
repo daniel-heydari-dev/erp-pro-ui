@@ -156,7 +156,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
     const isRemovable = onRemove !== undefined;
 
     const baseStyles = `
-      inline-flex items-center font-medium rounded-[4px] transition-all duration-200
+      inline-flex items-center font-medium rounded-md transition-all duration-200
       ${sizeStyles[size]}
       ${colorStyles[variant][color]}
       ${

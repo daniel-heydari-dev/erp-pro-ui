@@ -1,3 +1,21 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": ".ai/rules/always.md"
+    },
+    {
+      "text": "For skills, load files from .ai/skills/ when the topic matches."
+    }
+  ],
+  "github.copilot.chat.testGeneration.instructions": [
+    {
+      "file": ".ai/skills/testing-best-practices/SKILL.md"
+    }
+  ],
+  "github.copilot.chat.reviewSelection.instructions": [
+    {
+      "file": ".ai/agents/code-reviewer/AGENT.md"
+    }
+  ]
 }

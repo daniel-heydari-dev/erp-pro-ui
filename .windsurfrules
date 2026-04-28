@@ -1,0 +1,20 @@
+# Windsurf Rules
+
+## AI Configuration
+
+This project uses `.ai/` as the single source of truth for AI behavior.
+Always read and follow the guidelines in:
+
+- `.ai/skills/` — Coding best practices, patterns, and playbooks
+- `.ai/rules/` — Hard constraints and conventions (always follow these)
+- `.ai/agents/` — Specialized AI personas for specific tasks
+- `.ai/commands/` — Reusable command templates and macros
+- `.ai/prompts/` — Pre-built prompt templates
+
+## Instructions
+
+Read `SPEC.md` for project facts, stack, and key invariants.
+Load `docs/spec/<feature>/SPEC.md` when the user's task mentions that feature.
+Read all files in `.ai/rules/` first — hard constraints, never violate.
+Load `.ai/skills/<name>/` when the topic matches.
+Command templates in `.ai/commands/` — use when the user references one by name.

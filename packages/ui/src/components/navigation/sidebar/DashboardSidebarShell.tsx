@@ -1,6 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
-import { BellIcon, CircleIcon, FullScreenIcon } from "../../icons";
+import { BellIcon, FullScreenIcon } from "../../icons";
 import { Button } from "../../forms/button";
 import { DropdownMenu } from "../../overlays/dropdown-menu";
 import { Typography } from "../../typography";
@@ -12,8 +18,17 @@ import { SunToMoonButton } from "../../effects";
 
 export interface DashboardHeaderRenderContext {
   isSidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+  openSidebar: () => void;
+  closeSidebar: () => void;
   toggleSidebar: () => void;
+  direction: Exclude<SidebarProps["direction"], "auto">;
+  isRtl: boolean;
 }
+
+type DashboardShellSlot =
+  | ReactNode
+  | ((context: DashboardHeaderRenderContext) => ReactNode);
 
 const notificationItems = [
   {
@@ -42,7 +57,7 @@ const notificationItems = [
   },
 ] as const;
 
-interface DashboardSidebarShellProps {
+export interface DashboardSidebarShellProps {
   items: readonly SidebarItem[];
   open?: boolean;
   defaultOpen?: boolean;
@@ -51,17 +66,61 @@ interface DashboardSidebarShellProps {
   activePath?: string;
   onItemSelect?: SidebarProps["onItemSelect"];
   brand?: SidebarProps["brand"];
+  sidebarNavbar?: SidebarProps["navbar"];
   sidebarFooter?: SidebarProps["footer"];
-  header?:
-    | React.ReactNode
-    | ((context: DashboardHeaderRenderContext) => React.ReactNode);
-  breadcrumb?: React.ReactNode;
-  title?: React.ReactNode;
-  children?: React.ReactNode;
+  sidebarClassName?: SidebarProps["className"];
+  sidebarLinksClassName?: SidebarProps["linksClassName"];
+  sidebarItemClassName?: SidebarProps["itemClassName"];
+  sidebarActiveItemClassName?: SidebarProps["activeItemClassName"];
+  sidebarOverlayClassName?: SidebarProps["overlayClassName"];
+  sidebarCloseLabel?: SidebarProps["closeLabel"];
+  showSidebarOverlay?: SidebarProps["showOverlay"];
+  header?: DashboardShellSlot;
+  headerLeading?: DashboardShellSlot;
+  headerActions?: DashboardShellSlot;
+  headerClassName?: string;
+  headerTitleClassName?: string;
+  headerActionsClassName?: string;
+  breadcrumb?: ReactNode;
+  title?: ReactNode;
+  children?: ReactNode;
   className?: string;
   contentClassName?: string;
   mainClassName?: string;
   autoHideOnMobileBreakpoint?: boolean;
+}
+
+const rtlLanguages = /^(ar|fa|ur|he)(-|$)/i;
+
+function resolveDirection(
+  direction: SidebarProps["direction"],
+): Exclude<SidebarProps["direction"], "auto"> {
+  if (direction === "rtl" || direction === "ltr") {
+    return direction;
+  }
+
+  if (typeof document !== "undefined") {
+    const documentDirection = document.documentElement.getAttribute("dir");
+    if (documentDirection === "rtl" || documentDirection === "ltr") {
+      return documentDirection;
+    }
+  }
+
+  if (
+    typeof navigator !== "undefined" &&
+    rtlLanguages.test(navigator.language)
+  ) {
+    return "rtl";
+  }
+
+  return "ltr";
+}
+
+function resolveSlot(
+  slot: DashboardShellSlot | undefined,
+  context: DashboardHeaderRenderContext,
+) {
+  return typeof slot === "function" ? slot(context) : slot;
 }
 
 function useControllableOpenState(
@@ -95,8 +154,21 @@ export function DashboardSidebarShell({
   activePath,
   onItemSelect,
   brand,
+  sidebarNavbar,
   sidebarFooter,
+  sidebarClassName,
+  sidebarLinksClassName,
+  sidebarItemClassName,
+  sidebarActiveItemClassName,
+  sidebarOverlayClassName,
+  sidebarCloseLabel,
+  showSidebarOverlay,
   header,
+  headerLeading,
+  headerActions,
+  headerClassName,
+  headerTitleClassName,
+  headerActionsClassName,
   breadcrumb = "Pages / Dashboard",
   title = "Dashboard",
   children,
@@ -109,6 +181,35 @@ export function DashboardSidebarShell({
     open,
     defaultOpen,
     onOpenChange,
+  );
+  const resolvedDirection = resolveDirection(direction);
+  const isRtl = resolvedDirection === "rtl";
+  const openSidebar = useCallback(() => setOpen(true), [setOpen]);
+  const closeSidebar = useCallback(() => setOpen(false), [setOpen]);
+  const toggleSidebar = useCallback(
+    () => setOpen(!resolvedOpen),
+    [resolvedOpen, setOpen],
+  );
+
+  const headerContext = useMemo<DashboardHeaderRenderContext>(
+    () => ({
+      isSidebarOpen: resolvedOpen,
+      setSidebarOpen: setOpen,
+      openSidebar,
+      closeSidebar,
+      toggleSidebar,
+      direction: resolvedDirection,
+      isRtl,
+    }),
+    [
+      closeSidebar,
+      isRtl,
+      openSidebar,
+      resolvedDirection,
+      resolvedOpen,
+      setOpen,
+      toggleSidebar,
+    ],
   );
 
   useEffect(() => {
@@ -133,258 +234,274 @@ export function DashboardSidebarShell({
     return () => mediaQuery.removeEventListener("change", listener);
   }, [autoHideOnMobileBreakpoint, setOpen]);
 
-  const defaultHeader = useMemo(
+  const defaultHeaderActions = useMemo(
     () => (
-      <nav className="sticky top-2 z-40 mb-4 rounded-md border border-ds-border-3 bg-ds-surface-1/95  px-4 py-3 shadow-[0_4px_14px_color-mix(in_srgb,var(--ds-color-fg)_8%,transparent)] backdrop-blur-md flex items-center  ">
-        <div className="flex w-full justify-between gap-4">
-          <div className="min-w-0">
-            <Typography variant="caption" className="text-ds-3 capitalize">
-              {breadcrumb}
-            </Typography>
-            <Typography
-              variant="h5"
-              weight="black"
-              className="truncate leading-7 capitalize"
-            >
-              {title}
-            </Typography>
-          </div>
+      <>
+        <Button
+          type="button"
+          variant="tertiary"
+          size="small"
+          className="h-9 w-9 rounded-full p-0! xl:hidden"
+          aria-label="Toggle sidebar"
+          onClick={toggleSidebar}
+        >
+          <HamburgerIcon isOpen={resolvedOpen} />
+        </Button>
 
-          <div className="border-ds-border-4 hidden min-h-11 items-center gap-1 rounded-full border bg-ds-surface-1 px-2 py-1 shadow-[0_2px_8px_color-mix(in_srgb,var(--ds-color-fg)_6%,transparent)] sm:flex">
+        <DropdownMenu
+          animationClassName={isRtl ? "origin-top-left" : "origin-top-right"}
+          panelClassName={mergeClassNames(
+            "top-[44px]",
+            isRtl ? "left-0" : "right-0",
+          )}
+          trigger={
             <Button
               type="button"
               variant="tertiary"
               size="small"
-              className="h-9 w-9 rounded-full p-0! xl:hidden"
-              aria-label="Toggle sidebar"
-              onClick={() => setOpen(!resolvedOpen)}
+              className="relative h-9 w-9 rounded-full p-0!"
+              aria-label="Open notifications"
             >
-              <HamburgerIcon isOpen={resolvedOpen} />
+              <BellIcon className="h-5 w-5" />
+              <span
+                className={mergeClassNames(
+                  "bg-ds-state-danger text-ds-on-accent absolute -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[0.68rem] font-bold",
+                  isRtl ? "-left-0.5" : "-right-0.5",
+                )}
+              >
+                {notificationItems.length}
+              </span>
             </Button>
-
-            <DropdownMenu
-              panelClassName="right-0 top-[44px]"
-              trigger={
+          }
+        >
+          <div className="w-[340px] rounded-lg border border-ds-border-3 bg-ds-surface-1 p-3 shadow-xl">
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <Typography variant="body2" weight="black">
+                Notifications
+              </Typography>
+              <Button
+                type="button"
+                variant="tertiary"
+                size="small"
+                className="px-2 py-1 text-xs"
+              >
+                Mark all read
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {notificationItems.map((item) => (
                 <Button
+                  key={item.id}
                   type="button"
                   variant="tertiary"
                   size="small"
-                  className="relative h-9 w-9 rounded-full p-0!"
-                  aria-label="Open notifications"
+                  className={mergeClassNames(
+                    "w-full rounded-lg border border-ds-border-3 px-2.5 py-2",
+                    isRtl
+                      ? "justify-end text-right"
+                      : "justify-start text-left",
+                  )}
                 >
-                  <BellIcon className="h-5 w-5" />
-                  <span className="bg-ds-state-danger text-ds-on-accent absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[0.68rem] font-bold">
-                    {notificationItems.length}
+                  <span
+                    className={`mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${item.toneClassName}`}
+                  >
+                    <BellIcon className="h-3.5 w-3.5" />
                   </span>
-                </Button>
-              }
-            >
-              <div className="w-[340px] rounded-lg border border-ds-border-3 bg-ds-surface-1 p-3 shadow-xl">
-                <div className="mb-2 flex items-center justify-between">
-                  <Typography variant="body2" weight="black">
-                    Notifications
-                  </Typography>
-                  <Button
-                    type="button"
-                    variant="tertiary"
-                    size="small"
-                    className="px-2 py-1 text-xs"
-                  >
-                    Mark all read
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  {notificationItems.map((item) => (
-                    <Button
-                      key={item.id}
-                      type="button"
-                      variant="tertiary"
-                      size="small"
-                      className="w-full justify-start rounded-lg border border-ds-border-3 px-2.5 py-2 text-left"
-                    >
-                      <span
-                        className={`mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${item.toneClassName}`}
-                      >
-                        <BellIcon className="h-3.5 w-3.5" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-xs font-semibold text-ds-1">
-                          {item.title}
-                        </span>
-                        <span className="block truncate text-[11px] text-ds-3">
-                          {item.description}
-                        </span>
-                      </span>
-                      <span className="text-[11px] text-ds-3">{item.time}</span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </DropdownMenu>
-
-            <Button
-              type="button"
-              variant="tertiary"
-              size="small"
-              className="h-9 w-9 rounded-full p-0!"
-              aria-label="Toggle theme"
-            >
-              <span className="flex  cursor-pointer rounded-full">
-                <SunToMoonButton showLabelAndImage={false} />
-              </span>
-            </Button>
-
-            <Button
-              type="button"
-              variant="tertiary"
-              size="small"
-              className="h-9 w-9 rounded-full p-0!"
-              aria-label="Toggle fullscreen"
-              onClick={() => {
-                if (document.fullscreenElement) {
-                  document.exitFullscreen();
-                } else {
-                  document.documentElement.requestFullscreen();
-                }
-              }}
-            >
-              <FullScreenIcon className="h-5 w-5" />
-            </Button>
-
-            <DropdownMenu
-              panelClassName="right-0 top-[44px]"
-              trigger={
-                <Button
-                  type="button"
-                  variant="primary"
-                  size="small"
-                  className="h-9 w-9 rounded-full p-0! text-sm font-black"
-                  aria-label="Open user menu"
-                >
-                  JD
-                </Button>
-              }
-            >
-              <div className="w-52 rounded-lg border border-ds-border-3 bg-ds-surface-1 p-3 shadow-xl">
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="bg-ds-accent text-ds-on-accent inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-black">
-                    JD
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-xs font-semibold text-ds-1">
+                      {item.title}
+                    </span>
+                    <span className="block truncate text-[11px] text-ds-3">
+                      {item.description}
+                    </span>
                   </span>
-                  <div className="min-w-0">
-                    <Typography
-                      variant="body2"
-                      weight="black"
-                      className="truncate"
-                    >
-                      John Doe
-                    </Typography>
-                    <Typography variant="caption" className="text-ds-3">
-                      Administrator
-                    </Typography>
-                  </div>
-                </div>
-                <div className="my-2 border-t border-ds-border-3" />
-                <div className="flex flex-col gap-1">
-                  <Button
-                    type="button"
-                    variant="tertiary"
-                    size="small"
-                    className="justify-start px-2 py-1.5 text-sm"
-                  >
-                    Profile
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="tertiary"
-                    size="small"
-                    className="justify-start px-2 py-1.5 text-sm"
-                  >
-                    Settings
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="tertiary"
-                    size="small"
-                    className="justify-start px-2 py-1.5 text-sm text-ds-state-error-text"
-                  >
-                    Log Out
-                  </Button>
-                </div>
-              </div>
-            </DropdownMenu>
+                  <span className="text-[11px] text-ds-3">{item.time}</span>
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
+        </DropdownMenu>
 
-        <div className="mt-2 flex items-center gap-1 sm:hidden">
-          <Button
-            type="button"
-            variant="tertiary"
-            size="small"
-            className="p-1!"
-            aria-label="Toggle sidebar"
-            onClick={() => setOpen(!resolvedOpen)}
-          >
-            <HamburgerIcon isOpen={resolvedOpen} />
-          </Button>
+        <Button
+          type="button"
+          variant="tertiary"
+          size="small"
+          className="h-9 w-9 rounded-full p-0!"
+          aria-label="Toggle theme"
+        >
+          <span className="flex cursor-pointer rounded-full">
+            <SunToMoonButton showLabelAndImage={false} />
+          </span>
+        </Button>
 
-          <Button
-            type="button"
-            variant="tertiary"
-            size="small"
-            className="relative h-9 w-9 rounded-full p-0!"
-            aria-label="Open notifications"
-          >
-            <BellIcon className="h-5 w-5" />
-            <span className="text-ds-1 absolute -right-3 top-2 text-xs font-bold">
-              3
-            </span>
-          </Button>
+        <Button
+          type="button"
+          variant="tertiary"
+          size="small"
+          className="h-9 w-9 rounded-full p-0!"
+          aria-label="Toggle fullscreen"
+          onClick={() => {
+            if (document.fullscreenElement) {
+              document.exitFullscreen();
+            } else {
+              document.documentElement.requestFullscreen();
+            }
+          }}
+        >
+          <FullScreenIcon className="h-5 w-5" />
+        </Button>
 
-          <Button
-            type="button"
-            variant="tertiary"
-            size="small"
-            className="h-9 w-9 rounded-full p-0!"
-            aria-label="Toggle theme"
-          >
-            <CircleIcon className="h-4 w-4 text-ds-warning" />
-          </Button>
+        <DropdownMenu
+          animationClassName={isRtl ? "origin-top-left" : "origin-top-right"}
+          panelClassName={mergeClassNames(
+            "top-[44px]",
+            isRtl ? "left-0" : "right-0",
+          )}
+          trigger={
+            <Button
+              type="button"
+              variant="primary"
+              size="small"
+              className="h-9 w-9 rounded-full p-0! text-sm font-black"
+              aria-label="Open user menu"
+            >
+              JD
+            </Button>
+          }
+        >
+          <div className="w-52 rounded-lg border border-ds-border-3 bg-ds-surface-1 p-3 shadow-xl">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="bg-ds-accent text-ds-on-accent inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-black">
+                JD
+              </span>
+              <div className="min-w-0">
+                <Typography variant="body2" weight="black" className="truncate">
+                  John Doe
+                </Typography>
+                <Typography variant="caption" className="text-ds-3">
+                  Administrator
+                </Typography>
+              </div>
+            </div>
+            <div className="my-2 border-t border-ds-border-3" />
+            <div className="flex flex-col gap-1">
+              <Button
+                type="button"
+                variant="tertiary"
+                size="small"
+                className={mergeClassNames(
+                  "px-2 py-1.5 text-sm",
+                  isRtl ? "justify-end text-right" : "justify-start text-left",
+                )}
+              >
+                Profile
+              </Button>
+              <Button
+                type="button"
+                variant="tertiary"
+                size="small"
+                className={mergeClassNames(
+                  "px-2 py-1.5 text-sm",
+                  isRtl ? "justify-end text-right" : "justify-start text-left",
+                )}
+              >
+                Settings
+              </Button>
+              <Button
+                type="button"
+                variant="tertiary"
+                size="small"
+                className={mergeClassNames(
+                  "px-2 py-1.5 text-sm text-ds-state-error-text",
+                  isRtl ? "justify-end text-right" : "justify-start text-left",
+                )}
+              >
+                Log Out
+              </Button>
+            </div>
+          </div>
+        </DropdownMenu>
+      </>
+    ),
+    [isRtl, resolvedOpen, toggleSidebar],
+  );
 
-          <Button
-            type="button"
-            variant="tertiary"
-            size="small"
-            className="h-9 w-9 rounded-full p-0!"
-            aria-label="Toggle fullscreen"
-          >
-            <FullScreenIcon className="h-5 w-5" />
-          </Button>
+  const resolvedHeaderLeading = resolveSlot(headerLeading, headerContext);
+  const resolvedHeaderActions =
+    headerActions === undefined
+      ? defaultHeaderActions
+      : resolveSlot(headerActions, headerContext);
 
-          <Button
-            type="button"
-            variant="primary"
-            size="small"
-            className="ml-1 h-9 w-9 rounded-full p-0! text-sm font-black"
-            aria-label="Open user menu"
+  const defaultHeader = useMemo(
+    () => (
+      <nav
+        dir={resolvedDirection}
+        className={mergeClassNames(
+          "sticky top-2 z-40 mb-4 flex items-center rounded-md border border-ds-border-3 bg-ds-surface-1/95 px-4 py-3 shadow-[0_4px_14px_color-mix(in_srgb,var(--ds-color-fg)_8%,transparent)] backdrop-blur-md",
+          headerClassName,
+        )}
+      >
+        <div
+          className={mergeClassNames(
+            "flex w-full justify-between gap-4",
+            isRtl && "flex-row-reverse",
+          )}
+        >
+          <div
+            className={mergeClassNames(
+              "flex min-w-0 items-center gap-3",
+              isRtl && "flex-row-reverse text-right",
+              headerTitleClassName,
+            )}
           >
-            JD
-          </Button>
+            {resolvedHeaderLeading}
+            <div className="min-w-0">
+              <Typography variant="caption" className="text-ds-3 capitalize">
+                {breadcrumb}
+              </Typography>
+              <Typography
+                variant="h5"
+                weight="black"
+                className="truncate leading-7 capitalize"
+              >
+                {title}
+              </Typography>
+            </div>
+          </div>
+
+          <div
+            className={mergeClassNames(
+              "border-ds-border-4 flex min-h-11 shrink-0 items-center gap-1 rounded-full border bg-ds-surface-1 px-2 py-1 shadow-[0_2px_8px_color-mix(in_srgb,var(--ds-color-fg)_6%,transparent)]",
+              isRtl && "flex-row-reverse",
+              headerActionsClassName,
+            )}
+          >
+            {resolvedHeaderActions}
+          </div>
         </div>
       </nav>
     ),
-    [breadcrumb, resolvedOpen, setOpen, title],
+    [
+      breadcrumb,
+      headerActionsClassName,
+      headerClassName,
+      headerTitleClassName,
+      isRtl,
+      resolvedDirection,
+      resolvedHeaderActions,
+      resolvedHeaderLeading,
+      title,
+    ],
   );
 
   const resolvedHeader =
-    typeof header === "function"
-      ? header({
-          isSidebarOpen: resolvedOpen,
-          toggleSidebar: () => setOpen(!resolvedOpen),
-        })
-      : header;
+    header === undefined ? undefined : resolveSlot(header, headerContext);
 
   return (
-    <div className={mergeClassNames("flex h-full w-full", className)}>
+    <div
+      dir={resolvedDirection}
+      className={mergeClassNames("flex h-full w-full", className)}
+    >
       <Sidebar
         items={items}
         open={resolvedOpen}
@@ -392,15 +509,23 @@ export function DashboardSidebarShell({
         activePath={activePath}
         onItemSelect={onItemSelect}
         direction={direction}
+        navbar={sidebarNavbar}
         brand={brand}
         footer={sidebarFooter}
+        className={sidebarClassName}
+        linksClassName={sidebarLinksClassName}
+        itemClassName={sidebarItemClassName}
+        activeItemClassName={sidebarActiveItemClassName}
+        overlayClassName={sidebarOverlayClassName}
+        closeLabel={sidebarCloseLabel}
+        showOverlay={showSidebarOverlay}
       />
 
       <div className="h-full w-full">
         <main
           className={mergeClassNames(
             "mx-2 flex-none transition-all duration-200 ease-in-out",
-            direction === "rtl" ? "xl:mr-[18.5rem]" : "xl:ml-[18.5rem]",
+            isRtl ? "xl:mr-[18.5rem]" : "xl:ml-[18.5rem]",
             mainClassName,
           )}
         >

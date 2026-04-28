@@ -290,7 +290,7 @@ export const FilterProfile: React.FC<FilterProfileProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-200"
       onClick={onClose}
     >
       <div
@@ -738,7 +738,7 @@ function FilterSelectorMenu({
       {filterOptions.map((filter) => (
         <div
           key={filter.id}
-          className="min-w-36 rounded-[8px] px-2 py-1 hover:bg-ds-surface-2"
+          className="min-w-36 rounded-md px-2 py-1 hover:bg-ds-surface-2"
         >
           <Checkbox
             checked={visibleFilters.includes(filter.id)}
@@ -1244,7 +1244,7 @@ export default function DataTable<T = Record<string, any>>({
       className={mergeClassNames("space-y-0", className)}
     >
       {/* Row 1: Filters Row - Separated with border */}
-      <div className="relative z-[60] mb-4 min-h-[80px] flex items-center justify-between gap-4 rounded-[8px] border border-ds-border-2 bg-ds-surface-1 px-4 py-4">
+      <div className="relative z-[60] mb-4 min-h-[80px] flex items-center justify-between gap-4 rounded-lg border border-ds-border-2 bg-ds-surface-1 px-4 py-4">
         <div className="flex items-center gap-3 flex-wrap">
           {filterOptions
             .filter((filter) => visibleFilters.includes(filter.id))

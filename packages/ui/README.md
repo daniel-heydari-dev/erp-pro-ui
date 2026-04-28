@@ -215,6 +215,86 @@ import { DropdownMenu } from "erp-pro-ui";
 </DropdownMenu>;
 ```
 
+## Dashboard Sidebar Shell
+
+Use `DashboardSidebarShell` when you want the exact dashboard behavior: a top header connected to a responsive sidebar, mobile hamburger control, RTL support, and customization slots.
+
+```tsx
+import {
+  BellIcon,
+  Button,
+  DashboardSidebarShell,
+  FullScreenIcon,
+  HamburgerIcon,
+  type SidebarItem,
+} from "erp-pro-ui";
+
+const items: SidebarItem[] = [
+  { id: "dashboard", label: "داشبورد", href: "/dashboard", active: true },
+  { id: "inventory", label: "انبار", href: "/inventory" },
+  { id: "settings", label: "تنظیمات", href: "/settings" },
+];
+
+export function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <DashboardSidebarShell
+      items={items}
+      direction="rtl"
+      breadcrumb="صفحات / داشبورد"
+      title="داشبورد"
+      brand={<strong>ERPPRO</strong>}
+      sidebarFooter={<Button className="w-full">ارتقای پلن</Button>}
+      sidebarClassName="border-ds-border-2/60"
+      headerActions={({ isSidebarOpen, toggleSidebar, isRtl }) => (
+        <>
+          <Button
+            variant="tertiary"
+            size="small"
+            className="h-9 w-9 rounded-full p-0! xl:hidden"
+            onClick={toggleSidebar}
+            aria-label="Toggle sidebar"
+          >
+            <HamburgerIcon isOpen={isSidebarOpen} />
+          </Button>
+          <Button
+            variant="tertiary"
+            size="small"
+            className="relative h-9 w-9 rounded-full p-0!"
+            aria-label="Open notifications"
+          >
+            <BellIcon className="h-5 w-5" />
+            <span
+              className={
+                isRtl
+                  ? "absolute -left-0.5 -top-0.5"
+                  : "absolute -right-0.5 -top-0.5"
+              }
+            >
+              3
+            </span>
+          </Button>
+          <Button
+            variant="tertiary"
+            size="small"
+            className="h-9 w-9 rounded-full p-0!"
+          >
+            <FullScreenIcon className="h-5 w-5" />
+          </Button>
+        </>
+      )}
+    >
+      {children}
+    </DashboardSidebarShell>
+  );
+}
+```
+
+Customization props:
+
+- Header: `header`, `headerLeading`, `headerActions`, `headerClassName`, `headerTitleClassName`, `headerActionsClassName`
+- Sidebar: `brand`, `sidebarNavbar`, `sidebarFooter`, `sidebarClassName`, `sidebarLinksClassName`, `sidebarItemClassName`, `sidebarActiveItemClassName`, `sidebarOverlayClassName`
+- Behavior: `open`, `defaultOpen`, `onOpenChange`, `direction`, `activePath`, `onItemSelect`
+
 ## Colors And Fonts In Another Project
 
 The library now ships a two-layer theme contract so another project can use the same tokens without copying theme config:

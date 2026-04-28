@@ -78,6 +78,17 @@ export { Calendar } from "./components/forms/calendar";
 
 export { Card } from "./components/data-display/card";
 
+export { StatCard, ChartCard, TopProductsCard } from "./components/data-display/dashboard-cards";
+export type {
+  StatCardProps,
+  StatCardSize,
+  StatCardLegendItem,
+  ChartCardProps,
+  ChartCardLegendItem,
+  TopProductsCardProps,
+  TopProductItem,
+} from "./components/data-display/dashboard-cards";
+
 export { Carousel } from "./components/navigation/carousel";
 export {
   Sidebar,

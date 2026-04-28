@@ -308,7 +308,7 @@ export const isFilterActive = (value?: FilterValue): boolean =>
 
 function LoadingFilterField({ label }: { label: string }) {
   return (
-    <div className="min-w-[200px] space-y-2 rounded-[10px] border border-ds-border-2 bg-ds-surface-2/70 px-3 py-2">
+    <div className="min-w-[200px] space-y-2 rounded-lg border border-ds-border-2 bg-ds-surface-2/70 px-3 py-2">
       <div className="h-3 w-24 animate-pulse rounded bg-ds-surface-3" />
       <div className="h-10 w-full animate-pulse rounded bg-ds-surface-1" />
       <p className="text-xs text-ds-2">

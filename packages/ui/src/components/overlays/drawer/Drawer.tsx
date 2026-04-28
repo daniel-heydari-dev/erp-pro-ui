@@ -55,7 +55,7 @@ export const Drawer = ({
     <AnimatePresence>
       {open && (
         <div
-          className="fixed inset-0 z-40 flex overlay-backdrop"
+          className="fixed inset-0 z-200 flex overlay-backdrop"
           role="presentation"
         >
           <motion.div
@@ -90,11 +90,11 @@ export const Drawer = ({
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-10 top-[-72px] h-40 w-40 rounded-full bg-ds-accent/18 blur-3xl"
+              className="pointer-events-none absolute -end-10 top-[-72px] h-40 w-40 rounded-full bg-ds-accent/18 blur-3xl"
             />
             <button
               type="button"
-              className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-ds-border-2 bg-ds-surface-2 text-lg font-light text-ds-1 shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-ds-surface-3"
+              className="absolute end-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-ds-border-2 bg-ds-surface-2 text-lg font-light text-ds-1 shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-ds-surface-3"
               aria-label="Close drawer"
               onClick={() => onOpenChange?.(false)}
             >
@@ -102,7 +102,7 @@ export const Drawer = ({
             </button>
             <div className="relative z-10 flex h-full flex-col">
               {(title || description) && (
-                <header className="space-y-1 pr-10">
+                <header className="space-y-1 pe-10">
                   {title && (
                     <h2 className="text-lg font-semibold tracking-tight text-ds-1">
                       {title}
@@ -114,7 +114,7 @@ export const Drawer = ({
                 </header>
               )}
               {children && (
-                <div className="mt-4 flex-1 overflow-auto space-y-4 pr-1">
+                <div className="mt-4 flex-1 overflow-auto space-y-4 pe-1">
                   {children}
                 </div>
               )}

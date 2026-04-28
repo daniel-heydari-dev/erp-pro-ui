@@ -304,7 +304,7 @@ export function DataTableToolbar({
 
       {bulkSelectionActive && hasSelectedRows
         ? (bulkActionCard ?? (
-            <div className="mt-2 flex flex-col gap-2 rounded-[4px] border border-ds-border-2 bg-ds-surface-2 px-3 py-2 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+            <div className="mt-2 flex flex-col gap-2 rounded-md border border-ds-border-2 bg-ds-surface-2 px-3 py-2 shadow-sm lg:flex-row lg:items-center lg:justify-between">
               <div className="flex min-w-0 flex-wrap items-center gap-2">
                 <Chip
                   variant="soft"

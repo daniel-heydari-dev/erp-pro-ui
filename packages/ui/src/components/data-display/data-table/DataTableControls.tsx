@@ -27,7 +27,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
       animationClassName={`${
         direction === "rtl" ? "origin-top-left" : "origin-top-right"
       } transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]`}
-      panelClassName={`top-full z-50 mt-2 min-w-64 overflow-hidden rounded-[4px] border border-ds-border-2 bg-ds-surface-1 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-ds-border-3/35 backdrop-blur-2xl ${
+      panelClassName={`top-full z-50 mt-2 min-w-64 overflow-hidden rounded-md border border-ds-border-2 bg-ds-surface-1 shadow-[0_18px_40px_rgba(15,23,42,0.18)] ring-1 ring-inset ring-ds-border-3/35 backdrop-blur-2xl ${
         direction === "rtl" ? "left-0" : "right-0"
       }`}
     >
@@ -97,7 +97,7 @@ export const ColumnToggle: React.FC<ColumnToggleProps> = ({
       {columns.map((col) => (
         <div
           key={col.id}
-          className="rounded-[8px] px-2 py-1 hover:bg-ds-surface-2"
+          className="rounded-md px-2 py-1 hover:bg-ds-surface-2"
         >
           <Checkbox
             checked={col.visible !== false}
