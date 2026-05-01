@@ -2,6 +2,16 @@
 
 Typed React 19 component library for ERP, admin, and SaaS products.
 
+## What's New in v0.2.0
+
+- **RTL support across all form controls** — `Combobox`, `Select`, `MultiSelectCombobox`, `Label`, `Form`, `PasswordStrengthMeter`, and `Switch` now use CSS logical properties (`ms-*`, `me-*`, `ps-*`, `pe-*`) throughout. No extra configuration needed when the parent carries `dir="rtl"`.
+- **`Switch` RTL + dark mode** — Pass `dir="rtl"` directly on the component (or inherit it from the document). The thumb position and label alignment respond automatically. The unchecked track now uses the correct `--ds-surface-5` design token in both light and dark mode.
+- **`Radio` rewrite** — The native `<input type="radio">` was replaced with a fully custom styled indicator. Selected state and active ring now render correctly in dark mode.
+- **`Drawer` RTL** — Logical CSS properties are used internally so slide direction and spacing flip automatically with `dir="rtl"`.
+- **`DropdownMenu` panel width** — The panel is now `min-w-max`, so it no longer collapses narrower than its content in RTL and tight-layout contexts.
+- **`StatCard` size variants** — Three sizes available: `"sm"`, `"md"` (default), and `"lg"`. `sm` hides the chart slot; `lg` shows a legend row in the header.
+- **`PositiveNegativeBarChart`** — Border radius is now applied to the free end of every bar (away from the zero line), for both positive and negative bars in horizontal layout.
+
 This package is designed to be consumed from a different project, not only inside this monorepo. It ships compiled styles, typed components, root imports, subpath imports, icons, helpers, machine-readable docs metadata, and a publishable npm package surface.
 
 Live docs: [daniel-heydari-dev.github.io/erp-pro-ui](https://daniel-heydari-dev.github.io/erp-pro-ui/)
@@ -721,6 +731,10 @@ The tables below document the public surface you can use from another project.
 | `NeonLineChart`                                                                                                            | `erp-pro-ui/charts`        | Glowing line charts                               |
 | `StackedBarChart`                                                                                                          | `erp-pro-ui/charts`        | Stacked comparisons                               |
 | `ThinBreakdownBar`                                                                                                         | `erp-pro-ui/charts`        | Compact segmented metric bars                     |
+| `PositiveNegativeBarChart`, `PositiveNegativeBarChartData`                                                                 | `erp-pro-ui/charts`        | Horizontal bar chart with positive/negative bars  |
+| `StatCard`, `StatCardProps`, `StatCardSize`, `StatCardLegendItem`                                                          | root import only           | KPI stat card with sm / md / lg size variants     |
+| `ChartCard`                                                                                                                | root import only           | Dashboard chart container card                    |
+| `TopProductsCard`, `TopProductsCardProps`, `TopProductItem`                                                                | root import only           | Ranked list card for top items                    |
 
 ### Visual Effects And Text Components
 
