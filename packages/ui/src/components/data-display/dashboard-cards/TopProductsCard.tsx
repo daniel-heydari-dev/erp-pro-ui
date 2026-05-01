@@ -24,7 +24,7 @@ export interface TopProductsCardProps {
 
 const RankBadge: FC<{ rank: number }> = ({ rank }) => (
   <span
-    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-xs font-semibold"
+    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-xs font-semibold  border-ds-border-3/80 "
     style={{
       borderColor: "var(--ds-color-accent)",
       color: "var(--ds-color-accent)",
@@ -64,7 +64,7 @@ export const TopProductsCard: FC<TopProductsCardProps> = ({
   return (
     <div
       className={mergeClassNames(
-        "flex flex-col rounded-2xl border border-ds-border-2 bg-ds-surface-1 p-5",
+        "flex flex-col rounded-lg border border-ds-border-3/80 bg-ds-surface-1 p-5",
         className,
       )}
     >

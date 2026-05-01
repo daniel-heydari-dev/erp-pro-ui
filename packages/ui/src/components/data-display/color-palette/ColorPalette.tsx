@@ -1,690 +1,212 @@
+"use client";
+
 import React from "react";
 
-export interface ColorSwatch {
-  name: string;
-  value: string;
-  textColor?: "light" | "dark";
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+export interface TokenSwatch {
+  /** Tailwind class displayed as the main label, e.g. "bg-ds-surface-1" */
+  twClass: string;
+  /** Underlying CSS variable, e.g. "var(--ds-surface-1)" */
+  cssVar: string;
+  /** Short role description */
+  role: string;
+  /** Hint for readable label on the swatch itself */
+  textOnColor?: "light" | "dark" | "auto";
 }
 
-export interface ColorGroup {
+export interface TokenGroup {
+  /** Section heading */
   name: string;
-  colors: ColorSwatch[];
+  swatches: TokenSwatch[];
 }
 
 export interface ColorPaletteProps {
-  groups?: ColorGroup[];
-  theme?: "light" | "dark" | "all";
-  showGradients?: boolean;
-  showUsageExamples?: boolean;
+  /** Override the built-in groups with custom data */
+  groups?: TokenGroup[];
   className?: string;
 }
 
-const lightThemeGroups: ColorGroup[] = [
-  {
-    name: "Active Accent Scale",
-    colors: [
-      { name: "primary-50", value: "var(--ds-accent-50)", textColor: "dark" },
-      { name: "primary-100", value: "var(--ds-accent-100)", textColor: "dark" },
-      { name: "primary-200", value: "var(--ds-accent-200)", textColor: "dark" },
-      { name: "primary-300", value: "var(--ds-accent-300)", textColor: "dark" },
-      {
-        name: "primary-400",
-        value: "var(--ds-accent-400)",
-        textColor: "light",
-      },
-      {
-        name: "primary-500",
-        value: "var(--ds-accent-500)",
-        textColor: "light",
-      },
-      {
-        name: "primary-600",
-        value: "var(--ds-accent-600)",
-        textColor: "light",
-      },
-      {
-        name: "primary-700",
-        value: "var(--ds-accent-700)",
-        textColor: "light",
-      },
-      {
-        name: "primary-800",
-        value: "var(--ds-accent-800)",
-        textColor: "light",
-      },
-      {
-        name: "primary-900",
-        value: "var(--ds-accent-900)",
-        textColor: "light",
-      },
-    ],
-  },
-  {
-    name: "Semantic Surfaces",
-    colors: [
-      {
-        name: "bg-ds-canvas",
-        value: "var(--ds-color-bg-canvas)",
-        textColor: "dark",
-      },
-      {
-        name: "bg-ds-surface-1",
-        value: "var(--ds-color-bg-surface)",
-        textColor: "dark",
-      },
-      {
-        name: "bg-ds-surface-2",
-        value: "var(--ds-color-bg-elevated)",
-        textColor: "dark",
-      },
-      {
-        name: "bg-ds-surface-3",
-        value: "var(--ds-color-bg-ds-surface-3)",
-        textColor: "dark",
-      },
-      {
-        name: "accent-subtle",
-        value: "var(--ds-color-accent-subtle)",
-        textColor: "dark",
-      },
-    ],
-  },
-  {
-    name: "Semantic Foreground",
-    colors: [
-      { name: "fg", value: "var(--ds-color-fg)", textColor: "light" },
-      {
-        name: "fg-muted",
-        value: "var(--ds-color-fg-muted)",
-        textColor: "light",
-      },
-      {
-        name: "fg-subtle",
-        value: "var(--ds-color-fg-subtle)",
-        textColor: "light",
-      },
-      {
-        name: "on-accent",
-        value: "var(--ds-color-on-accent)",
-        textColor: "dark",
-      },
-    ],
-  },
-  {
-    name: "Semantic Borders",
-    colors: [
-      { name: "border", value: "var(--ds-color-border)", textColor: "dark" },
-      {
-        name: "border-strong",
-        value: "var(--ds-color-border-strong)",
-        textColor: "dark",
-      },
-      {
-        name: "border-muted",
-        value: "var(--ds-color-border-muted)",
-        textColor: "dark",
-      },
-      {
-        name: "border-field",
-        value: "var(--ds-color-border-field)",
-        textColor: "dark",
-      },
-      {
-        name: "focus-ring",
-        value: "var(--ds-color-focus-ring)",
-        textColor: "dark",
-      },
-    ],
-  },
-  {
-    name: "Semantic Status",
-    colors: [
-      { name: "success", value: "#1eb564", textColor: "light" },
-      { name: "warning", value: "#ff9500", textColor: "dark" },
-      { name: "danger", value: "#e31d1c", textColor: "light" },
-      { name: "info", value: "#0085c4", textColor: "light" },
-      { name: "disabled", value: "#d2d2d3", textColor: "dark" },
-    ],
-  },
-  {
-    name: "Foundation Tokens",
-    colors: [
-      { name: "--ds-primary", value: "var(--ds-primary)", textColor: "light" },
-      {
-        name: "--ds-surface-canvas",
-        value: "var(--ds-surface-canvas)",
-        textColor: "dark",
-      },
-      {
-        name: "--ds-surface-1",
-        value: "var(--ds-surface-1)",
-        textColor: "dark",
-      },
-      { name: "--ds-text-1", value: "var(--ds-text-1)", textColor: "light" },
-      { name: "--ds-border-1", value: "var(--ds-border-1)", textColor: "dark" },
-    ],
-  },
+// ---------------------------------------------------------------------------
+// Canonical token groups (correct --ds-* CSS variables)
+// ---------------------------------------------------------------------------
+
+export const surfaceGroup: TokenGroup = {
+  name: "Surfaces",
+  swatches: [
+    { twClass: "bg-ds-canvas",    cssVar: "var(--ds-surface-canvas)", role: "Page / app canvas",      textOnColor: "dark" },
+    { twClass: "bg-ds-surface-1", cssVar: "var(--ds-surface-1)",      role: "Card / panel",           textOnColor: "dark" },
+    { twClass: "bg-ds-surface-2", cssVar: "var(--ds-surface-2)",      role: "Elevated (modal/popover)", textOnColor: "dark" },
+    { twClass: "bg-ds-surface-3", cssVar: "var(--ds-surface-3)",      role: "Highest elevated",       textOnColor: "dark" },
+    { twClass: "bg-ds-accent-subtle", cssVar: "var(--ds-color-accent-subtle)", role: "Accent tinted surface", textOnColor: "dark" },
+  ],
+};
+
+export const textGroup: TokenGroup = {
+  name: "Text",
+  swatches: [
+    { twClass: "text-ds-1", cssVar: "var(--ds-text-1)", role: "Primary text",         textOnColor: "light" },
+    { twClass: "text-ds-2", cssVar: "var(--ds-text-2)", role: "Secondary / labels",   textOnColor: "light" },
+    { twClass: "text-ds-3", cssVar: "var(--ds-text-3)", role: "Muted / hints",        textOnColor: "light" },
+    { twClass: "text-ds-on-accent", cssVar: "var(--ds-color-on-accent)", role: "On accent bg", textOnColor: "dark" },
+  ],
+};
+
+export const borderGroup: TokenGroup = {
+  name: "Borders",
+  swatches: [
+    { twClass: "border-ds-border-1",     cssVar: "var(--ds-border-1)",    role: "Strong border",    textOnColor: "dark" },
+    { twClass: "border-ds-border-2",     cssVar: "var(--ds-border-2)",    role: "Default border",   textOnColor: "dark" },
+    { twClass: "border-ds-border-3",     cssVar: "var(--ds-border-3)",    role: "Subtle divider",   textOnColor: "dark" },
+    { twClass: "border-ds-border-4",     cssVar: "var(--ds-border-4)",    role: "Faintest border",  textOnColor: "dark" },
+    { twClass: "border-ds-border-field", cssVar: "var(--ds-border-field)", role: "Input field border", textOnColor: "dark" },
+  ],
+};
+
+export const accentGroup: TokenGroup = {
+  name: "Accent",
+  swatches: [
+    { twClass: "bg-ds-accent",       cssVar: "var(--ds-color-accent)",       role: "Brand / interactive",  textOnColor: "light" },
+    { twClass: "bg-ds-accent-hover", cssVar: "var(--ds-color-accent-hover)", role: "Hover state",          textOnColor: "light" },
+    { twClass: "ring-ds-focus",      cssVar: "var(--ds-color-focus-ring)",   role: "Focus ring",           textOnColor: "light" },
+  ],
+};
+
+export const accentScaleGroup: TokenGroup = {
+  name: "Accent Scale",
+  swatches: [
+    { twClass: "--ds-accent-50",  cssVar: "var(--ds-accent-50)",  role: "Lightest",  textOnColor: "dark"  },
+    { twClass: "--ds-accent-100", cssVar: "var(--ds-accent-100)", role: "100",       textOnColor: "dark"  },
+    { twClass: "--ds-accent-200", cssVar: "var(--ds-accent-200)", role: "200",       textOnColor: "dark"  },
+    { twClass: "--ds-accent-300", cssVar: "var(--ds-accent-300)", role: "300",       textOnColor: "dark"  },
+    { twClass: "--ds-accent-400", cssVar: "var(--ds-accent-400)", role: "400",       textOnColor: "light" },
+    { twClass: "--ds-accent-500", cssVar: "var(--ds-accent-500)", role: "Base (500)", textOnColor: "light" },
+    { twClass: "--ds-accent-600", cssVar: "var(--ds-accent-600)", role: "600",       textOnColor: "light" },
+    { twClass: "--ds-accent-700", cssVar: "var(--ds-accent-700)", role: "700",       textOnColor: "light" },
+    { twClass: "--ds-accent-800", cssVar: "var(--ds-accent-800)", role: "800",       textOnColor: "light" },
+    { twClass: "--ds-accent-900", cssVar: "var(--ds-accent-900)", role: "Darkest",   textOnColor: "light" },
+  ],
+};
+
+export const brandGroup: TokenGroup = {
+  name: "Brand Themes",
+  swatches: [
+    { twClass: "bg-ds-brand-purple", cssVar: "var(--ds-brand-purple)", role: "Purple (default)", textOnColor: "light" },
+    { twClass: "bg-ds-brand-teal",   cssVar: "var(--ds-brand-teal)",   role: "Teal",             textOnColor: "light" },
+    { twClass: "bg-ds-brand-yellow", cssVar: "var(--ds-brand-yellow)", role: "Yellow",           textOnColor: "dark"  },
+    { twClass: "bg-ds-brand-green",  cssVar: "var(--ds-brand-green)",  role: "Green",            textOnColor: "light" },
+  ],
+};
+
+export const statusGroup: TokenGroup = {
+  name: "Status",
+  swatches: [
+    { twClass: "bg-ds-state-success", cssVar: "var(--ds-color-success)", role: "Success",  textOnColor: "light" },
+    { twClass: "bg-ds-state-warning", cssVar: "var(--ds-color-warning)", role: "Warning",  textOnColor: "dark"  },
+    { twClass: "bg-ds-state-danger",  cssVar: "var(--ds-color-danger)",  role: "Danger",   textOnColor: "light" },
+    { twClass: "bg-ds-state-info",    cssVar: "var(--ds-color-info)",    role: "Info",     textOnColor: "light" },
+  ],
+};
+
+export const defaultGroups: TokenGroup[] = [
+  surfaceGroup,
+  textGroup,
+  borderGroup,
+  accentGroup,
+  accentScaleGroup,
+  brandGroup,
+  statusGroup,
 ];
 
-const darkThemeGroups: ColorGroup[] = [
-  {
-    name: "Active Accent Scale (Dark)",
-    colors: [
-      { name: "primary-50", value: "var(--ds-accent-50)", textColor: "dark" },
-      { name: "primary-100", value: "var(--ds-accent-100)", textColor: "dark" },
-      { name: "primary-200", value: "var(--ds-accent-200)", textColor: "dark" },
-      { name: "primary-300", value: "var(--ds-accent-300)", textColor: "dark" },
-      {
-        name: "primary-400",
-        value: "var(--ds-accent-400)",
-        textColor: "light",
-      },
-      {
-        name: "primary-500",
-        value: "var(--ds-accent-500)",
-        textColor: "light",
-      },
-      {
-        name: "primary-600",
-        value: "var(--ds-accent-600)",
-        textColor: "light",
-      },
-      {
-        name: "primary-700",
-        value: "var(--ds-accent-700)",
-        textColor: "light",
-      },
-      {
-        name: "primary-800",
-        value: "var(--ds-accent-800)",
-        textColor: "light",
-      },
-      {
-        name: "primary-900",
-        value: "var(--ds-accent-900)",
-        textColor: "light",
-      },
-    ],
-  },
-  {
-    name: "Semantic Surfaces (Dark)",
-    colors: [
-      {
-        name: "bg-ds-canvas",
-        value: "var(--ds-color-bg-canvas)",
-        textColor: "light",
-      },
-      {
-        name: "bg-ds-surface-1",
-        value: "var(--ds-color-bg-surface)",
-        textColor: "light",
-      },
-      {
-        name: "bg-ds-surface-2",
-        value: "var(--ds-color-bg-elevated)",
-        textColor: "light",
-      },
-      {
-        name: "bg-ds-surface-3",
-        value: "var(--ds-color-bg-ds-surface-3)",
-        textColor: "light",
-      },
-      {
-        name: "accent-subtle",
-        value: "var(--ds-color-accent-subtle)",
-        textColor: "light",
-      },
-    ],
-  },
-  {
-    name: "Semantic Foreground (Dark)",
-    colors: [
-      { name: "fg", value: "var(--ds-color-fg)", textColor: "dark" },
-      {
-        name: "fg-muted",
-        value: "var(--ds-color-fg-muted)",
-        textColor: "dark",
-      },
-      {
-        name: "fg-subtle",
-        value: "var(--ds-color-fg-subtle)",
-        textColor: "dark",
-      },
-      {
-        name: "on-accent",
-        value: "var(--ds-color-on-accent)",
-        textColor: "dark",
-      },
-    ],
-  },
-  {
-    name: "Semantic Borders (Dark)",
-    colors: [
-      { name: "border", value: "var(--ds-color-border)", textColor: "light" },
-      {
-        name: "border-strong",
-        value: "var(--ds-color-border-strong)",
-        textColor: "light",
-      },
-      {
-        name: "border-muted",
-        value: "var(--ds-color-border-muted)",
-        textColor: "light",
-      },
-      {
-        name: "border-field",
-        value: "var(--ds-color-border-field)",
-        textColor: "light",
-      },
-      {
-        name: "focus-ring",
-        value: "var(--ds-color-focus-ring)",
-        textColor: "dark",
-      },
-    ],
-  },
-  {
-    name: "Semantic Status (Dark)",
-    colors: [
-      { name: "success", value: "#22c55e", textColor: "light" },
-      { name: "warning", value: "#f59e42", textColor: "dark" },
-      { name: "danger", value: "#ef4444", textColor: "light" },
-      { name: "info", value: "#38bdf8", textColor: "dark" },
-      { name: "disabled", value: "#4b5563", textColor: "light" },
-    ],
-  },
-  {
-    name: "Foundation Tokens (Dark)",
-    colors: [
-      { name: "--ds-primary", value: "var(--ds-primary)", textColor: "light" },
-      {
-        name: "--ds-surface-canvas",
-        value: "var(--ds-surface-canvas)",
-        textColor: "light",
-      },
-      {
-        name: "--ds-surface-1",
-        value: "var(--ds-surface-1)",
-        textColor: "light",
-      },
-      { name: "--ds-text-1", value: "var(--ds-text-1)", textColor: "dark" },
-      {
-        name: "--ds-border-1",
-        value: "var(--ds-border-1)",
-        textColor: "light",
-      },
-    ],
-  },
-];
+// ---------------------------------------------------------------------------
+// SwatchCard
+// ---------------------------------------------------------------------------
 
-const gradientGroups: ColorGroup[] = [
-  {
-    name: "Semantic Gradients",
-    colors: [
-      { name: "accent-gradient-start", value: "#9333ea", textColor: "light" },
-      { name: "accent-gradient-end", value: "#7e22ce", textColor: "light" },
-      { name: "accent-secondary", value: "#4318ff", textColor: "light" },
-    ],
-  },
-  {
-    name: "Status Gradients",
-    colors: [
-      { name: "success-gradient-start", value: "#22c55e", textColor: "light" },
-      { name: "success-gradient-end", value: "#16a34a", textColor: "light" },
-      { name: "warning-gradient-start", value: "#f59e0b", textColor: "dark" },
-      { name: "warning-gradient-end", value: "#d97706", textColor: "light" },
-      { name: "error-gradient-start", value: "#ef4444", textColor: "light" },
-      { name: "error-gradient-end", value: "#dc2626", textColor: "light" },
-    ],
-  },
-  {
-    name: "Glass / Opacity",
-    colors: [
-      {
-        name: "glass-white-90",
-        value: "rgba(255,255,255,0.9)",
-        textColor: "dark",
-      },
-      {
-        name: "glass-white-70",
-        value: "rgba(255,255,255,0.7)",
-        textColor: "dark",
-      },
-      {
-        name: "glass-white-50",
-        value: "rgba(255,255,255,0.5)",
-        textColor: "dark",
-      },
-      {
-        name: "glass-white-20",
-        value: "rgba(255,255,255,0.2)",
-        textColor: "dark",
-      },
-      {
-        name: "glass-white-10",
-        value: "rgba(255,255,255,0.1)",
-        textColor: "dark",
-      },
-      { name: "glass-black-90", value: "rgba(0,0,0,0.9)", textColor: "light" },
-      { name: "glass-black-70", value: "rgba(0,0,0,0.7)", textColor: "light" },
-      { name: "glass-black-50", value: "rgba(0,0,0,0.5)", textColor: "light" },
-      { name: "glass-black-20", value: "rgba(0,0,0,0.2)", textColor: "light" },
-      { name: "glass-black-10", value: "rgba(0,0,0,0.1)", textColor: "light" },
-    ],
-  },
-];
+function SwatchCard({ swatch }: { swatch: TokenSwatch }) {
+  const swatchRef = React.useRef<HTMLDivElement>(null);
+  const [hex, setHex] = React.useState<string>("");
+  const [copied, setCopied] = React.useState(false);
 
-// Default groups (backwards compatibility)
-const defaultGroups: ColorGroup[] = lightThemeGroups;
-
-interface DisplayColorGroup {
-  group: ColorGroup;
-  mode?: "light" | "dark";
-}
-
-function ColorSwatchItem({ color }: { color: ColorSwatch }) {
-  const swatchRef = React.useRef<HTMLDivElement | null>(null);
-  const [resolvedValue, setResolvedValue] = React.useState<string>(color.value);
-
-  // Resolve runtime CSS variable values so docs reflect live theme tokens.
   React.useEffect(() => {
-    if (!swatchRef.current) {
-      return;
-    }
+    const el = swatchRef.current;
+    if (!el) return;
+    const bg = getComputedStyle(el).backgroundColor;
+    setHex(bg || "");
+  }, [swatch.cssVar]);
 
-    if (color.value.startsWith("var(")) {
-      const computedBackground = getComputedStyle(
-        swatchRef.current,
-      ).backgroundColor;
-      setResolvedValue(computedBackground || color.value);
-      return;
-    }
-
-    setResolvedValue(color.value);
-  }, [color.value]);
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(resolvedValue);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(swatch.twClass).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
-
-  const swatchLabel = color.value.startsWith("var(")
-    ? "LIVE"
-    : color.value.length <= 9
-      ? color.value.toUpperCase()
-      : "RGBA";
 
   return (
     <div
-      className="flex flex-col items-center gap-2 cursor-pointer transition-transform hover:scale-105"
-      onClick={copyToClipboard}
-      title="Click to copy"
+      role="button"
+      tabIndex={0}
+      onClick={handleCopy}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleCopy(); }}
+      title={`Copy ${swatch.twClass}`}
+      className="group flex flex-col gap-0 rounded-xl border border-ds-border-2 overflow-hidden text-start cursor-pointer transition hover:shadow-md hover:border-ds-border-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus"
     >
+      {/* Color preview */}
       <div
         ref={swatchRef}
-        className="w-20 h-20 rounded-lg shadow-md border border-ds-border-2 flex items-center justify-center text-xs font-mono"
-        style={{ backgroundColor: color.value }}
+        className="relative h-16 w-full flex items-end px-2 pb-1.5"
+        style={{ backgroundColor: swatch.cssVar }}
       >
-        <span className="font-semibold text-ds-1 mix-blend-difference">
-          {swatchLabel}
-        </span>
-      </div>
-      <span className="text-xs font-medium text-ds-2 text-center max-w-20">
-        {color.name}
-      </span>
-      <span className="text-[10px] font-mono text-ds-3 text-center max-w-20 break-all">
-        {resolvedValue}
-      </span>
-    </div>
-  );
-}
-
-function GradientPreview() {
-  // Static examples to illustrate common gradient recipes.
-  return (
-    <div className="mt-8">
-      <h3 className="text-lg font-semibold text-ds-1 mb-4">
-        Semantic Gradient Examples
-      </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-on-accent font-medium"
-            style={{
-              background: "linear-gradient(135deg, #9333ea, #7e22ce)",
-            }}
-          >
-            Accent Gradient
-          </div>
-          <code className="text-xs text-ds-3">
-            linear-gradient(135deg, #9333ea, #7e22ce)
-          </code>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-on-accent font-medium"
-            style={{
-              background: "linear-gradient(135deg, #9333ea, #4318ff)",
-            }}
-          >
-            Accent to Brand Primary
-          </div>
-          <code className="text-xs text-ds-3">
-            linear-gradient(135deg, #9333ea, #4318ff)
-          </code>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-on-accent font-medium"
-            style={{
-              background: "linear-gradient(135deg, #22c55e, #16a34a)",
-            }}
-          >
-            Success Gradient
-          </div>
-          <code className="text-xs text-ds-3">
-            linear-gradient(135deg, #22c55e, #16a34a)
-          </code>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-1 font-medium"
-            style={{
-              background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
-            }}
-          >
-            Warning Gradient
-          </div>
-          <code className="text-xs text-ds-3">
-            linear-gradient(135deg, #fbbf24, #f59e0b)
-          </code>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-on-accent font-medium"
-            style={{
-              background: "linear-gradient(135deg, #ef4444, #dc2626)",
-            }}
-          >
-            Error Gradient
-          </div>
-          <code className="text-xs text-ds-3">
-            linear-gradient(135deg, #ef4444, #dc2626)
-          </code>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div
-            className="h-24 rounded-lg flex items-center justify-center text-ds-on-accent font-medium backdrop-blur-xl border border-ds-border-2/40"
-            style={{
-              background: "rgba(147, 51, 234, 0.7)",
-            }}
-          >
-            Glass Effect
-          </div>
-          <code className="text-xs text-ds-3">
-            rgba(147, 51, 234, 0.7) + backdrop-blur
-          </code>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function UsageExamples() {
-  // Token usage references for semantic utilities + raw CSS variables.
-  return (
-    <div className="mt-8 p-6 bg-ds-surface-2 rounded-xl">
-      <h3 className="text-lg font-semibold text-ds-1 mb-4">
-        Recommended Usage
-      </h3>
-      <div className="space-y-4">
-        <div className="p-4 bg-ds-surface-1 rounded-lg border border-ds-border-2">
-          <h4 className="font-medium text-ds-1 mb-2">
-            Semantic utilities first
-          </h4>
-          <pre className="text-xs font-mono text-ds-2 overflow-x-auto">
-            {`import { Button } from "erp-pro-ui";
-
-<section className="bg-ds-surface-1 text-ds-1 border border-ds-border-2 rounded-2xl p-6">
-  <h2 className="text-ds-1 text-xl font-semibold">Semantic theme</h2>
-  <p className="text-ds-2">Use utilities generated by colors.css.</p>
-  <Button label="Save changes" primary />
-</section>`}
-          </pre>
-        </div>
-
-        <div className="p-4 bg-ds-surface-1 rounded-lg border border-ds-border-2">
-          <h4 className="font-medium text-ds-1 mb-2">
-            Raw design-system variables
-          </h4>
-          <pre className="text-xs font-mono text-ds-2 overflow-x-auto">
-            {`.dashboard-shell {
-  background: var(--ds-color-bg-surface);
-  color: var(--ds-color-fg);
-  border: 1px solid var(--ds-color-border);
-}
-
-.dashboard-shell a {
-  color: var(--ds-color-accent);
-}
-
-html[data-brand="teal"][data-mode="dark"] {
-  color-scheme: dark;
-}`}
-          </pre>
-        </div>
-
-        <div className="p-4 bg-ds-surface-1 rounded-lg border border-ds-border-2">
-          <h4 className="font-medium text-ds-1 mb-2">
-            Compatibility aliases for migration
-          </h4>
-          <pre className="text-xs font-mono text-ds-2 overflow-x-auto">
-            {`:root {
-  --color-primary: #4318ff;
-  --color-background-primary: #f4f7fe;
-  --color-text-primary: #1e293b;
-}
-
-/* Supported for migration. Prefer semantic utilities or --ds-* in new code. */`}
-          </pre>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function ColorPalette({
-  groups,
-  theme = "all",
-  showGradients = true,
-  showUsageExamples = true,
-  className,
-}: ColorPaletteProps) {
-  // Build display groups based on requested mode. Each group can be rendered
-  // inside an explicit `data-mode` wrapper so light and dark values are both
-  // resolved accurately on the same page.
-  let displayGroups: DisplayColorGroup[];
-  if (groups) {
-    displayGroups = groups.map((group) => ({ group }));
-  } else if (theme === "light") {
-    displayGroups = lightThemeGroups.map((group) => ({ group, mode: "light" }));
-  } else if (theme === "dark") {
-    displayGroups = darkThemeGroups.map((group) => ({ group, mode: "dark" }));
-  } else {
-    // Show all
-    displayGroups = [
-      ...lightThemeGroups.map((group) => ({ group, mode: "light" as const })),
-      ...darkThemeGroups.map((group) => ({ group, mode: "dark" as const })),
-    ];
-  }
-
-  // Append optional gradient/opacity examples when using built-in groups.
-  if (showGradients && !groups) {
-    displayGroups = [
-      ...displayGroups,
-      ...gradientGroups.map((group) => ({ group })),
-    ];
-  }
-
-  return (
-    <div className={`p-6 bg-ds-surface-1 rounded-xl ${className || ""}`}>
-      <h2 className="text-2xl font-bold text-ds-1 mb-2">Color Palette</h2>
-      <p className="text-sm text-ds-2 mb-6">
-        Preferred contract:{" "}
-        <code className="font-mono bg-ds-surface-2 px-2 py-1 rounded text-ds-1">
-          semantic utilities and --ds-* tokens
-        </code>{" "}
-        • Compatibility aliases remain available for migration. Light and dark
-        sections are resolved in their own mode contexts. Click any swatch to
-        copy the resolved color value.
-      </p>
-
-      <div className="mb-6 flex flex-wrap gap-2">
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
-            theme === "light" || theme === "all"
-              ? "bg-ds-accent-subtle text-ds-1"
-              : "bg-ds-surface-2 text-ds-3"
-          }`}
-        >
-          Light Theme
-        </span>
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
-            theme === "dark" || theme === "all"
-              ? "bg-ds-accent-subtle text-ds-1"
-              : "bg-ds-surface-2 text-ds-3"
-          }`}
-        >
-          Dark Theme
-        </span>
-        {showGradients && (
-          <span className="px-3 py-1 rounded-full text-xs font-medium bg-ds-accent-subtle text-ds-1">
-            Gradients
+        {copied && (
+          <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold bg-black/30 text-white rounded-t-xl">
+            Copied!
           </span>
         )}
+        <span
+          className="font-mono text-[9px] leading-none opacity-70"
+          style={{ color: swatch.textOnColor === "light" ? "#fff" : "#000" }}
+        >
+          {hex || "LIVE"}
+        </span>
       </div>
 
-      {displayGroups.map(({ group, mode }) => (
-        <div key={group.name} data-mode={mode} className="mb-8">
-          <h3 className="text-lg font-semibold text-ds-1 mb-4">{group.name}</h3>
-          <div className="flex flex-wrap gap-4">
-            {group.colors.map((color) => (
-              <ColorSwatchItem key={color.name} color={color} />
-            ))}
-          </div>
-        </div>
-      ))}
-
-      {showGradients && <GradientPreview />}
-      {showUsageExamples && <UsageExamples />}
+      {/* Meta */}
+      <div className="flex flex-col gap-0.5 px-3 py-2.5 bg-ds-surface-1">
+        <span className="text-[11px] font-semibold font-mono text-ds-1 truncate">
+          {swatch.twClass}
+        </span>
+        <span className="text-[10px] font-mono text-ds-3 truncate">
+          {swatch.cssVar}
+        </span>
+        <span className="text-[10px] text-ds-2 mt-0.5">{swatch.role}</span>
+      </div>
     </div>
   );
 }
 
-// Export color groups for external use
-export { lightThemeGroups, darkThemeGroups, gradientGroups, defaultGroups };
+// ---------------------------------------------------------------------------
+// ColorPalette
+// ---------------------------------------------------------------------------
+
+export default function ColorPalette({ groups, className }: ColorPaletteProps) {
+  const displayGroups = groups ?? defaultGroups;
+
+  return (
+    <div className={`space-y-8 ${className ?? ""}`}>
+      {displayGroups.map((group) => (
+        <section key={group.name}>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-ds-2">
+            {group.name}
+          </h3>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {group.swatches.map((swatch) => (
+              <SwatchCard key={swatch.twClass} swatch={swatch} />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+export { ColorPalette };

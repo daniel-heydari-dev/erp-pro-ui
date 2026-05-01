@@ -12,6 +12,7 @@ export function DropdownMenu({
   panelClassName,
   animationClassName,
   closeOnItemClick = false,
+  align,
 }: DropdownMenuProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [internalOpen, setInternalOpen] = useState(false);
@@ -53,10 +54,12 @@ export function DropdownMenu({
     };
   }, []);
 
+  const defaultAnimation = align === "start" ?  "origin-top-right": "origin-top-right";
+
   return (
     <div ref={wrapperRef} className={mergeClassNames("relative inline-flex", className)}>
       <div
-        className="inline-flex"
+        className="flex w-full"
         onMouseDown={(event) => {
           event.preventDefault();
           setOpen((current) => !current);
@@ -67,8 +70,10 @@ export function DropdownMenu({
 
       <div
         className={mergeClassNames(
-          "absolute z-[1200] transition-all duration-300 ease-in-out",
-          animationClassName ?? "origin-top-right",
+          "absolute z-1200 min-w-max rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl",
+          "top-full mt-1 transition-all duration-300 ease-in-out",
+          align === "end" ? "end-5" : align === "start" ? "start-5" : "",
+          animationClassName ?? defaultAnimation,
           resolvedOpen ? "scale-100" : "scale-0",
           panelClassName,
         )}

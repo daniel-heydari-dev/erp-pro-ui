@@ -8,28 +8,32 @@ import { Button } from "../../forms/button";
 import { mergeClassNames } from "../../../utils";
 import type { CSSProperties } from "react";
 
-export interface ThemeSwitcherButtonsProps {
-  className?: string;
+export interface ThemeSwitcherLabels {
+  mode?: string;
+  light?: string;
+  dark?: string;
+  brand?: string;
+  variant?: string;
+  variantDefault?: string;
+  variantAlt?: string;
+  purple?: string;
+  teal?: string;
+  yellow?: string;
+  green?: string;
 }
 
-const BRAND_OPTIONS: Array<{
-  value: ThemeColorType;
-  label: string;
-  swatch: string;
-}> = [
-  { value: "purple", label: "Purple", swatch: "var(--ds-brand-purple)" },
-  { value: "teal", label: "Teal", swatch: "var(--ds-brand-teal)" },
-  { value: "yellow", label: "Yellow", swatch: "var(--ds-brand-yellow)" },
-  { value: "green", label: "Green", swatch: "var(--ds-brand-green)" },
-];
+export interface ThemeSwitcherButtonsProps {
+  className?: string;
+  /** Override any label for localisation / translation. */
+  labels?: ThemeSwitcherLabels;
+}
 
-const VARIANT_OPTIONS: Array<{
-  value: ThemeVariantType;
-  label: string;
-}> = [
-  { value: "default", label: "Default" },
-  { value: "alt", label: "Alt" },
-];
+const BRAND_SWATCHES: Record<ThemeColorType, string> = {
+  purple: "var(--ds-brand-purple)",
+  teal:   "var(--ds-brand-teal)",
+  yellow: "var(--ds-brand-yellow)",
+  green:  "var(--ds-brand-green)",
+};
 
 function ToggleButton({
   label,
@@ -85,8 +89,8 @@ function ToggleButton({
       className={mergeClassNames(
         "group rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-200",
         active
-          ? "border-ds-border-1 bg-ds-surface-2 text-ds-1 shadow-sm"
-          : "border-ds-border-3 bg-ds-surface-1 text-ds-2 hover:border-ds-border-2 hover:text-ds-1",
+          ? "border-ds-border-accent bg-ds-surface-2 text-ds-1 shadow-sm ring-1 ring-ds-border-accent/40"
+          : "border-ds-border-2 bg-ds-surface-1 text-ds-2 hover:border-ds-border-accent/50 hover:bg-ds-surface-2 hover:text-ds-1",
         showBrandState && isLightMode
           ? "bg-ds-surface-1! hover:bg-ds-surface-1!"
           : null,
@@ -116,48 +120,67 @@ function ToggleButton({
 
 export default function ThemeSwitcherButtons({
   className,
+  labels = {},
 }: ThemeSwitcherButtonsProps) {
   const { mode, theme, variant, setMode, setTheme, setVariant } =
     useThemeContext();
 
+  const l: Required<ThemeSwitcherLabels> = {
+    mode:           labels.mode           ?? "Mode",
+    light:          labels.light          ?? "Light",
+    dark:           labels.dark           ?? "Dark",
+    brand:          labels.brand          ?? "Brand",
+    variant:        labels.variant        ?? "Variant",
+    variantDefault: labels.variantDefault ?? "Default",
+    variantAlt:     labels.variantAlt     ?? "Alt",
+    purple:         labels.purple         ?? "Purple",
+    teal:           labels.teal           ?? "Teal",
+    yellow:         labels.yellow         ?? "Yellow",
+    green:          labels.green          ?? "Green",
+  };
+
+  const brandOptions: Array<{ value: ThemeColorType; label: string; swatch: string }> = [
+    { value: "purple", label: l.purple, swatch: BRAND_SWATCHES.purple },
+    { value: "teal",   label: l.teal,   swatch: BRAND_SWATCHES.teal   },
+    { value: "yellow", label: l.yellow, swatch: BRAND_SWATCHES.yellow },
+    { value: "green",  label: l.green,  swatch: BRAND_SWATCHES.green  },
+  ];
+
+  const variantOptions: Array<{ value: ThemeVariantType; label: string }> = [
+    { value: "default", label: l.variantDefault },
+    { value: "alt",     label: l.variantAlt     },
+  ];
+
   return (
     <div
       className={mergeClassNames(
-        "w-full rounded-2xl border border-ds-border-2 bg-ds-surface-1 p-4 shadow-sm",
+        "w-full rounded-2xl border border-ds-border-2 bg-ds-canvas p-4 shadow-sm",
         className,
       )}
     >
       <div className="space-y-3">
         <div>
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-ds-3">
-            Mode
+            {l.mode}
           </p>
           <div className="flex flex-wrap gap-2">
-            <ToggleButton
-              label="Light"
-              active={mode === "light"}
-              onClick={() => setMode("light")}
-            />
-            <ToggleButton
-              label="Dark"
-              active={mode === "dark"}
-              onClick={() => setMode("dark")}
-            />
+            <ToggleButton label={l.light} active={mode === "light"} onClick={() => setMode("light")} />
+            <ToggleButton label={l.dark}  active={mode === "dark"}  onClick={() => setMode("dark")}  />
           </div>
         </div>
 
         <div>
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-ds-3">
-            Brand
+            {l.brand}
           </p>
           <div className="flex flex-wrap gap-2">
-            {BRAND_OPTIONS.map((option) => (
+            {brandOptions.map((opt) => (
               <ToggleButton
-                key={option.value}
-                label={option.label}
-                active={theme === option.value}
-                onClick={() => setTheme(option.value)}
-                swatch={option.swatch}
+                key={opt.value}
+                label={opt.label}
+                active={theme === opt.value}
+                onClick={() => setTheme(opt.value)}
+                swatch={opt.swatch}
                 showBrandState
                 mode={mode}
               />
@@ -167,15 +190,15 @@ export default function ThemeSwitcherButtons({
 
         <div>
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-ds-3">
-            Variant
+            {l.variant}
           </p>
           <div className="flex flex-wrap gap-2">
-            {VARIANT_OPTIONS.map((option) => (
+            {variantOptions.map((opt) => (
               <ToggleButton
-                key={option.value}
-                label={option.label}
-                active={variant === option.value}
-                onClick={() => setVariant(option.value)}
+                key={opt.value}
+                label={opt.label}
+                active={variant === opt.value}
+                onClick={() => setVariant(opt.value)}
               />
             ))}
           </div>

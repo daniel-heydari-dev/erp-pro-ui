@@ -65,7 +65,7 @@ const Combobox: React.FC<ComboboxProps> = ({
         }
       }}
       animationClassName="origin-top-left"
-      panelClassName=" left-0 top-[40px] z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition"
+      panelClassName="start-0 top-[40px] z-20 mt-1 flex w-full max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition"
       trigger={
         <motion.div
           style={{
@@ -103,7 +103,7 @@ const Combobox: React.FC<ComboboxProps> = ({
             )}
             <span
               className={mergeClassNames(
-                "ml-2 text-ds-2 transition-transform duration-300",
+                "ms-2 text-ds-2 transition-transform duration-300",
                 open ? "rotate-180" : "rotate-0",
               )}
             >

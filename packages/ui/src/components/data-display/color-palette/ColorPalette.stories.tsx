@@ -1,97 +1,15 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { StorySurface } from "../../shared/storybook";
-import ColorPalette from "./ColorPalette";
-
-const brands = ["purple", "teal", "yellow", "green"] as const;
-const modes = ["light", "dark"] as const;
-type ThemeVariant = "default" | "alt";
-
-// Core token checkpoints shown per brand/mode in the verification matrix.
-const TOKEN_KEYS = [
-  { label: "Canvas", cssVar: "--ds-surface-canvas" },
-  { label: "Surface", cssVar: "--ds-surface-1" },
-  { label: "Text", cssVar: "--ds-text-1" },
-  { label: "Border", cssVar: "--ds-border-1" },
-  { label: "Accent", cssVar: "--ds-accent" },
-] as const;
-
-function ThemeTokenReadout({
-  brand,
-  mode,
-  variant = "default",
-}: {
-  brand: (typeof brands)[number];
-  mode: (typeof modes)[number];
-  variant?: ThemeVariant;
-}) {
-  const cardRef = React.useRef<HTMLDivElement | null>(null);
-  const [values, setValues] = React.useState<Record<string, string>>({});
-
-  // Read computed values from the card context (`data-brand` + `data-mode`)
-  // so Storybook shows the actual resolved token output.
-  React.useLayoutEffect(() => {
-    if (!cardRef.current) {
-      return;
-    }
-
-    const computed = getComputedStyle(cardRef.current);
-    const nextValues = TOKEN_KEYS.reduce<Record<string, string>>(
-      (acc, token) => {
-        acc[token.cssVar] = computed.getPropertyValue(token.cssVar).trim();
-        return acc;
-      },
-      {},
-    );
-    setValues(nextValues);
-  }, [brand, mode, variant]);
-
-  return (
-    <div
-      ref={cardRef}
-      data-brand={brand}
-      data-mode={mode}
-      data-variant={variant}
-      data-dark-variant={variant}
-      data-theme={
-        variant === "alt" ? `${brand}-${mode}-alt` : `${brand}-${mode}`
-      }
-      className="ui:rounded-xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-3"
-    >
-      <div className="ui:mb-2 ui:flex ui:items-center ui:justify-between">
-        <span className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-[0.16em] ui:text-ds-2">
-          {`${mode} (${variant})`}
-        </span>
-        <span className="ui:rounded-full ui:bg-ds-accent-subtle ui:px-2 ui:py-0.5 ui:text-[10px] ui:font-medium ui:text-ds-1">
-          live tokens
-        </span>
-      </div>
-
-      <div className="ui:grid ui:grid-cols-1 ui:gap-2">
-        {TOKEN_KEYS.map((token) => (
-          <div
-            key={`${brand}-${mode}-${token.cssVar}`}
-            className="ui:flex ui:items-center ui:justify-between ui:rounded-md ui:border ui:border-ds-border-2 ui:bg-ds-surface-2 ui:px-2 ui:py-1.5"
-          >
-            <div className="ui:flex ui:items-center ui:gap-2">
-              <span
-                className="ui:h-3 ui:w-3 ui:rounded-full ui:border ui:border-ds-border-2"
-                style={{ backgroundColor: `var(${token.cssVar})` }}
-              />
-              <span className="ui:text-[11px] ui:font-medium ui:text-ds-1">
-                {token.label}
-              </span>
-            </div>
-            <span className="ui:text-[10px] ui:font-mono ui:text-ds-2">
-              {values[token.cssVar] ?? "…"}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import ColorPalette, {
+  accentGroup,
+  borderGroup,
+  defaultGroups,
+  statusGroup,
+  surfaceGroup,
+  textGroup,
+  type TokenSwatch,
+} from "./ColorPalette";
 
 const meta: Meta<typeof ColorPalette> = {
   title: "Data Display/ColorPalette",
@@ -101,212 +19,216 @@ const meta: Meta<typeof ColorPalette> = {
     docs: {
       description: {
         component:
-          "Organized color reference for semantic tokens, brand palettes, and practical implementation usage.",
+          "Design-token color reference. All swatches resolve live CSS variables — toggle dark mode in Storybook to see both themes. Click any swatch to copy the Tailwind class.",
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
-    theme: { control: "radio", options: ["light", "dark", "all"] },
-    showGradients: { control: "boolean" },
-    showUsageExamples: { control: "boolean" },
-    groups: { control: false, description: "Optional custom color groups." },
-    className: {
-      control: false,
-      description: "Custom class for the root palette.",
-    },
+    groups: { control: false },
+    className: { control: false },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * ## 1) Quick Reference
- * Start here to see the full semantic token set.
- */
-export const QuickReference: Story = {
-  args: {
-    theme: "all",
-    showGradients: false,
-    showUsageExamples: false,
-  },
-  render: (args) => (
-    <StorySurface
-      widthClassName="ui:w-full ui:max-w-6xl"
-      className="ui:block ui:p-6"
-    >
-      <ColorPalette {...args} />
-    </StorySurface>
-  ),
-};
+// ---------------------------------------------------------------------------
+// 1) Full palette
+// ---------------------------------------------------------------------------
 
-/**
- * ## 2) Semantic + Gradients
- * Includes semantic colors plus gradient and opacity tokens.
- */
-export const SemanticAndGradients: Story = {
-  args: {
-    theme: "all",
-    showUsageExamples: false,
-    showGradients: true,
-  },
-  render: (args) => (
-    <StorySurface
-      widthClassName="ui:w-full ui:max-w-6xl"
-      className="ui:block ui:p-6"
-    >
-      <ColorPalette {...args} />
-    </StorySurface>
-  ),
-};
-
-/**
- * ## 3) Implementation Guide
- * Focuses on usage guidance and copy-ready token examples.
- */
-export const ImplementationGuide: Story = {
-  args: {
-    groups: [],
-    showUsageExamples: true,
-    showGradients: false,
-  },
-  render: (args) => (
-    <StorySurface
-      widthClassName="ui:w-full ui:max-w-6xl"
-      className="ui:block ui:p-6"
-    >
-      <ColorPalette {...args} />
-    </StorySurface>
-  ),
-};
-
-/**
- * ## 4) Brand Override Example
- * Demonstrates replacing the default palette groups with custom groups.
- */
-export const BrandOverrideExample: Story = {
-  args: {
-    groups: [
-      {
-        name: "Brand Colors",
-        colors: [
-          { name: "brand-pink", value: "#FF0077" },
-          { name: "brand-cyan", value: "#00E0FF" },
-        ],
-      },
-    ],
-    showGradients: false,
-    showUsageExamples: false,
-  },
-  render: (args) => (
-    <StorySurface
-      widthClassName="ui:w-full ui:max-w-4xl"
-      className="ui:block ui:p-6"
-    >
-      <ColorPalette {...args} />
-    </StorySurface>
-  ),
-};
-
-/**
- * ## 5) Brand and Mode Matrix
- * Verifies semantic token behavior across every shipped brand and mode pair.
- */
-export const BrandAndModeMatrix: Story = {
-  args: {
-    showGradients: false,
-    showUsageExamples: false,
-  },
+export const FullPalette: Story = {
   render: () => (
-    <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
-      <div className="ui:space-y-6">
-        <div className="ui:max-w-3xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
-            Brand and mode matrix
-          </h2>
-          <p className="ui:text-sm ui:text-ds-2">
-            One section per brand with compact light and dark previews. This
-            keeps comparison clear without repeating full content blocks.
-          </p>
+    <StorySurface widthClassName="ui:w-full ui:max-w-6xl" className="ui:block ui:p-8">
+      <div className="ui:mb-8">
+        <h2 className="ui:text-2xl ui:font-bold ui:text-ds-1">Color tokens</h2>
+        <p className="ui:mt-1 ui:text-sm ui:text-ds-2">
+          Semantic design tokens used across all components. Click any swatch to copy its Tailwind class.
+        </p>
+      </div>
+      <ColorPalette groups={defaultGroups} />
+    </StorySurface>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 2) Design System Showcase (dashboard / market style)
+// ---------------------------------------------------------------------------
+
+function HeroSwatch({ swatch }: { swatch: TokenSwatch }) {
+  return (
+    <div className="ui:flex ui:flex-col ui:gap-2">
+      <div
+        className="ui:h-14 ui:rounded-lg ui:border ui:border-ds-border-2"
+        style={{ backgroundColor: swatch.cssVar }}
+      />
+      <div>
+        <p className="ui:text-xs ui:font-semibold ui:font-mono ui:text-ds-1">{swatch.twClass}</p>
+        <p className="ui:text-[10px] ui:text-ds-3">{swatch.role}</p>
+      </div>
+    </div>
+  );
+}
+
+function StatusPill({ swatch }: { swatch: TokenSwatch }) {
+  return (
+    <div
+      className="ui:flex ui:items-center ui:gap-2.5 ui:rounded-lg ui:px-3 ui:py-2.5 ui:border ui:border-ds-border-2"
+    >
+      <span
+        className="ui:h-3 ui:w-3 ui:rounded-full ui:shrink-0"
+        style={{ backgroundColor: swatch.cssVar }}
+      />
+      <div className="ui:min-w-0">
+        <p className="ui:text-xs ui:font-semibold ui:text-ds-1">{swatch.role}</p>
+        <p className="ui:text-[10px] ui:font-mono ui:text-ds-3 ui:truncate">{swatch.twClass}</p>
+      </div>
+    </div>
+  );
+}
+
+function SurfaceStack() {
+  const surfaces = surfaceGroup.swatches.slice(0, 4);
+  return (
+    <div className="ui:relative ui:h-32">
+      {surfaces.map((s, i) => (
+        <div
+          key={s.twClass}
+          className="ui:absolute ui:rounded-xl ui:border ui:border-ds-border-2 ui:px-3 ui:py-2 ui:flex ui:items-end"
+          style={{
+            backgroundColor: s.cssVar,
+            inset: 0,
+            margin: `${i * 10}px ${i * 14}px`,
+            zIndex: surfaces.length - i,
+          }}
+        >
+          {i === 0 && (
+            <span className="ui:text-[10px] ui:font-mono ui:text-ds-2">{s.twClass}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export const DesignSystemShowcase: Story = {
+  render: () => (
+    <StorySurface widthClassName="ui:w-full" className="ui:block">
+      <div className="ui:bg-ds-canvas ui:min-h-screen ui:p-6 ui:space-y-6">
+
+        {/* Header */}
+        <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-6 ui:flex ui:items-start ui:justify-between ui:gap-6">
+          <div>
+            <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3 ui:mb-1">Design System</p>
+            <h1 className="ui:text-3xl ui:font-bold ui:text-ds-1">Color Tokens</h1>
+            <p className="ui:mt-1.5 ui:text-sm ui:text-ds-2 ui:max-w-md">
+              Semantic palette powering every component. All values resolve live from CSS variables — switch themes to see both modes.
+            </p>
+          </div>
+          <div
+            className="ui:shrink-0 ui:h-16 ui:w-24 ui:rounded-xl ui:shadow-lg"
+            style={{ background: "linear-gradient(135deg, var(--ds-color-accent), var(--ds-color-accent-hover))" }}
+          />
         </div>
 
-        <div className="ui:grid ui:grid-cols-1 ui:gap-4 lg:ui:grid-cols-2">
-          {brands.map((brand) => (
-            <section
-              key={brand}
-              className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
-            >
-              <p className="ui:mb-3 ui:text-sm ui:font-semibold ui:uppercase ui:tracking-[0.12em] ui:text-ds-1">
-                {brand}
-              </p>
+        {/* Surfaces + Text side by side */}
+        <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
 
-              <div className="ui:grid ui:grid-cols-1 ui:gap-3 md:ui:grid-cols-2">
-                {modes.map((mode) => (
-                  <ThemeTokenReadout
-                    key={`${brand}-${mode}`}
-                    brand={brand}
-                    mode={mode}
-                  />
+          {/* Surfaces */}
+          <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5 ui:space-y-4">
+            <div>
+              <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3">Surfaces</p>
+              <p className="ui:text-sm ui:text-ds-2 ui:mt-0.5">Background layers in z-order</p>
+            </div>
+            <SurfaceStack />
+            <div className="ui:grid ui:grid-cols-2 ui:gap-2 ui:pt-2">
+              {surfaceGroup.swatches.map((s) => (
+                <HeroSwatch key={s.twClass} swatch={s} />
+              ))}
+            </div>
+          </div>
+
+          {/* Text + Borders */}
+          <div className="ui:space-y-4">
+            <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5 ui:space-y-3">
+              <div>
+                <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3">Text</p>
+                <p className="ui:text-sm ui:text-ds-2 ui:mt-0.5">Foreground hierarchy</p>
+              </div>
+              <div className="ui:space-y-2">
+                {textGroup.swatches.map((s) => (
+                  <div key={s.twClass} className="ui:flex ui:items-center ui:gap-3">
+                    <span className="ui:font-semibold ui:text-base" style={{ color: s.cssVar }}>Aa</span>
+                    <div>
+                      <p className="ui:text-xs ui:font-mono ui:font-semibold ui:text-ds-1">{s.twClass}</p>
+                      <p className="ui:text-[10px] ui:text-ds-3">{s.role}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
-            </section>
-          ))}
-        </div>
-      </div>
-    </StorySurface>
-  ),
-};
+            </div>
 
-/**
- * ## 6) Token Audit Matrix
- * Full audit for all brands across light/default, light/alt, dark/default, and dark/alt.
- */
-export const TokenAuditMatrix: Story = {
-  args: {
-    showGradients: false,
-    showUsageExamples: false,
-  },
-  render: () => (
-    <StorySurface widthClassName="ui:w-full" className="ui:block ui:p-6">
-      <div className="ui:space-y-6">
-        <div className="ui:max-w-4xl ui:space-y-2">
-          <h2 className="ui:text-2xl ui:font-semibold ui:text-ds-1">
-            Token audit matrix
-          </h2>
-          <p className="ui:text-sm ui:text-ds-2">
-            Verifies resolved token output for all brands in light/dark with
-            both default and alt variants.
-          </p>
-        </div>
-
-        <div className="ui:grid ui:grid-cols-1 ui:gap-4 lg:ui:grid-cols-2">
-          {brands.map((brand) => (
-            <section
-              key={brand}
-              className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-canvas ui:p-4 ui:shadow-sm"
-            >
-              <p className="ui:mb-3 ui:text-sm ui:font-semibold ui:uppercase ui:tracking-[0.12em] ui:text-ds-1">
-                {brand}
-              </p>
-
-              <div className="ui:grid ui:grid-cols-1 ui:gap-3 md:ui:grid-cols-4">
-                <ThemeTokenReadout
-                  brand={brand}
-                  mode="light"
-                  variant="default"
-                />
-                <ThemeTokenReadout brand={brand} mode="light" variant="alt" />
-                <ThemeTokenReadout
-                  brand={brand}
-                  mode="dark"
-                  variant="default"
-                />
-                <ThemeTokenReadout brand={brand} mode="dark" variant="alt" />
+            <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5 ui:space-y-3">
+              <div>
+                <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3">Borders</p>
+                <p className="ui:text-sm ui:text-ds-2 ui:mt-0.5">Separator scale</p>
               </div>
-            </section>
-          ))}
+              <div className="ui:space-y-2">
+                {borderGroup.swatches.map((s) => (
+                  <div key={s.twClass} className="ui:flex ui:items-center ui:gap-3">
+                    <div className="ui:h-4 ui:w-8 ui:shrink-0 ui:rounded ui:border-2" style={{ borderColor: s.cssVar }} />
+                    <div>
+                      <p className="ui:text-xs ui:font-mono ui:font-semibold ui:text-ds-1">{s.twClass}</p>
+                      <p className="ui:text-[10px] ui:text-ds-3">{s.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Accent + Status side by side */}
+        <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
+
+          {/* Accent */}
+          <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5 ui:space-y-4">
+            <div>
+              <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3">Accent</p>
+              <p className="ui:text-sm ui:text-ds-2 ui:mt-0.5">Brand & interactive color</p>
+            </div>
+            <div
+              className="ui:h-20 ui:rounded-xl ui:flex ui:items-center ui:justify-center ui:text-sm ui:font-semibold ui:text-ds-on-accent ui:shadow-md"
+              style={{ background: "linear-gradient(135deg, var(--ds-color-accent) 0%, var(--ds-color-accent-hover) 100%)" }}
+            >
+              bg-ds-accent
+            </div>
+            <div className="ui:grid ui:grid-cols-3 ui:gap-2">
+              {accentGroup.swatches.map((s) => (
+                <HeroSwatch key={s.twClass} swatch={s} />
+              ))}
+            </div>
+          </div>
+
+          {/* Status */}
+          <div className="ui:rounded-2xl ui:border ui:border-ds-border-2 ui:bg-ds-surface-1 ui:p-5 ui:space-y-4">
+            <div>
+              <p className="ui:text-xs ui:font-semibold ui:uppercase ui:tracking-widest ui:text-ds-3">Status</p>
+              <p className="ui:text-sm ui:text-ds-2 ui:mt-0.5">Semantic feedback colors</p>
+            </div>
+            <div className="ui:grid ui:grid-cols-2 ui:gap-2">
+              {statusGroup.swatches.map((s) => (
+                <StatusPill key={s.twClass} swatch={s} />
+              ))}
+            </div>
+            <div className="ui:grid ui:grid-cols-2 ui:gap-2">
+              {statusGroup.swatches.map((s) => (
+                <div key={s.twClass} className="ui:h-8 ui:rounded-lg" style={{ backgroundColor: s.cssVar }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
     </StorySurface>
   ),

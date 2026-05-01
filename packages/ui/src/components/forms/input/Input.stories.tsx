@@ -178,126 +178,6 @@ export function ValidationFeedbackFlowExample() {
   );
 }`;
 
-const hintMeta = (
-  <span className="ui:inline-flex ui:items-center ui:gap-1.5 ui:text-xs ui:text-ds-2">
-    <InfoCircleIcon width={14} height={14} color="currentColor" />
-    Hint
-  </span>
-);
-
-type ShowcaseVariant = {
-  title: string;
-  inputProps: Partial<InputProps>;
-};
-
-const showcaseVariants: ShowcaseVariant[] = [
-  {
-    title: "Text",
-    inputProps: {},
-  },
-  {
-    title: "Text + Left Icon",
-    inputProps: {
-      leftIcon: <SearchIcon width={18} height={18} color="currentColor" />,
-    },
-  },
-  {
-    title: "Text + Right Icon",
-    inputProps: {
-      rightIcon: <MailIcon width={16} height={16} color="currentColor" />,
-    },
-  },
-  {
-    title: "Text + Double Icons",
-    inputProps: {
-      leftIcon: <SearchIcon width={18} height={18} color="currentColor" />,
-      rightIcon: <MailIcon width={16} height={16} color="currentColor" />,
-    },
-  },
-];
-
-type ShowcaseRow = {
-  key: string;
-  withLabel?: boolean;
-  buildProps: (variant: ShowcaseVariant) => Partial<InputProps>;
-};
-
-const showcaseRows: ShowcaseRow[] = [
-  {
-    key: "placeholder",
-    buildProps: () => ({
-      placeholder: "Placeholder Text",
-    }),
-  },
-  {
-    key: "focused",
-    buildProps: () => ({
-      placeholder: "",
-      className: "ui:border-ds-border-accent ui:ring-1 ui:ring-ds-accent",
-    }),
-  },
-  {
-    key: "filled",
-    buildProps: () => ({
-      value: "User generated text",
-      readOnly: true,
-    }),
-  },
-  {
-    key: "disabled",
-    buildProps: () => ({
-      placeholder: "Placeholder Text",
-      disabled: true,
-      state: InputState.DISABLED,
-    }),
-  },
-  {
-    key: "error",
-    buildProps: () => ({
-      value: "User generated text",
-      readOnly: true,
-      state: InputState.ERROR,
-      error: "Error Message",
-    }),
-  },
-];
-
-function InputShowcaseGrid({ withLabel }: { withLabel: boolean }) {
-  const rows = showcaseRows.map((row) => ({
-    ...row,
-    withLabel,
-  }));
-
-  return (
-    <div className="ui:space-y-8">
-      <div className="ui:grid ui:gap-5 md:ui:grid-cols-2 xl:ui:grid-cols-4">
-        {showcaseVariants.map((variant) => (
-          <div key={variant.title} className="ui:space-y-4">
-            <p className="ui:text-sm ui:font-medium ui:text-ds-1">
-              {variant.title}
-            </p>
-            <div className="ui:space-y-4">
-              {rows.map((row) => {
-                const stateProps = row.buildProps(variant);
-
-                return (
-                  <Input
-                    key={`${variant.title}-${row.key}`}
-                    label={row.withLabel ? "Label" : undefined}
-                    labelHint={row.withLabel ? hintMeta : undefined}
-                    placeholder="Placeholder Text"
-                    {...variant.inputProps}
-                    {...stateProps}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function ControlledInput() {
   const [value, setValue] = useState("");
@@ -359,28 +239,74 @@ export const WithIcon: Story = {
 };
 
 /**
- * ## Input Matrix
- * Mirrors the product-spec states for basic and labeled inputs, including left/right/double icon layouts.
+ * ## Input Mix
+ * All available options in 8 inputs — label, hint, required, icons, and all four validation states.
  */
 export const InputMatrix: Story = {
   render: () => (
-    <StorySurface widthClassName="ui:w-full ui:max-w-7xl">
-      <StoryStack className="ui:w-full ui:gap-10">
-        <StorySection>
-          <StoryIntro
-            title="Basic Text"
-            description="Core text field states with left, right, and double-icon support."
+    <StorySurface widthClassName="ui:w-full ui:max-w-4xl">
+      <StoryStack className="ui:w-full">
+        <StoryIntro
+          title="Input mix"
+          description="All available options — label, hint, required mark, icons, and validation states."
+        />
+        <div className="ui:grid ui:gap-4 md:ui:grid-cols-2">
+          <Input
+            label="Full name"
+            labelTooltip="Additional context about this field"
+            required
+            placeholder="John Doe"
+            helperText="Appears on your public profile."
           />
-          <InputShowcaseGrid withLabel={false} />
-        </StorySection>
-
-        <StorySection>
-          <StoryIntro
-            title="Label Text"
-            description="The same field states with label and hint metadata on the header row."
+          <Input
+            label="Search"
+            placeholder="Search projects..."
+            leftIcon={<SearchIcon width={18} height={18} color="currentColor" />}
           />
-          <InputShowcaseGrid withLabel />
-        </StorySection>
+          <Input
+            label="Work email"
+            placeholder="name@company.com"
+            leftIcon={<MailIcon width={16} height={16} color="currentColor" />}
+            state={InputState.ERROR}
+            error="Use a valid company email address."
+          />
+          <Input
+            label="Environment name"
+            placeholder="production"
+            rightIcon={<InfoCircleIcon width={16} height={16} color="currentColor" />}
+            state={InputState.SUCCESS}
+            message="Environment name is available."
+          />
+          <Input
+            label="API key"
+            placeholder="sk-••••••••••••"
+            leftIcon={<SearchIcon width={18} height={18} color="currentColor" />}
+            rightIcon={<MailIcon width={16} height={16} color="currentColor" />}
+          />
+          <Input
+            label="Workspace slug"
+            placeholder="locked-workspace"
+            disabled
+            state={InputState.DISABLED}
+            helperText="Slug updates are restricted after first deployment."
+          />
+          <Input
+            label="Required field"
+            required
+            placeholder="Cannot be empty"
+            state={InputState.ERROR}
+            error="This field is required."
+            leftIcon={<InfoCircleIcon width={16} height={16} color="currentColor" />}
+          />
+          <Input
+            label="Branch code"
+            labelTooltip="Additional context about this field"
+            placeholder="main"
+            rightIcon={<SearchIcon width={18} height={18} color="currentColor" />}
+            state={InputState.SUCCESS}
+            message="Branch is available and ready."
+          />
+        </div>
       </StoryStack>
     </StorySurface>
   ),

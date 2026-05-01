@@ -137,11 +137,11 @@ export type {
 
 export { ChromaGrid } from "./components/effects/chroma-grid";
 
-export { ColorPalette } from "./components/data-display/color-palette";
+export { ColorPalette, surfaceGroup, textGroup, borderGroup, accentGroup, accentScaleGroup, brandGroup, statusGroup, defaultGroups } from "./components/data-display/color-palette";
 export type {
   ColorPaletteProps,
-  ColorGroup,
-  ColorSwatch,
+  TokenGroup,
+  TokenSwatch,
 } from "./components/data-display/color-palette";
 
 export { Combobox } from "./components/forms/combobox";
@@ -306,6 +306,7 @@ export { ThemeSwitcherButtons } from "./components/effects/sun-to-moon-button";
 export type {
   SunToMoonButtonProps,
   ThemeSwitcherButtonsProps,
+  ThemeSwitcherLabels,
 } from "./components/effects/sun-to-moon-button";
 
 export { Switch } from "./components/forms/switch";

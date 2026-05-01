@@ -1,4 +1,4 @@
-import { ColorPalette } from "erp-pro-ui";
+import { ColorPalette, defaultGroups } from "erp-pro-ui";
 import DocsButtonBar from "@/docs/components/DocsButtonBar";
 import CodeBlock from "@/docs/components/CodeBlock";
 
@@ -13,11 +13,7 @@ const ColorPaletteDoc = () => {
       {/* Full Palette */}
       <h2 className="docs-category-subtitle">System Palette</h2>
       <div className="docs-showcase-card h-auto p-4 block">
-        <ColorPalette
-          theme="all"
-          showGradients={true}
-          showUsageExamples={false}
-        />
+        <ColorPalette groups={defaultGroups} />
       </div>
 
       <CodeBlock
@@ -36,11 +32,7 @@ const ColorPaletteDoc = () => {
         Reference for using these colors via CSS variables or Tailwind.
       </p>
       <div className="docs-showcase-card h-auto p-4 block">
-        <ColorPalette
-          groups={[]}
-          showUsageExamples={true}
-          showGradients={false}
-        />
+        <ColorPalette />
       </div>
 
       <CodeBlock

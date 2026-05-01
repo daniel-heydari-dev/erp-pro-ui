@@ -77,7 +77,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
         }
       }}
       animationClassName="origin-top-left"
-      panelClassName="top-[40px] left-0 z-20 mt-1 flex max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition"
+      panelClassName="top-[40px] start-0 z-20 mt-1 flex w-full max-h-60 flex-col rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition"
       trigger={
         <motion.div
           style={{
@@ -112,7 +112,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
                       type="button"
                       onMouseDown={(e) => e.stopPropagation()}
                       onClick={(e) => handleRemoveTag(value[index], e)}
-                      className="ml-0.5 rounded-full p-0.5 text-ds-2 transition-colors hover:bg-ds-surface-1 hover:text-ds-1"
+                      className="ms-0.5 rounded-full p-0.5 text-ds-2 transition-colors hover:bg-ds-surface-1 hover:text-ds-1"
                     >
                       <CloseIcon className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -124,7 +124,7 @@ const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
             </div>
             <span
               className={mergeClassNames(
-                "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
+                "ms-2 shrink-0 text-ds-2 transition-transform duration-300",
                 open ? "rotate-180" : "rotate-0",
               )}
             >

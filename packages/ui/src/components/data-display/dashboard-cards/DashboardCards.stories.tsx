@@ -260,7 +260,7 @@ export const Size_MD: Story = {
                   data={salesBarData}
                   categories={salesBarCategories}
                   height={68}
-                  maxBarSize={10}
+                  compact
                 />
               }
             />

@@ -150,7 +150,7 @@ export const Select = forwardRef(function SelectComponent(
           setOpen(nextOpen);
         }}
         panelClassName={mergeClassNames(
-          " left-0 top-[40px] z-20 mt-1 flex flex-col overflow-auto rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition",
+          "start-0 top-[40px] z-20 mt-1 flex w-full flex-col overflow-auto rounded-lg border border-ds-border-2 bg-ds-surface-1 shadow-3 backdrop-blur-xl transition",
           isCompact ? "max-h-56" : "max-h-60",
           dropdownClassName,
         )}
@@ -215,7 +215,7 @@ export const Select = forwardRef(function SelectComponent(
 
               <span
                 className={mergeClassNames(
-                  "ml-2 shrink-0 text-ds-2 transition-transform duration-300",
+                  "ms-2 shrink-0 text-ds-2 transition-transform duration-300",
                   open ? "rotate-180" : "rotate-0",
                 )}
               >

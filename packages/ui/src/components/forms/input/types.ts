@@ -9,6 +9,8 @@ export enum InputState {
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  /** Text shown in a tooltip on the info icon next to the label. */
+  labelTooltip?: string;
   labelHint?: ReactNode;
   error?: string;
   helperText?: string;

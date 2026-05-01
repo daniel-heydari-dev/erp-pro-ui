@@ -12,7 +12,7 @@ export type ChipColor =
   | "warning"
   | "error"
   | "info";
-export type ChipSize = "sm" | "md" | "lg";
+export type ChipSize = "xs" |"sm" | "md" | "lg";
 
 export interface ChipProps {
   /** The content of the chip */
@@ -44,18 +44,21 @@ export interface ChipProps {
 }
 
 const sizeStyles: Record<ChipSize, string> = {
+  xs: "px-1.5 py-0.5 text-xs gap-1",
   sm: "px-2.5 py-1 text-xs gap-1.5",
   md: "px-3 py-1.5 text-sm gap-2",
   lg: "px-4 py-2 text-base gap-2.5",
 };
 
 const dotSizeStyles: Record<ChipSize, string> = {
+  xs: "w-1 h-1",
   sm: "w-1.5 h-1.5",
   md: "w-2 h-2",
   lg: "w-2.5 h-2.5",
 };
 
 const iconSizeStyles: Record<ChipSize, string> = {
+  xs: "w-2 h-2",
   sm: "w-3.5 h-3.5",
   md: "w-4 h-4",
   lg: "w-5 h-5",
@@ -139,7 +142,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
       children,
       variant = "soft",
       color = "default",
-      size = "md",
+      size = "xs",
       startIcon,
       endIcon,
       onRemove,
@@ -217,7 +220,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
           />
         )}
         {startIcon && (
-          <span className={`shrink-0 ${iconSizeStyles[size]}`}>
+          <span className={`inline-flex shrink-0 items-center justify-center ${iconSizeStyles[size]}`}>
             {startIcon}
           </span>
         )}
@@ -229,7 +232,7 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
           {children}
         </TruncatedText>
         {endIcon && !isRemovable && (
-          <span className={`shrink-0 ${iconSizeStyles[size]}`}>{endIcon}</span>
+          <span className={`inline-flex shrink-0 items-center justify-center ${iconSizeStyles[size]}`}>{endIcon}</span>
         )}
         {isRemovable && (
           <button

@@ -176,7 +176,7 @@ export const FormField = ({
     <div className="flex items-center justify-between gap-2">
       <label htmlFor={fieldId} className="text-sm font-medium text-ds-1">
         {label}
-        {required && <span className="ml-1 text-destructive">*</span>}
+        {required && <span className="ms-1 text-destructive">*</span>}
       </label>
       {helperAction && <div className="text-xs text-ds-2">{helperAction}</div>}
     </div>

@@ -32,6 +32,11 @@ interface BarChartProps {
   className?: string;
   layout?: "horizontal" | "vertical";
   maxBarSize?: number;
+  /**
+   * Compact mode — strips axes, grid, tooltip, and margins.
+   * Designed for small sparkline-style zones (e.g. StatCard md, ~130×68 px).
+   */
+  compact?: boolean;
 }
 
 export const BarChart: React.FC<BarChartProps> = ({
@@ -41,8 +46,9 @@ export const BarChart: React.FC<BarChartProps> = ({
   className = "",
   layout = "horizontal",
   maxBarSize,
+  compact = false,
 }) => {
-  const resolvedMaxBarSize = maxBarSize ?? (layout === "horizontal" ? 40 : 22);
+  const resolvedMaxBarSize = maxBarSize ?? (compact ? 8 : layout === "horizontal" ? 40 : 22);
 
   const normalizedCategories = React.useMemo(() => {
     const normalizedColors = normalizeChartColors(
@@ -54,6 +60,38 @@ export const BarChart: React.FC<BarChartProps> = ({
       color: normalizedColors[index] ?? category.color,
     }));
   }, [categories]);
+
+  if (compact) {
+    return (
+      <div className={`w-full h-full ${className}`} style={{ height }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <RechartsBarChart
+            data={data}
+            layout={layout}
+            barCategoryGap="20%"
+            margin={{ top: 2, right: 2, left: 2, bottom: 2 }}
+          >
+            <Tooltip
+              contentStyle={chartTooltipContentStyle}
+              cursor={chartBandHoverCursorStyle}
+              itemStyle={chartTooltipItemStyle}
+              labelStyle={chartTooltipLabelStyle}
+              wrapperStyle={chartTooltipWrapperStyle}
+            />
+            {normalizedCategories.map((cat) => (
+              <Bar
+                key={cat.key}
+                dataKey={cat.key}
+                fill={cat.color}
+                maxBarSize={resolvedMaxBarSize}
+                radius={[3, 3, 0, 0]}
+              />
+            ))}
+          </RechartsBarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  }
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
@@ -78,19 +116,13 @@ export const BarChart: React.FC<BarChartProps> = ({
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
-                tick={{
-                  fill: "var(--ds-color-fg-muted)",
-                  fontSize: 12,
-                }}
+                tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
                 dy={10}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{
-                  fill: "var(--ds-color-fg-muted)",
-                  fontSize: 12,
-                }}
+                tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
                 dx={-10}
               />
             </>
@@ -100,10 +132,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 type="number"
                 axisLine={false}
                 tickLine={false}
-                tick={{
-                  fill: "var(--ds-color-fg-muted)",
-                  fontSize: 12,
-                }}
+                tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
                 dy={10}
               />
               <YAxis
@@ -111,10 +140,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 type="category"
                 axisLine={false}
                 tickLine={false}
-                tick={{
-                  fill: "var(--ds-color-fg-muted)",
-                  fontSize: 12,
-                }}
+                tick={{ fill: "var(--ds-color-fg-muted)", fontSize: 12 }}
                 dx={-10}
               />
             </>

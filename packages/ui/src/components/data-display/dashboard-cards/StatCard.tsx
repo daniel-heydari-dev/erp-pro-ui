@@ -17,12 +17,12 @@ interface TrendBadgeProps {
 
 const TrendBadge: FC<TrendBadgeProps> = ({ value, direction }) => {
   const isUp = direction === "up";
-  const color = isUp ? "#05cd99" : "#e31d1c";
-  const bg = isUp ? "rgba(5,205,153,0.10)" : "rgba(227,29,28,0.08)";
+  const color = isUp ? "var(--ds-color-success)" : "var(--ds-color-danger)";
+  const bg = isUp ? "var(--ds-color-success-subtle)" : "var(--ds-color-danger-subtle)";
 
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-semibold leading-none"
+      className="inline-flex items-center gap-1 rounded-sm border px-1 py-0.5 text-[11px] font-semibold leading-none"
       style={{ color, borderColor: color, backgroundColor: bg }}
       aria-label={`${value} ${isUp ? "increase" : "decrease"}`}
     >
@@ -34,6 +34,7 @@ const TrendBadge: FC<TrendBadgeProps> = ({ value, direction }) => {
           <path d="M5 2V8M5 8L2 5M5 8L8 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         )}
       </svg>
+   
     </span>
   );
 };
@@ -46,7 +47,7 @@ const MenuButton: FC<{ onClick?: () => void }> = ({ onClick }) => (
   <Button
     variant="tertiary"
     size="small"
-    className="shrink-0 p-0.5! text-ds-color-fg-subtle"
+    className="shrink-0 p-0.5! text-ds-3"
     aria-label="More options"
     onClick={onClick}
   >
@@ -61,7 +62,7 @@ const MenuButton: FC<{ onClick?: () => void }> = ({ onClick }) => (
 const LegendDots: FC<{ items: { label: string; color: string }[] }> = ({ items }) => (
   <div className="flex items-center gap-3">
     {items.map((item) => (
-      <span key={item.label} className="flex items-center gap-1.5 text-xs text-ds-color-fg-muted">
+      <span key={item.label} className="flex items-center gap-1.5 text-xs text-ds-2">
         <span
           className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
           style={{ backgroundColor: item.color }}
@@ -96,10 +97,18 @@ export interface StatCardProps {
   value: ReactNode;
   dateRange: string;
   /** Chart content (any chart component). Ignored when size="sm".
-   *  For "md" the chart is placed in a fixed 68 × 130 px side zone — use
-   *  compact charts (MiniNeonSparkline, small BarChart, AreaChart, etc.).
-   *  For "lg" the chart spans full card width — set height via the chart prop. */
+   *  For "md" position is controlled by chartPosition.
+   *  For "lg" the chart spans full card width below a divider. */
   chart?: ReactNode;
+  /** Controls where the chart renders in size="md".
+   *  - "side"   (default) — compact chart to the right of the metric.
+   *  - "bottom" — full-width chart below the metric (good for bar/line/area charts). */
+  chartPosition?: "side" | "bottom";
+  /** Override the chart container's size/style.
+   *  "md" side:   overrides the side-zone div (default: h-[68px] w-[180px] shrink-0 overflow-hidden).
+   *  "md" bottom: overrides the bottom chart div (default: w-full pt-3).
+   *  "lg":        overrides the chart wrapper div (default: border-t border-ds-border-2 pt-4 w-full). */
+  chartClassName?: string;
   /** Legend items shown in the header. Only visible when size="lg". */
   legend?: StatCardLegendItem[];
   className?: string;
@@ -117,60 +126,78 @@ export const StatCard: FC<StatCardProps> = ({
   value,
   dateRange,
   chart,
+  chartPosition = "side",
+  chartClassName,
   legend,
   className,
   onMenuClick,
 }) => {
   const base = mergeClassNames(
-    "rounded-2xl border border-ds-border-2 bg-ds-surface-1",
+    "rounded-lg border border-ds-border-3/80 bg-ds-surface-1",
     className,
   );
 
   // ── sm: 2-col, metric only ───────────────────────────────────────────────
   if (size === "sm") {
     return (
-      <div className={mergeClassNames(base, "flex flex-col gap-3 p-5")}>
+      <div className={mergeClassNames(base, "flex flex-col gap-7 p-5")}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-semibold text-ds-color-fg">{title}</span>
+            <span className="text-sm font-semibold text-ds-1">{title}</span>
             {badge && <TrendBadge value={badge.value} direction={badge.direction} />}
           </div>
           <MenuButton onClick={onMenuClick} />
         </div>
         <div className="flex flex-col gap-1">
-          <p className="text-3xl font-extrabold tracking-tight text-ds-color-fg leading-none">
+          <p className="text-2xl font-bold tracking-tight text-ds-1 leading-none">
             {value}
           </p>
-          <p className="text-xs text-ds-color-fg-subtle mt-1">{dateRange}</p>
+          <p className="text-[10px] text-ds-3 mt-1">{dateRange}</p>
         </div>
       </div>
     );
   }
 
-  // ── md: 4-col, metric + side chart ──────────────────────────────────────
+  // ── md: 4-col, metric + chart ────────────────────────────────────────────
   if (size === "md") {
+    const metricBlock = (
+      <div className="flex flex-col gap-1 min-w-0">
+        <p className="text-3xl font-bold tracking-tight text-ds-1 leading-none">
+          {value}
+        </p>
+        <p className="text-[10px] text-ds-3 mt-1">{dateRange}</p>
+      </div>
+    );
+
     return (
       <div className={mergeClassNames(base, "flex flex-col gap-3 p-5")}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-semibold text-ds-color-fg">{title}</span>
+            <span className="text-sm font-semibold text-ds-1">{title}</span>
             {badge && <TrendBadge value={badge.value} direction={badge.direction} />}
           </div>
           <MenuButton onClick={onMenuClick} />
         </div>
-        <div className="flex items-end justify-between gap-3">
-          <div className="flex flex-col gap-1 min-w-0">
-            <p className="text-3xl font-extrabold tracking-tight text-ds-color-fg leading-none">
-              {value}
-            </p>
-            <p className="text-xs text-ds-color-fg-subtle mt-1">{dateRange}</p>
+
+        {chartPosition === "bottom" ? (
+          <>
+            {metricBlock}
+            {chart && (
+              <div className={mergeClassNames("w-full pt-3", chartClassName)}>
+                {chart}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="flex items-end justify-between gap-3">
+            {metricBlock}
+            {chart && (
+              <div className={mergeClassNames("h-[46px] w-[155px] shrink-0 overflow-hidden", chartClassName)}>
+                {chart}
+              </div>
+            )}
           </div>
-          {chart && (
-            <div className="h-[68px] w-[130px] shrink-0 overflow-hidden">
-              {chart}
-            </div>
-          )}
-        </div>
+        )}
       </div>
     );
   }
@@ -182,13 +209,13 @@ export const StatCard: FC<StatCardProps> = ({
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2 mb-4">
         <div className="flex flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-semibold text-ds-color-fg">{title}</span>
+            <span className="text-sm font-semibold text-ds-1">{title}</span>
             {badge && <TrendBadge value={badge.value} direction={badge.direction} />}
           </div>
-          <p className="text-3xl font-extrabold tracking-tight text-ds-color-fg leading-none">
+          <p className="text-3xl font-bold tracking-tight text-ds-1 leading-none">
             {value}
           </p>
-          <p className="text-xs text-ds-color-fg-subtle">{dateRange}</p>
+          <p className="text-xs text-ds-3">{dateRange}</p>
         </div>
         <div className="flex items-center gap-4 ms-auto">
           {legend && legend.length > 0 && <LegendDots items={legend} />}
@@ -198,7 +225,7 @@ export const StatCard: FC<StatCardProps> = ({
 
       {/* Chart area */}
       {chart && (
-        <div className="border-t border-ds-border-2 pt-4 w-full">
+        <div className={mergeClassNames("border-t border-ds-border-2 pt-4 w-full", chartClassName)}>
           {chart}
         </div>
       )}

@@ -54,7 +54,7 @@ const getBarRadius = (
   }
 
   if (layout === "horizontal") {
-    return value > 0 ? [6, 6, 0, 0] : [0, 0, 6, 6];
+    return [6, 6, 0, 0];
   }
 
   return value > 0 ? [0, 6, 6, 0] : [6, 0, 0, 6];

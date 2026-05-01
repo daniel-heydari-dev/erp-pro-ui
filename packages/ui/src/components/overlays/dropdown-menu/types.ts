@@ -9,4 +9,5 @@ export interface DropdownMenuProps {
   panelClassName?: string;
   animationClassName?: string;
   closeOnItemClick?: boolean;
+  align?: "start" | "end";
 }
