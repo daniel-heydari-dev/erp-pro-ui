@@ -299,7 +299,7 @@ export const Dialog = ({
             {showClose && (
               <button
                 type="button"
-                className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center
+                className="absolute right-4 top-4 z-10 w-8 h-8 flex items-center justify-center
                   rounded-full transition-all duration-200
                   text-ds-2 hover:text-ds-1 hover:bg-ds-surface-2"
                 aria-label="Close dialog"
