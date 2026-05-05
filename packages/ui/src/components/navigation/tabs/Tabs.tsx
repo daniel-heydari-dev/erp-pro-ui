@@ -1,4 +1,5 @@
 import {
+  Fragment,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -281,7 +282,9 @@ export function Tabs({
         aria-labelledby={`tab-${activeItem?.id ?? ""}`}
         className={mergeClassNames("mt-2 w-full", panelClassName)}
       >
-        {activeItem?.content}
+        <Fragment key={activeItem?.id}>
+          {activeItem?.content}
+        </Fragment>
       </div>
     </div>
   );
