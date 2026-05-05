@@ -80,6 +80,9 @@ export function SidebarLinks({
               onClick={(event) => {
                 item.onSelect?.(event);
                 onItemSelect?.(item, event);
+                if (onItemSelect) {
+                  event.preventDefault();
+                }
               }}
             >
               <span

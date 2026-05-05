@@ -78,6 +78,8 @@ export interface DashboardSidebarShellProps {
   header?: DashboardShellSlot;
   headerLeading?: DashboardShellSlot;
   headerActions?: DashboardShellSlot;
+  headerActionsLeading?: DashboardShellSlot;
+  headerActionsTrailing?: DashboardShellSlot;
   headerClassName?: string;
   headerTitleClassName?: string;
   headerActionsClassName?: string;
@@ -166,6 +168,8 @@ export function DashboardSidebarShell({
   header,
   headerLeading,
   headerActions,
+  headerActionsLeading,
+  headerActionsTrailing,
   headerClassName,
   headerTitleClassName,
   headerActionsClassName,
@@ -322,17 +326,7 @@ export function DashboardSidebarShell({
           </div>
         </DropdownMenu>
 
-        <Button
-          type="button"
-          variant="tertiary"
-          size="small"
-          className="h-9 w-9 rounded-full p-0!"
-          aria-label="Toggle theme"
-        >
-          <span className="flex cursor-pointer rounded-full">
-            <SunToMoonButton showLabelAndImage={false} />
-          </span>
-        </Button>
+        <SunToMoonButton showLabelAndImage={false} />
 
         <Button
           type="button"
@@ -427,10 +421,22 @@ export function DashboardSidebarShell({
   );
 
   const resolvedHeaderLeading = resolveSlot(headerLeading, headerContext);
+  const resolvedHeaderActionsLeading = headerActionsLeading
+    ? resolveSlot(headerActionsLeading, headerContext)
+    : null;
+  const resolvedHeaderActionsTrailing = headerActionsTrailing
+    ? resolveSlot(headerActionsTrailing, headerContext)
+    : null;
   const resolvedHeaderActions =
-    headerActions === undefined
-      ? defaultHeaderActions
-      : resolveSlot(headerActions, headerContext);
+    headerActions === undefined ? (
+      <>
+        {resolvedHeaderActionsLeading}
+        {defaultHeaderActions}
+        {resolvedHeaderActionsTrailing}
+      </>
+    ) : (
+      resolveSlot(headerActions, headerContext)
+    );
 
   const defaultHeader = useMemo(
     () => (

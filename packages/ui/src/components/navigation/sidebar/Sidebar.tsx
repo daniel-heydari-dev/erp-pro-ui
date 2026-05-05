@@ -65,7 +65,7 @@ export function Sidebar({
       <aside
         dir={direction === "auto" ? undefined : direction}
         className={mergeClassNames(
-          "fixed inset-y-2 z-50 flex w-72 flex-col rounded-xl border border-ds-border-3 bg-ds-surface-1/92 p-3 shadow-[0_10px_28px_color-mix(in_srgb,var(--ds-color-fg)_9%,transparent)] backdrop-blur-xl",
+          "fixed inset-y-2 z-70 flex w-72 flex-col rounded-xl border border-ds-border-3 bg-ds-surface-1/92 p-3 shadow-[0_10px_28px_color-mix(in_srgb,var(--ds-color-fg)_9%,transparent)] backdrop-blur-xl",
           "transition-transform duration-200 ease-out xl:translate-x-0",
           direction === "rtl" ? "right-2" : "left-2",
           resolvedOpen
@@ -149,7 +149,7 @@ export function Sidebar({
         aria-hidden={!resolvedOpen}
         tabIndex={resolvedOpen ? 0 : -1}
         className={mergeClassNames(
-          "fixed inset-0 z-40 p-0! bg-black/30 backdrop-blur-[2px] transition-opacity duration-200 xl:hidden",
+          "fixed inset-0 z-65 p-0! bg-black/30 backdrop-blur-[2px] transition-opacity duration-200 xl:hidden",
           resolvedOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0",
