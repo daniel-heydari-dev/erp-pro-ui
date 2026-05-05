@@ -57,7 +57,8 @@ export function Tabs({
   listClassName,
   triggerClassName,
   panelClassName,
-  animationDurationMs = 220,
+  animationDurationMs,
+  animation = "slide",
 }: TabsProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -116,25 +117,35 @@ export function Tabs({
       return;
     }
 
-    const indexDelta = activeIndex - previousIndex;
-    const logicalDirection = indexDelta >= 0 ? 1 : -1;
-    const visualDirection =
-      getEffectiveDirection() === "rtl" ? -logicalDirection : logicalDirection;
-    const fromX = visualDirection > 0 ? -14 : 14;
+    if (animation === "slide") {
+      const indexDelta = activeIndex - previousIndex;
+      const logicalDirection = indexDelta >= 0 ? 1 : -1;
+      const visualDirection =
+        getEffectiveDirection() === "rtl" ? -logicalDirection : logicalDirection;
+      const fromX = visualDirection > 0 ? -14 : 14;
 
-    panel.animate(
-      [
-        { opacity: 0, transform: `translateX(${fromX}px)` },
-        { opacity: 1, transform: "translateX(0px)" },
-      ],
-      {
-        duration: animationDurationMs,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-    );
+      panel.animate(
+        [
+          { opacity: 0, transform: `translateX(${fromX}px)` },
+          { opacity: 1, transform: "translateX(0px)" },
+        ],
+        {
+          duration: animationDurationMs ?? 300,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        },
+      );
+    } else if (animation === "fade") {
+      panel.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        {
+          duration: animationDurationMs ?? 360,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        },
+      );
+    }
 
     previousIndexRef.current = activeIndex;
-  }, [activeIndex, animationDurationMs, getEffectiveDirection]);
+  }, [activeIndex, animationDurationMs, animation, getEffectiveDirection]);
 
   const activeItem = items[activeIndex] ?? items[0];
 
@@ -228,7 +239,7 @@ export function Tabs({
                 className={mergeClassNames(
                   "h-full w-full rounded-md px-3 py-1 text-base font-normal leading-[22px] transition-colors duration-200",
                   "outline-none focus-visible:ring-2 focus-visible:ring-ds-focus/60",
-                  selected ? "text-ds-on-accent" : "text-ds-2 hover:text-ds-1",
+                  selected ? "text-ds-on-accent" : "text-ds-2 hover:text-ds-10",
                   item.disabled && "cursor-not-allowed opacity-55",
                   triggerClassName,
                 )}

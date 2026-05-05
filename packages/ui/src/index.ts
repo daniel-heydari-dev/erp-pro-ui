@@ -109,6 +109,7 @@ export type {
   TabsProps,
   TabsItem,
   TabsDirection,
+  TabsAnimation,
 } from "./components/navigation/tabs";
 
 export { Checkbox } from "./components/forms/checkbox";

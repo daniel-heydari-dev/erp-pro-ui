@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 export type TabsDirection = "auto" | "ltr" | "rtl";
+export type TabsAnimation = "slide" | "fade" | "none";
 
 export interface TabsItem {
   id: string;
@@ -20,4 +21,5 @@ export interface TabsProps {
   triggerClassName?: string;
   panelClassName?: string;
   animationDurationMs?: number;
+  animation?: TabsAnimation;
 }
