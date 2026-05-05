@@ -131,7 +131,7 @@ export function Tabs({
         ],
         {
           duration: animationDurationMs ?? 300,
-          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          easing: "cubic-bezier(0.42, 1, 0.36, 1)",
         },
       );
     } else if (animation === "fade") {
@@ -139,7 +139,18 @@ export function Tabs({
         [{ opacity: 0 }, { opacity: 1 }],
         {
           duration: animationDurationMs ?? 360,
-          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          easing: "cubic-bezier(0.42, 1, 0.36, 1)",
+        },
+      );
+    } else if (animation === "rise") {
+      panel.animate(
+        [
+          { opacity: 0, transform: "translateY(14px)" },
+          { opacity: 1, transform: "translateY(0px)" },
+        ],
+        {
+          duration: animationDurationMs ?? 420,
+          easing: "cubic-bezier(0.534, 1, 0.3, 1)",
         },
       );
     }

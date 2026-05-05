@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 export type TabsDirection = "auto" | "ltr" | "rtl";
-export type TabsAnimation = "slide" | "fade" | "none";
+export type TabsAnimation = "slide" | "fade" | "rise" | "none";
 
 export interface TabsItem {
   id: string;
