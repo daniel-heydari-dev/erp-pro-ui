@@ -2,7 +2,7 @@
   "name": "erp-pro-ui",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/daniel-heydari-dev/erp-pro-ui"
@@ -25,10 +25,13 @@
     "clean": "turbo clean && rm -rf node_modules",
     "install:all": "pnpm install"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
   "devDependencies": {
     "dotenv-cli": "^11.0.0",
     "prettier": "^3.8.3",
-    "turbo": "^2.9.6",
+    "turbo": "^2.9.9",
     "typescript": "^6.0.3"
   }
 }

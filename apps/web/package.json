@@ -12,30 +12,30 @@
   },
   "dependencies": {
     "@tanstack/react-table": "^8.21.3",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/fiber": "^9.6.1",
     "@erp-pro/shared": "workspace:*",
     "erp-pro-ui": "workspace:*",
-    "@types/three": "^0.183.1",
+    "@types/three": "^0.184.0",
     "framer-motion": "^12.38.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-icons": "^5.6.0",
-    "react-router-dom": "^7.14.0",
-    "three": "^0.183.2"
+    "react-router-dom": "^7.15.0",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/vite-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "^4.2.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.4.27",
-    "eslint": "^10.2.0",
-    "postcss": "^8.5.9",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8"
+    "autoprefixer": "^10.5.0",
+    "eslint": "^10.3.0",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10"
   }
 }
