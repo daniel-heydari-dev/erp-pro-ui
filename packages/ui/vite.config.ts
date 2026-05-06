@@ -72,6 +72,12 @@ const libraryEntries = {
   carousel: resolveFromRoot("src/components/navigation/carousel/index.ts"),
   sidebar: resolveFromRoot("src/components/navigation/sidebar/index.ts"),
   charts: resolveFromRoot("src/components/data-display/charts/index.ts"),
+  "dashboard-cards": resolveFromRoot(
+    "src/components/data-display/dashboard-cards/index.ts",
+  ),
+  "event-calendar": resolveFromRoot(
+    "src/components/data-display/event-calendar/index.ts",
+  ),
   checkbox: resolveFromRoot("src/components/forms/checkbox/index.ts"),
   chip: resolveFromRoot("src/components/data-display/chip/index.ts"),
   "progress-bar": resolveFromRoot(

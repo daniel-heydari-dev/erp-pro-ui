@@ -1,5 +1,7 @@
 import type { ButtonProps, ButtonVariant } from "./types";
 
+import { mergeClassNames } from "../../../utils";
+
 const baseClasses = `
   inline-flex
   items-center
@@ -49,7 +51,7 @@ export const Button = ({
   return (
     <button
       type={type}
-      className={`${baseClasses} ${variantClasses} ${sizeClasses} ${className}`.trim()}
+      className={mergeClassNames(baseClasses, variantClasses, sizeClasses, className)}
       style={backgroundColor ? { backgroundColor } : undefined}
       {...props}
     >

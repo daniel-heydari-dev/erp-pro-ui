@@ -102,6 +102,8 @@ const uiDocsLoaders: Record<UiCatalogSlug, ComponentLoader> = {
   icons: () => import("@/docs/ui-basics/IconsDoc"),
   typography: () => import("@/docs/ui-basics/TypographyDoc"),
   "truncated-text": () => import("@/docs/ui-basics/TruncatedTextDoc"),
+  "dashboard-cards": () => import("@/docs/ui-basics/DashboardCardsDoc"),
+  "event-calendar": () => import("@/docs/ui-basics/EventCalendarDoc"),
 };
 
 type SharedUiCatalogItem = (typeof uiCatalogItems)[number];

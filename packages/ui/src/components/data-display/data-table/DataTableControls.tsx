@@ -88,28 +88,36 @@ export const ColumnToggle: React.FC<ColumnToggleProps> = ({
   onHideAll,
   labels,
 }) => (
-  <div className="p-4 space-y-3">
-    <div className="flex items-center justify-between mb-3">
+  <div
+    className="flex flex-col"
+    style={{ maxHeight: "min(400px, 80dvh)" }}
+  >
+    {/* Header — never scrolls */}
+    <div className="flex shrink-0 items-center px-4 pb-2 pt-4">
       <span className="text-sm font-semibold text-ds-1">{labels.columns}</span>
     </div>
 
-    <div className="space-y-2 max-h-64 overflow-y-auto">
-      {columns.map((col) => (
-        <div
-          key={col.id}
-          className="rounded-md px-2 py-1 hover:bg-ds-surface-2"
-        >
-          <Checkbox
-            checked={col.visible !== false}
-            onChange={() => onToggle(col.id)}
-            label={col.label}
-          />
-        </div>
-      ))}
+    {/* Scrollable column list */}
+    <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-1">
+      <div className="space-y-0.5">
+        {columns.map((col) => (
+          <div
+            key={col.id}
+            className="rounded-md px-2 py-1 hover:bg-ds-surface-2"
+          >
+            <Checkbox
+              checked={col.visible !== false}
+              onChange={() => onToggle(col.id)}
+              label={col.label}
+            />
+          </div>
+        ))}
+      </div>
     </div>
 
+    {/* Sticky footer — always visible at bottom */}
     {(onShowAll || onHideAll) && (
-      <div className="flex gap-2 border-t border-ds-border-2 pt-2">
+      <div className="flex shrink-0 gap-2 border-t border-ds-border-2 px-4 py-3">
         {onShowAll && (
           <Button
             onClick={onShowAll}

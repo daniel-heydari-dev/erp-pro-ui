@@ -21,6 +21,8 @@ export interface TooltipProps {
   disabled?: boolean;
   /** Custom className for the tooltip */
   className?: string;
+  /** Extra className applied to the trigger wrapper div */
+  wrapperClassName?: string;
   /** Whether to show an arrow pointing to the trigger */
   arrow?: boolean;
   /** Maximum width of the tooltip */
@@ -79,6 +81,7 @@ export default function Tooltip({
   delayHide = 0,
   disabled = false,
   className = "",
+  wrapperClassName,
   arrow = true,
   maxWidth = 250,
   open: controlledOpen,
@@ -188,7 +191,7 @@ export default function Tooltip({
   };
 
   return (
-    <div ref={triggerRef} className="relative inline-flex" {...triggerProps}>
+    <div ref={triggerRef} className={`relative inline-flex${wrapperClassName ? ` ${wrapperClassName}` : ''}`} {...triggerProps}>
       {children}
       <AnimatePresence>
         {isOpen && !disabled && (
@@ -202,7 +205,7 @@ export default function Tooltip({
               absolute z-50 ${positionStyles[position]}
               px-3 py-2 text-sm font-medium
               rounded-lg border border-ds-border-2 bg-ds-surface-2 text-ds-1 shadow-lg
-              whitespace-normal break-words
+              whitespace-normal wrap-break-word
               ${className}
             `}
             style={{ maxWidth }}

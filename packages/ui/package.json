@@ -109,6 +109,18 @@
       "require": "./dist/charts.cjs",
       "default": "./dist/charts.mjs"
     },
+    "./dashboard-cards": {
+      "types": "./dist/components/data-display/dashboard-cards/index.d.ts",
+      "import": "./dist/dashboard-cards.mjs",
+      "require": "./dist/dashboard-cards.cjs",
+      "default": "./dist/dashboard-cards.mjs"
+    },
+    "./event-calendar": {
+      "types": "./dist/components/data-display/event-calendar/index.d.ts",
+      "import": "./dist/event-calendar.mjs",
+      "require": "./dist/event-calendar.cjs",
+      "default": "./dist/event-calendar.mjs"
+    },
     "./checkbox": {
       "types": "./dist/components/forms/checkbox/index.d.ts",
       "import": "./dist/checkbox.mjs",

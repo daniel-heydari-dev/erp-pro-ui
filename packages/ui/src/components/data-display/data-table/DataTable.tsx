@@ -726,32 +726,42 @@ function FilterSelectorMenu({
     <div
       dir={direction}
       className={mergeClassNames(
-        "p-4 min-h-58 min-w-48 space-y-3",
+        "flex min-w-48 flex-col",
         direction === "rtl" ? "text-right" : "text-left",
       )}
+      style={{ maxHeight: "min(400px, 80dvh)" }}
     >
-      <div className="mb-3 flex items-center justify-between">
+      {/* Header — never scrolls */}
+      <div className="flex shrink-0 items-center px-4 pb-2 pt-4">
         <span className="text-sm font-semibold text-ds-1">
           {labels.showFilters}
         </span>
       </div>
-      {filterOptions.map((filter) => (
-        <div
-          key={filter.id}
-          className="min-w-36 rounded-md px-2 py-1 hover:bg-ds-surface-2"
-        >
-          <Checkbox
-            checked={visibleFilters.includes(filter.id)}
-            onChange={(event) =>
-              onToggleFilter(filter.id, event.target.checked)
-            }
-            label={filter.label}
-          />
+
+      {/* Scrollable filter list */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-1">
+        <div className="space-y-0.5">
+          {filterOptions.map((filter) => (
+            <div
+              key={filter.id}
+              className="min-w-36 rounded-md px-2 py-1 hover:bg-ds-surface-2"
+            >
+              <Checkbox
+                checked={visibleFilters.includes(filter.id)}
+                onChange={(event) =>
+                  onToggleFilter(filter.id, event.target.checked)
+                }
+                label={filter.label}
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* Sticky footer — always visible at bottom */}
       <div
         className={mergeClassNames(
-          "flex gap-2 border-t border-ds-border-2 pt-2",
+          "flex shrink-0 gap-2 border-t border-ds-border-2 px-4 py-3",
           direction === "rtl" && "flex-row-reverse",
         )}
       >

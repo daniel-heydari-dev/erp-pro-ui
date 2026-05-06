@@ -316,6 +316,20 @@ export const uiCatalogItems = [
     packageExportPath: "truncated-text",
     storybookTitle: "Foundations/TruncatedText",
   },
+  {
+    name: "Dashboard Cards",
+    slug: "dashboard-cards",
+    packageExportPath: "dashboard-cards",
+    storybookTitle: "Data Display/Dashboard Cards/Gallery",
+    status: "new",
+  },
+  {
+    name: "Event Calendar",
+    slug: "event-calendar",
+    packageExportPath: "event-calendar",
+    storybookTitle: "Data Display/EventCalendar",
+    status: "new",
+  },
 ] as const satisfies readonly UiCatalogItem[];
 
 export type UiCatalogSlug = (typeof uiCatalogItems)[number]["slug"];

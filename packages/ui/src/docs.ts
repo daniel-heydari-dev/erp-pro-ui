@@ -493,6 +493,22 @@ const componentDocSeeds = {
     subpathImport:
       "import { TruncatedText, type TruncatedTextProps } from 'erp-pro-ui/truncated-text';",
   },
+  "dashboard-cards": {
+    summary:
+      "Pre-built KPI and analytics cards for ERP dashboards — stat tiles, earnings, support tracker, shipment statistics, vehicle condition, and more.",
+    aliases: ["kpi card", "metric card", "stat card", "analytics card"],
+    related: ["bar-chart", "area-chart", "neon-line-chart", "progress-bar"],
+    rootImport:
+      "import { StatCard, EarningsCard, SupportTrackerCard, ShipmentStatisticsCard, VehicleConditionCard } from 'erp-pro-ui';",
+  },
+  "event-calendar": {
+    summary:
+      "Full-featured event calendar with Month, Week, Day, and List views, category filters, mini navigation calendar, and an Add Event panel.",
+    aliases: ["calendar", "scheduler", "planner", "events"],
+    related: ["calendar", "datepicker", "form"],
+    rootImport:
+      "import { EventCalendar } from 'erp-pro-ui';",
+  },
 } as const satisfies Record<UiCatalogSlug, ComponentDocSeed>;
 
 function getComponentCategory(storybookTitle: string): string {
