@@ -47,7 +47,7 @@ const itemsWithImages: TopProductItem[] = baseItems.map((item) => ({
 }));
 
 const meta: Meta<typeof TopProductsCard> = {
-  title: "Data Display/Dashboard Cards/TopProductsCard",
+  title: "Data Display / Dashboard Cards / Sales / TopProductsCard",
   component: TopProductsCard,
   tags: ["autodocs"],
   parameters: {

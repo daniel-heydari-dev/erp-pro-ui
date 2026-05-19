@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import {
@@ -12,6 +14,7 @@ import { MiniNeonSparkline } from "../charts/MiniNeonSparkline";
 import { NeonLineChart } from "../charts/NeonLineChart";
 import { ChartCard } from "./ChartCard";
 import { EarningReportsTabsCard } from "./EarningReportsTabsCard";
+import type { PeriodFilterValue } from "./EarningReportsTabsCard";
 import { EarningsCard } from "./EarningsCard";
 import { RevenueGrowthCard } from "./RevenueGrowthCard";
 import { SalesOverviewCard } from "./SalesOverviewCard";
@@ -369,7 +372,7 @@ const topProducts = [
 // ---------------------------------------------------------------------------
 
 const meta: Meta = {
-  title: "Data Display/Dashboard Cards/Gallery",
+  title: "Data Display / Dashboard Cards / Gallery",
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -1127,6 +1130,8 @@ export const NexusCommerceDashboard: Story = {
                 tabs={salesEarningsTabs}
                 showAddTab={false}
                 defaultTabId="revenue"
+                showPeriodFilter
+                defaultPeriodFilter="this-year"
               />
             </div>
             <div className="col-span-6">
@@ -1759,13 +1764,29 @@ const earningTabs = [
   },
 ];
 
+function EarningReportsTabsCardWithFilter() {
+  const [period, setPeriod] = useState<PeriodFilterValue>("this-month");
+  return (
+    <EarningReportsTabsCard
+      title="Sales Reports"
+      subtitle="Business Sales Overview"
+      tabs={earningTabs}
+      defaultTabId="sales"
+      showAddTab={false}
+      showPeriodFilter
+      periodFilter={period}
+      onPeriodFilterChange={setPeriod}
+    />
+  );
+}
+
 export const EarningReportsTabsCardStory: Story = {
   name: "EarningReportsTabsCard",
   render: () => (
     <StoryPanel>
       <StoryIntro
         title="EarningReportsTabsCard"
-        description="Yearly earnings bar chart with icon tab switcher and optional add-category button."
+        description="Yearly earnings bar chart with icon tab switcher. Optional period filter select (Today → Custom) aligns to the right of the tab row; selecting Custom reveals an inline date-range picker."
       />
       <StorySection title="Default">
         <div className="max-w-[560px]">
@@ -1786,6 +1807,11 @@ export const EarningReportsTabsCardStory: Story = {
             showAddTab={false}
             defaultTabId="sales"
           />
+        </div>
+      </StorySection>
+      <StorySection title="With period filter">
+        <div className="max-w-[560px]">
+          <EarningReportsTabsCardWithFilter />
         </div>
       </StorySection>
     </StoryPanel>

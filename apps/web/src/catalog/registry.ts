@@ -104,6 +104,7 @@ const uiDocsLoaders: Record<UiCatalogSlug, ComponentLoader> = {
   "truncated-text": () => import("@/docs/ui-basics/TruncatedTextDoc"),
   "dashboard-cards": () => import("@/docs/ui-basics/DashboardCardsDoc"),
   "event-calendar": () => import("@/docs/ui-basics/EventCalendarDoc"),
+  "draggable-grid": () => import("@/docs/ui-basics/DraggableGridDoc"),
 };
 
 type SharedUiCatalogItem = (typeof uiCatalogItems)[number];
@@ -142,6 +143,42 @@ export const catalogCategories: CatalogCategory[] = [
         name: "Preview",
         slug: "preview",
         loader: () => import("@/docs/ui-basics/PreviewDoc"),
+      },
+    ],
+  },
+  {
+    name: "Tools Store",
+    slug: "tools-store",
+    items: [
+      {
+        name: "Dashboard",
+        slug: "dashboard",
+        status: "new",
+        loader: () => import("@/docs/tools-store/ERPDashboardPage"),
+      },
+      {
+        name: "Inventory",
+        slug: "inventory",
+        status: "new",
+        loader: () => import("@/docs/tools-store/ERPInventoryPage"),
+      },
+      {
+        name: "Sales",
+        slug: "sales",
+        status: "new",
+        loader: () => import("@/docs/tools-store/ERPSalesPage"),
+      },
+      {
+        name: "Orders",
+        slug: "orders",
+        status: "new",
+        loader: () => import("@/docs/tools-store/ERPOrdersPage"),
+      },
+      {
+        name: "Contacts",
+        slug: "contacts",
+        status: "new",
+        loader: () => import("@/docs/tools-store/ERPContactsPage"),
       },
     ],
   },

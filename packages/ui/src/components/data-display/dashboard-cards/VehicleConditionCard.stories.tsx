@@ -73,7 +73,7 @@ const threeItems: VehicleConditionItem[] = [
 ];
 
 const meta: Meta<typeof VehicleConditionCard> = {
-  title: "Data Display/Dashboard Cards/VehicleConditionCard",
+  title: "Data Display / Dashboard Cards / Orders / VehicleConditionCard",
   component: VehicleConditionCard,
   tags: ["autodocs"],
   parameters: {

@@ -28,7 +28,7 @@ const months = [
 ];
 
 const meta: Meta<typeof ShipmentStatisticsCard> = {
-  title: "Data Display/Dashboard Cards/ShipmentStatisticsCard",
+  title: "Data Display / Dashboard Cards / Orders / ShipmentStatisticsCard",
   component: ShipmentStatisticsCard,
   tags: ["autodocs"],
   parameters: {

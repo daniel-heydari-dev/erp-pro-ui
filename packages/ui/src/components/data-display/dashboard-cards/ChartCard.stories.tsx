@@ -35,7 +35,7 @@ const multiSeriesData = [
 ];
 
 const meta: Meta<typeof ChartCard> = {
-  title: "Data Display/Dashboard Cards/ChartCard",
+  title: "Data Display / Dashboard Cards / General / ChartCard",
   component: ChartCard,
   tags: ["autodocs"],
   parameters: {

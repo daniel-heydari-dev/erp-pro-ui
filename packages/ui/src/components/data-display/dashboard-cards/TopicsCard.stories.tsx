@@ -26,7 +26,7 @@ const threeTopics: TopicItem[] = [
 ];
 
 const meta: Meta<typeof TopicsCard> = {
-  title: "Data Display/Dashboard Cards/TopicsCard",
+  title: "Data Display / Dashboard Cards / Contacts / TopicsCard",
   component: TopicsCard,
   tags: ["autodocs"],
   parameters: {

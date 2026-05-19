@@ -43,7 +43,7 @@ const mobileMetric: SalesMetric = {
 };
 
 const meta: Meta<typeof SalesOverviewCard> = {
-  title: "Data Display/Dashboard Cards/SalesOverviewCard",
+  title: "Data Display / Dashboard Cards / Sales / SalesOverviewCard",
   component: SalesOverviewCard,
   tags: ["autodocs"],
   parameters: {

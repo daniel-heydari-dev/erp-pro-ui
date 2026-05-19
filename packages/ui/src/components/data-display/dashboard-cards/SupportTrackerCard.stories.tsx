@@ -38,7 +38,7 @@ const defaultItems: SupportItem[] = [
 ];
 
 const meta: Meta<typeof SupportTrackerCard> = {
-  title: "Data Display/Dashboard Cards/SupportTrackerCard",
+  title: "Data Display / Dashboard Cards / Contacts / SupportTrackerCard",
   component: SupportTrackerCard,
   tags: ["autodocs"],
   parameters: {

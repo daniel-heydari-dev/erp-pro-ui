@@ -95,6 +95,12 @@ export {
   ExpensesCard,
   IncomeExpenseCard,
   DeviceSalesCard,
+  PaymentSummaryCard,
+  BarBreakdownCard,
+  TopSellingItemsCard,
+  SalesHeatmapCard,
+  FinancialPLCard,
+  InventoryCards,
 } from "./components/data-display/dashboard-cards";
 export type {
   StatCardProps,
@@ -115,8 +121,11 @@ export type {
   RevenueGrowthCardProps,
   RevenueGrowthBarPoint,
   EarningReportsTabsCardProps,
+  EarningReportsTabsCardLabels,
   EarningTab,
   EarningTabBarPoint,
+  EarningTabSummary,
+  PeriodFilterValue,
   TopicsCardProps,
   TopicItem,
   ShipmentStatisticsCardProps,
@@ -136,6 +145,30 @@ export type {
   DeviceSalesCardProps,
   DeviceSalesChannel,
   DeviceSalesBrandRow,
+  PaymentSummaryCardProps,
+  PaymentSummarySlice,
+  PaymentSummaryMetric,
+  BarBreakdownCardProps,
+  BarBreakdownCategory,
+  BarBreakdownDataPoint,
+  BarBreakdownHeadline,
+  BarBreakdownMetric,
+  TopSellingItemsCardProps,
+  TopSellingItem,
+  TopSellingMetric,
+  TopSellingItemsCardLabels,
+} from "./components/data-display/dashboard-cards";
+export type {
+  SalesHeatmapCardProps,
+  HeatmapPoint,
+  FinancialPLCardProps,
+  PLMetricTab,
+  PLDataPoint,
+  PLWaterfallStep,
+  PLPeriod,
+  PLWaterfallRole,
+  InventoryCardsProps,
+  InventoryCardRow,
 } from "./components/data-display/dashboard-cards";
 
 export { EventCalendar } from "./components/data-display/event-calendar";
@@ -413,6 +446,12 @@ export type { DrawerProps, DrawerPosition } from "./components/overlays/drawer";
 // -----------------------------------------------------------------------------
 export { ASCIIText } from "./components/effects/ascii-text";
 export type { ASCIITextProps } from "./components/effects/ascii-text";
+
+// -----------------------------------------------------------------------------
+// Layout
+// -----------------------------------------------------------------------------
+export { DraggableGrid } from "./components/layout/draggable-grid";
+export type { DraggableGridProps, DraggableGridItem, DraggableGridItemSize } from "./components/layout/draggable-grid";
 
 // -----------------------------------------------------------------------------
 // Icons - Re-export from barrel file

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { VehiclesOverviewCard } from "./VehiclesOverviewCard";
 
 const meta: Meta<typeof VehiclesOverviewCard> = {
-  title: "Data Display/Dashboard Cards/VehiclesOverviewCard",
+  title: "Data Display / Dashboard Cards / Orders / VehiclesOverviewCard",
   component: VehiclesOverviewCard,
   tags: ["autodocs"],
   argTypes: {

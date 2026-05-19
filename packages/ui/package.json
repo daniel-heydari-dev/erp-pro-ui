@@ -337,6 +337,12 @@
       "require": "./dist/spinners.cjs",
       "default": "./dist/spinners.mjs"
     },
+    "./draggable-grid": {
+      "types": "./dist/components/layout/draggable-grid/index.d.ts",
+      "import": "./dist/draggable-grid.mjs",
+      "require": "./dist/draggable-grid.cjs",
+      "default": "./dist/draggable-grid.mjs"
+    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils.mjs",
@@ -363,6 +369,9 @@
     "tailwind-merge": "^3.5.0"
   },
   "peerDependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tanstack/react-table": "^8.21.3",
     "framer-motion": "^12.38.0",
     "react": "^19.2.5",
@@ -370,6 +379,15 @@
     "three": ">=0.183.2"
   },
   "peerDependenciesMeta": {
+    "@dnd-kit/core": {
+      "optional": true
+    },
+    "@dnd-kit/sortable": {
+      "optional": true
+    },
+    "@dnd-kit/utilities": {
+      "optional": true
+    },
     "@tanstack/react-table": {
       "optional": true
     },
@@ -381,6 +399,9 @@
     }
   },
   "devDependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
     "@storybook/react-vite": "^10.3.6",

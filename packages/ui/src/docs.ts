@@ -509,6 +509,17 @@ const componentDocSeeds = {
     rootImport:
       "import { EventCalendar } from 'erp-pro-ui';",
   },
+  "draggable-grid": {
+    exportName: "DraggableGrid",
+    summary:
+      "Drag-and-drop card grid with S/M/L size chips, localStorage persistence, and an optional shell wrapper. Powered by dnd-kit.",
+    aliases: ["drag and drop", "sortable grid", "dashboard layout", "kanban"],
+    related: ["dashboard-cards", "card"],
+    rootImport:
+      "import { DraggableGrid, type DraggableGridItem, type DraggableGridItemSize } from 'erp-pro-ui';",
+    subpathImport:
+      "import { DraggableGrid, type DraggableGridItem, type DraggableGridItemSize } from 'erp-pro-ui/draggable-grid';",
+  },
 } as const satisfies Record<UiCatalogSlug, ComponentDocSeed>;
 
 function getComponentCategory(storybookTitle: string): string {

@@ -69,7 +69,7 @@ const alternateMetrics: EarningsMetric[] = [
 ];
 
 const meta: Meta<typeof EarningsCard> = {
-  title: "Data Display/Dashboard Cards/EarningsCard",
+  title: "Data Display / Dashboard Cards / Dashboard / EarningsCard",
   component: EarningsCard,
   tags: ["autodocs"],
   parameters: {

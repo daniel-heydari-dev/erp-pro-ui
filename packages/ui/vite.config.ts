@@ -136,6 +136,9 @@ const libraryEntries = {
   "ascii-text": resolveFromRoot("src/components/effects/ascii-text/index.ts"),
   icons: resolveFromRoot("src/components/icons/index.ts"),
   spinners: resolveFromRoot("src/components/spinners/index.ts"),
+  "draggable-grid": resolveFromRoot(
+    "src/components/layout/draggable-grid/index.ts",
+  ),
   utils: resolveFromRoot("src/utils/index.ts"),
 };
 
@@ -145,6 +148,9 @@ const outputGlobals = {
   "framer-motion": "FramerMotion",
   three: "THREE",
   recharts: "Recharts",
+  "@dnd-kit/core": "DndKitCore",
+  "@dnd-kit/sortable": "DndKitSortable",
+  "@dnd-kit/utilities": "DndKitUtilities",
 };
 
 export default defineConfig({
@@ -176,6 +182,9 @@ export default defineConfig({
         "@react-three/drei",
         "@tanstack/react-table",
         "recharts",
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
       ],
       output: [
         {

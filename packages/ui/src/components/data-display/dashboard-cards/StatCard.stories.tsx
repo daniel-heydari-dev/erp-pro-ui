@@ -21,7 +21,7 @@ const sparklineData = [
 ];
 
 const meta: Meta<typeof StatCard> = {
-  title: "Data Display/Dashboard Cards/StatCard",
+  title: "Data Display / Dashboard Cards / General / StatCard",
   component: StatCard,
   tags: ["autodocs"],
   parameters: {

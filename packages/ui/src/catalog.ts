@@ -330,6 +330,13 @@ export const uiCatalogItems = [
     storybookTitle: "Data Display/EventCalendar",
     status: "new",
   },
+  {
+    name: "Draggable Grid",
+    slug: "draggable-grid",
+    packageExportPath: "draggable-grid",
+    storybookTitle: "Layout/DraggableGrid",
+    status: "new",
+  },
 ] as const satisfies readonly UiCatalogItem[];
 
 export type UiCatalogSlug = (typeof uiCatalogItems)[number]["slug"];

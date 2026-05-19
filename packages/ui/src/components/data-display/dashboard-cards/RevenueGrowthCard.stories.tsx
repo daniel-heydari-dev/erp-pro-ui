@@ -21,7 +21,7 @@ const weeklyData: RevenueGrowthBarPoint[] = [
 ];
 
 const meta: Meta<typeof RevenueGrowthCard> = {
-  title: "Data Display/Dashboard Cards/RevenueGrowthCard",
+  title: "Data Display / Dashboard Cards / Dashboard / RevenueGrowthCard",
   component: RevenueGrowthCard,
   tags: ["autodocs"],
   parameters: {
