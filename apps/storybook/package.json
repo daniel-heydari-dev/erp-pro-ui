@@ -13,29 +13,29 @@
   },
   "dependencies": {
     "erp-pro-ui": "workspace:*",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
     "@erp-pro/vite-config": "workspace:*",
-    "@storybook/addon-a11y": "^10.3.6",
-    "@storybook/addon-docs": "^10.3.6",
-    "@storybook/addon-links": "^10.3.6",
+    "@storybook/addon-a11y": "^10.4.1",
+    "@storybook/addon-docs": "^10.4.1",
+    "@storybook/addon-links": "^10.4.1",
     "@storybook/addon-mcp": "^0.6.0",
-    "@storybook/addon-onboarding": "^10.3.6",
-    "@storybook/addon-vitest": "^10.3.6",
-    "@storybook/react-vite": "^10.3.6",
-    "@tailwindcss/vite": "^4.2.4",
-    "@types/react": "^19.2.14",
+    "@storybook/addon-onboarding": "^10.4.1",
+    "@storybook/addon-vitest": "^10.4.1",
+    "@storybook/react-vite": "^10.4.1",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^10.3.0",
-    "eslint-plugin-storybook": "^10.3.6",
-    "storybook": "^10.3.6",
-    "tailwindcss": "^4.2.4",
+    "eslint": "^10.4.0",
+    "eslint-plugin-storybook": "^10.4.1",
+    "storybook": "^10.4.1",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.10",
-    "vitest": "^4.1.5"
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
   }
 }
