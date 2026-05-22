@@ -77,6 +77,8 @@ export interface FinancialPLCardProps {
   comparisonPeriod?: PLPeriod;
   defaultComparisonPeriod?: PLPeriod;
   onComparisonPeriodChange?: (v: PLPeriod) => void;
+  comparisonCustomDateRange?: DateRangeValue;
+  onComparisonCustomDateRangeChange?: (r: DateRangeValue) => void;
   comparisonActive?: boolean;
   defaultComparisonActive?: boolean;
   onComparisonActiveChange?: (v: boolean) => void;
@@ -117,6 +119,8 @@ export const FinancialPLCard: FC<FinancialPLCardProps> = ({
   comparisonPeriod,
   defaultComparisonPeriod = "this-year",
   onComparisonPeriodChange,
+  comparisonCustomDateRange,
+  onComparisonCustomDateRangeChange,
   comparisonActive,
   defaultComparisonActive = false,
   onComparisonActiveChange,
@@ -131,15 +135,17 @@ export const FinancialPLCard: FC<FinancialPLCardProps> = ({
   const [intPeriod,    setIntPeriod]    = useState<PLPeriod>(defaultPeriodFilter);
   const [intRange,     setIntRange]     = useState<DateRangeValue>({ start: null, end: null });
   const [intCmpPeriod, setIntCmpPeriod] = useState<PLPeriod>(defaultComparisonPeriod);
+  const [intCmpRange,  setIntCmpRange]  = useState<DateRangeValue>({ start: null, end: null });
   const [intCmpActive, setIntCmpActive] = useState(defaultComparisonActive);
   const [intOverview,  setIntOverview]  = useState(defaultOverviewActive);
 
-  const activeId        = selectedMetricId  ?? intMetricId;
-  const activePeriod    = periodFilter      ?? intPeriod;
-  const activeRange     = customDateRange   ?? intRange;
-  const activeCmpPeriod = comparisonPeriod  ?? intCmpPeriod;
-  const isCompOn        = comparisonActive  ?? intCmpActive;
-  const isOverviewOn    = overviewActive    ?? intOverview;
+  const activeId        = selectedMetricId        ?? intMetricId;
+  const activePeriod    = periodFilter            ?? intPeriod;
+  const activeRange     = customDateRange         ?? intRange;
+  const activeCmpPeriod = comparisonPeriod        ?? intCmpPeriod;
+  const activeCmpRange  = comparisonCustomDateRange ?? intCmpRange;
+  const isCompOn        = comparisonActive        ?? intCmpActive;
+  const isOverviewOn    = overviewActive          ?? intOverview;
 
   const activeMetric = metrics.find((m) => m.id === activeId) ?? metrics[0]!;
   const fmt          = activeMetric.yAxisFormatter ?? yAxisFormatter;
@@ -158,6 +164,11 @@ export const FinancialPLCard: FC<FinancialPLCardProps> = ({
     const next = !isCompOn;
     if (comparisonActive === undefined) setIntCmpActive(next);
     onComparisonActiveChange?.(next);
+    // Enabling compare exits overview mode
+    if (next && isOverviewOn) {
+      if (overviewActive === undefined) setIntOverview(false);
+      onOverviewActiveChange?.(false);
+    }
   }
 
   const chartData = useMemo((): PLDataPoint[] => {
@@ -203,6 +214,8 @@ export const FinancialPLCard: FC<FinancialPLCardProps> = ({
         onToggleComparison={toggleComparison}
         activeCmpPeriod={activeCmpPeriod}
         onCmpPeriodChange={(v) => { if (comparisonPeriod === undefined) setIntCmpPeriod(v); onComparisonPeriodChange?.(v); }}
+        activeCmpRange={activeCmpRange}
+        onCmpRangeChange={(r) => { if (comparisonCustomDateRange === undefined) setIntCmpRange(r); onComparisonCustomDateRangeChange?.(r); }}
         onMenuClick={onMenuClick}
         labels={labels}
       />

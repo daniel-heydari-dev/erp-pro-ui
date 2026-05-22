@@ -20,6 +20,7 @@ export interface PLCardLabels {
   /** aria-label for the ⋮ menu button. */
   moreOptions?: string;
   dateRangePlaceholder?: string;
+  comparisonDateRangePlaceholder?: string;
   periods?: {
     today?: string;
     yesterday?: string;
@@ -68,6 +69,8 @@ export interface PLCardHeaderProps {
   onToggleComparison: () => void;
   activeCmpPeriod: PLPeriod;
   onCmpPeriodChange: (v: PLPeriod) => void;
+  activeCmpRange: DateRangeValue;
+  onCmpRangeChange: (r: DateRangeValue) => void;
   onMenuClick?: () => void;
   labels?: PLCardLabels;
 }
@@ -76,10 +79,10 @@ export interface PLCardHeaderProps {
 
 function ctrlBtn(active: boolean) {
   return [
-    "rounded-lg border px-2.5 py-1 text-xs font-semibold transition-colors hover:opacity-100",
+    "rounded-lg border px-2.5 py-1 text-xs font-semibold transition-colors",
     active
       ? "border-ds-accent bg-ds-accent-subtle text-ds-accent"
-      : "border-ds-border-3 text-ds-3 hover:border-ds-border-2 hover:bg-ds-surface-2 hover:text-ds-2",
+      : "border-ds-border-2 bg-ds-surface-2 text-ds-2 hover:border-ds-border-1 hover:bg-ds-surface-3 hover:text-ds-1",
   ].join(" ");
 }
 
@@ -101,11 +104,14 @@ export const PLCardHeader: FC<PLCardHeaderProps> = ({
   onToggleComparison,
   activeCmpPeriod,
   onCmpPeriodChange,
+  activeCmpRange,
+  onCmpRangeChange,
   onMenuClick,
   labels,
 }) => {
-  const showCmpSelect  = showComparison && isCompOn && !isOverviewOn;
-  const showDatePicker = showPeriodFilter && activePeriod === "custom";
+  const showCmpSelect     = showComparison && isCompOn && !isOverviewOn;
+  const showDatePicker    = showPeriodFilter && activePeriod === "custom";
+  const showCmpDatePicker = showCmpSelect && activeCmpPeriod === "custom";
 
   const periodOpts = PERIOD_OPTS.map((opt) => ({
     ...opt,
@@ -189,19 +195,37 @@ export const PLCardHeader: FC<PLCardHeaderProps> = ({
         </div>
       </div>
 
-      {/* Row 3: date range picker — only when period = custom */}
-      {showDatePicker && (
+      {/* Row 3: date range pickers — shown when period or comparison period = custom */}
+      {(showDatePicker || showCmpDatePicker) && (
         <div className="flex items-center gap-2 px-5 pb-2">
-          <DatePicker
-            mode="range"
-            value={activeRange}
-            onChange={(v) => {
-              if (v && typeof v === "object" && "start" in v) {
-                onRangeChange(v as DateRangeValue);
-              }
-            }}
-            placeholder={labels?.dateRangePlaceholder ?? "Pick a date range"}
-          />
+          {showDatePicker && (
+            <div className="flex-1 min-w-0">
+              <DatePicker
+                mode="range"
+                value={activeRange}
+                onChange={(v) => {
+                  if (v && typeof v === "object" && "start" in v) {
+                    onRangeChange(v as DateRangeValue);
+                  }
+                }}
+                placeholder={labels?.dateRangePlaceholder ?? "Pick a date range"}
+              />
+            </div>
+          )}
+          {showCmpDatePicker && (
+            <div className="flex-1 min-w-0">
+              <DatePicker
+                mode="range"
+                value={activeCmpRange}
+                onChange={(v) => {
+                  if (v && typeof v === "object" && "start" in v) {
+                    onCmpRangeChange(v as DateRangeValue);
+                  }
+                }}
+                placeholder={labels?.comparisonDateRangePlaceholder ?? "Compare date range"}
+              />
+            </div>
+          )}
         </div>
       )}
     </>
