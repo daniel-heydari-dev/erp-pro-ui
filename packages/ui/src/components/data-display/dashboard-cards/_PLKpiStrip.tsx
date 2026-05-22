@@ -2,6 +2,7 @@
 
 import { type FC } from "react";
 
+import { Button } from "../../forms/button";
 import { mergeClassNames } from "../../../utils";
 
 import type { PLMetricTab, PLPeriod } from "./FinancialPLCard";
@@ -37,11 +38,12 @@ export const PLKpiStrip: FC<PLKpiStripProps> = ({
 
       return (
         <div key={m.id} className="group relative flex-1">
-          <button
+          <Button
+            variant="tertiary"
             onClick={() => onMetricChange(m.id)}
             aria-pressed={isActive}
             className={mergeClassNames(
-              "flex w-full flex-col gap-0.5 border-b-2 px-1 pb-3 pt-2 text-left transition-colors",
+              "flex! w-full flex-col! gap-0.5 border-b-2 px-1! pb-3! pt-2! text-left transition-colors",
               "first:pl-0 hover:bg-ds-surface-2/60",
               "focus-visible:outline focus-visible:outline-2 focus-visible:outline-ds-accent focus-visible:outline-offset-[-2px]",
               isActive ? "border-b-current" : "border-transparent",
@@ -71,7 +73,7 @@ export const PLKpiStrip: FC<PLKpiStripProps> = ({
                 )}
               </span>
             )}
-          </button>
+          </Button>
 
           {/* Hover tooltip */}
           {m.tooltip && (

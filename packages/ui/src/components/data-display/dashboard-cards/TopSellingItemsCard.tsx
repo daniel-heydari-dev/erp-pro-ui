@@ -210,12 +210,12 @@ export const TopSellingItemsCard: FC<TopSellingItemsCardProps> = ({
             aria-label="Metric toggle"
           >
             {(["qty", "revenue"] as TopSellingMetric[]).map((m) => (
-              <button
+              <Button
                 key={m}
-                type="button"
+                variant="tertiary"
                 onClick={() => handleMetricChange(m)}
                 className={mergeClassNames(
-                  "rounded px-2.5 py-1 text-xs font-medium transition-colors",
+                  "rounded px-2.5! py-1! text-xs font-medium transition-colors",
                   metric === m
                     ? "bg-ds-surface-1 text-ds-1 shadow-sm"
                     : "text-ds-3 hover:text-ds-2",
@@ -223,7 +223,7 @@ export const TopSellingItemsCard: FC<TopSellingItemsCardProps> = ({
                 aria-pressed={metric === m}
               >
                 {m === "qty" ? byQtyLabel : byRevenueLabel}
-              </button>
+              </Button>
             ))}
           </div>
           <Button
