@@ -171,6 +171,42 @@ export type {
   InventoryCardRow,
 } from "./components/data-display/dashboard-cards";
 
+export {
+  SubscriptionHealthCard,
+  ToolUsageOverviewCard,
+  AcquisitionChannelCard,
+  CustomerLifecycleCard,
+  SeatUtilizationCard,
+  TopToolsCard,
+  TopPlansCard,
+  AIInsightsCard,
+} from "./components/data-display/dashboard-cards";
+export type {
+  SubscriptionHealthCardProps,
+  SubscriptionTierHealth,
+  ToolUsageOverviewCardProps,
+  ToolUsageSegment,
+  AcquisitionChannelCardProps,
+  AcquisitionChannel,
+  AcquisitionPlanRow,
+  CustomerLifecycleCardProps,
+  CustomerLifecycleDataPoint,
+  CustomerLifecycleMetric,
+  CustomerLifecyclePeriod,
+  SeatUtilizationCardProps,
+  SeatTierRow,
+  SeatSummaryItem,
+  TopToolsCardProps,
+  TopToolItem,
+  TopPlansCardProps,
+  PlanItem,
+  TopPlansMetric,
+  AIInsightsCardProps,
+  AIInsight,
+  AIInsightType,
+  AIInsightImpact,
+} from "./components/data-display/dashboard-cards";
+
 export { EventCalendar } from "./components/data-display/event-calendar";
 export type {
   EventCalendarProps,
