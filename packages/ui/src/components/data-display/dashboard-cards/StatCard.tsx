@@ -189,10 +189,10 @@ export const StatCard: FC<StatCardProps> = ({
             )}
           </>
         ) : (
-          <div className="flex items-end justify-between gap-3">
+          <div className="flex items-end gap-3">
             {metricBlock}
             {chart && (
-              <div className={mergeClassNames("h-[46px] w-[155px] shrink-0 overflow-hidden", chartClassName)}>
+              <div className={mergeClassNames("relative flex-1 min-w-0 h-[46px]", chartClassName)}>
                 {chart}
               </div>
             )}

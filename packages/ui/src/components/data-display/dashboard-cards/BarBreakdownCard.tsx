@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, type FC } from "react";
+import { useState, type FC } from "react";
 import {
   BarChart as RechartsBarChart,
   Bar,
@@ -10,7 +10,8 @@ import {
 } from "recharts";
 
 import { Button } from "../../forms/button";
-import { SettingsIcon } from "../../icons/SettingsIcon";
+import { Select } from "../../forms/select";
+import { EllipsisVerticalIcon } from "../../icons/EllipsisVerticalIcon";
 import { mergeClassNames } from "../../../utils";
 import {
   chartTooltipContentStyle,
@@ -53,7 +54,11 @@ export interface BarBreakdownCardProps {
   variant?: "full" | "compact";
   headlines?: BarBreakdownHeadline[];
   categories: BarBreakdownCategory[];
+  /** Fallback data when the active period has no entry in dataByPeriod. */
   data: BarBreakdownDataPoint[];
+  /** Per-period data — key must match a value in `periods`. When provided,
+   *  the chart swaps to the matching dataset on period change. */
+  dataByPeriod?: Record<string, BarBreakdownDataPoint[]>;
   periodLabel?: string;
   periods?: string[];
   defaultPeriod?: string;
@@ -61,17 +66,11 @@ export interface BarBreakdownCardProps {
   onPeriodChange?: (period: string) => void;
   /** Only rendered in variant="full". */
   metrics?: BarBreakdownMetric[];
-  onSettingsClick?: () => void;
+  onMenuClick?: () => void;
   className?: string;
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
-
-const ChevronIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
 
 const TrendBadge: FC<{ value: string; direction: "up" | "down" }> = ({ value, direction }) => {
   const isUp = direction === "up";
@@ -88,65 +87,6 @@ const TrendBadge: FC<{ value: string; direction: "up" | "down" }> = ({ value, di
   );
 };
 
-const PeriodDropdown: FC<{
-  label?: string;
-  periods: string[];
-  activePeriod: string;
-  onSelect: (p: string) => void;
-}> = ({ label, periods, activePeriod, onSelect }) => {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const handle = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", handle);
-    return () => document.removeEventListener("mousedown", handle);
-  }, [open]);
-
-  return (
-    <div className="flex flex-col gap-1">
-      {label && <p className="text-[10px] font-semibold uppercase tracking-wider text-ds-3">{label}</p>}
-      <div ref={ref} className="relative">
-        <Button
-          variant="tertiary"
-          size="small"
-          onClick={() => setOpen((o) => !o)}
-          className="w-full justify-between gap-2 rounded-md border border-ds-border-2 bg-ds-surface-1 px-3 py-1.5 text-xs font-medium text-ds-2 hover:bg-ds-surface-2 hover:opacity-100"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-        >
-          <span className="truncate">{activePeriod}</span>
-          <span className={mergeClassNames("shrink-0 transition-transform duration-150", open ? "rotate-180" : "")}>
-            <ChevronIcon />
-          </span>
-        </Button>
-        {open && (
-          <div role="listbox" className="absolute end-0 top-full z-20 mt-1 min-w-full overflow-hidden rounded-md border border-ds-border-2 bg-ds-surface-1 py-1 shadow-lg">
-            {periods.map((p) => (
-              <Button
-                key={p}
-                variant="tertiary"
-                size="small"
-                role="option"
-                aria-selected={p === activePeriod}
-                onClick={() => { onSelect(p); setOpen(false); }}
-                className={mergeClassNames(
-                  "w-full justify-start rounded-none px-3 py-1.5 text-start text-xs hover:bg-ds-surface-2 hover:opacity-100",
-                  p === activePeriod ? "font-semibold text-ds-accent" : "text-ds-2",
-                )}
-              >
-                {p}
-              </Button>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 const BarChartArea: FC<{ categories: BarBreakdownCategory[]; data: BarBreakdownDataPoint[]; height?: number }> = ({
   categories,
@@ -203,13 +143,14 @@ export const BarBreakdownCard: FC<BarBreakdownCardProps> = ({
   headlines = [],
   categories,
   data,
+  dataByPeriod,
   periodLabel,
   periods = DEFAULT_PERIODS,
   defaultPeriod,
   selectedPeriod: controlledPeriod,
   onPeriodChange,
   metrics = [],
-  onSettingsClick,
+  onMenuClick,
   className,
 }) => {
   const isControlled = controlledPeriod !== undefined;
@@ -220,6 +161,8 @@ export const BarBreakdownCard: FC<BarBreakdownCardProps> = ({
     if (!isControlled) setInternalPeriod(p);
     onPeriodChange?.(p);
   };
+
+  const activeData = dataByPeriod?.[activePeriod] ?? data;
 
   const hasHeadlines = headlines.length > 0;
   const hasMetrics = metrics.length > 0 && variant === "full";
@@ -234,11 +177,11 @@ export const BarBreakdownCard: FC<BarBreakdownCardProps> = ({
         <Button
           variant="tertiary"
           size="small"
-          className="shrink-0 p-1! text-ds-3 hover:text-ds-1"
-          aria-label="Settings"
-          onClick={onSettingsClick}
+          className="shrink-0 p-0.5! text-ds-3 hover:text-ds-1"
+          aria-label="More options"
+          onClick={onMenuClick}
         >
-          <SettingsIcon width={16} height={16} />
+          <EllipsisVerticalIcon width={18} height={18} />
         </Button>
       </div>
 
@@ -258,15 +201,26 @@ export const BarBreakdownCard: FC<BarBreakdownCardProps> = ({
               ))}
             </div>
           )}
-          <div className={mergeClassNames(hasHeadlines ? "shrink-0" : "w-full max-w-[200px]")}>
-            <PeriodDropdown label={periodLabel} periods={periods} activePeriod={activePeriod} onSelect={handleSelect} />
+          <div className={mergeClassNames(hasHeadlines ? "shrink-0" : "w-full max-w-[160px]")}>
+            {periodLabel && (
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-ds-3">{periodLabel}</p>
+            )}
+            <Select
+              options={periods.map((p) => ({ value: p, label: p }))}
+              value={activePeriod}
+              onChange={(e) => handleSelect(e.target.value)}
+              size="compact"
+              selectionIndicator="none"
+              containerClassName="w-full"
+              aria-label="Filter by period"
+            />
           </div>
         </div>
 
         {/* Chart + optional right metrics */}
         <div className="flex gap-4">
           <div className="flex-1 min-w-0">
-            <BarChartArea categories={categories} data={data} />
+            <BarChartArea categories={categories} data={activeData} />
           </div>
           {hasMetrics && (
             <>

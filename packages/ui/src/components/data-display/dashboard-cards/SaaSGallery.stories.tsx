@@ -9,6 +9,7 @@ import { SeatUtilizationCard } from "./SeatUtilizationCard";
 import { TopToolsCard } from "./TopToolsCard";
 import { TopPlansCard } from "./TopPlansCard";
 import { AIInsightsCard } from "./AIInsightsCard";
+import { AIFeatureAdoptionCard } from "./AIFeatureAdoptionCard";
 
 const meta: Meta = {
   title: "Data Display / Dashboard Cards / SaaS / Gallery",
@@ -78,9 +79,16 @@ export const Default: Story = {
         </div>
       </StorySection>
 
-      {/* ── AI insights (full width) ────────────────────────────────────────── */}
-      <StorySection title="AI Business Insights">
-        <AIInsightsCard onViewAll={() => undefined} />
+      {/* ── AI Intelligence ─────────────────────────────────────────────────── */}
+      <StorySection title="AI Intelligence">
+        <StoryStack direction="horizontal" wrap>
+          <div className="min-w-[480px] flex-2">
+            <AIFeatureAdoptionCard />
+          </div>
+          <div className="min-w-[320px] flex-1">
+            <AIInsightsCard onViewAll={() => undefined} />
+          </div>
+        </StoryStack>
       </StorySection>
     </StorySurface>
   ),

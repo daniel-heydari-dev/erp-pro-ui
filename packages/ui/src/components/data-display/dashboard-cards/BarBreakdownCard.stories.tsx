@@ -13,9 +13,9 @@ const meta: Meta<typeof BarBreakdownCard> = {
       description: {
         component:
           "Stacked-bar breakdown card. Use `variant=\"full\"` for a layout with " +
-          "currency/value headlines, a stacked bar chart, and optional right-column " +
-          "metric rows. Use `variant=\"compact\"` for a lighter card showing only " +
-          "the period selector and chart.",
+          "value headlines, a stacked bar chart, and optional right-column metric rows. " +
+          "Use `variant=\"compact\"` for a lighter card showing only the period selector and chart. " +
+          "Pass `dataByPeriod` to automatically swap the chart dataset when a period is selected.",
       },
     },
   },
@@ -24,236 +24,163 @@ const meta: Meta<typeof BarBreakdownCard> = {
 export default meta;
 type Story = StoryObj<typeof BarBreakdownCard>;
 
-// ── Shared data ───────────────────────────────────────────────────────────────
-
-const CURRENCY_CATEGORIES = [
-  { key: "euro",    label: "Euro",           color: "#1C3A5F" },
-  { key: "dollari", label: "Dollari",        color: "#3B82C4" },
-  { key: "sterline",label: "Sterline",       color: "#93C5E8" },
-  { key: "franchi", label: "Franchi svizzeri", color: "#C9E3F5" },
-];
-
-const SECURITY_CATEGORIES = [
-  { key: "secure",   label: "Secure",   color: "#1C3A5F" },
-  { key: "unsecure", label: "Unsecure", color: "#3B82C4" },
-  { key: "visa",     label: "Visa",     color: "#93C5E8" },
-  { key: "paypal",   label: "Paypal",   color: "#C9E3F5" },
-];
-
-function makeCurrencyData(n = 30) {
-  return Array.from({ length: n }, (_, i) => ({
-    name: i % 10 === 0 ? `${String(i + 1).padStart(2, "0")} Mag 20` : "",
-    euro:    Math.round(20 + Math.random() * 35),
-    dollari: Math.round(10 + Math.random() * 25),
-    sterline:Math.round(5  + Math.random() * 20),
-    franchi: Math.round(2  + Math.random() * 10),
-  }));
-}
-
-function makeSecurityData(n = 20) {
-  return Array.from({ length: n }, (_, i) => ({
-    name: i % 10 === 0 ? `${String(i + 1).padStart(2, "0")} Mag 20` : "",
-    secure:   Math.round(25 + Math.random() * 30),
-    unsecure: Math.round(8  + Math.random() * 18),
-    visa:     Math.round(5  + Math.random() * 15),
-    paypal:   Math.round(2  + Math.random() * 10),
-  }));
-}
-
-const CURRENCY_DATA    = makeCurrencyData();
-const SECURITY_DATA    = makeSecurityData();
-
-const CURRENCY_METRICS = [
-  { label: "Scontrino Medio", badge: { value: "12%", direction: "up" as const }, primary: "€ 237,20", secondary: "/ € 135,00" },
-  { label: "Pagamenti Riusciti", badge: { value: "12%", direction: "up" as const }, primary: "92%", secondary: "/ € 135,00" },
-];
-
-const ITALIAN_PERIODS = ["Ultimi 30 giorni", "Ultimi 7 giorni", "Ultimi 90 giorni", "Quest'anno"];
-
-// ── Stories — Italian finance reproductions ────────────────────────────────────
-
-export const AltreValuteFull: Story = {
-  name: "ALTRE VALUTE — full (headlines + chart + metrics)",
-  render: () => (
-    <StoryPanel>
-      <StoryIntro
-        title='BarBreakdownCard variant="full"'
-        description="Two currency headlines on the left, period selector on the right, stacked bar chart in the center, and metric rows in a right column."
-      />
-      <StorySection title="Wide card">
-        <BarBreakdownCard
-          title="ALTRE VALUTE"
-          variant="full"
-          headlines={[
-            { flag: "🇪🇺", label: "Euro",    value: "€ 25.470,20" },
-            { flag: "🇬🇧", label: "Sterline", value: "£ 18.320,70" },
-          ]}
-          categories={CURRENCY_CATEGORIES}
-          data={CURRENCY_DATA}
-          periodLabel="Date"
-          periods={ITALIAN_PERIODS}
-          defaultPeriod="Ultimi 30 giorni"
-          metrics={CURRENCY_METRICS}
-        />
-      </StorySection>
-    </StoryPanel>
-  ),
-};
-
-export const AltreValuteStandard: Story = {
-  name: "ALTRE VALUTE — one headline, no metrics",
-  render: () => (
-    <StoryPanel>
-      <StoryIntro
-        title="BarBreakdownCard — single headline"
-        description="One currency headline + period selector + chart. No right metrics column."
-      />
-      <StorySection title="Medium card">
-        <div className="max-w-[480px]">
-          <BarBreakdownCard
-            title="ALTRE VALUTE"
-            variant="full"
-            headlines={[{ flag: "🇪🇺", label: "Euro", value: "€ 25.470,20" }]}
-            categories={CURRENCY_CATEGORIES}
-            data={CURRENCY_DATA}
-            periodLabel="Date"
-            periods={ITALIAN_PERIODS}
-            defaultPeriod="Ultimi 30 giorni"
-          />
-        </div>
-      </StorySection>
-    </StoryPanel>
-  ),
-};
-
-export const SicurezzaCompact: Story = {
-  name: 'SICUREZZA — variant="compact"',
-  render: () => (
-    <StoryPanel>
-      <StoryIntro
-        title='BarBreakdownCard variant="compact"'
-        description="No headline metrics — only period selector and stacked bar chart."
-      />
-      <StorySection title="Compact card">
-        <div className="max-w-[340px]">
-          <BarBreakdownCard
-            title="SICUREZZA"
-            variant="compact"
-            categories={SECURITY_CATEGORIES}
-            data={SECURITY_DATA}
-            periodLabel="Data"
-            periods={ITALIAN_PERIODS}
-            defaultPeriod="Ultimi 30 giorni"
-          />
-        </div>
-      </StorySection>
-    </StoryPanel>
-  ),
-};
-
-export const ScreenshotReproduction: Story = {
-  name: "Screenshot reproduction — 3-card row",
-  parameters: { layout: "fullscreen" },
-  render: () => (
-    <div className="flex flex-wrap gap-4 bg-ds-canvas p-8 items-start">
-      {/* Wide — two headlines + metrics */}
-      <div className="flex-[2] min-w-[500px]">
-        <BarBreakdownCard
-          title="ALTRE VALUTE"
-          variant="full"
-          headlines={[
-            { flag: "🇪🇺", label: "Euro",    value: "€ 25.470,20" },
-            { flag: "🇬🇧", label: "Sterline", value: "£ 18.320,70" },
-          ]}
-          categories={CURRENCY_CATEGORIES}
-          data={CURRENCY_DATA}
-          periodLabel="Date"
-          periods={ITALIAN_PERIODS}
-          defaultPeriod="Ultimi 30 giorni"
-          metrics={CURRENCY_METRICS}
-        />
-      </div>
-      {/* Medium — one headline */}
-      <div className="flex-1 min-w-[320px]">
-        <BarBreakdownCard
-          title="ALTRE VALUTE"
-          variant="full"
-          headlines={[{ flag: "🇪🇺", label: "Euro", value: "€ 25.470,20" }]}
-          categories={CURRENCY_CATEGORIES}
-          data={CURRENCY_DATA}
-          periodLabel="Date"
-          periods={ITALIAN_PERIODS}
-          defaultPeriod="Ultimi 30 giorni"
-        />
-      </div>
-      {/* Compact — no headline */}
-      <div className="w-[280px] shrink-0">
-        <BarBreakdownCard
-          title="SICUREZZA"
-          variant="compact"
-          categories={SECURITY_CATEGORIES}
-          data={SECURITY_DATA}
-          periodLabel="Data"
-          periods={ITALIAN_PERIODS}
-          defaultPeriod="Ultimi 30 giorni"
-        />
-      </div>
-    </div>
-  ),
-};
-
-// ── Stories — SaaS tools ───────────────────────────────────────────────────────
+// ── SaaS color palette ────────────────────────────────────────────────────────
 
 const PLAN_CATEGORIES = [
-  { key: "enterprise", label: "Enterprise", color: "#1C3A5F" },
-  { key: "business",   label: "Business",   color: "#3B82C4" },
-  { key: "pro",        label: "Pro",        color: "#93C5E8" },
-  { key: "starter",    label: "Starter",    color: "#C9E3F5" },
+  { key: "enterprise", label: "Enterprise", color: "#8B5CF6" },
+  { key: "business",   label: "Business",   color: "#3B82F6" },
+  { key: "pro",        label: "Pro",        color: "#06B6D4" },
+  { key: "starter",    label: "Starter",    color: "#10B981" },
 ];
 
 const CHANNEL_CATEGORIES = [
-  { key: "organic",  label: "Organic",  color: "#1C3A5F" },
-  { key: "paid",     label: "Paid Ads", color: "#3B82C4" },
-  { key: "referral", label: "Referral", color: "#93C5E8" },
-  { key: "direct",   label: "Direct",   color: "#C9E3F5" },
+  { key: "organic",   label: "Organic",   color: "#3B82F6" },
+  { key: "paid",      label: "Paid Ads",  color: "#8B5CF6" },
+  { key: "referral",  label: "Referral",  color: "#10B981" },
+  { key: "direct",    label: "Direct",    color: "#F59E0B" },
 ];
 
-const SAAS_PERIODS = ["Last 30 days", "Last 7 days", "Last 90 days", "This year"];
+const SEAT_CATEGORIES = [
+  { key: "billed", label: "Billed", color: "#6366f1" },
+  { key: "active", label: "Active", color: "#22c55e" },
+];
 
-function makeWeeklyData(keys: string[], n = 28) {
-  return Array.from({ length: n }, (_, i) => {
-    const entry: Record<string, string | number> = {
-      name: i % 7 === 0 ? `Week ${Math.floor(i / 7) + 1}` : "",
-    };
-    keys.forEach((k) => { entry[k] = Math.round(5 + Math.random() * 40); });
-    return entry;
-  });
+const SAAS_PERIODS = ["Today", "This Week", "This Month", "This Year"];
+
+// ── MRR data generators ───────────────────────────────────────────────────────
+
+function makeMRRToday() {
+  return Array.from({ length: 24 }, (_, i) => ({
+    name: i % 6 === 0 ? `${String(i).padStart(2, "0")}h` : "",
+    enterprise: Math.round(4 + Math.random() * 4),
+    business:   Math.round(3 + Math.random() * 3),
+    pro:        Math.round(2 + Math.random() * 3),
+    starter:    Math.round(1 + Math.random() * 2),
+  }));
 }
 
-const PLAN_DATA    = makeWeeklyData(["enterprise", "business", "pro", "starter"]);
-const CHANNEL_DATA = makeWeeklyData(["organic", "paid", "referral", "direct"]);
+function makeMRRWeek() {
+  return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((name) => ({
+    name,
+    enterprise: Math.round(840 + Math.random() * 280),
+    business:   Math.round(560 + Math.random() * 220),
+    pro:        Math.round(420 + Math.random() * 180),
+    starter:    Math.round(140 + Math.random() * 120),
+  }));
+}
 
-export const SaasRevenuePlan: Story = {
-  name: "SaaS — Revenue by plan",
+function makeMRRMonth() {
+  return Array.from({ length: 30 }, (_, i) => ({
+    name: (i + 1) % 5 === 1 ? `${i + 1}` : "",
+    enterprise: Math.round(120 + Math.random() * 60),
+    business:   Math.round(80  + Math.random() * 50),
+    pro:        Math.round(60  + Math.random() * 40),
+    starter:    Math.round(20  + Math.random() * 30),
+  }));
+}
+
+function makeMRRYear() {
+  return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].map((name) => ({
+    name,
+    enterprise: Math.round(3600 + Math.random() * 1400),
+    business:   Math.round(2400 + Math.random() * 1000),
+    pro:        Math.round(1800 + Math.random() * 800),
+    starter:    Math.round(600  + Math.random() * 600),
+  }));
+}
+
+// ── Signup data generators ────────────────────────────────────────────────────
+
+function makeSignupToday() {
+  return Array.from({ length: 24 }, (_, i) => ({
+    name: i % 6 === 0 ? `${String(i).padStart(2, "0")}h` : "",
+    organic:  Math.round(1 + Math.random() * 4),
+    paid:     Math.round(1 + Math.random() * 3),
+    referral: Math.round(0 + Math.random() * 2),
+    direct:   Math.round(0 + Math.random() * 2),
+  }));
+}
+
+function makeSignupWeek() {
+  return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((name) => ({
+    name,
+    organic:  Math.round(18 + Math.random() * 22),
+    paid:     Math.round(10 + Math.random() * 18),
+    referral: Math.round(5  + Math.random() * 12),
+    direct:   Math.round(3  + Math.random() * 8),
+  }));
+}
+
+function makeSignupMonth() {
+  return Array.from({ length: 30 }, (_, i) => ({
+    name: (i + 1) % 5 === 1 ? `${i + 1}` : "",
+    organic:  Math.round(18 + Math.random() * 22),
+    paid:     Math.round(10 + Math.random() * 18),
+    referral: Math.round(5  + Math.random() * 12),
+    direct:   Math.round(3  + Math.random() * 8),
+  }));
+}
+
+function makeSignupYear() {
+  return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].map((name) => ({
+    name,
+    organic:  Math.round(480 + Math.random() * 200),
+    paid:     Math.round(280 + Math.random() * 160),
+    referral: Math.round(140 + Math.random() * 100),
+    direct:   Math.round(80  + Math.random() * 80),
+  }));
+}
+
+// ── Static data (computed once) ───────────────────────────────────────────────
+
+const MRR_BY_PERIOD = {
+  "Today":      makeMRRToday(),
+  "This Week":  makeMRRWeek(),
+  "This Month": makeMRRMonth(),
+  "This Year":  makeMRRYear(),
+};
+
+const SIGNUP_BY_PERIOD = {
+  "Today":      makeSignupToday(),
+  "This Week":  makeSignupWeek(),
+  "This Month": makeSignupMonth(),
+  "This Year":  makeSignupYear(),
+};
+
+const SEAT_DATA = [
+  { name: "Ent.",    billed: 2400, active: 2310 },
+  { name: "Biz",     billed: 3200, active: 2980 },
+  { name: "Pro",     billed: 6450, active: 5820 },
+  { name: "Starter", billed: 6100, active: 5200 },
+  { name: "Free",    billed: 1001, active: 603  },
+];
+
+// ── Stories ───────────────────────────────────────────────────────────────────
+
+export const MRRByPlan: Story = {
+  name: "MRR by Plan — full",
   render: () => (
     <StoryPanel>
       <StoryIntro
-        title="SaaS — Revenue by plan"
-        description="Monthly recurring revenue split across pricing tiers. Full variant with headline MRR value and key SaaS metrics."
+        title="MRR by Plan"
+        description="MRR split across subscription tiers. Switch the period to zoom from today's hourly activity to full-year monthly totals."
       />
-      <StorySection title="MRR breakdown">
+      <StorySection title="Revenue breakdown">
         <BarBreakdownCard
-          title="REVENUE"
+          title="MRR BREAKDOWN"
           variant="full"
-          headlines={[{ label: "MRR", value: "$128,400" }]}
+          headlines={[
+            { label: "MRR", value: "$198,400" },
+            { label: "ARR", value: "$2.38M"   },
+          ]}
           categories={PLAN_CATEGORIES}
-          data={PLAN_DATA}
-          periodLabel="Period"
+          data={MRR_BY_PERIOD["This Month"]}
+          dataByPeriod={MRR_BY_PERIOD}
           periods={SAAS_PERIODS}
-          defaultPeriod="Last 30 days"
+          defaultPeriod="This Month"
           metrics={[
-            { label: "Avg Revenue / User", badge: { value: "9%", direction: "up" }, primary: "$94.20", secondary: "/ $86.00" },
-            { label: "Expansion MRR",      badge: { value: "5%", direction: "up" }, primary: "$12,840" },
+            { label: "Avg Rev / Account", badge: { value: "9.2%", direction: "up" }, primary: "$49.60" },
+            { label: "Expansion MRR",     badge: { value: "5.1%", direction: "up" }, primary: "$21,840" },
           ]}
         />
       </StorySection>
@@ -261,24 +188,24 @@ export const SaasRevenuePlan: Story = {
   ),
 };
 
-export const SaasSignupsByChannel: Story = {
-  name: "SaaS — Signups by channel",
+export const SignupsByChannel: Story = {
+  name: "Signups by Channel — compact",
   render: () => (
     <StoryPanel>
       <StoryIntro
-        title="SaaS — Signups by acquisition channel"
-        description="Weekly signup volume broken down by acquisition channel. Compact variant for a narrow dashboard slot."
+        title="Signups by acquisition channel"
+        description="Signup volume by channel. Period selector adapts chart granularity from hourly to yearly."
       />
       <StorySection title="Signups">
-        <div className="max-w-[360px]">
+        <div className="max-w-[380px]">
           <BarBreakdownCard
             title="SIGNUPS"
             variant="compact"
             categories={CHANNEL_CATEGORIES}
-            data={CHANNEL_DATA}
-            periodLabel="Period"
+            data={SIGNUP_BY_PERIOD["This Month"]}
+            dataByPeriod={SIGNUP_BY_PERIOD}
             periods={SAAS_PERIODS}
-            defaultPeriod="Last 30 days"
+            defaultPeriod="This Month"
           />
         </div>
       </StorySection>
@@ -286,24 +213,57 @@ export const SaasSignupsByChannel: Story = {
   ),
 };
 
-export const SaasDashboardRow: Story = {
-  name: "SaaS — Dashboard row",
+export const SeatsBilledVsActive: Story = {
+  name: "Seats: Billed vs Active",
+  render: () => (
+    <StoryPanel>
+      <StoryIntro
+        title="Seats: Billed vs Active by Tier"
+        description="Seat utilization across subscription tiers — billed seats vs seats with active usage."
+      />
+      <StorySection title="Seat breakdown">
+        <BarBreakdownCard
+          title="SEAT UTILIZATION"
+          variant="full"
+          headlines={[
+            { label: "Total Seats", value: "15,951" },
+            { label: "Active",      value: "13,933" },
+          ]}
+          categories={SEAT_CATEGORIES}
+          data={SEAT_DATA}
+          periods={["Current Period"]}
+          defaultPeriod="Current Period"
+          metrics={[
+            { label: "Utilization", badge: { value: "+0.9%", direction: "up" }, primary: "87.4%" },
+            { label: "Available",   primary: "2,018" },
+          ]}
+        />
+      </StorySection>
+    </StoryPanel>
+  ),
+};
+
+export const DashboardRow: Story = {
+  name: "Dashboard row — full layout",
   parameters: { layout: "fullscreen" },
   render: () => (
     <div className="flex flex-wrap gap-4 bg-ds-canvas p-8 items-start">
-      <div className="flex-[2] min-w-[480px]">
+      <div className="flex-2 min-w-[480px]">
         <BarBreakdownCard
-          title="REVENUE"
+          title="MRR BREAKDOWN"
           variant="full"
-          headlines={[{ label: "MRR", value: "$128,400" }]}
+          headlines={[
+            { label: "MRR", value: "$198,400" },
+            { label: "ARR", value: "$2.38M"   },
+          ]}
           categories={PLAN_CATEGORIES}
-          data={PLAN_DATA}
-          periodLabel="Period"
+          data={MRR_BY_PERIOD["This Month"]}
+          dataByPeriod={MRR_BY_PERIOD}
           periods={SAAS_PERIODS}
-          defaultPeriod="Last 30 days"
+          defaultPeriod="This Month"
           metrics={[
-            { label: "Avg Revenue / User", badge: { value: "9%", direction: "up" }, primary: "$94.20", secondary: "/ $86.00" },
-            { label: "Expansion MRR",      badge: { value: "5%", direction: "up" }, primary: "$12,840" },
+            { label: "Avg Rev / Account", badge: { value: "9.2%", direction: "up" }, primary: "$49.60" },
+            { label: "Expansion MRR",     badge: { value: "5.1%", direction: "up" }, primary: "$21,840" },
           ]}
         />
       </div>
@@ -312,10 +272,10 @@ export const SaasDashboardRow: Story = {
           title="SIGNUPS"
           variant="compact"
           categories={CHANNEL_CATEGORIES}
-          data={CHANNEL_DATA}
-          periodLabel="Period"
+          data={SIGNUP_BY_PERIOD["This Month"]}
+          dataByPeriod={SIGNUP_BY_PERIOD}
           periods={SAAS_PERIODS}
-          defaultPeriod="Last 30 days"
+          defaultPeriod="This Month"
         />
       </div>
     </div>

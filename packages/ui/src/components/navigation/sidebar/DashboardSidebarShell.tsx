@@ -447,16 +447,10 @@ export function DashboardSidebarShell({
           headerClassName,
         )}
       >
-        <div
-          className={mergeClassNames(
-            "flex w-full justify-between gap-4",
-            isRtl && "flex-row-reverse",
-          )}
-        >
+        <div className="flex w-full justify-between gap-4">
           <div
             className={mergeClassNames(
               "flex min-w-0 items-center gap-3",
-              isRtl && "flex-row-reverse text-right",
               headerTitleClassName,
             )}
           >
@@ -478,7 +472,6 @@ export function DashboardSidebarShell({
           <div
             className={mergeClassNames(
               "border-ds-border-4 flex min-h-11 shrink-0 items-center gap-1 rounded-full border bg-ds-surface-1 px-2 py-1 shadow-[0_2px_8px_color-mix(in_srgb,var(--ds-color-fg)_6%,transparent)]",
-              isRtl && "flex-row-reverse",
               headerActionsClassName,
             )}
           >
@@ -492,7 +485,6 @@ export function DashboardSidebarShell({
       headerActionsClassName,
       headerClassName,
       headerTitleClassName,
-      isRtl,
       resolvedDirection,
       resolvedHeaderActions,
       resolvedHeaderLeading,

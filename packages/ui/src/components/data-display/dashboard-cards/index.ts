@@ -136,3 +136,5 @@ export type { TopPlansCardProps, PlanItem, TopPlansMetric } from "./TopPlansCard
 
 export { AIInsightsCard } from "./AIInsightsCard";
 export type { AIInsightsCardProps, AIInsight, AIInsightType, AIInsightImpact } from "./AIInsightsCard";
+export { AIFeatureAdoptionCard } from "./AIFeatureAdoptionCard";
+export type { AIFeatureAdoptionCardProps, AIFeature } from "./AIFeatureAdoptionCard";

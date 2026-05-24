@@ -180,6 +180,7 @@ export {
   TopToolsCard,
   TopPlansCard,
   AIInsightsCard,
+  AIFeatureAdoptionCard,
 } from "./components/data-display/dashboard-cards";
 export type {
   SubscriptionHealthCardProps,
@@ -205,6 +206,8 @@ export type {
   AIInsight,
   AIInsightType,
   AIInsightImpact,
+  AIFeatureAdoptionCardProps,
+  AIFeature,
 } from "./components/data-display/dashboard-cards";
 
 export { EventCalendar } from "./components/data-display/event-calendar";

@@ -4,6 +4,7 @@ import {
   TopPlansCard,
   TopToolsCard,
   AIInsightsCard,
+  AIFeatureAdoptionCard,
   SalesHeatmapCard,
   FinancialPLCard,
   ExpensesCard,
@@ -345,14 +346,23 @@ export default function ERPDashboardPage() {
         </div>
       </div>
 
-      {/* ── Top tools + AI insights ────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-        <div className="lg:col-span-2">
+      {/* ── AI Intelligence ────────────────────────────────────────────────── */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-ds-accent px-2 py-0.5 text-[10px] font-bold text-ds-on-accent">AI</span>
+          <h2 className="text-sm font-semibold text-ds-2">AI Intelligence</h2>
+        </div>
+
+        {/* Adoption chart + top tools */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <AIFeatureAdoptionCard />
+          </div>
           <TopToolsCard />
         </div>
-        <div className="lg:col-span-3">
-          <AIInsightsCard />
-        </div>
+
+        {/* Full-width AI insights */}
+        <AIInsightsCard onViewAll={() => undefined} />
       </div>
 
       {/* ── Expenses breakdown ─────────────────────────────────────────────── */}
