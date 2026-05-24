@@ -3,10 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { StorySurface, StorySection, StoryStack, StoryIntro } from "../../shared/storybook";
 import { BarBreakdownCard } from "./BarBreakdownCard";
 import { InventoryCards } from "./InventoryCards";
-import { StockAvailabilityCard } from "./StockAvailabilityCard";
+import { SeatUtilizationCard } from "./SeatUtilizationCard";
 
 import type { InventoryCardRow } from "./InventoryCards";
-import type { StockItem } from "./StockAvailabilityCard";
 
 const meta: Meta = {
   title: "Data Display / Dashboard Cards / Inventory / Gallery",
@@ -14,6 +13,8 @@ const meta: Meta = {
 };
 export default meta;
 type Story = StoryObj;
+
+// ── InventoryCards rows ────────────────────────────────────────────────────────
 
 const ROWS: InventoryCardRow[] = [
   { id: "1",  name: "Bosch Drill GSB 18V",       category: "Power Tools", qty: 34,  totalCost: 1530,  potentialRevenue: 3059,  potentialProfit: 1529, status: "ok",  qtyTrend: 12, profitTrend: 8   },
@@ -38,13 +39,7 @@ const ROWS: InventoryCardRow[] = [
   { id: "20", name: "Wago Connectors 221",        category: "Hardware",    qty: 61,  totalCost: 902,   potentialRevenue: 1765,  potentialProfit: 863,  status: "ok",  qtyTrend: 14, profitTrend: 10  },
 ];
 
-const STOCK_ITEMS: StockItem[] = [
-  { id: "1", name: "Bosch Drill GSB 18V",     qty: 34 },
-  { id: "2", name: "Hilti Hammer Drill TE 6", qty: 7  },
-  { id: "3", name: "Knipex Pliers 200mm",     qty: 2  },
-  { id: "4", name: "Bahco Hacksaw 300mm",     qty: 0  },
-  { id: "5", name: "Hilti Epoxy Adhesive",    qty: 0  },
-];
+// ── Story ──────────────────────────────────────────────────────────────────────
 
 export const Default: Story = {
   name: "All Inventory Cards",
@@ -52,43 +47,38 @@ export const Default: Story = {
     <StorySurface>
       <StoryIntro
         title="Inventory Cards"
-        description="Stock management cards for the tools store. InventoryCards is a composite card that bundles availability, category breakdowns, and top-profit items into a single section."
+        description="Seat capacity, cost breakdown, and stock management cards. SeatUtilizationCard tracks subscription seat health; InventoryCards is a composite card for physical or digital asset inventories."
       />
 
-      <StorySection title="Stock Availability (standalone)">
+      <StorySection title="Seat Utilization">
         <StoryStack direction="horizontal" wrap>
-          <div className="w-[300px]">
-            <StockAvailabilityCard
-              totalAsset="€48K"
-              totalProduct={762}
-              availability={{ available: 76, lowStock: 16, outOfStock: 8 }}
-              lowStockItems={STOCK_ITEMS}
-            />
+          <div className="w-[360px]">
+            <SeatUtilizationCard />
           </div>
           <div className="flex-1 min-w-[320px]">
             <BarBreakdownCard
-              title="Cost vs Revenue by Category"
+              title="Seats: Billed vs Active by Tier"
               variant="full"
               headlines={[
-                { label: "Total Cost",    value: "€8.4K" },
-                { label: "Potential Rev", value: "€18.6K" },
+                { label: "Total Seats",  value: "15,951" },
+                { label: "Active",       value: "13,933" },
               ]}
               metrics={[
-                { label: "Gross Margin", primary: "55%", badge: { value: "+2.3%", direction: "up" } },
-                { label: "Needs Reorder", primary: "7" },
+                { label: "Utilization", primary: "87.4%", badge: { value: "+0.9%", direction: "up" } },
+                { label: "Available",   primary: "2,018" },
               ]}
               categories={[
-                { key: "cost",    label: "Buy Cost",     color: "#6366f1" },
-                { key: "revenue", label: "Sell Revenue", color: "#22c55e" },
+                { key: "billed", label: "Billed",  color: "#6366f1" },
+                { key: "active", label: "Active",  color: "#22c55e" },
               ]}
               data={[
-                { name: "Power",  cost: 4630, revenue: 8986  },
-                { name: "Hand",   cost: 1850, revenue: 3740  },
-                { name: "Acc.",   cost: 1591, revenue: 3218  },
-                { name: "HW",     cost: 1826, revenue: 3649  },
+                { name: "Ent.",    billed: 2400,  active: 2310  },
+                { name: "Pro",     billed: 6450,  active: 5820  },
+                { name: "Starter", billed: 6100,  active: 5200  },
+                { name: "Free",    billed: 1001,  active: 603   },
               ]}
-              periods={["Current Stock"]}
-              defaultPeriod="Current Stock"
+              periods={["Current Period"]}
+              defaultPeriod="Current Period"
             />
           </div>
         </StoryStack>

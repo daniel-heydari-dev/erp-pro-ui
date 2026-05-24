@@ -32,18 +32,18 @@ export const Default: Story = {
 };
 
 const highGrowthData: CustomerLifecycleDataPoint[] = [
-  { period: "Jan", trials: 180, converted: 62,  churned: 8  },
-  { period: "Feb", trials: 210, converted: 78,  churned: 11 },
-  { period: "Mar", trials: 248, converted: 94,  churned: 9  },
-  { period: "Apr", trials: 291, converted: 118, churned: 7  },
-  { period: "May", trials: 340, converted: 143, churned: 6  },
+  { label: "Jan", trials: 180, converted: 62,  churned: 8  },
+  { label: "Feb", trials: 210, converted: 78,  churned: 11 },
+  { label: "Mar", trials: 248, converted: 94,  churned: 9  },
+  { label: "Apr", trials: 291, converted: 118, churned: 7  },
+  { label: "May", trials: 340, converted: 143, churned: 6  },
 ];
 
 const highGrowthMetrics: CustomerLifecycleMetric[] = [
-  { label: "Trials",     value: "340",  badge: { value: "+16.8%", direction: "up"   } },
-  { label: "Converted",  value: "143",  badge: { value: "+21.2%", direction: "up"   } },
-  { label: "Churned",    value: "6",    badge: { value: "−14.3%", direction: "down" } },
-  { label: "Conv. Rate", value: "42%",  badge: { value: "+1.8pp", direction: "up"   } },
+  { label: "Trials",     value: 340, change: 16.8,  color: "#4F46E5" },
+  { label: "Converted",  value: 143, change: 21.2,  color: "#10B981" },
+  { label: "Churned",    value: 6,   change: -14.3, color: "#EF4444" },
+  { label: "Conv. Rate", value: 42,  change: 1.8,   color: "#F59E0B" },
 ];
 
 export const HighGrowth: Story = {
@@ -58,10 +58,9 @@ export const HighGrowth: Story = {
         <StorySection>
           <CustomerLifecycleCard
             title="Customer Lifecycle"
-            subtitle="5-month growth trajectory"
-            data={highGrowthData}
+            data={{ "this-month": highGrowthData }}
             metrics={highGrowthMetrics}
-            defaultPeriod="Month"
+            defaultPeriod="this-month"
           />
         </StorySection>
       </StoryStack>

@@ -32,16 +32,16 @@ export const Default: Story = {
 };
 
 const partnerHeavyChannels: AcquisitionChannel[] = [
-  { key: "partner",    label: "Partner Network",   newAccounts: 298, color: "#7C3AED" },
-  { key: "direct",     label: "Direct / Organic",  newAccounts: 187, color: "#2563EB" },
-  { key: "marketplace",label: "App Marketplace",   newAccounts: 142, color: "#0891B2" },
-  { key: "affiliate",  label: "Affiliate",         newAccounts: 73,  color: "#D97706" },
+  { key: "partner",     label: "Partner Network",  newSubs: 298, color: "#7C3AED" },
+  { key: "direct",      label: "Direct / Organic", newSubs: 187, color: "#2563EB" },
+  { key: "marketplace", label: "App Marketplace",  newSubs: 142, color: "#0891B2" },
+  { key: "affiliate",   label: "Affiliate",        newSubs: 73,  color: "#D97706" },
 ];
 
 const partnerPlanRows: AcquisitionPlanRow[] = [
-  { plan: "Enterprise", partner: 61,  direct: 34,  marketplace: 18,  affiliate: 4  },
-  { plan: "Pro",        partner: 128, direct: 82,  marketplace: 74,  affiliate: 29 },
-  { plan: "Starter",    partner: 109, direct: 71,  marketplace: 50,  affiliate: 40 },
+  { name: "Enterprise", partner: 61,  direct: 34,  marketplace: 18,  affiliate: 4  },
+  { name: "Pro",        partner: 128, direct: 82,  marketplace: 74,  affiliate: 29 },
+  { name: "Starter",    partner: 109, direct: 71,  marketplace: 50,  affiliate: 40 },
 ];
 
 export const PartnerHeavy: Story = {
@@ -56,8 +56,7 @@ export const PartnerHeavy: Story = {
         <StorySection>
           <div className="w-[460px]">
             <AcquisitionChannelCard
-              title="Acquisition by Channel"
-              subtitle="Partner network leading growth this quarter"
+              title="Acquisition by Channel — Partner-led"
               channels={partnerHeavyChannels}
               plans={partnerPlanRows}
             />

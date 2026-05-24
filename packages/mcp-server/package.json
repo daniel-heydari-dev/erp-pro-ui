@@ -33,9 +33,9 @@
   "devDependencies": {
     "@erp-pro/eslint-config": "workspace:*",
     "@erp-pro/tsconfig": "workspace:*",
-    "@types/node": "^25.6.0",
-    "eslint": "^10.3.0",
-    "tsx": "^4.21.0",
+    "@types/node": "^25.9.1",
+    "eslint": "^10.4.0",
+    "tsx": "^4.22.3",
     "typescript": "^6.0.3"
   }
 }
