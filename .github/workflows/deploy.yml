@@ -27,7 +27,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile "--config.onlyBuiltDependencies[0]=esbuild"
 
       - name: Build web app
         run: pnpm turbo build --filter=web...

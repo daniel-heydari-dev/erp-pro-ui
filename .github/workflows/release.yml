@@ -32,7 +32,7 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile "--config.onlyBuiltDependencies[0]=esbuild"
 
       - name: Resolve publish state
         id: publish_state
