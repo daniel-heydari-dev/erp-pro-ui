@@ -372,7 +372,7 @@ const topProducts = [
 // ---------------------------------------------------------------------------
 
 const meta: Meta = {
-  title: "Data Display / Dashboard Cards / Gallery",
+  title: "Data Display/Dashboard Cards/Gallery",
   tags: ["autodocs"],
   parameters: {
     layout: "padded",

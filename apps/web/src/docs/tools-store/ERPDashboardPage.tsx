@@ -1,13 +1,14 @@
 import {
   StatCard,
   MiniNeonSparkline,
-  TopSellingItemsCard,
+  TopPlansCard,
+  TopToolsCard,
+  AIInsightsCard,
   SalesHeatmapCard,
   FinancialPLCard,
   ExpensesCard,
 } from "erp-pro-ui";
 import type {
-  TopSellingItem,
   HeatmapPoint,
   PLMetricTab,
   PLDataPoint,
@@ -32,53 +33,53 @@ const np   = (a: number[]) => a.map((v) => Math.round(v * 0.34));
 const mgn  = (a: number[]) => a.map((v, i) => Math.round(30 + (v / Math.max(...a)) * 10 + (i % 3)));
 const prev = (a: number[]) => a.map((v) => Math.round(v * 0.83));
 const valFmt = (v: number) =>
-  v >= 1_000_000 ? `€${(v/1_000_000).toFixed(2)}M` : v >= 1_000 ? `€${Math.round(v/1_000)}k` : `€${v}`;
+  v >= 1_000_000 ? `$${(v/1_000_000).toFixed(2)}M` : v >= 1_000 ? `$${Math.round(v/1_000)}k` : `$${v}`;
 const pctFmt = (v: number) => `${v}%`;
 
 // ── KPI sparklines ─────────────────────────────────────────────────────────────
 
-const revenueWeek = [
-  { label: "Mon", value: 3820 },
-  { label: "Tue", value: 4210 },
-  { label: "Wed", value: 3980 },
-  { label: "Thu", value: 4540 },
-  { label: "Fri", value: 5120 },
-  { label: "Sat", value: 3640 },
-  { label: "Sun", value: 820  },
+const mrrWeek = [
+  { label: "Mon", value: 195200 },
+  { label: "Tue", value: 196100 },
+  { label: "Wed", value: 196800 },
+  { label: "Thu", value: 197400 },
+  { label: "Fri", value: 198400 },
+  { label: "Sat", value: 198400 },
+  { label: "Sun", value: 198400 },
 ];
-const ordersWeek = [
-  { label: "Mon", value: 18 },
-  { label: "Tue", value: 22 },
-  { label: "Wed", value: 19 },
-  { label: "Thu", value: 25 },
-  { label: "Fri", value: 28 },
-  { label: "Sat", value: 14 },
-  { label: "Sun", value: 4  },
+const trialsWeek = [
+  { label: "Mon", value: 11 },
+  { label: "Tue", value: 14 },
+  { label: "Wed", value: 9  },
+  { label: "Thu", value: 18 },
+  { label: "Fri", value: 16 },
+  { label: "Sat", value: 8  },
+  { label: "Sun", value: 5  },
 ];
-const inventoryWeek = [
-  { label: "Mon", value: 144000 },
-  { label: "Tue", value: 141800 },
-  { label: "Wed", value: 139400 },
-  { label: "Thu", value: 142100 },
-  { label: "Fri", value: 138900 },
-  { label: "Sat", value: 143200 },
-  { label: "Sun", value: 142300 },
+const seatsWeek = [
+  { label: "Mon", value: 13820 },
+  { label: "Tue", value: 13856 },
+  { label: "Wed", value: 13891 },
+  { label: "Thu", value: 13905 },
+  { label: "Fri", value: 13933 },
+  { label: "Sat", value: 13933 },
+  { label: "Sun", value: 13933 },
 ];
-const arWeek = [
-  { label: "Mon", value: 31200 },
-  { label: "Tue", value: 29800 },
-  { label: "Wed", value: 27400 },
-  { label: "Thu", value: 28900 },
-  { label: "Fri", value: 28500 },
-  { label: "Sat", value: 28500 },
-  { label: "Sun", value: 28500 },
+const churnsWeek = [
+  { label: "Mon", value: 3 },
+  { label: "Tue", value: 1 },
+  { label: "Wed", value: 2 },
+  { label: "Thu", value: 0 },
+  { label: "Fri", value: 1 },
+  { label: "Sat", value: 0 },
+  { label: "Sun", value: 0 },
 ];
 
 // ── P&L metrics ────────────────────────────────────────────────────────────────
 
 const plMetrics: PLMetricTab[] = [
   {
-    id: "revenue", label: "Revenue", value: "€2.47M", rawValue: 2470000,
+    id: "revenue", label: "Revenue", value: "$2.47M", rawValue: 2470000,
     change: 17.6, changeLabel: "vs last year", color: "#22c55e", chartType: "area",
     chartData: pts(MONTHS, REV_YEAR),
     comparisonChartData: pts(MONTHS, prev(REV_YEAR)),
@@ -86,19 +87,19 @@ const plMetrics: PLMetricTab[] = [
     yAxisFormatter: valFmt,
   },
   {
-    id: "cogs", label: "COGS", value: "€1.11M", rawValue: 1111500,
+    id: "cogs", label: "COGS", value: "$1.11M", rawValue: 1111500,
     change: 2.1, changeLabel: "vs last year", color: "#f97316", chartType: "bar",
     chartData: pts(MONTHS, cogs(REV_YEAR)),
     yAxisFormatter: valFmt,
   },
   {
-    id: "gross-profit", label: "Gross Profit", value: "€1.36M", rawValue: 1358500,
+    id: "gross-profit", label: "Gross Profit", value: "$1.36M", rawValue: 1358500,
     change: 5.8, changeLabel: "vs last year", color: "#3b82f6", chartType: "area",
     chartData: pts(MONTHS, gp(REV_YEAR)),
     yAxisFormatter: valFmt,
   },
   {
-    id: "net-profit", label: "Net Profit", value: "€840K", rawValue: 839900,
+    id: "net-profit", label: "Net Profit", value: "$840K", rawValue: 839900,
     change: 12.3, changeLabel: "vs last year", color: "var(--ds-color-accent)", chartType: "area",
     chartData: pts(MONTHS, np(REV_YEAR)),
     yAxisFormatter: valFmt,
@@ -112,106 +113,100 @@ const plMetrics: PLMetricTab[] = [
 ];
 
 const waterfallSteps: PLWaterfallStep[] = [
-  { metricId: "revenue",      label: "Revenue",      role: "add"      },
-  { metricId: "cogs",         label: "COGS",         role: "subtract" },
-  {                           label: "Gross Profit",  role: "total"    },
-  { rawValue: 518600,         label: "OpEx",         role: "subtract" },
-  {                           label: "Net Profit",    role: "total"    },
+  { metricId: "revenue",      label: "Revenue",     role: "add"      },
+  { metricId: "cogs",         label: "COGS",        role: "subtract" },
+  {                           label: "Gross Profit", role: "total"    },
+  { rawValue: 518600,         label: "OpEx",        role: "subtract" },
+  {                           label: "Net Profit",   role: "total"    },
 ];
 
-// ── Sales heatmap ──────────────────────────────────────────────────────────────
+// ── User activity heatmap ──────────────────────────────────────────────────────
 
-const RAW_HEATMAP: Record<string, number[]> = {
+const ACTIVITY_BASE: Record<string, number[]> = {
   Mon: [120, 480, 860,  940,  620, 540, 710,  980,  870,  640, 320, 140],
   Tue: [90,  440, 790,  880,  590, 510, 680,  910,  820,  600, 290, 110],
   Wed: [110, 460, 830,  910,  640, 580, 740,  1020, 940,  680, 340, 160],
   Thu: [130, 500, 880,  970,  670, 610, 780,  1080, 1010, 720, 370, 180],
   Fri: [150, 560, 1020, 1180, 780, 710, 890,  1240, 1190, 880, 480, 220],
-  Sat: [80,  620, 940,  880,  760, 680, 590,  520,  440,  310, 180, 60],
-  Sun: [40,  160, 240,  280,  220, 190, 170,  150,  120,  90,  50,  20],
+  Sat: [80,  620, 940,  880,  760, 680, 590,  520,  440,  310, 180, 60 ],
+  Sun: [40,  160, 240,  280,  220, 190, 170,  150,  120,  90,  50,  20 ],
 };
 
-const SLOT_TOP: Record<string, string> = {
-  "08h": "Measuring Tape 5m",   "09h": "Stanley Hammer 16oz",
-  "10h": "Bosch Drill GSB 18V", "11h": "Bosch Drill GSB 18V",
-  "12h": "Knipex Pliers 200mm", "13h": "Knipex Pliers 200mm",
-  "14h": "DeWalt Saw Blade Set", "15h": "Bosch Drill GSB 18V",
-  "16h": "Bosch Drill GSB 18V", "17h": "Makita Grinder 115mm",
-  "18h": "Stanley Hammer 16oz", "19h": "Measuring Tape 5m",
+const SLOT_TOOL: Record<string, string> = {
+  "08h": "AI Copywriter",    "09h": "Analytics Pro",
+  "10h": "Invoice Manager",  "11h": "Analytics Pro",
+  "12h": "AI Copywriter",    "13h": "Team Scheduler",
+  "14h": "Invoice Manager",  "15h": "Analytics Pro",
+  "16h": "AI Copywriter",    "17h": "Support Desk",
+  "18h": "AI Copywriter",    "19h": "Team Scheduler",
 };
 
 const heatmapData: HeatmapPoint[] = DAYS.flatMap((day) =>
   SLOTS.map((slot, i) => {
-    const value = RAW_HEATMAP[day]![i] ?? 0;
+    const value = ACTIVITY_BASE[day]![i] ?? 0;
     return {
       day, slot, value,
-      clients: value > 0 ? Math.max(1, Math.round(value / 148)) : 0,
-      topProduct: value > 0 ? SLOT_TOP[slot] : undefined,
+      clients: value > 0 ? Math.max(1, Math.round(value / 18)) : 0,
+      topProduct: value > 0 ? SLOT_TOOL[slot] : undefined,
     };
   }),
 );
 
-// ── Top selling items ──────────────────────────────────────────────────────────
-
-const topItems: TopSellingItem[] = [
-  { id: 1, name: "Bosch Drill GSB 18V", category: "Power Tools", qty: 184, revenue: 16561, qtyTrend: 12, revenueTrend: 15 },
-  { id: 2, name: "Stanley Hammer 16oz", category: "Hand Tools",  qty: 312, revenue: 7787,  qtyTrend: -3, revenueTrend: -2 },
-  { id: 3, name: "DeWalt Saw Blade Set", category: "Accessories", qty: 97,  revenue: 5819,  qtyTrend: 28, revenueTrend: 31 },
-  { id: 4, name: "Makita Grinder 115mm", category: "Power Tools", qty: 68,  revenue: 9384,  qtyTrend: 8,  revenueTrend: 9  },
-  { id: 5, name: "Knipex Pliers 200mm", category: "Hand Tools",  qty: 145, revenue: 5074,  qtyTrend: 5,  revenueTrend: 6  },
-];
-
 // ── Expenses ───────────────────────────────────────────────────────────────────
 
 const expenses: ExpenseItem[] = [
-  { label: "Employees",       percentage: 36, color: "#7367F0" },
-  { label: "Supplier orders", percentage: 28, color: "#00CFE8" },
-  { label: "Rent",            percentage: 18, color: "#28C76F" },
-  { label: "Tax (biz)",       percentage: 12, color: "#FF9F43" },
-  { label: "Electricity",     percentage:  3, color: "#EA5455" },
-  { label: "Phone & IT",      percentage:  2, color: "#82868B" },
-  { label: "Other",           percentage:  1, color: "#BABFC7" },
+  { label: "Payroll",        percentage: 42, color: "#7367F0" },
+  { label: "Infrastructure", percentage: 22, color: "#00CFE8" },
+  { label: "Marketing",      percentage: 16, color: "#28C76F" },
+  { label: "R&D",            percentage: 12, color: "#FF9F43" },
+  { label: "Support & CS",   percentage:  5, color: "#EA5455" },
+  { label: "Admin & Legal",  percentage:  2, color: "#82868B" },
+  { label: "Other",          percentage:  1, color: "#BABFC7" },
 ];
 
 const topExpenses: TopExpenseItem[] = [
-  { label: "Employees",       value: "€96,000", color: "#7367F0" },
-  { label: "Supplier orders", value: "€74,000", color: "#00CFE8" },
-  { label: "Rent",            value: "€48,000", color: "#28C76F" },
+  { label: "Payroll",        value: "$112K",  color: "#7367F0" },
+  { label: "Infrastructure", value: "$58.7K", color: "#00CFE8" },
+  { label: "Marketing",      value: "$42.7K", color: "#28C76F" },
 ];
 
-// ── Recent orders (inline mini-list) ──────────────────────────────────────────
+// ── Recent signups / activity ──────────────────────────────────────────────────
 
-interface RecentOrder {
-  id: string; customer: string; type: "sale" | "purchase";
-  amount: number; status: "pending" | "processing" | "shipped" | "delivered" | "partial";
+interface RecentSignup {
+  id: string; company: string; plan: "enterprise" | "pro" | "starter" | "trial";
+  mrr: number; status: "active" | "trial" | "renewal" | "upgrade" | "churn";
   date: string;
 }
 
-const recentOrders: RecentOrder[] = [
-  { id: "#SO-1042", customer: "Ahmed K.",     type: "sale",     amount: 218,  status: "pending",    date: "Today 14:32" },
-  { id: "#SO-1041", customer: "Sara M.",      type: "sale",     amount: 89,   status: "shipped",    date: "Today 11:18" },
-  { id: "#PO-0214", customer: "Bosch Supply", type: "purchase", amount: 2840, status: "partial",    date: "Today 09:05" },
-  { id: "#SO-1040", customer: "Tools Co.",    type: "sale",     amount: 1240, status: "delivered",  date: "Yesterday"   },
-  { id: "#PO-0213", customer: "Stanley Dist.",type: "purchase", amount: 1280, status: "processing", date: "Yesterday"   },
+const recentSignups: RecentSignup[] = [
+  { id: "#ACC-2841", company: "Acme Corp",       plan: "enterprise", mrr: 499, status: "active",  date: "Today 14:32" },
+  { id: "#ACC-2840", company: "Bright Media",    plan: "pro",        mrr: 99,  status: "upgrade", date: "Today 11:18" },
+  { id: "#ACC-2839", company: "NexaFlow",        plan: "trial",      mrr: 0,   status: "trial",   date: "Today 09:05" },
+  { id: "#ACC-2838", company: "TechVault Ltd",   plan: "pro",        mrr: 99,  status: "renewal", date: "Yesterday"   },
+  { id: "#ACC-2837", company: "RedSpark Agency", plan: "starter",    mrr: 29,  status: "churn",   date: "Yesterday"   },
 ];
 
-const STATUS_STYLES: Record<RecentOrder["status"], string> = {
-  pending:    "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-  processing: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  shipped:    "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-  delivered:  "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-  partial:    "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+const SIGNUP_STATUS_STYLES: Record<RecentSignup["status"], string> = {
+  active:  "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  trial:   "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  upgrade: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+  renewal: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  churn:   "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
 };
 
-// ── Low stock alerts (inline mini-list) ───────────────────────────────────────
+const PLAN_COLORS: Record<RecentSignup["plan"], string> = {
+  enterprise: "#7C3AED", pro: "#2563EB", starter: "#0891B2", trial: "#64748B",
+};
 
-interface LowStockItem { name: string; sku: string; qty: number; min: number; }
+// ── Trial expiry alerts ────────────────────────────────────────────────────────
 
-const lowStock: LowStockItem[] = [
-  { name: "Knipex Pliers 200mm", sku: "KN-2001", qty: 2, min: 5 },
-  { name: "DeWalt Blade 185mm",  sku: "DW-B185", qty: 0, min: 5 },
-  { name: "Bosch Bits Set 32pc", sku: "BS-3200", qty: 3, min: 5 },
-  { name: "Stanley Tape 5m",     sku: "ST-T500", qty: 4, min: 5 },
+interface TrialAlert { company: string; daysLeft: number; seats: number; }
+
+const trialAlerts: TrialAlert[] = [
+  { company: "NexaFlow",       daysLeft: 1, seats: 12 },
+  { company: "DevStream Inc",  daysLeft: 2, seats: 5  },
+  { company: "Pixel Studio",   daysLeft: 3, seats: 8  },
+  { company: "ClearPath SaaS", daysLeft: 5, seats: 23 },
 ];
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -221,42 +216,42 @@ export default function ERPDashboardPage() {
     <div className="space-y-5 p-6">
       <div>
         <h1 className="text-2xl font-bold text-ds-1">Dashboard</h1>
-        <p className="mt-1 text-sm text-ds-3">Tools Store — Full business overview</p>
+        <p className="mt-1 text-sm text-ds-3">SaaS Tools Store — Full business overview</p>
       </div>
 
       {/* ── KPI strip ─────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
-          title="Revenue Today"
-          value="€4,820"
-          dateRange="vs yesterday €4,290"
+          title="MRR"
+          value="$198.4K"
+          dateRange="vs last month $194.2K"
+          badge={{ value: "+2.1%", direction: "up" }}
+          chart={<MiniNeonSparkline data={mrrWeek} tone="default" />}
+        />
+        <StatCard
+          title="New Trials"
+          value="81"
+          dateRange="this week · 284 total active"
           badge={{ value: "+12.4%", direction: "up" }}
-          chart={<MiniNeonSparkline data={revenueWeek} tone="default" />}
+          chart={<MiniNeonSparkline data={trialsWeek} tone="default" />}
         />
         <StatCard
-          title="Active Orders"
-          value="23"
-          dateRange="purchase + sales combined"
-          badge={{ value: "+3 new", direction: "up" }}
-          chart={<MiniNeonSparkline data={ordersWeek} tone="default" />}
+          title="Active Seats"
+          value="13,933"
+          dateRange="of 15,951 total (87.4%)"
+          badge={{ value: "+0.9%", direction: "up" }}
+          chart={<MiniNeonSparkline data={seatsWeek} tone="default" />}
         />
         <StatCard
-          title="Inventory Value"
-          value="€142.3K"
-          dateRange="at cost price"
-          badge={{ value: "−1.8%", direction: "down" }}
-          chart={<MiniNeonSparkline data={inventoryWeek} tone="default" />}
-        />
-        <StatCard
-          title="Customers Owe Me"
-          value="€28.5K"
-          dateRange="accounts receivable"
-          badge={{ value: "−8.2%", direction: "down" }}
-          chart={<MiniNeonSparkline data={arWeek} tone="default" />}
+          title="Churns This Week"
+          value="7"
+          dateRange="vs 12 last week"
+          badge={{ value: "−41.7%", direction: "down" }}
+          chart={<MiniNeonSparkline data={churnsWeek} tone="default" />}
         />
       </div>
 
-      {/* ── P&L + Heatmap ─────────────────────────────────────────────────── */}
+      {/* ── P&L + Activity heatmap ─────────────────────────────────────────── */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <FinancialPLCard
@@ -271,44 +266,40 @@ export default function ERPDashboardPage() {
           />
         </div>
         <SalesHeatmapCard
-          title="Best Sales Times"
-          subtitle="Revenue intensity by day & hour"
+          title="User Activity"
+          subtitle="Active sessions by day & hour"
           data={heatmapData}
-          metricLabel="Revenue"
+          metricLabel="Sessions"
         />
       </div>
 
-      {/* ── Top items + Recent orders + Low stock ─────────────────────────── */}
+      {/* ── Top plans + Recent activity + Trial alerts ─────────────────────── */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        {/* Top selling items */}
-        <TopSellingItemsCard
-          title="Top Selling Items"
-          subtitle="This year"
-          items={topItems}
-          showTrend
-          maxItems={5}
+        <TopPlansCard
+          title="Top Subscription Plans"
+          subtitle="This month"
         />
 
-        {/* Recent orders */}
+        {/* Recent signups / renewals */}
         <div className="rounded-lg border border-ds-border-3/80 bg-ds-surface-1 p-5">
-          <p className="text-base font-bold text-ds-1">Recent Orders</p>
-          <p className="mt-0.5 text-xs text-ds-3">Latest purchase &amp; sales orders</p>
+          <p className="text-base font-bold text-ds-1">Recent Activity</p>
+          <p className="mt-0.5 text-xs text-ds-3">Latest signups, upgrades &amp; renewals</p>
           <div className="mt-4 space-y-2">
-            {recentOrders.map((order) => (
-              <div key={order.id} className="flex items-center justify-between rounded-md border border-ds-border-3/60 px-3 py-2">
+            {recentSignups.map((s) => (
+              <div key={s.id} className="flex items-center justify-between rounded-md border border-ds-border-3/60 px-3 py-2">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: order.type === "sale" ? "#22c55e" : "#f97316" }}>
-                      {order.type === "sale" ? "SALE" : "BUY"}
+                    <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: PLAN_COLORS[s.plan] }}>
+                      {s.plan}
                     </span>
-                    <span className="text-xs font-semibold text-ds-1">{order.id}</span>
+                    <span className="text-xs font-semibold text-ds-1">{s.id}</span>
                   </div>
-                  <p className="mt-0.5 truncate text-xs text-ds-3">{order.customer} · {order.date}</p>
+                  <p className="mt-0.5 truncate text-xs text-ds-3">{s.company} · {s.date}</p>
                 </div>
                 <div className="ml-3 flex flex-col items-end gap-1 shrink-0">
-                  <span className="text-sm font-bold text-ds-1">€{order.amount.toLocaleString()}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${STATUS_STYLES[order.status]}`}>
-                    {order.status}
+                  <span className="text-sm font-bold text-ds-1">{s.mrr > 0 ? `$${s.mrr}/mo` : "–"}</span>
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${SIGNUP_STATUS_STYLES[s.status]}`}>
+                    {s.status}
                   </span>
                 </div>
               </div>
@@ -316,35 +307,35 @@ export default function ERPDashboardPage() {
           </div>
         </div>
 
-        {/* Low stock alerts */}
+        {/* Trial expiry alerts */}
         <div className="rounded-lg border border-ds-border-3/80 bg-ds-surface-1 p-5">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-base font-bold text-ds-1">Low Stock Alerts</p>
-              <p className="mt-0.5 text-xs text-ds-3">Items below minimum threshold (5 units)</p>
+              <p className="text-base font-bold text-ds-1">Trial Expiry Alerts</p>
+              <p className="mt-0.5 text-xs text-ds-3">Trials expiring within 5 days</p>
             </div>
-            <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-600 dark:bg-red-900/30 dark:text-red-400">
-              {lowStock.length} items
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+              {trialAlerts.length} accounts
             </span>
           </div>
           <div className="mt-4 space-y-3">
-            {lowStock.map((item) => (
-              <div key={item.sku}>
+            {trialAlerts.map((item) => (
+              <div key={item.company}>
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
-                    <p className="truncate text-xs font-semibold text-ds-1">{item.name}</p>
-                    <p className="text-[10px] text-ds-3">{item.sku}</p>
+                    <p className="truncate text-xs font-semibold text-ds-1">{item.company}</p>
+                    <p className="text-[10px] text-ds-3">{item.seats} seats · trial period</p>
                   </div>
-                  <span className={`ml-2 shrink-0 text-sm font-bold ${item.qty === 0 ? "text-red-500" : "text-amber-500"}`}>
-                    {item.qty === 0 ? "OUT" : `${item.qty} left`}
+                  <span className={`ml-2 shrink-0 text-sm font-bold ${item.daysLeft <= 1 ? "text-red-500" : item.daysLeft <= 3 ? "text-amber-500" : "text-yellow-500"}`}>
+                    {item.daysLeft}d left
                   </span>
                 </div>
                 <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-ds-border-3/40">
                   <div
                     className="h-full rounded-full transition-all"
                     style={{
-                      width: `${Math.round((item.qty / item.min) * 100)}%`,
-                      backgroundColor: item.qty === 0 ? "#ef4444" : item.qty <= 2 ? "#f97316" : "#eab308",
+                      width: `${Math.round((item.daysLeft / 14) * 100)}%`,
+                      backgroundColor: item.daysLeft <= 1 ? "#ef4444" : item.daysLeft <= 3 ? "#f97316" : "#eab308",
                     }}
                   />
                 </div>
@@ -354,26 +345,36 @@ export default function ERPDashboardPage() {
         </div>
       </div>
 
+      {/* ── Top tools + AI insights ────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
+        <div className="lg:col-span-2">
+          <TopToolsCard />
+        </div>
+        <div className="lg:col-span-3">
+          <AIInsightsCard />
+        </div>
+      </div>
+
       {/* ── Expenses breakdown ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ExpensesCard
           title="Operating Expenses"
-          totalExpense="€270.2K"
+          totalExpense="$267.5K"
           expenses={expenses}
           topExpenses={topExpenses}
         />
         <div className="rounded-lg border border-ds-border-3/80 bg-ds-surface-1 p-5">
           <p className="text-base font-bold text-ds-1">Money Flow Summary</p>
-          <p className="mt-0.5 text-xs text-ds-3">This year · all amounts in EUR</p>
+          <p className="mt-0.5 text-xs text-ds-3">This year · all amounts in USD</p>
           <div className="mt-5 space-y-3">
             {[
-              { label: "Gross Revenue",        value: 2470000, color: "#22c55e", sign: "+"  },
-              { label: "Tax (21%)",             value: 518700,  color: "#ef4444", sign: "−"  },
-              { label: "Revenue After Tax",     value: 1951300, color: "#3b82f6", sign: "="  },
-              { label: "Cost of Goods (COGS)",  value: 1111500, color: "#ef4444", sign: "−"  },
-              { label: "Gross Profit",          value: 839800,  color: "#3b82f6", sign: "="  },
-              { label: "Operating Expenses",    value: 270200,  color: "#ef4444", sign: "−"  },
-              { label: "Net Profit",            value: 569600,  color: "#22c55e", sign: "="  },
+              { label: "Gross Revenue",       value: 2470000, color: "#22c55e", sign: "+" },
+              { label: "Tax (21%)",            value: 518700,  color: "#ef4444", sign: "−" },
+              { label: "Revenue After Tax",    value: 1951300, color: "#3b82f6", sign: "=" },
+              { label: "Cost of Revenue",      value: 1111500, color: "#ef4444", sign: "−" },
+              { label: "Gross Profit",         value: 839800,  color: "#3b82f6", sign: "=" },
+              { label: "Operating Expenses",   value: 267500,  color: "#ef4444", sign: "−" },
+              { label: "Net Profit",           value: 572300,  color: "#22c55e", sign: "=" },
             ].map((row) => (
               <div key={row.label} className="flex items-center justify-between border-b border-ds-border-3/40 pb-3 last:border-0 last:pb-0">
                 <div className="flex items-center gap-2">
