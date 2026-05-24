@@ -7259,6 +7259,7 @@ snapshots:
   es-toolkit@1.45.1: {}
 
   esbuild@0.27.2:
+    requiresBuild: true
     optionalDependencies:
       '@esbuild/aix-ppc64': 0.27.2
       '@esbuild/android-arm': 0.27.2
@@ -7288,6 +7289,7 @@ snapshots:
       '@esbuild/win32-x64': 0.27.2
 
   esbuild@0.28.0:
+    requiresBuild: true
     optionalDependencies:
       '@esbuild/aix-ppc64': 0.28.0
       '@esbuild/android-arm': 0.28.0
